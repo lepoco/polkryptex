@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-define('APPDIR', 'app/');
+define('APPDIR', 'app\\');
 define('ABSPATH', dirname(__FILE__) . '\\..\\');
 
 if (version_compare($ver = PHP_VERSION, $req = '7.4.0', '<')) {

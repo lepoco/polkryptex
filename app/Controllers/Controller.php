@@ -44,7 +44,7 @@ class Controller
         $this->queueScript('https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js', 'sha256-Eb6SfNpZyLYBnrvqg4KFxb6vIRg+pLg9vU5Pv5QTzko=', '2.0.8');
         $this->queueScript('https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js', 'sha256-lISRn4x2bHaafBiAb0H5C7mqJli7N0SH+vrapxjIz3k=', '3.1.1');
 
-        $this->queueScript(Http::baseUrl('js/main.js'), null, App::get()->variables->get('version'));
+        $this->queueScript(Http::baseUrl('js/main.min.js'), null, App::get()->variables->get('version'));
         $this->queueStyle(Http::baseUrl('css/main.min.css'), null, App::get()->variables->get('version'));
     }
 
