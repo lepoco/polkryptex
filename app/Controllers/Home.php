@@ -22,10 +22,10 @@ final class Home extends Controller
         $this->print();
     }
 
-    protected function testDebugPrint()
+    protected function testDebugPrint(): void
     {
         Singleton::get()->debug->warning('Opened page: ' . $this->name);
-        
+
         dump($this);
         dump(Singleton::get());
     }

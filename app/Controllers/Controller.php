@@ -18,6 +18,8 @@ class Controller
 {
     protected ?string $name;
 
+    protected ?string $baseurl;
+
     public function __construct()
     {
         $this->name = Singleton::get()->variables->get('pagenow');
@@ -28,12 +30,12 @@ class Controller
         }
     }
 
-    protected function getComponent(string $name)
+    protected function getComponent(string $name): void
     {
         if (is_file(ABSPATH . APPDIR . 'views/components/' . $name . '.php')) {
             require_once ABSPATH . APPDIR . 'views/components/' . $name . '.php';
         } else {
-            echo 'Component not found!';
+            Singleton::get()->debug->exception('Component "' . $name . '" not found!');
         }
     }
 
@@ -42,10 +44,14 @@ class Controller
         if (is_file(ABSPATH . APPDIR . 'views/' . $this->name . '.php')) {
             require_once ABSPATH . APPDIR . 'views/' . $this->name . '.php';
         } else {
-            Singleton::get()->debug->error('Page not found - ' . $this->name);
+            Singleton::get()->debug->exception('Page not found - ' . $this->name);
         }
 
-
         exit;
+    }
+
+    protected function title(): void
+    {
+        echo $this->name; // ?
     }
 }

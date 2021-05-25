@@ -44,4 +44,10 @@ final class Debug
             $this->monolog->warning($message);
         }
     }
+
+    public function exception(string $message): void
+    {
+        $this->error('EXCEPTION: ' . $message);
+        throw new \Exception($message);
+    }
 }

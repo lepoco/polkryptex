@@ -15,22 +15,22 @@ namespace Polkryptex\Core;
 final class Singleton
 {
     /** @var Application */
-    private static $app;
+    private static $instance;
 
     /**
      * @return Application
      */
     public static function get()
     {
-        if (!static::$app) {
+        if (!static::$instance) {
             throw new \LogicException("The Application object isn't initialized yet");
         }
 
-        return static::$app;
+        return static::$instance;
     }
 
-    public static function set(Application $app)
+    public static function set(Application $instance)
     {
-        static::$app = $app;
+        static::$instance = $instance;
     }
 }
