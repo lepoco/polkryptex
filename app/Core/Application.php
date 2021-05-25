@@ -13,6 +13,6 @@ final class Application
 {
     public function __construct()
     {
-        exit('ELo');
+        exit('Something about to happen');
     }
 }
