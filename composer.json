@@ -1,0 +1,25 @@
+{
+    "name":        "polkryptex/polkryptex",
+    "type":        "project",
+    "description": "Cryptocurrency exchange platform",
+    "homepage":    "https://github.com/Pomianowski/zpi",
+    "license":     "GNU-3.0",
+
+    "keywords": [
+        "cryptocurrency",
+        "bitcoin",
+        "etherum"
+    ],
+    
+    "require": {
+        "php": "^7.4",
+        "monolog/monolog": "2.2.*",
+        "symfony/translation": "5.2.*",
+        "swiftmailer/swiftmailer": "6.2.*",
+        "respect/validation": "2.2.*"
+    },
+
+    "autoload": {
+        "psr-4": {"Polkryptex\\": "app"}
+    }
+}

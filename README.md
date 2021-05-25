@@ -1,4 +1,4 @@
-# Cryptocurrency exchange platform
+# Polkryptex - Cryptocurrency exchange platform
 Team IT project
 
 
