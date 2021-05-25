@@ -9,11 +9,23 @@
 
 namespace Polkryptex\Core;
 
+use Polkryptex\Common\Debug;
+use Polkryptex\Common\Router;
+
 final class Application
 {
+    private $providers = [];
+
+    private Debug $debug;
+
+    private Router $router; 
+
     private function __construct()
     {
         Singleton::set($this);
+
+        $this->debug = new Debug();
+        $this->router = new Router();
 
         //Symfony\Component\VarDumper\VarDumper\dump
         exit(dump($this));
@@ -26,5 +38,14 @@ final class Application
     static function start(): Application
     {
         return new Application();
+    }
+
+    private function register(): void
+    {
+        //
+    }
+
+    private function get()
+    {
     }
 }

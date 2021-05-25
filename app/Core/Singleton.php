@@ -15,8 +15,6 @@ final class Singleton
     private static $app;
 
     /**
-     * Wrong.
-     *
      * @return Application
      */
     public static function get()
