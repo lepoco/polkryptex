@@ -9,6 +9,7 @@
 
 $this->getComponent('Header');
 ?>
-
-<?php $this->testDebugPrint(); ?>
+    <div>
+        This page does not exists!;
+    </div>
 <?php $this->getComponent('Footer'); ?>

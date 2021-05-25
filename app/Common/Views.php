@@ -18,10 +18,10 @@ final class Views
         Singleton::get()->variables->set('pagenow', $name);
         $controller = 'Polkryptex\\Controllers\\' . $name;
 
-        if (class_exists($controller)) {
-            return new $controller();
-        } else {
-            return new Polkryptex\Controllers\Controller();
+        if (!class_exists($controller)) {
+            $controller = 'Polkryptex\\Controllers\\Controller';
         }
+
+        return new $controller();
     }
 }

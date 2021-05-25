@@ -16,11 +16,14 @@ final class Home extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->print();
+    }
 
+    protected function testDebugPrint()
+    {
         Singleton::get()->debug->warning('Opened page: ' . $this->name);
-
+        
         dump($this);
         dump(Singleton::get());
-        exit();
     }
 }

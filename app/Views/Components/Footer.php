@@ -7,8 +7,6 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-$this->getComponent('Header');
 ?>
-
-<?php $this->testDebugPrint(); ?>
-<?php $this->getComponent('Footer'); ?>
+</body>
+</html>
