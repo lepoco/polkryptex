@@ -9,11 +9,16 @@
 
 namespace Polkryptex\Core;
 
+use Polkryptex\Core\Singleton;
+
 final class Application
 {
     private function __construct()
     {
-        exit('123');
+        Singleton::set($this);
+
+        //Symfony\Component\VarDumper\VarDumper\dump
+        exit(dump($this));
     }
 
     static function start()

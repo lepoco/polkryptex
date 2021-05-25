@@ -7,14 +7,14 @@
 
     "keywords": [
         "cryptocurrency",
-        "bitcoin",
-        "etherum"
+        "bitcoin"
     ],
     
     "require": {
         "php": "^7.4",
         "monolog/monolog": "2.2.*",
         "symfony/translation": "5.2.*",
+        "symfony/var-dumper": "5.2.*",
         "swiftmailer/swiftmailer": "6.2.*",
         "respect/validation": "2.2.*"
     },

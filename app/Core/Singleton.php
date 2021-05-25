@@ -11,24 +11,25 @@ namespace Polkryptex\Core;
 
 final class Singleton
 {
-    // Hold the class instance.
-    private static $instance = null;
+    /** @var Application */
+    private static $app;
 
-    // The constructor is private
-    // to prevent initiation with outer code.
-    private function __construct()
+    /**
+     * Wrong.
+     *
+     * @return Application
+     */
+    public static function get()
     {
-        // The expensive process (e.g.,db connection) goes here.
-    }
-
-    // The object is created from within the class itself
-    // only if the class has no instance.
-    public static function getInstance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new Singleton();
+        if (!static::$app) {
+            throw new \LogicException("The Application object isn't initialized yet");
         }
 
-        return self::$instance;
+        return static::$app;
+    }
+
+    public static function set(Application $app)
+    {
+        static::$app = $app;
     }
 }

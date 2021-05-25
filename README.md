@@ -42,7 +42,7 @@ Get the repository to yourself
 git clone git@github.com:Polkryptex/Polkryptex.git FOLDER_NAME
 ```
 
-Go to the folder and run composer to install the missing libraries
+Go to the folder and run Composer to install the missing libraries
 ```powershell
 cd 'FOLDER_NAME'
 composer install
