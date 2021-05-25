@@ -33,7 +33,7 @@ $RECYCLE.BIN/
 
 ### Sass ###
 .sass-cache/
-*.css.map
+#*.css.map
 
 ### Less ###
 *.cs
