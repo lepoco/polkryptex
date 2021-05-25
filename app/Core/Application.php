@@ -11,20 +11,28 @@ namespace Polkryptex\Core;
 
 use Polkryptex\Common\Debug;
 use Polkryptex\Common\Router;
+use Polkryptex\Common\Variables;
 
 final class Application
 {
-    private $providers = [];
+    /**
+     * @link https://packagist.org/packages/monolog/monolog
+     */
+    public Debug $debug;
 
-    private Debug $debug;
+    /**
+     * @link https://github.com/bramus/router
+     */
+    public Router $router;
 
-    private Router $router; 
+    public Variables $variables;
 
     private function __construct()
     {
         Singleton::set($this);
 
         $this->debug = new Debug();
+        $this->variables = new Variables();
         $this->router = new Router();
     }
 
@@ -35,21 +43,5 @@ final class Application
     static function start(): Application
     {
         return new Application();
-    }
-
-    public function view(string $name)
-    {
-        $this->debug->warning('Opened page: ' . $name);
-        //Symfony\Component\VarDumper\VarDumper\dump
-        exit(dump($this));
-    }
-
-    private function register(): void
-    {
-        //
-    }
-
-    private function get()
-    {
     }
 }

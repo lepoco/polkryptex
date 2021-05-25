@@ -23,7 +23,7 @@ final class Debug
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
 
-            $this->monolog = new Logger('name');
+            $this->monolog = new Logger('Polkryptex');
             $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'error.log', Logger::WARNING));
         }
     }

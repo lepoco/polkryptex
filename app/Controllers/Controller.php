@@ -11,16 +11,12 @@ namespace Polkryptex\Controllers;
 
 use Polkryptex\Core\Singleton;
 
-final class Home extends Controller
+class Controller
 {
+    protected ?string $name;
+
     public function __construct()
     {
-        parent::__construct();
-
-        Singleton::get()->debug->warning('Opened page: ' . $this->name);
-
-        dump($this);
-        dump(Singleton::get());
-        exit();
+        $this->name = Singleton::get()->variables->get('pagenow');
     }
 }

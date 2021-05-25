@@ -10,7 +10,6 @@
 namespace Polkryptex\Common;
 
 use Bramus\Router\Router as BramusRouter;
-use Polkryptex\Core\Singleton;
 
 final class Router
 {
@@ -26,10 +25,10 @@ final class Router
     private function registerRoutes(): void
     {
         $this->router->set404(function () {
-            Singleton::get()->view('404');
+            Views::display('404');
         });
         $this->router->get('/', function () {
-            Singleton::get()->view('Home');
+            Views::display('Home');
         });
     }
 }
