@@ -24,9 +24,9 @@ final class Http
         return self::urlFix((self::isSsl() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME'])) . $join;
     }
 
-    private static function urlFix(string $p): string
+    public static function urlFix(string $requestUri): string
     {
-        $p = str_replace('\\', '/', trim($p));
-        return (substr($p, -1) != '/') ? $p .= '/' : $p;
+        $requestUri = str_replace('\\', '/', trim($requestUri));
+        return (substr($requestUri, -1) != '/') ? $requestUri .= '/' : $requestUri;
     }
 }
