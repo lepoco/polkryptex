@@ -38,12 +38,12 @@ Team IT project
 
 ## Committing rules
 Get the repository to yourself
-```
+```powershell
 git clone git@github.com:Polkryptex/Polkryptex.git FOLDER_NAME
 ```
 
 When you're done with the changes, change branch and send a commit
-```
+```powershell
 git checkout -b pr/FEATURE_NAME
 git add .
 git commit -m 'FEATURE_NAME or whatever'

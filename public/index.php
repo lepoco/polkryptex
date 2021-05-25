@@ -26,3 +26,5 @@ date_default_timezone_set('UTC');
 
 require_once ABSPATH . APPDIR . 'config.php';
 require_once ABSPATH . 'vendor/autoload.php';
+
+Polkryptex\Core\Application::start();

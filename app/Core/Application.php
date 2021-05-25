@@ -11,8 +11,13 @@ namespace Polkryptex\Core;
 
 final class Application
 {
-    public function __construct()
+    private function __construct()
     {
-        exit('Something about to happen');
+        exit('123');
+    }
+
+    static function start()
+    {
+        return new Application();
     }
 }
