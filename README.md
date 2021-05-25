@@ -42,6 +42,12 @@ Get the repository to yourself
 git clone git@github.com:Polkryptex/Polkryptex.git FOLDER_NAME
 ```
 
+Go to the folder and run composer to install the missing libraries
+```powershell
+cd 'FOLDER_NAME'
+composer install
+```
+
 When you're done with the changes, change branch and send a commit
 ```powershell
 git checkout -b pr/FEATURE_NAME
