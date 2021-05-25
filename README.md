@@ -35,3 +35,18 @@ Team IT project
 - @Szymon - Databases
 - @Kacper - API Interfaces and rewrite rules
 - @Leszek - Rewrite engine and core functions
+
+## Committing rules
+Get the repository to yourself
+```
+git clone git@github.com:Polkryptex/Polkryptex.git FOLDER_NAME
+```
+
+When you're done with the changes, change branch and send a commit
+```
+git checkout -b pr/FEATURE_NAME
+git add .
+git commit -m 'FEATURE_NAME or whatever'
+```
+
+Create new pull request from this feature

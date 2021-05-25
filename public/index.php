@@ -18,13 +18,11 @@ if (!is_file(ABSPATH . 'vendor/autoload.php')) {
     exit('FATAL ERROR: Composer not found');
 }
 
-
 if (!is_file(ABSPATH . APPDIR . 'config.php')) {
     exit('FATAL ERROR: Config not found');
 }
 
 date_default_timezone_set('UTC');
-
 
 require_once ABSPATH . APPDIR . 'config.php';
 require_once ABSPATH . 'vendor/autoload.php';
