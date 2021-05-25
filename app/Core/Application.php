@@ -26,9 +26,6 @@ final class Application
 
         $this->debug = new Debug();
         $this->router = new Router();
-
-        //Symfony\Component\VarDumper\VarDumper\dump
-        exit(dump($this));
     }
 
     /**
@@ -38,6 +35,13 @@ final class Application
     static function start(): Application
     {
         return new Application();
+    }
+
+    public function view(string $name)
+    {
+        $this->debug->warning('Opened page: ' . $name);
+        //Symfony\Component\VarDumper\VarDumper\dump
+        exit(dump($this));
     }
 
     private function register(): void

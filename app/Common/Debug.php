@@ -14,28 +14,31 @@ use Monolog\Handler\StreamHandler;
 
 final class Debug
 {
-    private $monolog;
+    private Logger $monolog;
 
     public function __construct()
     {
-        if(defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG == true)
-        {
+        if (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG == true) {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
-        }
 
-        $this->monolog = new Logger('name');
-        $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'error.log', Logger::WARNING));
+            $this->monolog = new Logger('name');
+            $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'error.log', Logger::WARNING));
+        }
     }
 
     public function error(string $message): void
     {
-        $this->monolog->error($message);
+        if ($this->monolog != null) {
+            $this->monolog->error($message);
+        }
     }
 
     public function warning(string $message): void
     {
-        $this->monolog->warning($message);
+        if ($this->monolog != null) {
+            $this->monolog->warning($message);
+        }
     }
 }
