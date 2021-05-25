@@ -9,8 +9,6 @@
 
 namespace Polkryptex\Core;
 
-use Polkryptex\Core\Singleton;
-
 final class Application
 {
     private function __construct()
@@ -21,7 +19,11 @@ final class Application
         exit(dump($this));
     }
 
-    static function start()
+    /**
+     * Returns a new application instance, should be triggered by public/index.php
+     * @return Application
+     */
+    static function start(): Application
     {
         return new Application();
     }
