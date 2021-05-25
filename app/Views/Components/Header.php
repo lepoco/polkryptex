@@ -22,6 +22,9 @@
     <meta name="msapplication-starturl" content="/">
 
     <title>Polkryptex - <?php $this->title(); ?></title>
+    <?php foreach ($this->styles as $style) : ?>
+        <link type="text/css" rel="stylesheet" href="<?php echo $style[0]; ?>" integrity="<?php echo $style[1]; ?>" crossorigin="anonymous" />
+    <?php endforeach; ?>
 </head>
 
 <body>

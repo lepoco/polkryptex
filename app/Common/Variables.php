@@ -16,6 +16,12 @@ final class Variables
 {
     private array $variables = [];
 
+    public function __construct()
+    {
+        $this->set('debug', (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG));
+        $this->set('version', (defined('POLKRYPTEX_VERSION') && POLKRYPTEX_VERSION ? POLKRYPTEX_VERSION : ''));
+    }
+
     public function set(string $name, $value): void
     {
         if(!isset($this->variables[$name]))

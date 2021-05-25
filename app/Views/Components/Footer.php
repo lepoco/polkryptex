@@ -8,5 +8,9 @@
  */
 
 ?>
+<?php foreach ($this->scripts as $script) : ?>
+    <script type="<?php echo $script[2]; ?>" src="<?php echo $script[0]; ?>" integrity="<?php echo $script[1]; ?>" crossorigin="anonymous"></script>
+<?php endforeach; ?>
 </body>
+
 </html>

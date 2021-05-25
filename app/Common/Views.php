@@ -9,7 +9,7 @@
 
 namespace Polkryptex\Common;
 
-use Polkryptex\Core\Singleton;
+use Polkryptex\Core\Singleton as App;
 
 /**
  * @author Leszek P.
@@ -18,7 +18,7 @@ final class Views
 {
     public static function display(string $name)
     {
-        Singleton::get()->variables->set('pagenow', $name);
+        App::get()->variables->set('pagenow', $name);
         $controller = 'Polkryptex\\Controllers\\' . $name;
 
         if (!class_exists($controller)) {
