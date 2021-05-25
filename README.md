@@ -47,6 +47,7 @@ When you're done with the changes, change branch and send a commit
 git checkout -b pr/FEATURE_NAME
 git add .
 git commit -m 'FEATURE_NAME or whatever'
+git push --set-upstream origin pr/FEATURE_NAME
 ```
 
 Create new pull request from this feature
