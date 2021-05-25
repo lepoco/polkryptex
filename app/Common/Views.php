@@ -11,6 +11,9 @@ namespace Polkryptex\Common;
 
 use Polkryptex\Core\Singleton;
 
+/**
+ * @author Leszek P.
+ */
 final class Views
 {
     public static function display(string $name)

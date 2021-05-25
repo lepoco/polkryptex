@@ -9,6 +9,9 @@
 
 namespace Polkryptex\Core;
 
+/**
+ * @author Leszek P.
+ */
 final class Singleton
 {
     /** @var Application */

@@ -9,6 +9,9 @@
 
 namespace Polkryptex\Common;
 
+/**
+ * @author Leszek P.
+ */
 final class Variables
 {
     private array $variables = [];

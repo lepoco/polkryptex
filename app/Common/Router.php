@@ -11,6 +11,9 @@ namespace Polkryptex\Common;
 
 use Bramus\Router\Router as BramusRouter;
 
+/**
+ * @author Leszek P.
+ */
 final class Router
 {
     private BramusRouter $router;

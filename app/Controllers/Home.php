@@ -11,6 +11,9 @@ namespace Polkryptex\Controllers;
 
 use Polkryptex\Core\Singleton;
 
+/**
+ * @author Leszek P.
+ */
 final class Home extends Controller
 {
     public function __construct()

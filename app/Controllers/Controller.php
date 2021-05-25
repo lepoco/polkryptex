@@ -11,6 +11,9 @@ namespace Polkryptex\Controllers;
 
 use Polkryptex\Core\Singleton;
 
+/**
+ * @author Leszek P.
+ */
 class Controller
 {
     protected ?string $name;

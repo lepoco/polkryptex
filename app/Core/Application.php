@@ -13,6 +13,9 @@ use Polkryptex\Common\Debug;
 use Polkryptex\Common\Router;
 use Polkryptex\Common\Variables;
 
+/**
+ * @author Leszek P.
+ */
 final class Application
 {
     /**

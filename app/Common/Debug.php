@@ -12,6 +12,9 @@ namespace Polkryptex\Common;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
+/**
+ * @author Leszek P.
+ */
 final class Debug
 {
     private Logger $monolog;
