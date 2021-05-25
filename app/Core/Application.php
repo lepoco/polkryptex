@@ -10,8 +10,8 @@
 namespace Polkryptex\Core;
 
 use Polkryptex\Common\Debug;
-use Polkryptex\Common\Router;
 use Polkryptex\Common\Variables;
+use Polkryptex\Common\Router;
 
 /**
  * @author Leszek P.
@@ -22,6 +22,11 @@ final class Application
      * @link https://packagist.org/packages/monolog/monolog
      */
     public Debug $debug;
+
+    /**
+     * @link https://github.com/nette/database
+     */
+    public Database $database;
 
     /**
      * @link https://github.com/bramus/router
@@ -36,6 +41,7 @@ final class Application
 
         $this->debug = new Debug();
         $this->variables = new Variables();
+        $this->database = new Database();
         $this->router = new Router();
     }
 

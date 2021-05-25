@@ -24,8 +24,7 @@ final class Variables
 
     public function set(string $name, $value): void
     {
-        if(!isset($this->variables[$name]))
-        {
+        if (!isset($this->variables[$name])) {
             $this->variables[$name] = $value;
         }
     }
@@ -34,9 +33,7 @@ final class Variables
     {
         if (isset($this->variables[$name])) {
             return $this->variables[$name];
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
