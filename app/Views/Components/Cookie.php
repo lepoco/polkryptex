@@ -17,7 +17,7 @@
                     <span>We use  🍪 to personalize the content you see on Polkryptex pages. <a href="/cookies-policy">Find out more</a></span>
                 </div>
                 <div>
-                    <a href="#" class="faded p-3">Manage cookies</a> <a href="#" class="btn btn-outline-secondary">Accept</a>
+                    <a href="#" class="faded mr-1">Manage cookies</a> <a href="#" class="btn btn-outline-light-dark">Accept</a>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@
 ?>
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <svg width="19" height="23" viewBox="0 0 19 23" xmlns="http://www.w3.org/2000/svg" data-testid="logo-svg" class="styles__StyledLetterSvg-a7znz5-0 cwPRsp">
                 <defs>
                     <linearGradient id="logo_letter1" x1="-3.542" x2="187.902" y1="222.275" y2="33.495" gradientTransform="matrix(.10838 0 0 .11312 -.092 -.004)" gradientUnits="userSpaceOnUse">
@@ -36,21 +36,31 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/private">Private</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/busisness">Business</a>
                 </li>
             </ul>
+            <div class="d-flex mr-1">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Plans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Help</a>
+                    </li>
+                </ul>
+            </div>
             <div class="d-flex">
-                <button class="btn btn-secondary" type="submit">Sign in</button>
-                <button class="btn btn-dark" type="submit">Register</button>
+                <a href="/signin" class="btn btn-secondary mr-1" type="submit">Sign in</a>
+                <a href="/register" class="btn btn-dark" type="submit">Register for free</a>
             </div>
         </div>
     </div>

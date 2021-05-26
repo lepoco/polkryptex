@@ -9,17 +9,13 @@
 
 namespace Polkryptex\Controllers;
 
-use Polkryptex\Core\Singleton as App;
-
 /**
  * @author Leszek P.
  */
 final class NotFound extends Controller
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
         $this->setAsFullScreen();
-        $this->print();
     }
 }

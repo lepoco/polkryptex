@@ -16,12 +16,6 @@ use Polkryptex\Core\Singleton as App;
  */
 final class Home extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->print();
-    }
-
     protected function testDebugPrint(): void
     {
         App::get()->debug->warning('Opened page: ' . $this->name);

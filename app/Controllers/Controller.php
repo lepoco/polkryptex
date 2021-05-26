@@ -23,6 +23,8 @@ class Controller
 
     protected bool $fullScreen = false;
 
+    protected $bodyClasses = [];
+
     protected array $scripts = [];
 
     protected array $styles = [];
@@ -31,11 +33,23 @@ class Controller
     {
         $this->name = App::get()->variables->get('pagenow');
 
+        $this->addDefaultClasses();
         $this->addDefaultScripts();
 
-        if (get_parent_class($this) == null) {
-            $this->print();
+        if (method_exists($this, 'init'))
+        {
+            $this->{'init'}();
         }
+
+        $this->print();
+    }
+
+    private function addDefaultClasses()
+    {
+        $this->addBodyClass('polkryptex');
+        $this->addBodyClass('theme-light');
+        $this->addBodyClass('page-' . ($this->fullScreen ? 'fullscreen' : 'regular'));
+        $this->addBodyClass('page-' . strtolower($this->name));
     }
 
     private function addDefaultScripts()
@@ -50,7 +64,17 @@ class Controller
         $this->queueStyle(Http::baseUrl('css/main.min.css'), null, App::get()->variables->get('version'));
     }
 
-    protected function setAsFullScreen()
+    protected function addBodyClass(string $class): void
+    {
+        $this->bodyClasses[] = $class;
+    }
+
+    protected function getBodyClasses(): string
+    {
+        return implode(' ', $this->bodyClasses);
+    }
+
+    protected function setAsFullScreen(): void
     {
         $this->fullScreen = true;
     }
