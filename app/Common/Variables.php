@@ -38,4 +38,9 @@ final class Variables
             return null;
         }
     }
+
+    public function getAll(): array
+    {
+        return $this->variables;
+    }
 }

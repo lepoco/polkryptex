@@ -14,9 +14,12 @@ namespace Polkryptex\Core;
  */
 final class Registry
 {
+    private const OBJECT_KEY = 0;
+    private const ACCESS_KEY = 1;
+
     private static array $objects = [];
 
-    public static function &dump(): array
+    public static function dump(): array
     {
         return defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG ? self::$objects : [];
     }
@@ -26,13 +29,13 @@ final class Registry
         self::$objects[$name] = [$object, $access];
     }
 
-    public static function &get(string $name)
+    public static function get(string $name)
     {
-        if (!empty(self::$objects[$name][1]) && !in_array(self::getCallingClass(), self::$objects[$name][1])) {
+        if (!empty(self::$objects[$name][self::ACCESS_KEY]) && !in_array(self::getCallingClass(), self::$objects[$name][self::ACCESS_KEY])) {
             throw new \LogicException('Insufficient class permissions to a registry object');
         }
 
-        return self::$objects[$name][0] ?? null;
+        return self::$objects[$name][self::OBJECT_KEY] ?? null;
     }
 
     private static function getCallingClass()

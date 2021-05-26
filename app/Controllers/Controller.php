@@ -23,7 +23,9 @@ class Controller
 
     protected bool $fullScreen = false;
 
-    protected $bodyClasses = [];
+    protected array $variables = [];
+
+    protected array $bodyClasses = [];
 
     protected array $scripts = [];
 
@@ -31,7 +33,7 @@ class Controller
 
     public function __construct()
     {
-        $this->name = Registry::get('Variables')->get('page_now');
+        $this->name = $this->getVariable('page_now');
 
         $this->addDefaultClasses();
         $this->addDefaultScripts();
@@ -42,6 +44,12 @@ class Controller
         }
 
         $this->print();
+
+        if (method_exists($this, 'done')) {
+            $this->{'done'}();
+        }
+
+        exit;
     }
 
     private function addDefaultClasses()
@@ -54,14 +62,14 @@ class Controller
 
     private function addDefaultScripts()
     {
-        $this->queueScript(Registry::get('Variables')->get('debug') ? 'https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js' : 'https://cdn.jsdelivr.net/npm/vue@2');
+        $this->queueScript($this->getVariable('debug') ? 'https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js' : 'https://cdn.jsdelivr.net/npm/vue@2');
         $this->queueScript('https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js', 'sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=', '3.6.0');
         $this->queueScript('https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.js', 'sha256-9CxlH0BQastrZiSQ8zjdR6WVHTMSA5xKuP5QkEhPNRo=', '4.4.2');
         $this->queueScript('https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js', 'sha256-Eb6SfNpZyLYBnrvqg4KFxb6vIRg+pLg9vU5Pv5QTzko=', '2.0.8');
         $this->queueScript('https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js', 'sha256-lISRn4x2bHaafBiAb0H5C7mqJli7N0SH+vrapxjIz3k=', '3.1.1');
 
-        $this->queueScript(Http::baseUrl('js/main.min.js'), null, Registry::get('Variables')->get('version'));
-        $this->queueStyle(Http::baseUrl('css/main.min.css'), null, Registry::get('Variables')->get('version'));
+        $this->queueScript(Http::baseUrl('js/main.min.js'), null, $this->getVariable('version'));
+        $this->queueStyle(Http::baseUrl('css/main.min.css'), null, $this->getVariable('version'));
     }
 
     protected function addBodyClass(string $class): void
@@ -88,6 +96,16 @@ class Controller
         }
     }
 
+    protected function getVariable(string $name, bool $update = false)
+    {
+        if(empty($this->variables) || $update)
+        {
+            $this->variables = Registry::get('Variables')->getAll();
+        }
+
+        return $this->variables[$name] ?? null;
+    }
+
     protected function print(): void
     {
         if (is_file(ABSPATH . APPDIR . 'views/' . $this->name . '.php')) {
@@ -95,8 +113,6 @@ class Controller
         } else {
             Registry::get('Debug')->exception('Page not found - ' . $this->name);
         }
-
-        exit;
     }
 
     protected function queueScript(string $url, ?string $sri = null, ?string $version = null, ?string $type = "text/javascript")
@@ -112,5 +128,10 @@ class Controller
     protected function title(): void
     {
         echo $this->name; // ?
+    }
+
+    protected function __(string $text, ?array $variables = null): ?string
+    {
+        return Registry::get('Translator')->trans($text, $variables);
     }
 }

@@ -11,6 +11,7 @@ namespace Polkryptex\Core;
 
 use Polkryptex\Common\Variables;
 use Polkryptex\Common\Options;
+use Polkryptex\Common\Translator;
 
 /**
  * @author Leszek P.
@@ -29,8 +30,9 @@ final class Application
 
         Registry::register('Debug', new Debug());
         Registry::register('Variables', new Variables());
-        Registry::register('Database', new Database());
+        Registry::register('Database', new Database(), ['Polkryptex\Common\Options']);
         Registry::register('Options', new Options());
+        Registry::register('Translator', new Translator());
         
         (new Router());
     }
