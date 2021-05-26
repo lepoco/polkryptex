@@ -24,3 +24,4 @@ define('PASSWORD_SALT', '(UEuLn_.qjp.^dhU,ITMEWhU{e~[aYM)&bMryk0fMJ;~AmWRJ9?;oRE
 define('NONCE_SALT', 'k>O)fS24Gufs[Hs0:foxvH9^4SX;nE])6-<ZocI>M+<G]|{%v%VJqKJbS)I=XPi>');
 
 define('POLKRYPTEX_DEBUG', true);
+define('POLKRYPTEX_DEBUG_DISPLAY', false);

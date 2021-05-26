@@ -21,10 +21,15 @@ final class Debug
 
     public function __construct()
     {
-        if (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG == true) {
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            error_reporting(E_ALL);
+        if (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG) {
+
+            if (defined('POLKRYPTEX_DEBUG_DISPLAY') && POLKRYPTEX_DEBUG_DISPLAY) {
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
+            } else {
+                error_reporting(0);
+            }
 
             $this->monolog = new Logger('Polkryptex');
             $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'error.log', Logger::WARNING));

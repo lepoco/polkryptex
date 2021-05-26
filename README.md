@@ -21,8 +21,8 @@ Team IT project
 - Composer
 
 ## External solutions
-- Nette Database
 - Bramus Router
+- Database by David Adams
 - Monolog
 - Symfony Translation
 - Symfony var-dumper

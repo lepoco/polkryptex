@@ -18,32 +18,19 @@ final class Application
 {
     /**
      * @link https://packagist.org/packages/monolog/monolog
-     */
-    public Debug $debug;
-
-    /**
      * @link https://github.com/nette/database
-     */
-    public Database $database;
-
-    /**
      * @link https://github.com/bramus/router
      */
-    public Router $router;
-
-    /**
-     * 
-     */
-    public Variables $variables;
 
     private function __construct()
     {
-        Singleton::set($this);
+        Registry::register('App', $this);
 
-        $this->debug = new Debug();
-        $this->variables = new Variables();
-        $this->database = new Database();
-        $this->router = new Router();
+        Registry::register('Debug', new Debug());
+        Registry::register('Vars', new Variables());
+        Registry::register('DB', new Database());
+        
+        (new Router());
     }
 
     /**

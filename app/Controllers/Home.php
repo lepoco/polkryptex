@@ -9,7 +9,7 @@
 
 namespace Polkryptex\Controllers;
 
-use Polkryptex\Core\Singleton as App;
+use Polkryptex\Core\Registry;
 
 /**
  * @author Leszek P.
@@ -18,9 +18,7 @@ final class Home extends Controller
 {
     protected function testDebugPrint(): void
     {
-        App::get()->debug->warning('Opened page: ' . $this->name);
-
+        dump(Registry::dump());
         dump($this);
-        dump(App::get());
     }
 }
