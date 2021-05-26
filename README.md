@@ -15,23 +15,26 @@ Team IT project
 
 ## Technologies
 - PHP
-- JavaScript
-- MySQL (MariaDB)
-- HTML 5
-- CSS & SASS
+- MySQL
+- SASS
+- PWA
 - Composer
 
 ## External solutions
-- Optional PWA (for the needs of mobile devices)
+- Nette Database
+- Bramus Router
+- Monolog
+- Symfony Translation
+- Symfony var-dumper
 - Vue.js
 - PayPal WebAPI
-- Chart.js for visualization
-- Bootstrap as a base for styles
-- jQuery for easier Ajax queries
+- Chart.js
+- Bootstrap SASS
+- jQuery
 
 ## Roles
-- @Paweł - Frontend
-- @Filip - Frontend
+- @Leszek - Core functions and Content Management System
+- @Kacper - UI elements and APIs
+- @Filip - Designing graphical interfaces, images and vectors
 - @Szymon - Databases
-- @Kacper - API Interfaces and rewrite rules
-- @Leszek - Rewrite engine and core functions
+- @Paweł - Frontend
