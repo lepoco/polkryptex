@@ -8,6 +8,7 @@
  */
 
 $this->getComponent('Header');
+$this->getComponent('Navigation');
 ?>
 
 <div class="container">

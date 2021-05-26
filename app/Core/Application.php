@@ -9,9 +9,7 @@
 
 namespace Polkryptex\Core;
 
-use Polkryptex\Common\Debug;
 use Polkryptex\Common\Variables;
-use Polkryptex\Common\Router;
 
 /**
  * @author Leszek P.
@@ -33,6 +31,9 @@ final class Application
      */
     public Router $router;
 
+    /**
+     * 
+     */
     public Variables $variables;
 
     private function __construct()

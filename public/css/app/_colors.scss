@@ -1,0 +1,16 @@
+
+
+$c-hyperlink: rgb(0, 117, 235);
+$c-hyperlink-faded: rgb(139, 149, 158);
+
+/* Override Bootstrap colors */
+$theme-colors: (
+  primary:  rgb(0, 117, 235),
+  secondary:rgba(230, 230, 230, 0.6),
+  success:    #000,
+  info:       #000,
+  warning:    #000,
+  danger:     #000,
+  light:      rgb(243, 244, 245),
+  dark:       rgb(25, 28, 31)
+);

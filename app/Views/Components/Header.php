@@ -28,3 +28,5 @@
 </head>
 
 <body>
+<?php $this->getComponent('Cookie'); ?>
+<section id="app">

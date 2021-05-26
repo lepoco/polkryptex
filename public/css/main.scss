@@ -4,5 +4,13 @@
  * Licensed under GNU-3.0 (https://github.com/Polkryptex/Polkryptex/blob/main/LICENSE)
  */
 
+@import "app/fonts";
+@import "app/colors";
+
 @import "bootstrap/bootstrap";
-@import "app/app";
+
+@import "app/default";
+@import "app/animations";
+
+@import "app/components/cookie";
+@import "app/components/toast";

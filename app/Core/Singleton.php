@@ -12,15 +12,15 @@ namespace Polkryptex\Core;
 /**
  * @author Leszek P.
  */
+//antipattern, really?
+//https://stackoverflow.com/questions/37733391/singleton-alternative-for-php-pdo
+//http://fabien.potencier.org/what-is-dependency-injection.html
+//https://www.reddit.com/r/PHP/comments/1vfqm0/singleton_alternative/
 final class Singleton
 {
-    /** @var Application */
-    private static $instance;
+    private static Application $instance;
 
-    /**
-     * @return Application
-     */
-    public static function get()
+    public static function get(): Application
     {
         if (!static::$instance) {
             throw new \LogicException("The Application object isn't initialized yet");
