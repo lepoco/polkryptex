@@ -18,9 +18,9 @@ final class Views
 {
     public static function display(string $name)
     {
-        Registry::get('Vars')->set('pagenow', $name);
+        Registry::get('Variables')->set('page_now', $name);
+        
         $controller = 'Polkryptex\\Controllers\\' . $name;
-
         if (!class_exists($controller)) {
             $controller = 'Polkryptex\\Controllers\\Controller';
         }

@@ -10,6 +10,7 @@
 namespace Polkryptex\Core;
 
 use Polkryptex\Common\Variables;
+use Polkryptex\Common\Options;
 
 /**
  * @author Leszek P.
@@ -27,8 +28,9 @@ final class Application
         Registry::register('App', $this);
 
         Registry::register('Debug', new Debug());
-        Registry::register('Vars', new Variables());
-        Registry::register('DB', new Database());
+        Registry::register('Variables', new Variables());
+        Registry::register('Database', new Database());
+        Registry::register('Options', new Options());
         
         (new Router());
     }

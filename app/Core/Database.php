@@ -23,6 +23,14 @@ final class Database
     /**
      * Database instance
      *
+     * @var boolean
+     * @access protected
+     */
+    protected bool $is_connected = false;
+
+    /**
+     * Database instance
+     *
      * @var object
      * @access protected
      */
@@ -42,7 +50,7 @@ final class Database
      * @var boolean
      * @access protected
      */
-    protected $show_errors = false;
+    protected bool $show_errors = false;
 
     /**
      * Current query
@@ -67,32 +75,33 @@ final class Database
      */
     public function __construct()
     {
-        if (defined('POLKRYPTEX_DEBUG'))
-        {
-            if (POLKRYPTEX_DEBUG)
-            {
+        if (defined('POLKRYPTEX_DEBUG')) {
+            if (POLKRYPTEX_DEBUG) {
                 $this->show_errors = true;
             }
-        }
-        else
-        {
+        } else {
             return;
         }
 
-        if(!defined('POLKRYPTEX_DB_HOST') || empty(POLKRYPTEX_DB_HOST))
-        {
+        if (!defined('POLKRYPTEX_DB_HOST') || empty(POLKRYPTEX_DB_HOST)) {
             return;
         }
-            
+
 
         $this->connection = new Mysqli(POLKRYPTEX_DB_HOST, POLKRYPTEX_DB_USER, POLKRYPTEX_DB_PASS, POLKRYPTEX_DB_NAME);
 
-        if ($this->connection->connect_error)
-        {
+        if ($this->connection->connect_error) {
             App::get()->debug->exception('Failed to connect to MySQL - ' . $this->connection->connect_error);
+        } else {
+            $this->$is_connected = true;
         }
 
         $this->connection->set_charset('utf8');
+    }
+
+    public function isConnected(): bool
+    {
+        return $this->is_connected;
     }
 
     /**
@@ -105,8 +114,7 @@ final class Database
      */
     public function query($query): Database
     {
-        if (!$this->query_closed)
-        {
+        if (!$this->query_closed) {
             $this->query->close();
         }
 

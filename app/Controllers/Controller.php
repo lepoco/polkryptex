@@ -31,7 +31,7 @@ class Controller
 
     public function __construct()
     {
-        $this->name = Registry::get('Vars')->get('pagenow');
+        $this->name = Registry::get('Variables')->get('page_now');
 
         $this->addDefaultClasses();
         $this->addDefaultScripts();
@@ -54,14 +54,14 @@ class Controller
 
     private function addDefaultScripts()
     {
-        $this->queueScript(Registry::get('Vars')->get('debug') ? 'https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js' : 'https://cdn.jsdelivr.net/npm/vue@2');
+        $this->queueScript(Registry::get('Variables')->get('debug') ? 'https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js' : 'https://cdn.jsdelivr.net/npm/vue@2');
         $this->queueScript('https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js', 'sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=', '3.6.0');
         $this->queueScript('https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.js', 'sha256-9CxlH0BQastrZiSQ8zjdR6WVHTMSA5xKuP5QkEhPNRo=', '4.4.2');
         $this->queueScript('https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js', 'sha256-Eb6SfNpZyLYBnrvqg4KFxb6vIRg+pLg9vU5Pv5QTzko=', '2.0.8');
         $this->queueScript('https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js', 'sha256-lISRn4x2bHaafBiAb0H5C7mqJli7N0SH+vrapxjIz3k=', '3.1.1');
 
-        $this->queueScript(Http::baseUrl('js/main.min.js'), null, Registry::get('Vars')->get('version'));
-        $this->queueStyle(Http::baseUrl('css/main.min.css'), null, Registry::get('Vars')->get('version'));
+        $this->queueScript(Http::baseUrl('js/main.min.js'), null, Registry::get('Variables')->get('version'));
+        $this->queueStyle(Http::baseUrl('css/main.min.css'), null, Registry::get('Variables')->get('version'));
     }
 
     protected function addBodyClass(string $class): void

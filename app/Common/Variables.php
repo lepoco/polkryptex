@@ -14,11 +14,12 @@ namespace Polkryptex\Common;
  */
 final class Variables
 {
-    private array $variables = [];
+    protected array $variables = [];
 
     public function __construct()
     {
         $this->set('debug', (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG));
+        $this->set('debug_display', (defined('POLKRYPTEX_DEBUG_DISPLAY') && POLKRYPTEX_DEBUG_DISPLAY));
         $this->set('version', (defined('POLKRYPTEX_VERSION') && POLKRYPTEX_VERSION ? POLKRYPTEX_VERSION : ''));
     }
 
