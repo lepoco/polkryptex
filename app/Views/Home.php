@@ -19,4 +19,5 @@ $this->getComponent('Navigation');
     </div>
 </div>
 
+<?php $this->getComponent('ToastContainer'); ?>
 <?php $this->getComponent('Footer'); ?>

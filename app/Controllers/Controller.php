@@ -21,6 +21,8 @@ class Controller
 
     protected ?string $baseurl;
 
+    protected bool $fullScreen = false;
+
     protected array $scripts = [];
 
     protected array $styles = [];
@@ -46,6 +48,11 @@ class Controller
 
         $this->queueScript(Http::baseUrl('js/main.min.js'), null, App::get()->variables->get('version'));
         $this->queueStyle(Http::baseUrl('css/main.min.css'), null, App::get()->variables->get('version'));
+    }
+
+    protected function setAsFullScreen()
+    {
+        $this->fullScreen = true;
     }
 
     protected function getComponent(string $name): void

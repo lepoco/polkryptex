@@ -9,7 +9,15 @@
 
 $this->getComponent('Header');
 ?>
+<div class="hero full">
     <div>
-        This page does not exists!;
+        <h1 class="accent">Ups!</h1>
+        <p>The page you are looking for has not been found.</p>
+
+        <a href="/" class="btn btn-dark">Back to the home page</a>
     </div>
+    <div>
+        😅
+    </div>
+</div>
 <?php $this->getComponent('Footer'); ?>

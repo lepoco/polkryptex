@@ -29,7 +29,7 @@ final class Router
     private function registerRoutes(): void
     {
         $this->router->set404(function () {
-            Views::display('404');
+            Views::display('NotFound');
         });
         $this->router->get('/', function () {
             Views::display('Home');

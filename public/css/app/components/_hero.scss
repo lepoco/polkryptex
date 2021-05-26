@@ -1,0 +1,36 @@
+
+.hero {
+    &.full {
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+        width: 100%;
+        display: flex;
+        div
+        {
+            &:first-child {
+                position: absolute;
+                right: 50%;
+                margin: auto;
+                width: 50%;
+                height: 100vh;
+                display: flex;
+                max-width: 43rem;
+                padding: 0px 1rem;
+                min-height: 100vh;
+                flex-direction: column;
+                -webkit-box-align: start;
+                align-items: start;
+                -webkit-box-pack: center;
+                justify-content: center;
+            }
+            &:last-child {
+                height: 100vh;
+                position: absolute;
+                right: 0px;
+                width: 50%;
+                background-color: rgb(251, 250, 251);
+            }
+        }
+    }
+}

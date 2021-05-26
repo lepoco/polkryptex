@@ -27,6 +27,6 @@
     <?php endforeach; ?>
 </head>
 
-<body>
+<body class="page-<?php echo $this->fullScreen ? 'fullscreen' : 'regular'; ?> page-<?php echo strtolower($this->name); ?>">
 <?php $this->getComponent('Cookie'); ?>
 <section id="app">
