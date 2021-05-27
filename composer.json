@@ -17,6 +17,7 @@
         "symfony/translation": "5.2.*",
         "symfony/var-dumper": "5.2.*",
         "swiftmailer/swiftmailer": "6.2.*",
+        "jenssegers/blade": "1.4.*",
         "respect/validation": "2.2.*"
     },
 

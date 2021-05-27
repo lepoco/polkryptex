@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Common;
+namespace Polkryptex\Core;
 
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use Symfony\Component\Translation\Loader\ArrayLoader;

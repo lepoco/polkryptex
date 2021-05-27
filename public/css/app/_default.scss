@@ -41,8 +41,20 @@ h1 {
     font-size: 6rem;
 }
 
+form,
+.form {
+    width: 100%;
+}
+
 .mr-1 {
     margin-right: 1rem;
+}
+
+.pr-1 {
+    padding-right: 1rem;
+}
+.pr-2 {
+    padding-right: 2rem;
 }
 
 .btn {

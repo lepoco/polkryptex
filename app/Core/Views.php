@@ -7,9 +7,9 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Common;
+namespace Polkryptex\Core;
 
-use Polkryptex\Core\Registry;
+use Polkryptex\Core\Vue;
 
 /**
  * @author Leszek P.
@@ -19,12 +19,17 @@ final class Views
     public static function display(string $name)
     {
         Registry::get('Variables')->set('page_now', $name);
-        
-        $controller = 'Polkryptex\\Controllers\\' . $name;
-        if (!class_exists($controller)) {
-            $controller = 'Polkryptex\\Controllers\\Controller';
+
+        if(defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG)
+        {
+            Vue::compile(ABSPATH . APPDIR . 'common\\vue\\', ABSPATH . 'public/js/vue');
         }
 
-        return new $controller();
+        $controller = 'Polkryptex\\Common\\Controllers\\' . $name;
+        if (!class_exists($controller)) {
+            return new Controller($name);
+        }
+
+        return new $controller($name);
     }
 }

@@ -7,16 +7,17 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Common;
+namespace Polkryptex\Common\Controllers;
+
+use Polkryptex\Core\Controller;
 
 /**
  * @author Leszek P.
  */
-final class Request
+final class SignIn extends Controller
 {
-    public function __construct()
+    public function init()
     {
-        dump($_REQUEST);
-        exit;
+        $this->setAsFullScreen();
     }
 }

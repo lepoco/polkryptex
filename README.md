@@ -22,6 +22,7 @@ Team IT project
 
 ## External solutions
 - Bramus Router
+- Jenssegers Blade
 - Database by David Adams
 - Monolog
 - Symfony Translation

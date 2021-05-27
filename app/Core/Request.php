@@ -7,10 +7,16 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-?>
+namespace Polkryptex\Core;
 
-<section class="toast">
-    <div class="toast__container">
-    
-    </div>
-</section>
+/**
+ * @author Leszek P.
+ */
+final class Request
+{
+    public function __construct()
+    {
+        dump($_REQUEST);
+        exit;
+    }
+}

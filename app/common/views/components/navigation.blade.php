@@ -1,13 +1,4 @@
-<?php
 
-/**
- * @package   Polkryptex
- *
- * @copyright Copyright (c) 2021 - Kacper J., Pawel L., Filip S., Szymon K., Leszek P.
- * @license   https://www.gnu.org/licenses/gpl-3.0.txt
- */
-
-?>
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="/">
@@ -48,13 +39,13 @@
             <div class="d-flex mr-1">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Features</a>
+                        <a class="nav-link" aria-current="page" href="/features">Features</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Plans</a>
+                        <a class="nav-link" aria-current="page" href="/plans">Plans</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Help</a>
+                        <a class="nav-link" aria-current="page" href="/help">Help</a>
                     </li>
                 </ul>
             </div>

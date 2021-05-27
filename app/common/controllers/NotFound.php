@@ -7,18 +7,17 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Controllers;
+namespace Polkryptex\Common\Controllers;
 
-use Polkryptex\Core\Registry;
+use Polkryptex\Core\Controller;
 
 /**
  * @author Leszek P.
  */
-final class Home extends Controller
+final class NotFound extends Controller
 {
-    protected function testDebugPrint(): void
+    public function init()
     {
-        dump(Registry::dump());
-        dump($this);
+        $this->setAsFullScreen();
     }
 }

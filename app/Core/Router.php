@@ -10,8 +10,6 @@
 namespace Polkryptex\Core;
 
 use Bramus\Router\Router as BramusRouter;
-use Polkryptex\Common\Request;
-use Polkryptex\Common\Views;
 
 /**
  * @author Leszek P.
@@ -35,6 +33,10 @@ final class Router
 
         $this->router->set404(function () {
             Views::display('NotFound');
+        });
+
+        $this->router->get('/signin', function () {
+            Views::display('SignIn');
         });
         
         $this->router->get('/', function () {
