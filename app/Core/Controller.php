@@ -88,6 +88,7 @@ class Controller
         $this->addData('scripts', $this->scripts, false);
 
         $this->addData('language', 'en');
+        $this->addData('fullscreen', $this->fullScreen);
 
         $this->addData('csrf_token','abcdefg', false);
         
@@ -128,11 +129,12 @@ class Controller
         $this->setDefaultViewData();
         $this->setPublicFunctions();
 
+        $pagename = $this->pascalToKebab($this->name);
         if ($this->getVariable('debug')) {
-            $this->blade->make('app', $this->viewData);
+            $this->blade->make($pagename, $this->viewData);
         }
 
-        echo $this->blade->render('app', $this->viewData);
+        echo $this->blade->render($pagename, $this->viewData);
     }
 
     protected function addDirective(string $name, $directive)
