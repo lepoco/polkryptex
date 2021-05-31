@@ -102,7 +102,10 @@ class Controller
             'imports' => [
                 'vue' => $this->getVariable('debug') ? 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.js' : 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.prod.js',
                 'vue-router' => 'https://cdn.jsdelivr.net/npm/vue-router@4.0.8/dist/vue-router.esm-browser.js',
-                'jquery' => 'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js'
+                'js-cookie' => 'https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs',
+                'jquery' => 'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
+                'popperjs' => 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
+                'bootstrap' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.js'
             ]
         ], false);
 

@@ -12,6 +12,7 @@
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - {{ $title }}</title>
     <script type="importmap">@json( $importmap )</script>
+
 @foreach($styles as $style)
     <link type="text/css" rel="stylesheet" href="{{ $style['src'] }}" integrity="{{ $style['sri'] }}" crossorigin="anonymous" />
 @endforeach
@@ -21,11 +22,8 @@
 @endforeach
 
 </head>
-
 <body class="{{ $body_classes }}">
 
-@if($installed)
-    @include('components.cookie')
-@endif
+@include('components.cookie')
 
 <section id="app" data-vue-component="{{ $title }}" data-vue-props="@json( $props )" data-csrf-token="{{ $csrf_token }}" data-auth="@json( $auth )">

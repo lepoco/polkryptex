@@ -12,6 +12,7 @@
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - <?php echo e($title); ?></title>
     <script type="importmap"><?php echo json_encode( $importmap , 15, 512) ?></script>
+
 <?php $__currentLoopData = $styles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $style): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <link type="text/css" rel="stylesheet" href="<?php echo e($style['src']); ?>" integrity="<?php echo e($style['sri']); ?>" crossorigin="anonymous" />
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -21,11 +22,8 @@
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 </head>
-
 <body class="<?php echo e($body_classes); ?>">
 
-<?php if($installed): ?>
-    <?php echo $__env->make('components.cookie', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php endif; ?>
+<?php echo $__env->make('components.cookie', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <section id="app" data-vue-component="<?php echo e($title); ?>" data-vue-props="<?php echo json_encode( $props , 15, 512) ?>" data-csrf-token="<?php echo e($csrf_token); ?>" data-auth="<?php echo json_encode( $auth , 15, 512) ?>"><?php /**PATH E:\www\rdev\polkryptex\app\common\views/components/header.blade.php ENDPATH**/ ?>
