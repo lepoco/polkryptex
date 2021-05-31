@@ -28,4 +28,4 @@
     <?php echo $__env->make('components.cookie', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php endif; ?>
 
-<section id="app" data-vue-component="<?php echo e($title); ?>" data-vue-props="<?php echo json_encode( $props , 15, 512) ?>" data-csrf-token="<?php echo e($csrf_token); ?>" data-auth="<?php echo json_encode( $auth , 15, 512) ?>"><?php /**PATH E:\MAMP\htdocs\polkryptex\app\common\views/components/header.blade.php ENDPATH**/ ?>
+<section id="app" data-vue-component="<?php echo e($title); ?>" data-vue-props="<?php echo json_encode( $props , 15, 512) ?>" data-csrf-token="<?php echo e($csrf_token); ?>" data-auth="<?php echo json_encode( $auth , 15, 512) ?>"><?php /**PATH E:\www\rdev\polkryptex\app\common\views/components/header.blade.php ENDPATH**/ ?>

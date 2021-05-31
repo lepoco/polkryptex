@@ -28,6 +28,7 @@ final class Application
         Registry::register('Variables', new Variables());
         Registry::register('Database', new Database(), ['Polkryptex\Common\Options']);
         Registry::register('Options', new Options());
+        Registry::register('User', new User());
         
         (new Router());
     }
@@ -38,6 +39,6 @@ final class Application
      */
     static function start(): Application
     {
-        return new Application();
+        return new self();
     }
 }

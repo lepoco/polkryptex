@@ -11,6 +11,9 @@ composer.phar
 .vscode/
 .tmp/
 
+# Configuration
+app/config.php
+
 # Logs
 logs
 *.log

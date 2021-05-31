@@ -19,9 +19,9 @@ define('POLKRYPTEX_DB_HOST', '');
 define('POLKRYPTEX_DB_USER', '');
 define('POLKRYPTEX_DB_PASS', '');
 
-define('SESSION_SALT', '}>I]U!?G+x@c~.<^2&.nq&v>0#DMI?Y@_sJvXp=Dv.HpaR@2Wj.f8otZ|5f@Yf6R');
-define('PASSWORD_SALT', '(UEuLn_.qjp.^dhU,ITMEWhU{e~[aYM)&bMryk0fMJ;~AmWRJ9?;oREZD)<%u1#%');
-define('NONCE_SALT', 'k>O)fS24Gufs[Hs0:foxvH9^4SX;nE])6-<ZocI>M+<G]|{%v%VJqKJbS)I=XPi>');
+define('SESSION_SALT', '');
+define('PASSWORD_SALT', '');
+define('NONCE_SALT', '');
 
-define('POLKRYPTEX_DEBUG', true);
-define('POLKRYPTEX_DEBUG_DISPLAY', true);
+define('POLKRYPTEX_DEBUG', false);
+define('POLKRYPTEX_DEBUG_DISPLAY', false);

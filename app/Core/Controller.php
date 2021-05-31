@@ -90,6 +90,8 @@ class Controller
         $this->addData('language', 'en');
         $this->addData('fullscreen', $this->fullScreen);
 
+        $this->addData('installed', defined('SESSION_SALT'), false);
+
         $this->addData('csrf_token','abcdefg', false);
         
         $this->addData('auth', [
@@ -98,9 +100,9 @@ class Controller
         
         $this->addData('importmap', [
             'imports' => [
-                'vue' => 'https://unpkg.com/vue@3.0.11/dist/vue.esm-browser.js',
-                'vue-router' => 'https://unpkg.com/vue-router@4.0.5/dist/vue-router.esm-browser.js',
-                'html' => '/js/html.js'
+                'vue' => $this->getVariable('debug') ? 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.js' : 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.prod.js',
+                'vue-router' => 'https://cdn.jsdelivr.net/npm/vue-router@4.0.8/dist/vue-router.esm-browser.js',
+                'jquery' => 'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js'
             ]
         ], false);
 

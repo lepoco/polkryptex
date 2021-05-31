@@ -27,6 +27,14 @@ final class Router
 
     private function registerRoutes(): void
     {
+        // if(!defined(''))
+        // {
+        //     $this->router->get('/', function () {
+        //         Views::display('Installer');
+        //     });
+        //     return;
+        // }
+
         $this->router->get('/request', function () {
             new Request();
         });

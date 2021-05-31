@@ -29,4 +29,28 @@ final class Http
         $requestUri = str_replace('\\', '/', trim($requestUri));
         return (substr($requestUri, -1) != '/') ? $requestUri .= '/' : $requestUri;
     }
+
+    public static function internalRedirect(string $path = '/', bool $cache = false, bool $permanent = false)
+    {
+        self::redirect(self::baseUrl($path), $cache, $permanent);
+    }
+
+    public static function redirect(string $path = '/', bool $cache = false, bool $permanent = false)
+    {
+        header('Expires: on, 01 Jan 1970 00:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        if(!$cache)
+        {
+            header('Cache-Control: no-store, no-cache, must-revalidate');
+            header('Cache-Control: post-check=0, pre-check=0', false);
+            header('Pragma: no-cache');
+        }
+
+        if($permanent)
+        {
+            header('HTTP/1.1 301 Moved Permanently');
+        }
+        
+        header('Location: ' . $path);
+    }
 }

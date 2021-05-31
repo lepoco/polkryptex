@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - {{ $title }}</title>
-
+    <script type="importmap">@json( $importmap )</script>
 @foreach($styles as $style)
     <link type="text/css" rel="stylesheet" href="{{ $style['src'] }}" integrity="{{ $style['sri'] }}" crossorigin="anonymous" />
 @endforeach
@@ -22,8 +22,10 @@
 
 </head>
 
-<body class="{{ $body_classes }}" data-vue-component="{{ $title }}" data-vue-props="@json( $props )" data-csrf-token="{{ $csrf_token }}" data-auth="@json( $auth )">
+<body class="{{ $body_classes }}">
 
-@include('components.cookie')
+@if($installed)
+    @include('components.cookie')
+@endif
 
-<section id="app">
+<section id="app" data-vue-component="{{ $title }}" data-vue-props="@json( $props )" data-csrf-token="{{ $csrf_token }}" data-auth="@json( $auth )">
