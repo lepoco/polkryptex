@@ -9,8 +9,6 @@
 
 namespace Polkryptex\Core\Components;
 
-use Polkryptex\Core\Registry;
-
 /**
  * @author Leszek P.
  */
@@ -18,11 +16,11 @@ final class Views
 {
     public static function display(string $name)
     {
-        Registry::get('Variables')->set('page_now', $name);
+        \Polkryptex\Core\Registry::get('Variables')->set('page_now', $name);
 
         $controller = 'Polkryptex\\Common\\Controllers\\' . $name;
         if (!class_exists($controller)) {
-            return new Controller($name);
+            return new \Polkryptex\Core\Controller($name);
         }
 
         return new $controller($name);

@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace Polkryptex\Core\Components;
 
 /**
  * @author Leszek P.
@@ -23,7 +23,7 @@ final class Options
             return $this->cache[$name];
         }
 
-        $database = Registry::get('Database');
+        $database = \Polkryptex\Core\Registry::get('Database');
 
         if(!$database->isConnected())
         {

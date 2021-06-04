@@ -9,7 +9,6 @@
 
 namespace Polkryptex\Core\Components;
 
-use Polkryptex\Core\Registry;
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 
@@ -26,7 +25,7 @@ final class Translator
     public static function init()
     {
         $translator = new self();
-        Registry::register('Translator', $translator);
+        \Polkryptex\Core\Registry::register('Translator', $translator);
     }
 
     public static function setLanguage(string $code = null)
@@ -45,7 +44,7 @@ final class Translator
         if (is_file($moFile)) {
             self::$symfonyTranslator->addResource('mo', $moFile, $code);
         } else {
-            Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
+            \Polkryptex\Core\Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
         }
     }
 

@@ -41,7 +41,7 @@ final class Router
         // }
 
         $this->router->get('/request', function () {
-            new Request();
+            new \Polkryptex\Core\Request();
         });
 
         $this->router->set404(function () {

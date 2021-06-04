@@ -41,7 +41,7 @@ final class User
 
     public function getTransactions(bool $reCache = false): array
     {
-
+        return [];
     }
 
     public function isLoggedIn(): bool
