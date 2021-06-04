@@ -18,9 +18,10 @@ use Symfony\Component\Translation\Loader\MoFileLoader;
  */
 final class Translator
 {
-    protected ?SymfonyTranslator $symfonyTranslator = null;
-    
-    protected ?string $currentDomain = null;
+
+    protected const DEFAULT_LANGUAGE = 'en_US';
+
+    protected static ?SymfonyTranslator $symfonyTranslator = null;
 
     public static function init()
     {
@@ -28,40 +29,34 @@ final class Translator
         Registry::register('Translator', $translator);
     }
 
-    private function initializeSymfony($code = 'en_US')
+    public static function setLanguage(string $code = null)
     {
-        $this->symfonyTranslator = new SymfonyTranslator($code);
-        $this->symfonyTranslator->addLoader('mo', new MoFileLoader());
-    }
+        if($code == null)
+        {
+            $code = self::DEFAULT_LANGUAGE;
+        }
 
-    public function setLanguage(string $code = 'en_US')
-    {
-        if ($this->symfonyTranslator == null) {
-            $this->initializeSymfony($code);
+        if (self::$symfonyTranslator == null) {
+            self::$symfonyTranslator = new SymfonyTranslator($code);
+            self::$symfonyTranslator->addLoader('mo', new MoFileLoader());
         }
 
         $moFile = ABSPATH . 'app/common/languages/' . $code . '.mo';
         if (is_file($moFile)) {
-            $this->symfonyTranslator->addResource('mo', $moFile, $code);
-
-            $this->currentDomain = $code;
+            self::$symfonyTranslator->addResource('mo', $moFile, $code);
         } else {
             Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
         }
     }
 
-    public function trans(string $text): ?string
+    public static function translate(string $text): ?string
     {
-        if($this->symfonyTranslator == null)
+        if(self::$symfonyTranslator == null)
         {
-            $this->initializeSymfony();
+            self::$symfonyTranslator = new SymfonyTranslator(self::DEFAULT_LANGUAGE);
+            self::$symfonyTranslator->addLoader('mo', new MoFileLoader());
         }
 
-        return $this->symfonyTranslator->trans($text);
-    }
-
-    public static function translate(string $string): ?string
-    {
-        return Registry::get('Translator')->trans($string);
+        return self::$symfonyTranslator->trans($text);
     }
 }

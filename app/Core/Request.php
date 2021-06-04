@@ -17,6 +17,6 @@ final class Request
     public function __construct()
     {
         dump($_REQUEST);
-        exit;
+        \Polkryptex\Core\Application::stop();
     }
 }

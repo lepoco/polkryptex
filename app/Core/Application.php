@@ -22,8 +22,6 @@ final class Application
 
     private function __construct()
     {
-        Registry::register('App', $this);
-
         Registry::register('Debug', new Debug());
         Registry::register('Variables', new Variables());
         Registry::register('Database', new Database(), ['Polkryptex\Common\Options']);
@@ -41,5 +39,10 @@ final class Application
     static function start(): Application
     {
         return new self();
+    }
+
+    static function stop()
+    {
+        exit;
     }
 }

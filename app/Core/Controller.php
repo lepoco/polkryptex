@@ -43,24 +43,32 @@ class Controller
 
     public function __construct(string $pageName)
     {
-        $this->name = $pageName;
-        $this->viewData['title'] = $this->name;
+        $this->name = $this->viewData['title'] = $pageName;
 
-        Registry::get('Translator')->setLanguage('pl_PL');
-
+        $this->registerTranslation();
         $this->registerBlade();
+        $this->registerCoreScripts();
+
+        $this->setDefaultClasses();
+        $this->setPublicFunctions();
 
         if (method_exists($this, 'init')) {
             $this->{'init'}();
         }
 
+        $this->setDefaultViewData();
         $this->print();
 
         if (method_exists($this, 'done')) {
             $this->{'done'}();
         }
 
-        exit;
+        \Polkryptex\Core\Application::stop();
+    }
+
+    private function registerTranslation()
+    {
+        Registry::get('Translator')->setLanguage('pl_PL');
     }
 
     private function registerBlade()
@@ -70,6 +78,12 @@ class Controller
         $this->blade->directive('translate', function ($expression) {
             return '<?php echo Polkryptex\Core\Components\Translator::translate(' . $expression . '); ?>';
         });
+    }
+
+    private function registerCoreScripts()
+    {
+        $this->queueScript('js/app.min.js', null, $this->getVariable('version'), 'module');
+        $this->queueStyle('css/main.min.css', null, $this->getVariable('version'));
     }
 
     private function setDefaultClasses()
@@ -136,14 +150,6 @@ class Controller
 
     protected function print(): void
     {
-        $this->queueScript('js/app.min.js', null, $this->getVariable('version'), 'module');
-        $this->queueStyle('css/main.min.css', null, $this->getVariable('version'));
-
-        $this->setDefaultClasses();
-
-        $this->setDefaultViewData();
-        $this->setPublicFunctions();
-
         $pagename = $this->pascalToKebab($this->name);
         if ($this->getVariable('debug')) {
             $test = $this->blade->make($pagename, $this->viewData);

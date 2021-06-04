@@ -17,7 +17,7 @@ use Monolog\Handler\StreamHandler;
  */
 final class Debug
 {
-    private Logger $monolog;
+    private ?Logger $monolog = null;
 
     public function __construct()
     {
