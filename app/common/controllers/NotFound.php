@@ -18,6 +18,7 @@ final class NotFound extends Controller
 {
     public function init()
     {
+        $this->setTitle('Page not found');
         $this->setAsFullScreen();
     }
 }

@@ -11,7 +11,6 @@ namespace Polkryptex\Core;
 
 use ReflectionMethod;
 use Jenssegers\Blade\Blade;
-use Polkryptex\Core\Components\Translator;
 
 /**
  * @author Leszek P.
@@ -211,7 +210,6 @@ class Controller
 
     public function __(string $text, ?array $variables = null): ?string
     {
-        //return Registry::get('Translator')->trans($text, $variables);
-        return $text;
+        return Registry::get('Translator')->translate($text);
     }
 }

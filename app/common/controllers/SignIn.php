@@ -18,6 +18,7 @@ final class SignIn extends Controller
 {
     public function init()
     {
+        $this->setTitle('Sign In');
         $this->setAsFullScreen();
     }
 }

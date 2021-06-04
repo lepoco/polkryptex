@@ -16,6 +16,11 @@ use Polkryptex\Core\Controller;
  */
 final class Home extends Controller
 {
+    public function init()
+    {
+        $this->setTitle('Home');
+    }
+
     public static function testDebugPrint()
     {
         return 'This is a return from function';

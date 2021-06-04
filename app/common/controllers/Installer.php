@@ -18,6 +18,7 @@ final class Installer extends Controller
 {
     public function init()
     {
+        $this->setTitle('Installer');
         $this->setAsFullScreen();
     }
 }
