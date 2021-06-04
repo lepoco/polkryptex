@@ -27,31 +27,31 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/"><?php echo Polkryptex\Core\Components\Translator::translate('Home'); ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/private">Private</a>
+                    <a class="nav-link" href="/private"><?php echo Polkryptex\Core\Components\Translator::translate('Private'); ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/busisness">Business</a>
+                    <a class="nav-link" href="/busisness"><?php echo Polkryptex\Core\Components\Translator::translate('Business'); ?></a>
                 </li>
             </ul>
             <div class="d-flex mr-1">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/features">Features</a>
+                        <a class="nav-link" aria-current="page" href="/features"><?php echo Polkryptex\Core\Components\Translator::translate('Features'); ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/plans">Plans</a>
+                        <a class="nav-link" aria-current="page" href="/plans"><?php echo Polkryptex\Core\Components\Translator::translate('Plans'); ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/help">Help</a>
+                        <a class="nav-link" aria-current="page" href="/help"><?php echo Polkryptex\Core\Components\Translator::translate('Help'); ?></a>
                     </li>
                 </ul>
             </div>
             <div class="d-flex">
-                <a href="/signin" class="btn btn-secondary mr-1" type="submit">Sign in</a>
-                <a href="/register" class="btn btn-dark" type="submit">Register for free</a>
+                <a href="/signin" class="btn btn-secondary mr-1" type="submit"><?php echo Polkryptex\Core\Components\Translator::translate('Sign in'); ?></a>
+                <a href="/register" class="btn btn-dark" type="submit"><?php echo Polkryptex\Core\Components\Translator::translate('Register for free'); ?></a>
             </div>
         </div>
     </div>

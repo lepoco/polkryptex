@@ -5,6 +5,9 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+            <h2><?php echo Polkryptex\Core\Components\Translator::translate('Home page'); ?></h2>
+        </div>
+        <div class="col-12">
             <?php dump(get_defined_vars()); ?>
         </div>
     </div>

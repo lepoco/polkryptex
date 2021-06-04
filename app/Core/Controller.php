@@ -11,6 +11,7 @@ namespace Polkryptex\Core;
 
 use ReflectionMethod;
 use Jenssegers\Blade\Blade;
+use Polkryptex\Core\Components\Translator;
 
 /**
  * @author Leszek P.
@@ -18,8 +19,6 @@ use Jenssegers\Blade\Blade;
 class Controller
 {
     private Blade $blade;
-
-    private Translator $translator;
 
     protected const VIEWS_PATH = 'common\\views\\';
 
@@ -48,7 +47,9 @@ class Controller
         $this->name = $pageName;
         $this->viewData['title'] = $this->name;
 
-        $this->blade = new Blade(ABSPATH . APPDIR . self::VIEWS_PATH, ABSPATH . APPDIR . 'cache\\');
+        Registry::get('Translator')->setLanguage('pl_PL');
+
+        $this->registerBlade();
 
         if (method_exists($this, 'init')) {
             $this->{'init'}();
@@ -61,6 +62,15 @@ class Controller
         }
 
         exit;
+    }
+
+    private function registerBlade()
+    {
+        $this->blade = new Blade(ABSPATH . APPDIR . self::VIEWS_PATH, ABSPATH . APPDIR . 'cache\\');
+
+        $this->blade->directive('translate', function ($expression) {
+            return '<?php echo Polkryptex\Core\Components\Translator::translate(' . $expression . '); ?>';
+        });
     }
 
     private function setDefaultClasses()
@@ -83,6 +93,7 @@ class Controller
 
     protected function setDefaultViewData()
     {
+        $this->addData('debug', ($this->getVariable('debug') || !defined('SESSION_SALT')));
         $this->addData('body_classes', implode(' ', $this->bodyClasses));
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
@@ -136,7 +147,7 @@ class Controller
 
         $pagename = $this->pascalToKebab($this->name);
         if ($this->getVariable('debug')) {
-            $this->blade->make($pagename, $this->viewData);
+            $test = $this->blade->make($pagename, $this->viewData);
         }
 
         echo $this->blade->render($pagename, $this->viewData);
@@ -173,7 +184,7 @@ class Controller
 
     protected function setTitle($title)
     {
-        $this->viewData['title'] = $title;
+        $this->viewData['title'] = $this->__($title);
     }
 
     protected function setAsFullScreen(): void
@@ -200,6 +211,7 @@ class Controller
 
     public function __(string $text, ?array $variables = null): ?string
     {
-        return Registry::get('Translator')->trans($text, $variables);
+        //return Registry::get('Translator')->trans($text, $variables);
+        return $text;
     }
 }

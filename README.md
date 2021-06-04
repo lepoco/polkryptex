@@ -15,10 +15,13 @@ Team IT project
 
 ## Technologies
 - PHP
+- GNU gettext
 - MySQL
 - SASS
 - PWA
 - Composer
+
+## Timeline
 
 ## External solutions
 - Bramus Router
@@ -32,6 +35,7 @@ Team IT project
 - Chart.js
 - Bootstrap SASS
 - jQuery
+- PoEdit
 
 ## Roles
 - @Leszek - Core functions and Content Management System

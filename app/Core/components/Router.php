@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace Polkryptex\Core\Components;
 
 use Bramus\Router\Router as BramusRouter;
 
@@ -17,6 +17,11 @@ use Bramus\Router\Router as BramusRouter;
 final class Router
 {
     private BramusRouter $router;
+
+    public static function init()
+    {
+        return new self();
+    }
 
     public function __construct()
     {

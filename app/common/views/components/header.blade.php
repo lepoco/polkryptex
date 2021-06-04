@@ -12,10 +12,13 @@
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - {{ $title }}</title>
     <script type="importmap">@json( $importmap )</script>
+@if(!$debug)
+    <link rel="manifest" href="media/manifest.json">
+@endif
 
 @foreach($styles as $style)
     <link type="text/css" rel="stylesheet" href="{{ $style['src'] }}" integrity="{{ $style['sri'] }}" crossorigin="anonymous" />
-@endforeach
+@endforeach 
 
 @foreach($scripts as $script)
     <script type="{{ $script['type'] }}" src="{{ $script['src'] }}" integrity="{{ $script['sri'] }}" crossorigin="anonymous" defer></script>

@@ -28,9 +28,10 @@ final class Application
         Registry::register('Variables', new Variables());
         Registry::register('Database', new Database(), ['Polkryptex\Common\Options']);
         Registry::register('Options', new Options());
-        Registry::register('User', new User());
+        Registry::register('User', new Components\User());
         
-        (new Router());
+        Components\Translator::init();
+        Components\Router::init();
     }
 
     /**

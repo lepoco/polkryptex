@@ -18,7 +18,7 @@ final class Variables
 
     public function __construct()
     {
-        $this->set('debug', (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG));
+        $this->set('debug', (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG || !defined('POLKRYPTEX_VERSION')));
         $this->set('debug_display', (defined('POLKRYPTEX_DEBUG_DISPLAY') && POLKRYPTEX_DEBUG_DISPLAY));
         $this->set('version', (defined('POLKRYPTEX_VERSION') && POLKRYPTEX_VERSION ? POLKRYPTEX_VERSION : ''));
     }

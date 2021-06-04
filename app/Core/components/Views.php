@@ -7,9 +7,9 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace Polkryptex\Core\Components;
 
-use Polkryptex\Core\Vue;
+use Polkryptex\Core\Registry;
 
 /**
  * @author Leszek P.

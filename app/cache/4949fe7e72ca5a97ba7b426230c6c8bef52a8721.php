@@ -12,10 +12,13 @@
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - <?php echo e($title); ?></title>
     <script type="importmap"><?php echo json_encode( $importmap , 15, 512) ?></script>
+<?php if(!$debug): ?>
+    <link rel="manifest" href="media/manifest.json">
+<?php endif; ?>
 
 <?php $__currentLoopData = $styles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $style): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <link type="text/css" rel="stylesheet" href="<?php echo e($style['src']); ?>" integrity="<?php echo e($style['sri']); ?>" crossorigin="anonymous" />
-<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 
 <?php $__currentLoopData = $scripts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $script): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <script type="<?php echo e($script['type']); ?>" src="<?php echo e($script['src']); ?>" integrity="<?php echo e($script['sri']); ?>" crossorigin="anonymous" defer></script>

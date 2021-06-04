@@ -1,23 +1,125 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-05-26 16:02+0200\n"
-"PO-Revision-Date: 2021-05-26 16:02+0200\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2021-06-04 16:59+0200\n"
+"PO-Revision-Date: 2021-06-04 16:59+0200\n"
+"Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
+"Language-Team: Polkryptex\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
-"X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: style.css\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: ../views\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
+"|| n%100>14) ? 1 : 2);\n"
+"X-Poedit-KeywordsList: translate;trans;__;_e;_n:1,2;_x:1,2c;_ex:1,2c;"
+"_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
+"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Last-Translator: \n"
-"Language: pl_PL\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-msgid "Polkryptex"
+#: components/cookie.blade.php:7
+msgid "We use  🍪 to personalize the content you see on Polkryptex pages."
 msgstr ""
+"Używamy  🍪 do zarządzania treściami, które widzisz na stronach Polkryptex."
+
+#: components/cookie.blade.php:7
+msgid "Find out more"
+msgstr "Zobacz więcej"
+
+#: components/cookie.blade.php:10
+msgid "Manage cookies"
+msgstr "Zarządzaj ciasteczkami"
+
+#: components/cookie.blade.php:10
+msgid "Accept"
+msgstr "Akceptuj"
+
+#: components/navigation.blade.php:30
+msgid "Home"
+msgstr "Home"
+
+#: components/navigation.blade.php:33
+msgid "Private"
+msgstr "Prywatnie"
+
+#: components/navigation.blade.php:36
+msgid "Business"
+msgstr "Przedsiębiorca"
+
+#: components/navigation.blade.php:42
+msgid "Features"
+msgstr "Funkcje"
+
+#: components/navigation.blade.php:45
+msgid "Plans"
+msgstr "Plany"
+
+#: components/navigation.blade.php:48
+msgid "Help"
+msgstr "Pomoc"
+
+#: components/navigation.blade.php:53 sign-in.blade.php:16
+msgid "Sign in"
+msgstr "Zaloguj się"
+
+#: components/navigation.blade.php:54
+msgid "Register for free"
+msgstr "Zarejestruj się za darmo"
+
+#: home.blade.php:8
+msgid "Home page"
+msgstr "Strona główna"
+
+#: installer.blade.php:6
+msgid "Installer"
+msgstr "Instalator"
+
+#: installer.blade.php:11
+msgid "Database"
+msgstr "Baza danych"
+
+#: installer.blade.php:15 installer.blade.php:37
+msgid "User"
+msgstr "Użytkownik"
+
+#: installer.blade.php:19 installer.blade.php:45 sign-in.blade.php:13
+msgid "Password"
+msgstr "Hasło"
+
+#: installer.blade.php:26
+msgid "Host"
+msgstr "Serwer"
+
+#: installer.blade.php:30
+msgid "Table"
+msgstr "Tablica"
+
+#: installer.blade.php:41
+msgid "Username"
+msgstr "Użytkownik"
+
+#: installer.blade.php:52
+msgid "Begin installation"
+msgstr "Rozpocznij instalację"
+
+#: not-found.blade.php:6
+msgid "Ups!"
+msgstr "Ojej!"
+
+#: not-found.blade.php:7
+msgid "The page you are looking for has not been found."
+msgstr "Strona, której szukasz nie została znaleziona."
+
+#: not-found.blade.php:9
+msgid "Back to the home page"
+msgstr "Wróć na stronę główną"
+
+#: sign-in.blade.php:6
+msgid "Sign In"
+msgstr "Zaloguj się"
+
+#: sign-in.blade.php:9
+msgid "Email address"
+msgstr "Adres e-mail"
