@@ -9,6 +9,7 @@ composer.phar
 # Visual Studio Code - https://code.visualstudio.com/
 .settings/
 .vscode/
+.vs/
 .tmp/
 
 # Configuration
