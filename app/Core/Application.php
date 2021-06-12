@@ -18,7 +18,6 @@ final class Application
      * @link https://packagist.org/packages/monolog/monolog
      * @link https://github.com/bramus/router
      */
-
     private function __construct()
     {
         Registry::register('Debug', new Debug());

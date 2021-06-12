@@ -62,6 +62,7 @@ class Controller extends Blade
     private function setupController(): void
     {
         parent::__construct();
+        $this->baseUrl = \Polkryptex\Core\Shared\Http::baseUrl();
 
         $this->registerTranslation();
         $this->registerCoreScripts();
@@ -82,8 +83,8 @@ class Controller extends Blade
 
     private function registerCoreScripts(): void
     {
-        $this->queueScript('js/app.min.js', null, $this->getVariable('version'), 'module');
-        $this->queueStyle('css/main.min.css', null, $this->getVariable('version'));
+        $this->queueScript($this->baseUrl . 'js/app.min.js', null, $this->getVariable('version'), 'module');
+        $this->queueStyle($this->baseUrl . 'css/main.min.css', null, $this->getVariable('version'));
     }
 
     private function setDefaultClasses(): void
@@ -97,7 +98,8 @@ class Controller extends Blade
     protected function setDefaultViewData(): void
     {
         $this->addData('debug', ($this->getVariable('debug') || !defined('SESSION_SALT')));
-        $this->addData('body_classes', implode(' ', $this->bodyClasses));
+        $this->addData('baseUrl', $this->baseUrl);
+        $this->addData('bodyClasses', implode(' ', $this->bodyClasses));
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
 

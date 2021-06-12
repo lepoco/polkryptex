@@ -92,6 +92,10 @@ class Blade
             return '<?php echo Polkryptex\Core\Components\Translator::translate(' . $text . '); ?>';
         });
 
+        $this->addDirective('media', function ($media) {
+            return '<?php echo $baseUrl . \'media/'. str_replace('\'', '', $media).'\'; ?>';
+        });
+
         $this->addDirective('placeholder', function ($size = '100', $text = 'POLKRYPTEX') {
 
             $size = str_replace('\'', '', $size);

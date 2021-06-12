@@ -11,10 +11,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - {{ $title }}</title>
+    <link rel="icon" href="@media('favicon.svg')"/>
     <script type="importmap">@json( $importmap )</script>
-@if(!$debug)
-    <link rel="manifest" href="media/manifest.json">
-@endif
+    <link rel="manifest" href="@media('manifest.json')">
 
 @foreach($styles as $style)
     <link type="text/css" rel="stylesheet" href="{{ $style['src'] }}" integrity="{{ $style['sri'] }}" crossorigin="anonymous" />
@@ -25,7 +24,7 @@
 @endforeach
 
 </head>
-<body class="{{ $body_classes }}">
+<body class="{{ $bodyClasses }}">
 
 @include('components.cookie')
 

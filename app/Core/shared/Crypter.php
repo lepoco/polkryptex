@@ -15,7 +15,23 @@ namespace Polkryptex\Core\Shared;
 final class Crypter
 {
     /**
-     * Encrypts data depending on the selected method, default password
+     * Gets the application salts.
+     *
+     * @access   private
+     * @return   array
+     */
+    private static function getSalts(): array
+    {
+        return [
+            'algo'      => defined('POLKRYPTEX_ALGO') ? POLKRYPTEX_ALGO : '',
+            'password'  => defined('PASSWORD_SALT') ? PASSWORD_SALT : '',
+            'nonce'     => defined('NONCE_SALT') ? NONCE_SALT : '',
+            'token'     => defined('SESSION_SALT') ? SESSION_SALT : ''
+        ];
+    }
+
+    /**
+     * Encrypts data depending on the selected method, default password.
      *
      * @access   public
      * @param    string $string
@@ -47,7 +63,7 @@ final class Crypter
     }
 
     /**
-     * Compares encrypted data with those in the database
+     * Compares encrypted data with those in the database.
      *
      * @access   public
      * @param    string $text
@@ -95,7 +111,7 @@ final class Crypter
     }
 
     /**
-     * Generates a pseudo-random string
+     * Generates a pseudo-random string.
      *
      * @access   public
      * @param    int $length
@@ -137,18 +153,8 @@ final class Crypter
         return $rand;
     }
 
-    private static function getSalts(): array
-    {
-        return [
-            'algo'      => defined('POLKRYPTEX_ALGO') ? POLKRYPTEX_ALGO : '',
-            'password'  => defined('PASSWORD_SALT') ? PASSWORD_SALT : '',
-            'nonce'     => defined('NONCE_SALT') ? NONCE_SALT : '',
-            'token'     => defined('SESSION_SALT') ? SESSION_SALT : ''
-        ];
-    }
-
     /**
-     * Generates a pseudo-random seed
+     * Generates a pseudo-random seed.
      *
      * @access   private
      * @return   void
@@ -167,7 +173,7 @@ final class Crypter
     }
 
     /**
-     * Flips a random seed based on the timecode
+     * Flips a random seed based on the timecode.
      *
      * @access   private
      * @return   int

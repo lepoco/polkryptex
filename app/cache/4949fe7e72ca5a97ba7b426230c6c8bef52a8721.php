@@ -11,10 +11,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - <?php echo e($title); ?></title>
+    <link rel="icon" href="<?php echo $baseUrl . 'media/favicon.svg'; ?>"/>
     <script type="importmap"><?php echo json_encode( $importmap , 15, 512) ?></script>
-<?php if(!$debug): ?>
-    <link rel="manifest" href="media/manifest.json">
-<?php endif; ?>
+    <link rel="manifest" href="<?php echo $baseUrl . 'media/manifest.json'; ?>">
 
 <?php $__currentLoopData = $styles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $style): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <link type="text/css" rel="stylesheet" href="<?php echo e($style['src']); ?>" integrity="<?php echo e($style['sri']); ?>" crossorigin="anonymous" />
@@ -25,7 +24,7 @@
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 </head>
-<body class="<?php echo e($body_classes); ?>">
+<body class="<?php echo e($bodyClasses); ?>">
 
 <?php echo $__env->make('components.cookie', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
