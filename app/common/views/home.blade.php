@@ -10,6 +10,7 @@
         <div class="col-12">
             @dump(get_defined_vars())
         </div>
+        @placeholder('100x100')
     </div>
 </div>
 

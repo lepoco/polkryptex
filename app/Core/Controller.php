@@ -9,29 +9,18 @@
 
 namespace Polkryptex\Core;
 
-use ReflectionMethod;
-use Jenssegers\Blade\Blade;
-
 /**
  * @author Leszek P.
  */
-class Controller
+class Controller extends Blade
 {
-    private Blade $blade;
-
-    protected const VIEWS_PATH = 'common\\views\\';
-
+    protected bool $fullScreen = false;
+    
     protected ?string $name;
 
     protected ?string $displayName;
 
     protected ?string $baseUrl;
-
-    protected bool $fullScreen = false;
-
-    protected array $viewData = [];
-
-    protected array $vueProps = [];
 
     protected array $variables = [];
 
@@ -44,19 +33,12 @@ class Controller
     public function __construct(string $pageName)
     {
         $this->name = $this->viewData['title'] = $pageName;
-
-        $this->registerTranslation();
-        $this->registerBlade();
-        $this->registerCoreScripts();
-
-        $this->setDefaultClasses();
-        $this->setPublicFunctions();
+        $this->setupController();
 
         if (method_exists($this, 'init')) {
             $this->{'init'}();
         }
 
-        $this->setDefaultViewData();
         $this->print();
 
         if (method_exists($this, 'done')) {
@@ -66,27 +48,36 @@ class Controller
         \Polkryptex\Core\Application::stop();
     }
 
-    private function registerTranslation()
+    private function setupController(): void
+    {
+        parent::__construct();
+
+        $this->registerTranslation();
+        $this->registerCoreScripts();
+        $this->setDefaultClasses();
+    }
+
+    protected function print(): void
+    {
+        $pagename = $this->pascalToKebab($this->name);
+        
+        $this->setDefaultViewData();
+        $this->isDebug($this->getVariable('debug'));
+        $this->bladePrint($pagename);
+    }
+
+    private function registerTranslation(): void
     {
         Registry::get('Translator')->setLanguage('pl_PL');
     }
 
-    private function registerBlade()
-    {
-        $this->blade = new Blade(ABSPATH . APPDIR . self::VIEWS_PATH, ABSPATH . APPDIR . 'cache\\');
-
-        $this->blade->directive('translate', function ($expression) {
-            return '<?php echo Polkryptex\Core\Components\Translator::translate(' . $expression . '); ?>';
-        });
-    }
-
-    private function registerCoreScripts()
+    private function registerCoreScripts(): void
     {
         $this->queueScript('js/app.min.js', null, $this->getVariable('version'), 'module');
         $this->queueStyle('css/main.min.css', null, $this->getVariable('version'));
     }
 
-    private function setDefaultClasses()
+    private function setDefaultClasses(): void
     {
         $this->addBodyClass('polkryptex');
         $this->addBodyClass('theme-light');
@@ -94,17 +85,7 @@ class Controller
         $this->addBodyClass('page-' . strtolower($this->name));
     }
 
-    protected function addData(string $name, $data, bool $prop = true)
-    {
-        $this->viewData[$name] = $data;
-
-        if($prop)
-        {
-            $this->vueProps[$name] = $data;
-        }
-    }
-
-    protected function setDefaultViewData()
+    protected function setDefaultViewData(): void
     {
         $this->addData('debug', ($this->getVariable('debug') || !defined('SESSION_SALT')));
         $this->addData('body_classes', implode(' ', $this->bodyClasses));
@@ -116,51 +97,23 @@ class Controller
 
         $this->addData('installed', defined('SESSION_SALT'), false);
 
-        $this->addData('csrf_token','abcdefg', false);
-        
+        $this->addData('csrf_token', 'abcdefg', false);
+
         $this->addData('auth', [
             'user' => ''
         ], false);
-        
+
         $this->addData('importmap', [
             'imports' => [
                 'vue' => $this->getVariable('debug') ? 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.js' : 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.prod.js',
                 'vue-router' => 'https://cdn.jsdelivr.net/npm/vue-router@4.0.8/dist/vue-router.esm-browser.js',
                 'js-cookie' => 'https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs',
-                'jquery' => 'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
                 'popperjs' => 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
                 'bootstrap' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.js'
             ]
         ], false);
 
         $this->addData('props', $this->vueProps);
-    }
-
-    protected function setPublicFunctions()
-    {
-        $methods = get_class_methods($this);
-
-        foreach ($methods as $method) {
-            $reflect = new ReflectionMethod($this, $method);
-            if ($reflect->isPublic() && $reflect->isStatic() && strpos($method, '__') === false) {
-                $this->addData($this->pascalToKebab($method, '_'), $this->{$method}());
-            }
-        }
-    }
-
-    protected function print(): void
-    {
-        $pagename = $this->pascalToKebab($this->name);
-        if ($this->getVariable('debug')) {
-            $test = $this->blade->make($pagename, $this->viewData);
-        }
-
-        echo $this->blade->render($pagename, $this->viewData);
-    }
-
-    protected function addDirective(string $name, $directive)
-    {
-        $this->blade->directive($name, $directive);
     }
 
     protected function getVariable(string $name, bool $update = false)
@@ -170,6 +123,23 @@ class Controller
         }
 
         return $this->variables[$name] ?? null;
+    }
+
+    protected function queueScript(string $url, ?string $sri = null, ?string $version = null, ?string $type = "text/javascript")
+    {
+        $this->scripts[] = [
+            'src'  => $url . ($version != null ? '?v=' . $version : ''),
+            'sri'  => $sri,
+            'type' => $type
+        ];
+    }
+
+    protected function queueStyle(string $url, ?string $sri = null, ?string $version = null): void
+    {
+        $this->styles[] = [
+            'src' => $url . ($version != null ? '?v=' . $version : ''),
+            'sri' => $sri
+        ];
     }
 
     protected function pascalToKebab(string $input, string $separator = '-'): string
@@ -197,25 +167,8 @@ class Controller
         $this->fullScreen = true;
     }
 
-    protected function queueScript(string $url, ?string $sri = null, ?string $version = null, ?string $type = "text/javascript")
-    {
-        $this->scripts[] = [
-            'src'  => $url . ($version != null ? '?v=' . $version : ''),
-            'sri'  => $sri,
-            'type' => $type
-        ];
-    }
-
-    protected function queueStyle(string $url, ?string $sri = null, ?string $version = null)
-    {
-        $this->styles[] = [
-            'src' => $url . ($version != null ? '?v=' . $version : ''),
-            'sri' => $sri
-        ];
-    }
-
     public function __(string $text, ?array $variables = null): ?string
     {
-        return Registry::get('Translator')->translate($text);
+        return \Polkryptex\Core\Components\Translator::translate($text);
     }
 }

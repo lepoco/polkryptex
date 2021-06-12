@@ -10,6 +10,7 @@
         <div class="col-12">
             <?php dump(get_defined_vars()); ?>
         </div>
+        <?php echo '<svg version="1.1" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" xml:space="preserve"><rect fill="#000" width="100" height="100"/><text fill="#FFF" font-size="10px" font-weight="bold" font-family="Raleway, Helvetica, sans-serif" transform="matrix(1 0 0 1 16.666666666667 55)">POLKRYPTEX</text></svg>'; ?>
     </div>
 </div>
 
