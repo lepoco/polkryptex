@@ -15,8 +15,10 @@ namespace Polkryptex\Core;
 class Controller extends Blade
 {
     protected bool $fullScreen = false;
-    
+
     protected ?string $name;
+    
+    protected ?string $namespace;
 
     protected ?string $displayName;
 
@@ -30,9 +32,9 @@ class Controller extends Blade
 
     protected array $styles = [];
 
-    public function __construct(string $pageName)
+    public function __construct(string $namespace)
     {
-        $this->name = $this->viewData['title'] = $pageName;
+        $this->setupNamespace($namespace);
         $this->setupController();
 
         if (method_exists($this, 'init')) {
@@ -48,6 +50,15 @@ class Controller extends Blade
         \Polkryptex\Core\Application::stop();
     }
 
+    private function setupNamespace(string $namespace)
+    {
+        $this->namespace = $namespace;
+        $this->name = strtolower(str_replace('\\', '-', $namespace));
+        $this->viewData['title'] = $this->name;
+
+        $this->setViewPath(strtolower(str_replace('\\', '.', $namespace)));
+    }
+
     private function setupController(): void
     {
         parent::__construct();
@@ -59,11 +70,9 @@ class Controller extends Blade
 
     protected function print(): void
     {
-        $pagename = $this->pascalToKebab($this->name);
-        
         $this->setDefaultViewData();
         $this->isDebug($this->getVariable('debug'));
-        $this->bladePrint($pagename);
+        $this->bladePrint();
     }
 
     private function registerTranslation(): void

@@ -9,14 +9,12 @@
 
 namespace Polkryptex\Core\Components;
 
-use Bramus\Router\Router as BramusRouter;
-
 /**
  * @author Leszek P.
  */
 final class Router
 {
-    private BramusRouter $router;
+    private \Bramus\Router\Router $router;
 
     public static function init()
     {
@@ -25,7 +23,7 @@ final class Router
 
     public function __construct()
     {
-        $this->router = new BramusRouter();
+        $this->router = new \Bramus\Router\Router();
         $this->registerRoutes();
         $this->router->run();
     }
@@ -54,6 +52,14 @@ final class Router
         
         $this->router->get('/', function () {
             Views::display('Home');
+        });
+
+        $this->router->get('/help', function () {
+            Views::display('Help');
+        });
+
+        $this->router->get('/dashboard', function () {
+            Views::display('Dashboard\\Dashboard');
         });
     }
 }

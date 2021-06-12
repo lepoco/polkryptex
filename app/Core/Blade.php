@@ -22,7 +22,9 @@ class Blade
 
     protected ?\Jenssegers\Blade\Blade $blade = null;
 
-    protected bool $debug;
+    protected bool $debug = false;
+
+    protected string $viewPath = '';
 
     protected array $viewData = [];
 
@@ -44,13 +46,18 @@ class Blade
         $this->debug = $debug;
     }
 
-    public function bladePrint(string $name): void
+    public function setViewPath(string $path)
+    {
+        $this->viewPath = $path;
+    }
+
+    public function bladePrint(): void
     {
         if ($this->debug) {
-            $test = $this->blade->make($name, $this->viewData);
+            $renderResult = $this->blade->make($this->viewPath, $this->viewData);
         }
 
-        echo $this->blade->render($name, $this->viewData);
+        echo $this->blade->render($this->viewPath, $this->viewData);
     }
 
     protected function addData(string $name, $data, bool $prop = true)
@@ -69,14 +76,14 @@ class Blade
 
     protected function baseMethods()
     {
-        $methods = get_class_methods($this);
+        // $methods = get_class_methods($this);
 
-        foreach ($methods as $method) {
-            $reflect = new ReflectionMethod($this, $method);
-            if ($reflect->isPublic() && $reflect->isStatic() && strpos($method, '__') === false) {
-                $this->addData($this->pascalToKebab($method, '_'), $this->{$method}());
-            }
-        }
+        // foreach ($methods as $method) {
+        //     $reflect = new ReflectionMethod($this, $method);
+        //     if ($reflect->isPublic() && $reflect->isStatic() && strpos($method, '__') === false) {
+        //         $this->addData($this->pascalToKebab($method, '_'), $this->{$method}());
+        //     }
+        // }
     }
 
     protected function baseDirectives()
@@ -90,15 +97,12 @@ class Blade
             $size = str_replace('\'', '', $size);
             $text = str_replace('\'', '', $text);
 
-            if(strpos($size, 'x') === false)
-            {
+            if (strpos($size, 'x') === false) {
                 $width = $height = intval($size);
-            }
-            else
-            {
+            } else {
                 $size = explode('x', $size);
                 $width = intval($size[0]);
-                $height = intval($size[1]);  
+                $height = intval($size[1]);
             }
 
             $textH = $width / 10;

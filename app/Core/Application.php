@@ -16,7 +16,6 @@ final class Application
 {
     /**
      * @link https://packagist.org/packages/monolog/monolog
-     * @link https://github.com/nette/database
      * @link https://github.com/bramus/router
      */
 
