@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace APP;
+namespace Polkryptex;
 
 defined('ABSPATH') or die('No script kiddies please!');
 

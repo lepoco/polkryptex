@@ -7,6 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+define('POLKRYPTEX_VERSION', '1.0.1');
 define('APPDIR', 'app\\');
 define('ABSPATH', dirname(__FILE__) . '\\..\\');
 

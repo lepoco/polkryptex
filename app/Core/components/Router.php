@@ -72,7 +72,7 @@ final class Router
     private function request()
     {
         $requestController = self::REQUEST_NAMESPACE . filter_var($_REQUEST['action'] ?? '__UNKNOWN', FILTER_SANITIZE_STRING, ['default' => '__UNKNOWN']);
-        if (!isset($_REQUEST['action']) || class_exists($requestController)) {
+        if (!isset($_REQUEST['action']) || !class_exists($requestController)) {
             return new \Polkryptex\Core\Request();
         }
 
