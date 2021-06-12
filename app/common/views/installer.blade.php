@@ -5,7 +5,8 @@
     <div class="hero__column">
         <h1 class="accent">@translate('Installer')</h1>
 
-        <form>
+        <form id="install">
+            <input type="hidden" name="action" value="Install"/>
             <div class="row">
                 <div class="col-12 mb-3">
                     <strong>@translate('Database')</strong>
@@ -47,9 +48,9 @@
                 </div>
             </div>
 
+            <button type="submit" class="btn btn-dark mt-3">@translate('Begin installation')</button>
         </form>
 
-        <a href="/" class="btn btn-dark mt-3">@translate('Begin installation')</a>
     </div>
     <div class="hero__column">
         😅

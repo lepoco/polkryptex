@@ -22,6 +22,9 @@
     },
 
     "autoload": {
-        "psr-4": {"Polkryptex\\": "app"}
+        "psr-4": {
+            "Polkryptex\\Core\\": "app\\core",
+            "Polkryptex\\Common\\": "app\\common"
+        }
     }
 }

@@ -8,7 +8,7 @@
  */
 
 namespace Polkryptex\Core;
-
+//use Illuminate\View\Component;
 /**
  * @author Leszek P.
  */
@@ -85,8 +85,8 @@ class Controller extends Blade
 
     private function registerCoreScripts(): void
     {
-        $this->queueScript($this->baseUrl . 'js/app.min.js', null, $this->getVariable('version'), 'module');
-        $this->queueStyle($this->baseUrl . 'css/main.min.css', null, $this->getVariable('version'));
+        $this->queueInternalScript('app.min');
+        $this->queueInternalStyle('main.min');
     }
 
     private function setDefaultClasses(): void
@@ -99,10 +99,11 @@ class Controller extends Blade
 
     protected function setDefaultViewData(): void
     {
-        $this->addData('installed', defined('SESSION_SALT'), false);
-        $this->addData('debug', ($this->getVariable('debug') || !defined('SESSION_SALT')));
-        
+        $this->addData('installed', defined('APP_VERSION'), false);
+        $this->addData('debug', ($this->getVariable('debug') || !defined('APP_VERSION')));
+
         $this->addData('baseUrl', $this->baseUrl);
+        $this->addData('ajax', $this->baseUrl . 'request/');
         $this->addData('bodyClasses', implode(' ', $this->bodyClasses));
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
@@ -140,12 +141,22 @@ class Controller extends Blade
         ];
     }
 
+    protected function queueInternalScript(string $path): void
+    {
+        $this->queueScript($this->baseUrl . 'js/' . $path . '.js', null, $this->getVariable('version'), 'module');
+    }
+
     protected function queueStyle(string $url, ?string $sri = null, ?string $version = null): void
     {
         $this->styles[] = [
             'src' => $url . ($version != null ? '?v=' . $version : ''),
             'sri' => $sri
         ];
+    }
+
+    protected function queueInternalStyle(string $path): void
+    {
+        $this->queueStyle($this->baseUrl . 'css/' . $path . '.css', null, $this->getVariable('version'));
     }
 
     protected function addBodyClass(string $class): void
@@ -163,7 +174,12 @@ class Controller extends Blade
         $this->fullScreen = true;
     }
 
-    public function __(string $text, ?array $variables = null): ?string
+    protected function redirect(?string $path = null): void
+    {
+        \Polkryptex\Core\Shared\Http::redirect($this->baseUrl . $path, false);
+    }
+
+    protected function __(string $text, ?array $variables = null): ?string
     {
         return \Polkryptex\Core\Components\Translator::translate($text);
     }

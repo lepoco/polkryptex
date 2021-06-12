@@ -21,9 +21,9 @@ final class Debug
 
     public function __construct()
     {
-        if (defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG) {
+        if (defined('APP_DEBUG') && APP_DEBUG) {
 
-            if (defined('POLKRYPTEX_DEBUG_DISPLAY') && POLKRYPTEX_DEBUG_DISPLAY) {
+            if (defined('APP_DEBUG_DISPLAY') && APP_DEBUG_DISPLAY) {
                 ini_set('display_errors', 1);
                 ini_set('display_startup_errors', 1);
                 error_reporting(E_ALL);

@@ -23,10 +23,10 @@ final class Crypter
     private static function getSalts(): array
     {
         return [
-            'algo'      => defined('POLKRYPTEX_ALGO') ? POLKRYPTEX_ALGO : '',
-            'password'  => defined('PASSWORD_SALT') ? PASSWORD_SALT : '',
-            'nonce'     => defined('NONCE_SALT') ? NONCE_SALT : '',
-            'token'     => defined('SESSION_SALT') ? SESSION_SALT : ''
+            'algo'      => defined('APP_ALGO') ? APP_ALGO : '',
+            'password'  => defined('APP_PASSWORD_SALT') ? APP_PASSWORD_SALT : '',
+            'nonce'     => defined('APP_NONCE_SALT') ? APP_NONCE_SALT : '',
+            'token'     => defined('APP_SESSION_SALT') ? APP_SESSION_SALT : ''
         ];
     }
 

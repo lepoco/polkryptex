@@ -16,6 +16,10 @@ final class Router
 {
     private \Bramus\Router\Router $router;
 
+    private const CONTROLLER_NAMESPACE = 'Polkryptex\\Common\\Controllers\\';
+
+    private const REQUEST_NAMESPACE = 'Polkryptex\\Common\\Requests\\';
+
     private array $routes = [];
 
     public static function init(array $routes = [])
@@ -34,17 +38,44 @@ final class Router
 
     private function registerRoutes(): void
     {
-        $this->router->get('/request', fn () => new \Polkryptex\Core\Request());
-        $this->router->set404(fn () => Views::display('NotFound'));
+        $this->router->post('/request', fn () => $this->request());
+        $this->router->get('/request', fn () => $this->request());
+
+        $this->router->set404(fn () => $this->view('NotFound'));
+
+        if (!defined('APP_VERSION')) {
+            $this->router->get('/', fn () => $this->view('Installer'));
+            return;
+        }
 
         foreach ($this->routes as $route) {
             if (is_array($route[1])) {
                 foreach ($route[1] as $subroute) {
-                    $this->router->get($route[0] . $subroute[0], fn () => Views::display($subroute[1]));
+                    $this->router->get($route[0] . $subroute[0], fn () => $this->view($subroute[1]));
                 }
             } else {
-                $this->router->get($route[0], fn () => Views::display($route[1]));
+                $this->router->get($route[0], fn () => $this->view($route[1]));
             }
         }
+    }
+
+    private function view(string $namespace)
+    {
+        $controller = self::CONTROLLER_NAMESPACE . $namespace;
+        if (!class_exists($controller)) {
+            return new \Polkryptex\Core\Controller($namespace);
+        }
+
+        return new $controller($namespace);
+    }
+
+    private function request()
+    {
+        $requestController = self::REQUEST_NAMESPACE . filter_var($_REQUEST['action'] ?? '__UNKNOWN', FILTER_SANITIZE_STRING, ['default' => '__UNKNOWN']);
+        if (!isset($_REQUEST['action']) || class_exists($requestController)) {
+            return new \Polkryptex\Core\Request();
+        }
+
+        return new $requestController();
     }
 }

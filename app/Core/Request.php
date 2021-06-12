@@ -12,11 +12,21 @@ namespace Polkryptex\Core;
 /**
  * @author Leszek P.
  */
-final class Request
+class Request
 {
+    protected array $response = [];
+
     public function __construct()
     {
-        dump($_REQUEST);
-        \Polkryptex\Core\Application::stop();
+        if (method_exists($this, 'action')) {
+            $this->{'action'}();
+        }
+        
+        $this->finish();
+    }
+
+    protected function finish()
+    {
+        \Polkryptex\Core\Application::stop(json_encode($this->response, JSON_UNESCAPED_UNICODE));
     }
 }

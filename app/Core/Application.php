@@ -54,8 +54,8 @@ final class Application
         return new self();
     }
 
-    static function stop()
+    static function stop(?string $message = null)
     {
-        exit;
+        exit($message);
     }
 }

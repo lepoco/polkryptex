@@ -33,6 +33,7 @@ class Blade
     public function __construct()
     {
         $this->blade = new \Jenssegers\Blade\Blade(ABSPATH . APPDIR . self::VIEWS_PATH, ABSPATH . APPDIR . self::CACHE_PATH);
+
         $this->baseDirectives();
         $this->baseMethods();
     }
@@ -94,6 +95,10 @@ class Blade
 
         $this->addDirective('media', function ($media) {
             return '<?php echo $baseUrl . \'media/'. str_replace('\'', '', $media).'\'; ?>';
+        });
+
+        $this->addDirective('debug', function () {
+            return '<?php dump(get_defined_vars()); ?>';
         });
 
         $this->addDirective('placeholder', function ($size = '100', $text = 'POLKRYPTEX') {
