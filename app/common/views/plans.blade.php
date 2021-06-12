@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2>@translate('Help')</h2>
+            <h2>@translate('Plans')</h2>
         </div>
     </div>
 </div>

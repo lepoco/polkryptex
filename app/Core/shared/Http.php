@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core\Global;
+namespace Polkryptex\Core\Shared;
 
 /**
  * @author Leszek P.
@@ -39,18 +39,16 @@ final class Http
     {
         header('Expires: on, 01 Jan 1970 00:00:00 GMT');
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        if(!$cache)
-        {
+        if (!$cache) {
             header('Cache-Control: no-store, no-cache, must-revalidate');
             header('Cache-Control: post-check=0, pre-check=0', false);
             header('Pragma: no-cache');
         }
 
-        if($permanent)
-        {
+        if ($permanent) {
             header('HTTP/1.1 301 Moved Permanently');
         }
-        
+
         header('Location: ' . $path);
     }
 }

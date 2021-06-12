@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core\Global;
+namespace Polkryptex\Core\Shared;
 
 /**
  * @author Leszek P.

@@ -16,50 +16,35 @@ final class Router
 {
     private \Bramus\Router\Router $router;
 
-    public static function init()
+    private array $routes = [];
+
+    public static function init(array $routes = [])
     {
-        return new self();
+        return new self($routes);
     }
 
-    public function __construct()
+    public function __construct(array $routes = [])
     {
+        $this->routes = $routes;
         $this->router = new \Bramus\Router\Router();
+
         $this->registerRoutes();
         $this->router->run();
     }
 
     private function registerRoutes(): void
     {
-        // if(!defined(''))
-        // {
-        //     $this->router->get('/', function () {
-        //         Views::display('Installer');
-        //     });
-        //     return;
-        // }
+        $this->router->get('/request', fn () => new \Polkryptex\Core\Request());
+        $this->router->set404(fn () => Views::display('NotFound'));
 
-        $this->router->get('/request', function () {
-            new \Polkryptex\Core\Request();
-        });
-
-        $this->router->set404(function () {
-            Views::display('NotFound');
-        });
-
-        $this->router->get('/signin', function () {
-            Views::display('SignIn');
-        });
-        
-        $this->router->get('/', function () {
-            Views::display('Home');
-        });
-
-        $this->router->get('/help', function () {
-            Views::display('Help');
-        });
-
-        $this->router->get('/dashboard', function () {
-            Views::display('Dashboard\\Dashboard');
-        });
+        foreach ($this->routes as $route) {
+            if (is_array($route[1])) {
+                foreach ($route[1] as $subroute) {
+                    $this->router->get($route[0] . $subroute[0], fn () => Views::display($subroute[1]));
+                }
+            } else {
+                $this->router->get($route[0], fn () => Views::display($route[1]));
+            }
+        }
     }
 }

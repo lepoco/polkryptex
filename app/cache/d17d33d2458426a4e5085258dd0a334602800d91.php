@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2><?php echo Polkryptex\Core\Components\Translator::translate('Help'); ?></h2>
+            <h2><?php echo Polkryptex\Core\Components\Translator::translate('Plans'); ?></h2>
         </div>
     </div>
 </div>
 
 <?php echo $__env->make('components.toast-container', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('components.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php /**PATH E:\www\rdev\polkryptex\app\common\views/help.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\www\rdev\polkryptex\app\common\views/plans.blade.php ENDPATH**/ ?>

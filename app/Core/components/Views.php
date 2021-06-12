@@ -14,13 +14,10 @@ namespace Polkryptex\Core\Components;
  */
 final class Views
 {
-
     private const CONTROLLER_NAMESPACE = 'Polkryptex\\Common\\Controllers\\';
 
     public static function display(string $namespace)
     {
-        \Polkryptex\Core\Registry::get('Variables')->set('page_now', $namespace);
-
         $controller = self::CONTROLLER_NAMESPACE . $namespace;
         if (!class_exists($controller)) {
             return new \Polkryptex\Core\Controller($namespace);

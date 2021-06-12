@@ -24,12 +24,26 @@ final class Application
         Registry::register('Debug', new Debug());
         Registry::register('Variables', new Variables());
         Registry::register('Database', new Database(), ['\Polkryptex\Core\Components\Options']);
-        
+
         Registry::register('Options', new Components\Options(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
         Registry::register('User', new Components\User(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
-        
+
         Components\Translator::init();
-        Components\Router::init();
+
+        Components\Router::init(
+            [
+                ['', 'Home'],
+                ['/register', 'Register'],
+                ['/signin', 'SignIn'],
+                ['/plans', 'Plans'],
+                ['/help', 'Help'],
+
+                ['/dashboard', [
+                    ['', 'Dashboard\\Dashboard'],
+                    ['/wallet', 'Dashboard\\Wallet']
+                ]]
+            ]
+        );
     }
 
     /**
