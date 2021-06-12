@@ -79,6 +79,8 @@ class Controller extends Blade
     private function registerTranslation(): void
     {
         Registry::get('Translator')->setLanguage('pl_PL');
+        $this->addData('language', 'pl');
+        $this->addData('noTranslate', false);
     }
 
     private function registerCoreScripts(): void
@@ -97,27 +99,20 @@ class Controller extends Blade
 
     protected function setDefaultViewData(): void
     {
+        $this->addData('installed', defined('SESSION_SALT'), false);
         $this->addData('debug', ($this->getVariable('debug') || !defined('SESSION_SALT')));
+        
         $this->addData('baseUrl', $this->baseUrl);
         $this->addData('bodyClasses', implode(' ', $this->bodyClasses));
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
-
-        $this->addData('language', 'en');
         $this->addData('fullscreen', $this->fullScreen);
+        $this->addData('csrfToken', \Polkryptex\Core\Shared\Crypter::salter(64), false);
 
-        $this->addData('installed', defined('SESSION_SALT'), false);
-
-        $this->addData('csrf_token', 'abcdefg', false);
-
-        $this->addData('auth', [
-            'user' => ''
-        ], false);
+        $this->addData('auth', ['user' => ''], false);
 
         $this->addData('importmap', [
             'imports' => [
-                'vue' => $this->getVariable('debug') ? 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.js' : 'https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.esm-browser.prod.js',
-                'vue-router' => 'https://cdn.jsdelivr.net/npm/vue-router@4.0.8/dist/vue-router.esm-browser.js',
                 'js-cookie' => 'https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs',
                 'popperjs' => 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
                 'bootstrap' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.js'

@@ -1,24 +1,27 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="{{ $language }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=5, viewport-fit=cover, user-scalable=0">
     <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+@if($noTranslate)
     <meta name="google" value="notranslate" />
+@endif
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - {{ $title }}</title>
     <link rel="icon" href="@media('favicon.svg')"/>
-    <script type="importmap">@json( $importmap )</script>
     <link rel="manifest" href="@media('manifest.json')">
+    <script type="importmap">@json( $importmap )</script>
 
 @foreach($styles as $style)
     <link type="text/css" rel="stylesheet" href="{{ $style['src'] }}" integrity="{{ $style['sri'] }}" crossorigin="anonymous" />
 @endforeach 
 
+    <script>const app = {title: '{{ $title }}', props: @json( $props ), csrf: '{{ $csrfToken }}', auth: @json( $auth, JSON_PRETTY_PRINT )}</script>
 @foreach($scripts as $script)
     <script type="{{ $script['type'] }}" src="{{ $script['src'] }}" integrity="{{ $script['sri'] }}" crossorigin="anonymous" defer></script>
 @endforeach
@@ -28,4 +31,4 @@
 
 @include('components.cookie')
 
-<section id="app" data-vue-component="{{ $title }}" data-vue-props="@json( $props )" data-csrf-token="{{ $csrf_token }}" data-auth="@json( $auth )">
+<section id="app">
