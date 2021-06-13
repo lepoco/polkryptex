@@ -32,7 +32,6 @@ final class Install extends Request
 
         $this->isEmpty([
             'user',
-            'password',
             'host',
             'table',
             'admin_username',
