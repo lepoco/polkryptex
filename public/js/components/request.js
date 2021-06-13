@@ -19,7 +19,7 @@ export default class Request {
         xhr.onload = function () {
             if (Request.isJson(this.responseText)) {
                 //Action
-                callAction('OK', this.responseText);
+                callAction('OK', JSON.parse(this.responseText));
             }
             else {
                 Toast.send('Error', 'An error occurred while submitting the form.', 'alert');
