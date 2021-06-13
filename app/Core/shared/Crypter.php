@@ -47,14 +47,14 @@ final class Crypter
 
         switch ($type) {
             case 'password':
-                return (empty($salts['password']) ? password_hash(hash_hmac('sha256', $text, $salts['password']), $salts['algo']) : '');
+                return (!empty($salts['password']) ? password_hash(hash_hmac('sha256', $text, $salts['password']), $salts['algo']) : '');
 
             case 'nonce':
-                return (empty($salts['nonce']) ? hash_hmac('sha1', $text, $salts['nonce']) : '');
+                return (!empty($salts['nonce']) ? hash_hmac('sha1', $text, $salts['nonce']) : '');
                 break;
 
             case 'token':
-                return (empty($salts['token']) ? hash_hmac('sha256', $text, $salts['token']) : '');
+                return (!empty($salts['token']) ? hash_hmac('sha256', $text, $salts['token']) : '');
                 break;
 
             default:
