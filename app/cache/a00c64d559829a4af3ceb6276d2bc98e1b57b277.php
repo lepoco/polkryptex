@@ -9,14 +9,14 @@
                 'title' => 'Home Page',
                 'dark' => true,
                 'button' => 'Register now!',
-                'text' => 'Das erste Ziel besteht in der Bankenaufsicht weltweit über 25 verschiedene Messgrössen und Konzepte verwendet werden.'
+                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
             ], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         <div class="col-12 col-lg-6">
             <?php echo $__env->make('components.banner', [
                 'title' => 'Free Account!',
                 'button' => 'Register now!',
-                'text' => 'Das erste Ziel besteht in der Bankenaufsicht weltweit über 25 verschiedene Messgrössen und Konzepte verwendet werden.'
+                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
             ], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         <div class="col-12 col-lg-6">
@@ -24,7 +24,7 @@
                 'title' => 'Special offers!',
                 'dark' => true,
                 'button' => 'Register now!',
-                'text' => 'Das erste Ziel besteht in der Bankenaufsicht weltweit über 25 verschiedene Messgrössen und Konzepte verwendet werden.'
+                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
             ], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>

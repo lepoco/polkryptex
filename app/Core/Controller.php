@@ -87,6 +87,16 @@ class Controller extends Blade
     {
         $this->queueInternalScript('app.min');
         $this->queueInternalStyle('main.min');
+
+        $this->registerPageScript();
+    }
+
+    private function registerPageScript(): void
+    {
+        if(is_file(ABSPATH . 'public/js/pages/' . $this->name . '.js'))
+        {
+            $this->queueInternalScript('pages/' . $this->name);
+        }
     }
 
     private function setDefaultClasses(): void

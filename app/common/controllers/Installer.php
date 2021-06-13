@@ -20,7 +20,5 @@ final class Installer extends Controller
     {
         $this->setTitle('Installer');
         $this->setAsFullScreen();
-        
-        $this->queueInternalScript('pages/install');
     }
 }
