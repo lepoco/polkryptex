@@ -4,14 +4,16 @@
 <div class="hero full">
     <div class="hero__column">
         <h1 class="accent">@translate('Sign In')</h1>
-        <form>
+        <form id="signin">
+            <input type="hidden" name="action" value="SignIn"/>
+            <input type="hidden" name="nonce" value="@nonce('signin')"/>
             <div class="mb-3 pr-2">
                 <label for="email" class="form-label">@translate('Email address')</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
             </div>
             <div class="mb-3 pr-2">
                 <label for="password" class="form-label">@translate('Password')</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" name="password">
             </div>
             <button type="submit" class="btn btn-secondary">@translate('Sign in')</button>
         </form>
