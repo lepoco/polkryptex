@@ -48,5 +48,4 @@
     </footer>
 </div>
 
-@include('components.toast-container')
 @include('components.footer')

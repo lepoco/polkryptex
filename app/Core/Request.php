@@ -48,7 +48,7 @@ class Request
     public function __construct()
     {
         $this->initializeResponse();
-        
+
         $this->validateAction();
         $this->validateNonce();
 
@@ -84,14 +84,12 @@ class Request
     {
         $notSetField = [];
         foreach ($fields as $field) {
-            if(!isset($_REQUEST[$field]))
-            {
+            if (!isset($_REQUEST[$field])) {
                 $notSetField[] = $field;
             }
         }
 
-        if(count($notSetField) > 0)
-        {
+        if (count($notSetField) > 0) {
             $this->addContent('notice', 'not-exists');
             $this->addContent('fields', $notSetField);
             $this->finish(self::ERROR_MISSING_ARGUMENTS);

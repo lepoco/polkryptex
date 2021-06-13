@@ -10,5 +10,4 @@
     </div>
 </div>
 
-@include('components.toast-container')
 @include('components.footer')
