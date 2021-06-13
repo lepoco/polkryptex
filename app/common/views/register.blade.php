@@ -6,6 +6,7 @@
         <h1 class="accent">@translate('Register')</h1>
         <form id="register">
             <input type="hidden" name="action" value="Register"/>
+            <input type="hidden" name="nonce" value="@nonce('register')"/>
             <div class="mb-3 pr-2">
                 <label for="email" class="form-label">@translate('Email address')</label>
                 <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
