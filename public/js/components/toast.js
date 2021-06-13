@@ -7,6 +7,7 @@ export default class Toast {
     static send(header, message = null, timeout = 3000, type = 'default') {
         const CONTAINER = document.querySelector('.toast__container');
         const TOAST_ID = 'toast-' + parseInt(Math.random() * 1000000000, 10);
+        const TIME_NOW = (new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000))).toISOString().substr(11, 8);
 
         let icon = null;
         switch (type) {
@@ -20,24 +21,21 @@ export default class Toast {
                 icon = '<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" /><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />';
                 break;
         }
-
-        console.log(CONTAINER);
-
+        
         let toastElement = document.createElement('div')
         toastElement.id = TOAST_ID;
         toastElement.classList.add('toast');
-        toastElement.classList.add('fade');
+        //toastElement.classList.add('fade');
         toastElement.classList.add('hide');
         toastElement.innerHTML = '<div class="toast-header"><svg fill="currentColor" width="20" height="20" xmlns="http://www.w3.org/2000/svg" focusable="false">'
             + icon + '</svg><strong class="me-auto">'
-            + header + '</strong><small>' +
-            (new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000))).toISOString().substr(11, 8)
+            + header + '</strong><small>' + TIME_NOW
             + '</small></div><div class="toast-body">'
             + message + '</div>';
 
         CONTAINER.appendChild(toastElement);
 
-        let toast = new BootstrapToast(document.getElementById(TOAST_ID), { animate: true, delay: timeout });;
+        let toast = new BootstrapToast(document.getElementById(TOAST_ID), { animate: true, delay: timeout });
         toast.show();
     }
 }
