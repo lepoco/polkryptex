@@ -12,4 +12,4 @@
             </div>
         </div>
     </div>
-</section><?php /**PATH E:\www\rdev\polkryptex\app\common\views/components/cookie.blade.php ENDPATH**/ ?>
+</section><?php /**PATH C:\xampp\htdocs\polkryptex\app\common\views/components/cookie.blade.php ENDPATH**/ ?>

@@ -31,4 +31,4 @@
 
 <?php echo $__env->make('components.cookie', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-<section id="app"><?php /**PATH E:\www\rdev\polkryptex\app\common\views/components/header.blade.php ENDPATH**/ ?>
+<section id="app"><?php /**PATH C:\xampp\htdocs\polkryptex\app\common\views/components/header.blade.php ENDPATH**/ ?>

@@ -55,4 +55,4 @@
             </div>
         </div>
     </div>
-</nav><?php /**PATH E:\www\rdev\polkryptex\app\common\views/components/navigation.blade.php ENDPATH**/ ?>
+</nav><?php /**PATH C:\xampp\htdocs\polkryptex\app\common\views/components/navigation.blade.php ENDPATH**/ ?>
