@@ -58,4 +58,4 @@
 </div>
 
 <?php echo $__env->make('components.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php /**PATH E:\www\rdev\polkryptex\app\common\views/installer.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\polkryptex\app\common\views/installer.blade.php ENDPATH**/ ?>
