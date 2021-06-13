@@ -1,5 +1,6 @@
 # Polkryptex - Cryptocurrency exchange platform
-Team IT project
+A web application developed as part of a team IT project.  
+Kazimierz Wielki University, Bydgoszcz, Poland
 
 ## Description
 Polkryptex is a revolutionary cryptocurrency management tool. It allows you to exchange not only cryptocurrencies but also traditional ones. Store all your savings with us! IT'S SAFE!
