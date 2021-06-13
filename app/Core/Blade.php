@@ -93,6 +93,10 @@ class Blade
             return '<?php echo Polkryptex\Core\Components\Translator::translate(' . $text . '); ?>';
         });
 
+        $this->addDirective('nonce', function ($text, $type = 'nonce') {
+            return '<?php echo Polkryptex\Core\Shared\Crypter::encrypt(' . $text . ', ' . $type . '); ?>';
+        });
+
         $this->addDirective('media', function ($media) {
             return '<?php echo $baseUrl . \'media/'. str_replace('\'', '', $media).'\'; ?>';
         });
