@@ -28,13 +28,13 @@ Polkryptex is a revolutionary cryptocurrency management tool. It allows you to e
 - PoEdit
 
 ## Timeline
-01.06.2021 - Creation of CMS and base functionalities
-01.07.2021 - User accounts and registration
-01.08.2021 - User's wallet mechanism
-01.09.2021 - Currency exchange capability
-01.10.2021 - Connection to the cryptocurrency API
-01.11.2021 - Implementing the PayPal API
-01.12.2021 - Optional, PWA support
+- 01.06.2021 - Creation of CMS and base functionalities
+- 01.07.2021 - User accounts and registration
+- 01.08.2021 - User's wallet mechanism
+- 01.09.2021 - Currency exchange capability
+- 01.10.2021 - Connection to the cryptocurrency API
+- 01.11.2021 - Implementing the PayPal API
+- 01.12.2021 - Optional, PWA support
 
 ## External solutions
 - Bramus Router
