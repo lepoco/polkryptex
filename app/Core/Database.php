@@ -75,23 +75,21 @@ final class Database
      */
     public function __construct()
     {
-        if (defined('POLKRYPTEX_DEBUG')) {
-            if (POLKRYPTEX_DEBUG) {
-                $this->show_errors = true;
-            }
+        if (defined('APP_DEBUG') && APP_DEBUG) {
+            $this->show_errors = true;
         } else {
             return;
         }
 
-        if (!defined('POLKRYPTEX_DB_HOST') || empty(POLKRYPTEX_DB_HOST)) {
+        if (!defined('APP_DB_HOST') || empty(APP_DB_HOST)) {
             return;
         }
 
 
-        $this->connection = new Mysqli(POLKRYPTEX_DB_HOST, POLKRYPTEX_DB_USER, POLKRYPTEX_DB_PASS, POLKRYPTEX_DB_NAME);
+        $this->connection = new Mysqli(APP_DB_HOST, APP_DB_USER, APP_DB_PASS, APP_DB_NAME);
 
         if ($this->connection->connect_error) {
-            App::get()->debug->exception('Failed to connect to MySQL - ' . $this->connection->connect_error);
+            Registry::get('Debug')->exception('Failed to connect to MySQL - ' . $this->connection->connect_error);
         } else {
             $this->$is_connected = true;
         }

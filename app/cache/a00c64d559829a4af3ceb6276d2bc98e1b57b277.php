@@ -42,6 +42,13 @@
     </div>
 </div>
 
+<div class="container py-4">
+    <footer class="pt-3 mt-4 text-muted border-top">
+        Polkryptex © <?php echo e(date('Y')); ?>
+
+    </footer>
+</div>
+
 <?php echo $__env->make('components.toast-container', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('components.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php /**PATH E:\www\rdev\polkryptex\app\common\views/home.blade.php ENDPATH**/ ?>

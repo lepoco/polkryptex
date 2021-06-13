@@ -30,23 +30,30 @@ final class Debug
             } else {
                 error_reporting(0);
             }
+        }
 
-            $this->monolog = new Logger('Polkryptex');
-            $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'error.log', Logger::WARNING));
+        $this->monolog = new Logger('Polkryptex');
+        $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'debug.log', Logger::WARNING));
+    }
+
+    public function info(string $message, ?array $data = []): void
+    {
+        if ($this->monolog != null) {
+            $this->monolog->info($message, $data);
         }
     }
 
-    public function error(string $message): void
+    public function error(string$message, ?array $data = []): void
     {
         if ($this->monolog != null) {
-            $this->monolog->error($message);
+            $this->monolog->error($message, $data);
         }
     }
 
-    public function warning(string $message): void
+    public function warning(string$message, ?array $data = []): void
     {
         if ($this->monolog != null) {
-            $this->monolog->warning($message);
+            $this->monolog->warning($message, $data);
         }
     }
 

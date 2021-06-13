@@ -41,7 +41,9 @@ class Request
 
     protected string $action;
 
-    private array $response;
+    private array $response = [];
+
+    private array $requestData = [];
 
     public function __construct()
     {
@@ -112,6 +114,23 @@ class Request
             $this->addContent('fields', $emptyField);
             $this->finish(self::ERROR_EMPTY_ARGUMENTS);
         }
+    }
+
+    protected function filter(array $fields): void
+    {
+        foreach ($fields as $field) {
+            $this->addData($field[0], $_REQUEST[$field[0]]);
+        }
+    }
+
+    protected function addData(string $name, $value): void
+    {
+        $this->requestData[$name] = $value;
+    }
+
+    protected function getData(string $name)
+    {
+        return $this->requestData[$name] ?? null;
     }
 
     private function initializeResponse(): void

@@ -11,6 +11,7 @@ namespace Polkryptex\Common\Requests;
 
 use Mysqli;
 use Polkryptex\Core\Request;
+use Polkryptex\Core\Registry;
 use Polkryptex\Core\Shared\Crypter;
 
 /**
@@ -38,6 +39,15 @@ final class Install extends Request
             'admin_password'
         ]);
 
+        $this->filter([
+            ['user'],
+            ['password'],
+            ['host'],
+            ['table'],
+            ['admin_username'],
+            ['admin_password']
+        ]);
+
         $this->isInstalled();
         $this->isMysql();
 
@@ -45,6 +55,8 @@ final class Install extends Request
         $this->createHtaccess();
         $this->createDatabase();
         $this->fillDatabase();
+
+        $this->finish(self::CODE_SUCCESS);
     }
 
 
@@ -52,7 +64,7 @@ final class Install extends Request
     {
         $config  = '<?php' . "\n";
         $config .= "\n" . '/**';
-        $config .= "\n" . ' * @package   APP';
+        $config .= "\n" . ' * @package   Polkryptex';
         $config .= "\n" . ' *';
         $config .= "\n" . ' * @copyright Copyright (c) 2021 - Kacper J., Pawel L., Filip S., Szymon K., Leszek P.';
         $config .= "\n" . ' * @license   https://www.gnu.org/licenses/gpl-3.0.txt';
@@ -61,13 +73,14 @@ final class Install extends Request
         $config .= "\n" . 'namespace Polkryptex;';
         $config .= "\n";
         $config .= "\n" . 'defined(\'ABSPATH\') or die(\'No script kiddies please!\');';
+        $config .= "\n";
         $config .= "\n" . 'define(\'APP_VERSION\', \'' . POLKRYPTEX_VERSION . '\');';
         $config .= "\n" . 'define(\'APP_ALGO\', ' . $this->getAlgorithm() . ');';
         $config .= "\n";
-        $config .= "\n" . 'define(\'APP_DB_NAME\', \'\');';
-        $config .= "\n" . 'define(\'APP_DB_HOST\', \'\');';
-        $config .= "\n" . 'define(\'APP_DB_USER\', \'\');';
-        $config .= "\n" . 'define(\'APP_DB_PASS\', \'\');';
+        $config .= "\n" . 'define(\'APP_DB_NAME\', \'' . $this->getData('table') . '\');';
+        $config .= "\n" . 'define(\'APP_DB_HOST\', \'' . $this->getData('host') . '\');';
+        $config .= "\n" . 'define(\'APP_DB_USER\', \'' . $this->getData('user') . '\');';
+        $config .= "\n" . 'define(\'APP_DB_PASS\', \'' . $this->getData('password') . '\');';
         $config .= "\n";
         $config .= "\n" . 'define(\'APP_SESSION_SALT\', \'' . Crypter::salter(64) . '\');';
         $config .= "\n" . 'define(\'APP_PASSWORD_SALT\', \'' . Crypter::salter(64) . '\');';
@@ -79,6 +92,8 @@ final class Install extends Request
 
         $path = ABSPATH . APPDIR . 'config.php';
         file_put_contents($path, $config);
+
+        Registry::get('Debug')->info('Configuration file has been created', ['request' => 'Polkryptex\Common\Requests\Install']);
     }
 
     private function createHtaccess(string $dir = '/'): void
@@ -99,11 +114,13 @@ final class Install extends Request
 
         $path = ABSPATH . 'public/.htaccess';
         file_put_contents($path, $htaccess);
+
+        Registry::get('Debug')->info('.htaccess file has been created', ['request' => 'Polkryptex\Common\Requests\Install']);
     }
 
     private function createDatabase(): void
     {
-        $database = new Mysqli($_REQUEST['host'], $_REQUEST['user'], $_REQUEST['password'], $_REQUEST['table']);
+        $database = new Mysqli($this->getData('host'), $this->getData('user'), $this->getData('password'), $this->getData('table'));
         $database->set_charset('utf8');
 
         $databaseFile = file(ABSPATH . APPDIR . 'database/database.sql');
@@ -112,16 +129,20 @@ final class Install extends Request
         // Loop through each line
         foreach ($databaseFile as $line) {
             //Skip comments and blanks
-            if (substr($line, 0, 2) == '--' || $line == '' || substr($line, 0, 1) == '#')
+            if (substr($line, 0, 2) == '--' || $line == '' || substr($line, 0, 1) == '#') {
                 continue;
+            }
 
             $queryLine .= $line;
-
             if (substr(trim($line), -1, 1) == ';') {
                 $database->query($queryLine);
                 $queryLine = '';
             }
         }
+
+        unset($database);
+
+        Registry::get('Debug')->info('Tables for the database have been created', ['request' => 'Polkryptex\Common\Requests\Install', 'sql' => ABSPATH . APPDIR . 'database/database.sql']);
     }
 
     private function fillDatabase(): void
@@ -145,10 +166,12 @@ final class Install extends Request
     private function isMysql(): void
     {
         error_reporting(0);
-        $database = new Mysqli($_REQUEST['host'], $_REQUEST['user'], $_REQUEST['password'], $_REQUEST['table']);
+        $database = new Mysqli($this->getData('host'), $this->getData('user'), $this->getData('password'), $this->getData('table'));
         if ($database->connect_error) {
             $this->finish(self::ERROR_MYSQL_UNKNOWN);
         }
+
+        unset($database);
     }
 
     private function isInstalled(): void
