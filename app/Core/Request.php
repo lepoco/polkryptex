@@ -162,7 +162,7 @@ class Request
             $this->finish(self::ERROR_MISSING_NONCE);
         }
 
-        if (!Crypter::compare('ajax_' . $this->action . '_nonce', filter_var($_REQUEST['nonce'], FILTER_SANITIZE_STRING), 'nonce')) {
+        if (!Crypter::compare('ajax_' . strtolower($this->action) . '_nonce', filter_var($_REQUEST['nonce'], FILTER_SANITIZE_STRING), 'nonce')) {
             $this->finish(self::ERROR_INVALID_NONCE);
         }
     }
