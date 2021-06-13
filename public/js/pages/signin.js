@@ -3,5 +3,9 @@ import Toast from './../components/toast.js'
 
 Request.register('#signin', function(status, response){
     console.log(response);
-    Toast.send('Error', 'error');
+
+    if (response.status !== 'S01')
+    {
+        Toast.send('Login failed', 'The provided username or password is incorrect', 'alert');
+    }
 });
