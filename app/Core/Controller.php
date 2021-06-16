@@ -8,12 +8,16 @@
  */
 
 namespace Polkryptex\Core;
+
+use Polkryptex\Core\Components\Options;
 //use Illuminate\View\Component;
 /**
  * @author Leszek P.
  */
 class Controller extends Blade
 {
+    protected Options $options;
+
     protected bool $fullScreen = false;
 
     protected ?string $name;
@@ -34,6 +38,7 @@ class Controller extends Blade
 
     public function __construct(string $namespace)
     {
+        $this->options = Registry::get('Options');
         $this->setupNamespace($namespace);
         $this->setupController();
 
@@ -187,6 +192,11 @@ class Controller extends Blade
     protected function redirect(?string $path = null): void
     {
         \Polkryptex\Core\Shared\Http::redirect($this->baseUrl . $path, false);
+    }
+
+    protected function getOption(string $name)
+    {
+        $this->options->get($name);
     }
 
     protected function __(string $text, ?array $variables = null): ?string

@@ -22,10 +22,10 @@ final class Application
     {
         Registry::register('Debug', new Debug());
         Registry::register('Variables', new Variables());
-        Registry::register('Database', new Database(), ['\Polkryptex\Core\Components\Options']);
+        Registry::register('Database', new Database(), ['\Polkryptex\Core\Components\Queries']);
 
         Registry::register('Options', new Components\Options(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
-        Registry::register('User', new Components\User(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
+        Registry::register('User', Components\User::fetch(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
 
         Components\Translator::init();
 

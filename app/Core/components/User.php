@@ -14,6 +14,20 @@ namespace Polkryptex\Core\Components;
  */
 final class User
 {
+    public static function fetch(): self
+    {
+        $user = new self();
+
+        //get from db
+
+        return $user;
+    }
+
+    public function __construct()
+    {
+
+    }
+
     public function getId(): ?int
     {
         return '';
@@ -34,7 +48,7 @@ final class User
         return '';
     }
 
-    public function getAccounts(bool $reCache = false): array
+    public function getWallets(bool $reCache = false): array
     {
         return [];
     }

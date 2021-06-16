@@ -10,6 +10,7 @@
 namespace Polkryptex\Common\Controllers;
 
 use Polkryptex\Core\Controller;
+use Polkryptex\Core\Components\Query;
 
 /**
  * @author Leszek P.

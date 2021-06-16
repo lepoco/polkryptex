@@ -10,6 +10,7 @@
 namespace Polkryptex\Common\Requests;
 
 use Mysqli;
+use Polkryptex\Core\Database;
 use Polkryptex\Core\Request;
 use Polkryptex\Core\Registry;
 use Polkryptex\Core\Shared\Crypter;
@@ -19,6 +20,10 @@ use Polkryptex\Core\Shared\Crypter;
  */
 final class Install extends Request
 {
+
+    private ?string $passwordSalt = null;
+    private /*Mixed*/ $passwordAlgo = null;
+
     public function action(): void
     {
         $this->isSet([
@@ -61,6 +66,8 @@ final class Install extends Request
 
     private function createConfig(): void
     {
+        $this->passwordSalt = Crypter::salter(64);
+
         $config  = '<?php' . "\n";
         $config .= "\n" . '/**';
         $config .= "\n" . ' * @package   Polkryptex';
@@ -82,7 +89,7 @@ final class Install extends Request
         $config .= "\n" . 'define(\'APP_DB_PASS\', \'' . $this->getData('password') . '\');';
         $config .= "\n";
         $config .= "\n" . 'define(\'APP_SESSION_SALT\', \'' . Crypter::salter(64) . '\');';
-        $config .= "\n" . 'define(\'APP_PASSWORD_SALT\', \'' . Crypter::salter(64) . '\');';
+        $config .= "\n" . 'define(\'APP_PASSWORD_SALT\', \'' . $this->passwordSalt . '\');';
         $config .= "\n" . 'define(\'APP_NONCE_SALT\', \'' . Crypter::salter(64) . '\');';
         $config .= "\n";
         $config .= "\n" . 'define(\'APP_DEBUG\', false);';
@@ -146,18 +153,78 @@ final class Install extends Request
 
     private function fillDatabase(): void
     {
+        $database = new Database($this->getData('host'), $this->getData('user'), $this->getData('password'), $this->getData('table'));
+
+        if (!$database->isConnected()) {
+            $this->finish(self::ERROR_MYSQL_UNKNOWN);
+        }
+
+        $database->query(
+            "INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES " .
+                "('version', '" . POLKRYPTEX_VERSION . "'), " .
+                "('site_name', 'Polkryptex'),  " .
+                "('site_description', 'Trust us with your money'),  " .
+                "('dashboard', 'dashboard'),  " .
+                "('timezone', 'UTC'), " .
+                "('date_format', 'j F Y'), " .
+                "('time_format', 'H:i'), " .
+                "('record_date_format', 'j F Y'), " .
+                "('charset', 'UTF8'), " .
+                "('cache', 'false'), " .
+                "('gzip', 'false'),  " .
+                "('language', 'pl'),  " .
+                "('language_mode', '1'),  " .
+                "('signin_captcha', 'false'), " .
+                "('captcha_public', ''), " .
+                "('captcha_secret', ''), " .
+                "('force_ssl', 'false'), " .
+                "('store_ip_addresses', 'true'), " .
+                "('redirect_404', 'false'), " .
+                "('redirect_404_direction', ''), " .
+                "('redirect_home', 'false'), " .
+                "('redirect_home_direction', ''), " .
+                "('google_analytics', '')"
+        );
+
+        $database->query(
+            "INSERT IGNORE INTO pkx_user_roles (role_name, role_permissions) VALUES " .
+                "('administrator', '{permissions:[\"all\"]}'), " .
+                "('manager', '{permissions:[]}'), " .
+                "('analyst', '{permissions:[]}'), " .
+                "('client', '{permissions:[]}')"
+        );
+
+        //At this point, we need a configuration file
+        //as it has encryption salts stored in it
+        // if (is_file(ABSPATH . APPDIR . 'config.php')) {
+        //     require_once ABSPATH . APPDIR . 'config.php';
+        // }
+
+        //drop database polkryptex;create database polkryptex;
+
+        $database->query(
+            "INSERT INTO pkx_users (user_name, user_display_name, user_password, user_role, user_status) VALUES (?,?,?,1,1)",
+            $this->getData('admin_username'),
+            $this->getData('admin_username'),
+            Crypter::encrypt($this->getData('admin_password'), 'password', $this->passwordSalt, $this->passwordAlgo),
+        );
+        unset($database);
     }
 
     private function getAlgorithm(): string
     {
         /** Password hash type */
         if (defined('PASSWORD_ARGON2ID')) {
+            $this->passwordAlgo = PASSWORD_ARGON2ID;
             return 'PASSWORD_ARGON2ID';
         } else if (defined('PASSWORD_ARGON2I')) {
+            $this->passwordAlgo = PASSWORD_ARGON2I;
             return 'PASSWORD_ARGON2I';
         } else if (defined('PASSWORD_BCRYPT')) {
+            $this->passwordAlgo = PASSWORD_BCRYPT;
             return 'PASSWORD_BCRYPT';
         } else if (defined('PASSWORD_DEFAULT')) {
+            $this->passwordAlgo = PASSWORD_DEFAULT;
             return 'PASSWORD_DEFAULT';
         }
     }

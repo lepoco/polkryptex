@@ -12,7 +12,7 @@ namespace Polkryptex\Common\Requests;
 use Polkryptex\Core\Request;
 
 /**
- * @author Leszek P.
+ * @author Szymon K.
  */
 final class Register extends Request
 {

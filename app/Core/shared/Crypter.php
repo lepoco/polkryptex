@@ -40,21 +40,31 @@ final class Crypter
      */
     public static function encrypt(
         string $text,
-        ?string $type = 'password'
+        ?string $type = 'password',
+        ?string $customSalt = null,
+        /*Mixed*/
+        $customAlgo = null
     ): string {
 
         $salts = self::getSalts();
 
         switch ($type) {
             case 'password':
-                return (!empty($salts['password']) ? password_hash(hash_hmac('sha256', $text, $salts['password']), $salts['algo']) : '');
+                return (!empty($salts['password']) ? password_hash(
+                    hash_hmac(
+                        'sha256',
+                        $text,
+                        ($customSalt !== null ? $customSalt : $salts['password'])
+                    ),
+                    ($customAlgo !== null ? $customAlgo : $salts['algo'])
+                ) : '');
 
             case 'nonce':
-                return (!empty($salts['nonce']) ? hash_hmac('sha1', $text, $salts['nonce']) : '');
+                return (!empty($salts['nonce']) ? hash_hmac('sha1', $text, $customSalt ?? $salts['nonce']) : '');
                 break;
 
             case 'token':
-                return (!empty($salts['token']) ? hash_hmac('sha256', $text, $salts['token']) : '');
+                return (!empty($salts['token']) ? hash_hmac('sha256', $text, $customSalt ?? $salts['token']) : '');
                 break;
 
             default:

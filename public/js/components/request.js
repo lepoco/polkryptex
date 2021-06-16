@@ -17,7 +17,15 @@ export default class Request {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', ENDPOINT, true);
         xhr.onload = function () {
+            if(app.props.debug)
+            {
+                console.log(this.responseText);
+            }
+
             if (Request.isJson(this.responseText)) {
+                if (app.props.debug) {
+                    console.log(JSON.parse(this.responseText));
+                }
                 //Action
                 callAction('OK', JSON.parse(this.responseText));
             }

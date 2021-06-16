@@ -1,6 +1,7 @@
 -- Options
 CREATE TABLE IF NOT EXISTS pkx_options (
 	option_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	option_name VARCHAR (64) NOT NULL,
 	option_value LONGTEXT
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -60,18 +61,12 @@ CREATE TABLE IF NOT EXISTS pkx_statistics_tags (
 	tag_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	tag_name VARCHAR (32)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT IGNORE INTO pkx_statistics_tags (tag_name) VALUES ('unknown') ON DUPLICATE KEY UPDATE tag_name=tag_name;
 
 -- Statistics types
 CREATE TABLE IF NOT EXISTS pkx_statistics_types (
 	type_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	type_name VARCHAR (32)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT IGNORE INTO pkx_statistics_types (type_name) VALUES ('unknown') ON DUPLICATE KEY UPDATE type_name=type_name;
-INSERT IGNORE INTO pkx_statistics_types (type_name) VALUES ('query') ON DUPLICATE KEY UPDATE type_name=type_name;
-INSERT IGNORE INTO pkx_statistics_types (type_name) VALUES ('page') ON DUPLICATE KEY UPDATE type_name=type_name;
-INSERT IGNORE INTO pkx_statistics_types (type_name) VALUES ('action') ON DUPLICATE KEY UPDATE type_name=type_name;
-
 
 -- Statistics
 CREATE TABLE IF NOT EXISTS pkx_statistics (

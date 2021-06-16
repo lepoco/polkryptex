@@ -73,25 +73,27 @@ final class Database
      *
      * @access public
      */
-    public function __construct()
+    public function __construct(?string $host = null, ?string $user = null, ?string $password = null, ?string $table = null)
     {
         if (defined('APP_DEBUG') && APP_DEBUG) {
             $this->show_errors = true;
-        } else {
+        }
+
+        if ($host === null && (!defined('APP_DB_HOST') || empty(APP_DB_HOST))) {
             return;
         }
 
-        if (!defined('APP_DB_HOST') || empty(APP_DB_HOST)) {
-            return;
-        }
-
-
-        $this->connection = new Mysqli(APP_DB_HOST, APP_DB_USER, APP_DB_PASS, APP_DB_NAME);
+        $this->connection = new Mysqli(
+            ($host !== null ? $host : APP_DB_HOST),
+            ($host !== null ? $user : APP_DB_USER),
+            ($host !== null ? $password : APP_DB_PASS),
+            ($host !== null ? $table : APP_DB_NAME)
+        );
 
         if ($this->connection->connect_error) {
             Registry::get('Debug')->exception('Failed to connect to MySQL - ' . $this->connection->connect_error);
         } else {
-            $this->$is_connected = true;
+            $this->is_connected = true;
         }
 
         $this->connection->set_charset('utf8');
@@ -159,6 +161,12 @@ final class Database
     {
         $params = array();
         $row = array();
+        
+        if($this->query == null)
+        {
+            return [];
+        }
+
         $meta = $this->query->result_metadata();
 
         while ($field = $meta->fetch_field())
@@ -188,6 +196,11 @@ final class Database
     {
         $params = array();
         $row = array();
+
+        if ($this->query == null) {
+            return [];
+        }
+        
         $meta = $this->query->result_metadata();
         while ($field = $meta->fetch_field())
             $params[] = &$row[$field->name];
