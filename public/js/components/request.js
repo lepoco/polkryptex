@@ -11,12 +11,16 @@ export default class Request {
     static ajax(event, form, callAction) {
         event.preventDefault();
 
+        Request.lockForm(form);
+
         const ENDPOINT = app.props.ajax;
         let data = new FormData(form);
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', ENDPOINT, true);
         xhr.onload = function () {
+            Request.unlockForm(form);
+
             if(app.props.debug)
             {
                 console.log(this.responseText);
@@ -34,6 +38,22 @@ export default class Request {
             }
         };
         xhr.send(data);
+    }
+
+    static lockForm(form)
+    {
+        Array.prototype.forEach.call(form.elements, child => {
+            child.disabled = true;
+        });
+    }
+
+    static unlockForm(form)
+    {
+        window.setTimeout(function () {
+            Array.prototype.forEach.call(form.elements, child => {
+                child.disabled = false;
+            });
+        }, 512);
     }
 
     static isJson(string) {

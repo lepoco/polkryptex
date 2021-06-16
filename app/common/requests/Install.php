@@ -171,7 +171,7 @@ final class Install extends Request
         }
 
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('host', ?)", $this->request->url->host);
-        $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('seured', ?)", $this->request->isSecured() ? 1 : 0);
+        $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('seured', ?)", $this->request->isSecured() ? 'true' : 'false');
 
         $baseurl = ($this->request->isSecured() ? 'https://' : 'http://' ) . $this->request->url->host . '/';
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('baseurl', ?)", $baseurl);
