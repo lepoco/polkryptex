@@ -9,6 +9,7 @@
 
 namespace Polkryptex\Core;
 
+use Nette\Http\Request as NetteRequest;
 use Polkryptex\Core\Shared\Crypter;
 
 /**
@@ -39,6 +40,8 @@ class Request
 
     protected const CODE_SUCCESS                   = 'S01';
 
+    protected NetteRequest $request;
+
     protected string $action;
 
     private array $response = [];
@@ -47,6 +50,7 @@ class Request
 
     public function __construct()
     {
+        $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
         $this->initializeResponse();
 
         $this->validateAction();

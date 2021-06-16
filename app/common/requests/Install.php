@@ -10,6 +10,7 @@
 namespace Polkryptex\Common\Requests;
 
 use Mysqli;
+use Ramsey\Uuid\Uuid;
 use Polkryptex\Core\Database;
 use Polkryptex\Core\Request;
 use Polkryptex\Core\Registry;
@@ -20,8 +21,12 @@ use Polkryptex\Core\Shared\Crypter;
  */
 final class Install extends Request
 {
+    private ?string $usersNamespace = null;
+
+    private ?string $transationsNamespace = null;
 
     private ?string $passwordSalt = null;
+
     private /*Mixed*/ $passwordAlgo = null;
 
     public function action(): void
@@ -66,6 +71,9 @@ final class Install extends Request
 
     private function createConfig(): void
     {
+        $this->usersNamespace = Uuid::uuid4()->toString();
+        $this->transationsNamespace = Uuid::uuid4()->toString();
+
         $this->passwordSalt = Crypter::salter(64);
 
         $config  = '<?php' . "\n";
@@ -91,6 +99,9 @@ final class Install extends Request
         $config .= "\n" . 'define(\'APP_SESSION_SALT\', \'' . Crypter::salter(64) . '\');';
         $config .= "\n" . 'define(\'APP_PASSWORD_SALT\', \'' . $this->passwordSalt . '\');';
         $config .= "\n" . 'define(\'APP_NONCE_SALT\', \'' . Crypter::salter(64) . '\');';
+        $config .= "\n";
+        $config .= "\n" . 'define(\'APP_USERS_NAMESPACE\', \'' . $this->usersNamespace . '\');';
+        $config .= "\n" . 'define(\'APP_TRANSACTIONS_NAMESPACE\', \'' . $this->transationsNamespace . '\');';
         $config .= "\n";
         $config .= "\n" . 'define(\'APP_DEBUG\', false);';
         $config .= "\n" . 'define(\'APP_DEBUG_DISPLAY\', false);';
@@ -159,6 +170,14 @@ final class Install extends Request
             $this->finish(self::ERROR_MYSQL_UNKNOWN);
         }
 
+        $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('host', ?)", $this->request->url->host);
+        $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('seured', ?)", $this->request->isSecured() ? 1 : 0);
+
+        $baseurl = ($this->request->isSecured() ? 'https://' : 'http://' ) . $this->request->url->host . '/';
+        $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('baseurl', ?)", $baseurl);
+        $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('home', ?)", $baseurl);
+        
+
         $database->query(
             "INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES " .
                 "('version', '" . POLKRYPTEX_VERSION . "'), " .
@@ -203,10 +222,11 @@ final class Install extends Request
         //drop database polkryptex;create database polkryptex;
 
         $database->query(
-            "INSERT INTO pkx_users (user_name, user_display_name, user_password, user_role, user_status) VALUES (?,?,?,1,1)",
+            "INSERT IGNORE INTO pkx_users (user_name, user_display_name, user_password, user_uuid, user_role, user_status) VALUES (?,?,?,?,1,1)",
             $this->getData('admin_username'),
             $this->getData('admin_username'),
             Crypter::encrypt($this->getData('admin_password'), 'password', $this->passwordSalt, $this->passwordAlgo),
+            Uuid::uuid5($this->usersNamespace, 'user/'.$this->getData('admin_username'))->toString()
         );
         unset($database);
     }

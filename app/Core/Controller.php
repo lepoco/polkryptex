@@ -9,14 +9,15 @@
 
 namespace Polkryptex\Core;
 
-use Polkryptex\Core\Components\Options;
+use Nette\Http\Response;
+use Nette\Http\Request;
 //use Illuminate\View\Component;
 /**
  * @author Leszek P.
  */
 class Controller extends Blade
 {
-    protected Options $options;
+    protected Request $request;
 
     protected bool $fullScreen = false;
 
@@ -38,7 +39,8 @@ class Controller extends Blade
 
     public function __construct(string $namespace)
     {
-        $this->options = Registry::get('Options');
+        $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
+
         $this->setupNamespace($namespace);
         $this->setupController();
 
@@ -67,7 +69,7 @@ class Controller extends Blade
     private function setupController(): void
     {
         parent::__construct();
-        $this->baseUrl = \Polkryptex\Core\Shared\Http::baseUrl();
+        $this->baseUrl = $this->getOption('baseurl', ($this->request->isSecured() ? 'https://' : 'http://') .$this->request->url->host . '/');
 
         $this->registerTranslation();
         $this->registerCoreScripts();
@@ -191,12 +193,13 @@ class Controller extends Blade
 
     protected function redirect(?string $path = null): void
     {
-        \Polkryptex\Core\Shared\Http::redirect($this->baseUrl . $path, false);
+        $response = new Response();
+        $response->redirect($this->baseUrl . $path);
     }
 
-    protected function getOption(string $name)
+    protected function getOption(string $name, $default = null)
     {
-        $this->options->get($name);
+        return \Polkryptex\Core\Registry::get('Options')::get($name, $default);
     }
 
     protected function __(string $text, ?array $variables = null): ?string

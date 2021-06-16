@@ -48,23 +48,32 @@ final class Crypter
 
         $salts = self::getSalts();
 
+        if (empty($salts['password'])) {
+            $salts['password'] = $customSalt;
+        }
+
+        if (empty($salts['nonce'])) {
+            $salts['nonce'] = $customSalt;
+        }
+
+        if (empty($salts['token'])) {
+            $salts['token'] = $customSalt;
+        }
+
+        if (empty($salts['algo'])) {
+            $salts['algo'] = $customAlgo;
+        }
+
         switch ($type) {
             case 'password':
-                return (!empty($salts['password']) ? password_hash(
-                    hash_hmac(
-                        'sha256',
-                        $text,
-                        ($customSalt !== null ? $customSalt : $salts['password'])
-                    ),
-                    ($customAlgo !== null ? $customAlgo : $salts['algo'])
-                ) : '');
+                return (!empty($salts['password']) ? password_hash(hash_hmac( 'sha256', $text, $salts['password']), $salts['algo']) : '');
 
             case 'nonce':
-                return (!empty($salts['nonce']) ? hash_hmac('sha1', $text, $customSalt ?? $salts['nonce']) : '');
+                return (!empty($salts['nonce']) ? hash_hmac('sha1', $text, $salts['nonce']) : '');
                 break;
 
             case 'token':
-                return (!empty($salts['token']) ? hash_hmac('sha256', $text, $customSalt ?? $salts['token']) : '');
+                return (!empty($salts['token']) ? hash_hmac('sha256', $text, $salts['token']) : '');
                 break;
 
             default:
@@ -88,10 +97,23 @@ final class Crypter
         string $text,
         string $compare_text,
         string $type = 'password',
-        bool $plain = true
+        bool $plain = true,
+        ?string $customSalt = null
     ): bool {
 
         $salts = self::getSalts();
+
+        if (empty($salts['password'])) {
+            $salts['password'] = $customSalt;
+        }
+
+        if (empty($salts['nonce'])) {
+            $salts['nonce'] = $customSalt;
+        }
+
+        if (empty($salts['token'])) {
+            $salts['token'] = $customSalt;
+        }
 
         switch ($type) {
             case 'password':

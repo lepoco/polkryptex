@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS pkx_users (
 	CONSTRAINT fk_user_role FOREIGN KEY (user_role) REFERENCES pkx_user_roles (role_id),
 	user_status BOOLEAN DEFAULT false,
 	user_registered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	user_last_login DATETIME DEFAULT NULL
+	user_last_login DATETIME DEFAULT NULL,
+	user_uuid VARCHAR (32)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Currencies 
@@ -53,7 +54,8 @@ CREATE TABLE IF NOT EXISTS pkx_transactions (
 	transaction_from_wallet_id INT (6) UNSIGNED DEFAULT NULL,
 	CONSTRAINT fk_transaction_from_wallet_id FOREIGN KEY (transaction_from_wallet_id) REFERENCES pkx_wallets (wallet_id),
 	transaction_to_wallet_id INT (6) UNSIGNED DEFAULT NULL,
-	CONSTRAINT fk_transaction_to_wallet_id FOREIGN KEY (transaction_to_wallet_id) REFERENCES pkx_wallets (wallet_id)
+	CONSTRAINT fk_transaction_to_wallet_id FOREIGN KEY (transaction_to_wallet_id) REFERENCES pkx_wallets (wallet_id),
+	transaction_uuid VARCHAR (32)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Statistics tags

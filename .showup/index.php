@@ -197,7 +197,7 @@ $theme_color = '#03A9F4';
                         <img src="https://octodex.github.com/images/octonaut.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5>leszek</h5>
-                            <span class="--darker">php developer</span>
+                            <span class="--darker">backend developer</span>
                             <p>Technology Officer</p>
                         </div>
                     </div>
