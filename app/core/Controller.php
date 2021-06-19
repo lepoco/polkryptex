@@ -69,17 +69,17 @@ class Controller extends Blade
 
     private function setupArguments(array $arguments): void
     {
-        if (in_array('requireLogin', $arguments) && true === $arguments['requireLogin']) {
+        if (isset($arguments['requireLogin']) && true === $arguments['requireLogin']) {
             if (!Registry::get('Account')->currentUser()->isLoggedIn()) {
                 $this->redirect('signin');
             }
         }
 
-        if (in_array('title', $arguments)) {
+        if (isset($arguments['title'])) {
             $this->setTitle($arguments['title']);
         }
 
-        if (in_array('fullscreen', $arguments) && true === $arguments['fullscreen']) {
+        if (isset($arguments['fullscreen']) && true === $arguments['fullscreen']) {
             $this->fullScreen = true;
         }
     }

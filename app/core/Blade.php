@@ -36,8 +36,7 @@ abstract class Blade
     {
         $this->blade = new \Jenssegers\Blade\Blade(ABSPATH . APPDIR . self::VIEWS_PATH, ABSPATH . APPDIR . self::CACHE_PATH);
 
-        $this->baseDirectives();
-        $this->baseMethods();
+        $this->registerDirectives();
     }
 
     protected function setViewName(string $title)
@@ -79,7 +78,7 @@ abstract class Blade
         $this->blade->directive($name, $directive);
     }
 
-    protected function baseDirectives()
+    protected function registerDirectives()
     {
         $this->addDirective('translate', function ($text) {
             return '<?php echo Polkryptex\Core\Registry::get(\'Translator\')->translate(' . $text . '); ?>';
