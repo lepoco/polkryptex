@@ -27,7 +27,7 @@
 @endforeach
 
 </head>
-<body class="{{ $bodyClasses }}">
+<body class="{{ implode(' ', $bodyClasses) }}">
 
 @include('components.cookie')
 

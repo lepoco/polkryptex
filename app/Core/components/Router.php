@@ -22,11 +22,6 @@ final class Router
 
     private array $routes = [];
 
-    public static function init(array $routes = [])
-    {
-        return new self($routes);
-    }
-
     public function __construct(array $routes = [])
     {
         $this->routes = $routes;
@@ -40,9 +35,9 @@ final class Router
         $this->router->run();
     }
 
-    public function register($path, $namespace): void
+    public function register(string $path, string $namespace, array $arguments = []): void
     {
-        $this->router->get($path, fn () => $this->view($namespace));
+        $this->router->get($path, fn () => $this->view($namespace, $arguments));
     }
 
     private function registerBaseRoutes(): void
@@ -50,27 +45,33 @@ final class Router
         $this->router->post('/request', fn () => $this->request());
         $this->router->get('/request', fn () => $this->request());
 
-        $this->router->set404(fn () => $this->view('NotFound'));
+        $this->router->set404(fn () => $this->view('NotFound', ['title' => 'Page not found', 'fullscreen' => true]));
 
         foreach ($this->routes as $route) {
+
+            if(!isset($route[2]))
+            {
+                $route = [];
+            }
+
             if (is_array($route[1])) {
                 foreach ($route[1] as $subroute) {
-                    $this->router->get($route[0] . $subroute[0], fn () => $this->view($subroute[1]));
+                    $this->router->get($route[0] . $subroute[0], fn () => $this->view($subroute[1], $route[2]));
                 }
             } else {
-                $this->router->get($route[0], fn () => $this->view($route[1]));
+                $this->router->get($route[0], fn () => $this->view($route[1], $route[2]));
             }
         }
     }
 
-    private function view(string $namespace): object
+    private function view(string $namespace, array $arguments = []): object
     {
         $controller = self::CONTROLLER_NAMESPACE . $namespace;
         if (!class_exists($controller)) {
-            return new \Polkryptex\Core\Controller($namespace);
+            return new \Polkryptex\Core\Controller($namespace, $arguments);
         }
 
-        return new $controller($namespace);
+        return new $controller($namespace, $arguments);
     }
 
     private function request(): object

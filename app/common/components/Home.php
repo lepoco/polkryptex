@@ -7,18 +7,17 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Common\Controllers;
+namespace Polkryptex\Common\Components;
 
-use Polkryptex\Core\Controller;
+use Illuminate\View\Component;
 
 /**
  * @author Leszek P.
  */
-final class Installer extends Controller
+final class Home extends Component
 {
-    public function init()
+    public function render()
     {
-        $this->setTitle('Installer');
-        $this->setAsFullScreen();
+        //view('home');
     }
 }

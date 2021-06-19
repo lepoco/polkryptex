@@ -36,12 +36,13 @@ class Controller extends Blade
 
     protected array $styles = [];
 
-    public function __construct(string $namespace)
+    public function __construct(string $namespace, array $arguments = [])
     {
         $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
         $this->debug = Debug::isDebug();
 
         $this->setupNamespace($namespace);
+        $this->setupArguments($arguments);
         $this->setupController();
 
         if (method_exists($this, 'init')) {
@@ -57,13 +58,24 @@ class Controller extends Blade
         \Polkryptex\Core\Application::stop();
     }
 
-    private function setupNamespace(string $namespace)
+    private function setupNamespace(string $namespace): void
     {
         $this->namespace = $namespace;
         $this->name = strtolower(str_replace('\\', '-', $namespace));
         $this->viewData['title'] = $this->name;
 
         $this->setViewPath(Utils::namespaceToBlade($namespace));
+    }
+
+    private function setupArguments(array $arguments): void
+    {
+        if(in_array('title', $arguments)) {
+            $this->setTitle($arguments['title']);
+        }
+
+        if(in_array('fullscreen', $arguments) && true === $arguments['fullscreen']) {
+            $this->fullScreen = true;
+        }
     }
 
     private function setupController(): void
@@ -118,7 +130,7 @@ class Controller extends Blade
         $this->addData('baseUrl', $this->baseUrl);
         $this->addData('dashboard', $this->getOption('dashboard', 'dashboard'));
         $this->addData('ajax', $this->baseUrl . 'request/');
-        $this->addData('bodyClasses', implode(' ', $this->bodyClasses));
+        $this->addData('bodyClasses', $this->bodyClasses);
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
         $this->addData('fullscreen', $this->fullScreen);
@@ -137,7 +149,7 @@ class Controller extends Blade
         $this->addData('props', $this->vueProps);
     }
 
-    protected function queueScript(string $url, ?string $sri = null, ?string $version = null, ?string $type = "text/javascript")
+    protected function queueScript(string $url, ?string $sri = null, ?string $version = null, ?string $type = "text/javascript"): void
     {
         $this->scripts[] = [
             'src'  => $url . ($version != null ? '?v=' . $version : ''),
@@ -169,7 +181,7 @@ class Controller extends Blade
         $this->bodyClasses[] = $class;
     }
 
-    protected function setTitle($title)
+    protected function setTitle($title): void
     {
         $this->viewData['title'] = $this->__($title);
     }

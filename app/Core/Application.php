@@ -57,7 +57,7 @@ final class Application
         $router = new Components\Router();
 
         if(!defined('APP_VERSION')) {
-            $router->register('', 'Installer');
+            $router->register('', 'Installer', ['title' => 'Installer', 'fullscreen' => true]);
             $router->run();
 
             return;
@@ -67,11 +67,11 @@ final class Application
             $router->register('/debug', 'Debug');
         }
 
-        $router->register('', 'Home');
-        $router->register('/register', 'Register');
-        $router->register('/signin', 'SignIn');
-        $router->register('/plans', 'Plans');
-        $router->register('/help', 'Help');
+        $router->register('', 'Home', ['title' => 'Home']);
+        $router->register('/register', 'Register', ['title' => 'Register', 'fullscreen' => true]);
+        $router->register('/signin', 'SignIn', ['title' => 'Sign In', 'fullscreen' => true]);
+        $router->register('/plans', 'Plans', ['title' => 'Plans']);
+        $router->register('/help', 'Help', ['title' => 'Help']);
     
         $router->register('/dashboard', 'Dashboard\\Dashboard');
         $router->register('/dashboard/wallet', 'Dashboard\\Wallet');
@@ -83,12 +83,12 @@ final class Application
      * Returns a new application instance, should be triggered by public/index.php
      * @return Application
      */
-    static function start(): Application
+    static function start(): self
     {
         return new self();
     }
 
-    static function stop(?string $message = null)
+    static function stop(?string $message = null): void
     {
         exit($message);
     }
