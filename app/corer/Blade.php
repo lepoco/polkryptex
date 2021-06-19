@@ -14,15 +14,17 @@ use ReflectionMethod;
 /**
  * @author Leszek P.
  */
-class Blade
+abstract class Blade
 {
+    protected const COMPOSERS_NAMESPACE = '\\Polkryptex\\Common\\Composers\\';
+
     protected const VIEWS_PATH = 'common\\views\\';
 
     protected const CACHE_PATH = 'cache\\';
 
     protected ?\Jenssegers\Blade\Blade $blade = null;
 
-    protected bool $debug = false;
+    protected string $viewTitle = '';
 
     protected string $viewPath = '';
 
@@ -38,15 +40,26 @@ class Blade
         $this->baseMethods();
     }
 
-    public function setViewPath(string $path)
+    protected function setViewName(string $title)
+    {
+        $this->viewTitle = $title;
+    }
+
+    protected function setViewPath(string $path)
     {
         $this->viewPath = $path;
     }
 
-    public function bladePrint(): void
+    protected function bladePrint(): void
     {
-        if ($this->debug) {
-            $renderResult = $this->blade->make($this->viewPath, $this->viewData);
+        if (!$this->blade->exists($this->viewPath)) {
+            $this->blade->render('notfound', $this->viewData);
+        }
+
+        $composer = self::COMPOSERS_NAMESPACE . $this->viewTitle . 'Composer';
+
+        if (class_exists($composer)) {
+            $this->blade->composer($this->viewPath, $composer);
         }
 
         echo $this->blade->render($this->viewPath, $this->viewData);
@@ -61,21 +74,9 @@ class Blade
         }
     }
 
-    public function addDirective(string $name, $directive)
+    protected function addDirective(string $name, $directive)
     {
         $this->blade->directive($name, $directive);
-    }
-
-    protected function baseMethods()
-    {
-        // $methods = get_class_methods($this);
-
-        // foreach ($methods as $method) {
-        //     $reflect = new ReflectionMethod($this, $method);
-        //     if ($reflect->isPublic() && $reflect->isStatic() && strpos($method, '__') === false) {
-        //         $this->addData($this->pascalToKebab($method, '_'), $this->{$method}());
-        //     }
-        // }
     }
 
     protected function baseDirectives()
@@ -93,7 +94,7 @@ class Blade
         });
 
         $this->addDirective('media', function ($media) {
-            return '<?php echo $baseUrl . \'media/'. str_replace('\'', '', $media).'\'; ?>';
+            return '<?php echo $baseUrl . \'media/' . str_replace('\'', '', $media) . '\'; ?>';
         });
 
         $this->addDirective('debug', function () {

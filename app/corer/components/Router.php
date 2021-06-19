@@ -14,11 +14,9 @@ namespace Polkryptex\Core\Components;
  */
 final class Router
 {
-    private \Bramus\Router\Router $router;
-
-    private const CONTROLLER_NAMESPACE = 'Polkryptex\\Common\\Controllers\\';
-
     private const REQUEST_NAMESPACE = 'Polkryptex\\Common\\Requests\\';
+
+    private \Bramus\Router\Router $router;
 
     private array $routes = [];
 
@@ -66,17 +64,12 @@ final class Router
 
     private function view(string $namespace, array $arguments = []): object
     {
-        $controller = self::CONTROLLER_NAMESPACE . $namespace;
-        if (!class_exists($controller)) {
-            return new \Polkryptex\Core\Controller($namespace, $arguments);
-        }
-
-        return new $controller($namespace, $arguments);
+        return new \Polkryptex\Core\Controller($namespace, $arguments);
     }
 
     private function request(): object
     {
-        $requestController = self::REQUEST_NAMESPACE . filter_var($_REQUEST['action'] ?? '__UNKNOWN', FILTER_SANITIZE_STRING, ['default' => '__UNKNOWN']);
+        $requestController = self::REQUEST_NAMESPACE . filter_var($_REQUEST['action'] ?? '__UNKNOWN', FILTER_SANITIZE_STRING, ['default' => '__UNKNOWN']) . 'Request';
         if (!isset($_REQUEST['action']) || !class_exists($requestController)) {
             return new \Polkryptex\Core\Request();
         }

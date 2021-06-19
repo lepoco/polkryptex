@@ -19,6 +19,9 @@
 <div class="container py-4">
     <div class="row">
         <div class="col-12 col-lg-6">
+
+            @component('Components::Home')
+
             <strong>\Polkryptex\Core\Registry::get('Session')</strong>
             @php
             dump(\Polkryptex\Core\Registry::get('Session'));

@@ -19,7 +19,7 @@ use Polkryptex\Core\Components\Crypter;
 /**
  * @author Leszek P.
  */
-final class Install extends Request
+final class InstallRequest extends Request
 {
     private ?string $usersNamespace = null;
 

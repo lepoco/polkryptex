@@ -25,7 +25,7 @@ final class Utils
         return implode($separator, $ret);
     }
 
-    public static function namespaceToBlade($namespace): string
+    public static function namespaceToBlade(string $namespace): string
     {
         $view = '';
         $path = explode('\\', $namespace);
@@ -34,5 +34,11 @@ final class Utils
         }
 
         return $view;
+    }
+
+    public static function namespaceToTitle(string $namespace): string
+    {
+        $paths = explode('\\', $namespace);
+        return trim($paths[count($paths) - 1]);
     }
 }

@@ -12,7 +12,7 @@ namespace Polkryptex\Core;
 use Nette\Http\Response;
 use Nette\Http\Request;
 use Polkryptex\Core\Components\Utils;
-//use Illuminate\View\Component;
+
 /**
  * @author Leszek P.
  */
@@ -39,7 +39,6 @@ class Controller extends Blade
     public function __construct(string $namespace, array $arguments = [])
     {
         $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
-        $this->debug = Debug::isDebug();
 
         $this->setupNamespace($namespace);
         $this->setupArguments($arguments);
@@ -64,16 +63,23 @@ class Controller extends Blade
         $this->name = strtolower(str_replace('\\', '-', $namespace));
         $this->viewData['title'] = $this->name;
 
+        $this->setViewName(Utils::namespaceToTitle($namespace));
         $this->setViewPath(Utils::namespaceToBlade($namespace));
     }
 
     private function setupArguments(array $arguments): void
     {
-        if(in_array('title', $arguments)) {
+        if (in_array('requireLogin', $arguments) && true === $arguments['requireLogin']) {
+            if (!Registry::get('Account')->currentUser()->isLoggedIn()) {
+                $this->redirect('signin');
+            }
+        }
+
+        if (in_array('title', $arguments)) {
             $this->setTitle($arguments['title']);
         }
 
-        if(in_array('fullscreen', $arguments) && true === $arguments['fullscreen']) {
+        if (in_array('fullscreen', $arguments) && true === $arguments['fullscreen']) {
             $this->fullScreen = true;
         }
     }
@@ -126,7 +132,7 @@ class Controller extends Blade
     protected function setDefaultViewData(): void
     {
         $this->addData('installed', defined('APP_VERSION'), false);
-        $this->addData('debug', $this->isDebug());
+        $this->addData('debug', Debug::isDebug());
         $this->addData('baseUrl', $this->baseUrl);
         $this->addData('dashboard', $this->getOption('dashboard', 'dashboard'));
         $this->addData('ajax', $this->baseUrl . 'request/');
@@ -189,11 +195,6 @@ class Controller extends Blade
     protected function setAsFullScreen(): void
     {
         $this->fullScreen = true;
-    }
-
-    protected function isDebug(): bool
-    {
-        return Debug::isDebug();
     }
 
     protected function redirect(?string $path = null): void

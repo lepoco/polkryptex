@@ -9,45 +9,46 @@
 
 namespace Polkryptex\Common\Requests;
 
-use Polkryptex\Core\Components\User;
-use Polkryptex\Core\Registry;
 use Polkryptex\Core\Request;
 
 /**
  * @author Szymon K.
  */
-final class SignIn extends Request
+final class RegisterRequest extends Request
 {
     public function action(): void
     {
         $this->isSet([
             'username',
-            'password'
+            'email',
+            'password',
+            'password_confirm'
         ]);
 
         $this->isEmpty([
             'username',
-            'password'
+            'email',
+            'password',
+            'password_confirm'
         ]);
 
         $this->validate([
             ['username', FILTER_SANITIZE_STRING],
-            ['password', FILTER_SANITIZE_STRING]
+            ['email', FILTER_SANITIZE_STRING],
+            ['password'],
+            ['password_confirm']
         ]);
 
-        $user = User::find($this->getData('username'));
+        if(strlen($this->getData('password')) < 8)
+        {
+            $this->finish(self::ERROR_PASSWORD_TOO_SHORT);
+        }
 
-        if(!$user->isValid())
+        if($this->getData('password') != $this->getData('password_confirm'))
         {
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
-        if(!$user->checkPassword($this->getData('password')))
-        {
-            $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
-        }
-
-        Registry::get('Account')->signIn($user);
         $this->finish(self::CODE_SUCCESS);
     }
 }

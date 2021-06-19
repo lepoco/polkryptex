@@ -73,8 +73,8 @@ final class Application
         $router->register('/plans', 'Plans', ['title' => 'Plans']);
         $router->register('/help', 'Help', ['title' => 'Help']);
     
-        $router->register('/dashboard', 'Dashboard\\Dashboard');
-        $router->register('/dashboard/wallet', 'Dashboard\\Wallet');
+        $router->register('/dashboard', 'Dashboard\\Dashboard', ['title' => 'Dashboard', 'requireLogin' => true]);
+        $router->register('/dashboard/wallet', 'Dashboard\\Wallet', ['title' => 'Wallet', 'requireLogin' => true]);
 
         $router->run();
     }
