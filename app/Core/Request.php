@@ -9,8 +9,9 @@
 
 namespace Polkryptex\Core;
 
+use Ramsey\Uuid\Uuid;
 use Nette\Http\Request as NetteRequest;
-use Polkryptex\Core\Shared\Crypter;
+use Polkryptex\Core\Components\Crypter;
 
 /**
  * @author Leszek P.
@@ -44,15 +45,23 @@ class Request
 
     protected string $action;
 
+    protected string $method;
+
     private array $response = [];
+
+    private array $incomeData = [];
 
     private array $requestData = [];
 
     public function __construct()
     {
         $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
-        $this->initializeResponse();
 
+        if (empty($this->request->post) && empty($this->request->url->getQueryParameters())) {
+            exit('BAD GATEWAY');
+        }
+
+        $this->initialize();
         $this->validateAction();
         $this->validateNonce();
 
@@ -87,8 +96,9 @@ class Request
     protected function isSet(array $fields): void
     {
         $notSetField = [];
+
         foreach ($fields as $field) {
-            if (!isset($_REQUEST[$field])) {
+            if (!isset($this->incomeData[$field])) {
                 $notSetField[] = $field;
             }
         }
@@ -104,9 +114,7 @@ class Request
     {
         $emptyField = [];
         foreach ($fields as $field) {
-            if (!isset($_REQUEST[$field])) {
-                $emptyField[] = $field;
-            } else if (empty($_REQUEST[$field])) {
+            if (!isset($this->incomeData[$field]) || empty($this->incomeData[$field])) {
                 $emptyField[] = $field;
             }
         }
@@ -118,10 +126,20 @@ class Request
         }
     }
 
-    protected function filter(array $fields): void
+    protected function validate(array $fields): void
     {
         foreach ($fields as $field) {
-            $this->addData($field[0], $_REQUEST[$field[0]]);
+
+            if (!isset($field[1])) {
+                $field[1] = FILTER_UNSAFE_RAW;
+            }
+
+            $value = isset($this->incomeData[$field[0]]) ? $this->incomeData[$field[0]] : null;
+
+            $this->addData(
+                $field[0],
+                filter_var($value, $field[1])
+            );
         }
     }
 
@@ -135,23 +153,39 @@ class Request
         return $this->requestData[$name] ?? null;
     }
 
-    private function initializeResponse(): void
+    private function initialize(): void
     {
+        $this->method = $this->request->method;
+
+        if ('GET' === $this->method) {
+            $this->incomeData = $this->request->url->getQueryParameters();
+        }
+
+        if ('POST' === $this->method) {
+            $this->incomeData = $this->request->post;
+        }
+
         $this->response = [
             'status' => self::ERROR_UNKNOWN,
+            'type' => $this->method,
             'content' => [
-                'hash' => \Polkryptex\Core\Shared\Crypter::salter(32, 'UN')
-            ]
+                'hash' => Crypter::salter(32, 'UN')
+            ],
+            'uuid' => Uuid::uuid1()->toString()
         ];
     }
 
     private function validateAction(): void
     {
-        if (!isset($_REQUEST['action'])) {
+        if (!isset($this->incomeData['action'])) {
             $this->finish(self::ERROR_MISSING_ACTION);
         }
 
-        $this->action = filter_var($_REQUEST['action'], FILTER_SANITIZE_STRING);
+        $this->action = filter_var($this->incomeData['action'], FILTER_SANITIZE_STRING);
+
+        if (empty($this->action)) {
+            $this->finish(self::ERROR_MISSING_ACTION);
+        }
     }
 
     private function validateNonce(): void
@@ -160,11 +194,11 @@ class Request
             return;
         }
 
-        if (!isset($_REQUEST['nonce'])) {
+        if (!isset($this->incomeData['nonce'])) {
             $this->finish(self::ERROR_MISSING_NONCE);
         }
 
-        if (!Crypter::compare('ajax_' . strtolower($this->action) . '_nonce', filter_var($_REQUEST['nonce'], FILTER_SANITIZE_STRING), 'nonce')) {
+        if (!Crypter::compare('ajax_' . strtolower($this->action) . '_nonce', $this->incomeData['nonce'], 'nonce')) {
             $this->finish(self::ERROR_INVALID_NONCE);
         }
     }

@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core\Shared;
+namespace Polkryptex\Core\Components;
 
 /**
  * @author Leszek P.
@@ -69,7 +69,7 @@ final class Crypter
                 return (!empty($salts['password']) ? password_hash(hash_hmac( 'sha256', $text, $salts['password']), $salts['algo']) : '');
 
             case 'nonce':
-                return (!empty($salts['nonce']) ? hash_hmac('sha1', $text, $salts['nonce']) : '');
+                return (!empty($salts['nonce']) ? hash_hmac('sha1', $text . date('Y-m-d h'), $salts['nonce']) : '');
                 break;
 
             case 'token':
@@ -124,7 +124,7 @@ final class Crypter
                 }
 
             case 'nonce':
-                if (($plain ? hash_hmac('sha1', $text, $salts['nonce']) : $text) == $compare_text) {
+                if (($plain ? hash_hmac('sha1', $text . date('Y-m-d h'), $salts['nonce']) : $text) == $compare_text) {
                     return true;
                 } else {
                     return false;

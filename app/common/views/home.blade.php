@@ -5,6 +5,12 @@
 <div class="container py-4">
     <div class="row">
         <div class="col-12 py-4">
+        @php
+
+        $query = \Polkryptex\Core\Components\Query::getUserById(1);
+        dump($query);
+
+        @endphp
             @include('components.banner', [
                 'title' => 'Home Page',
                 'dark' => true,

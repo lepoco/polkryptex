@@ -1,11 +1,14 @@
-import Request from './../components/request.js'
-import Toast from './../components/toast.js'
+import Request from "./../components/request.js";
+import Toast from "./../components/toast.js";
 
-Request.register('#signin', function(status, response){
-    console.log(response);
-
-    if (response.status !== 'S01')
-    {
-        Toast.send('Login failed', 'The provided username or password is incorrect', 'alert');
-    }
+Request.register("#signin", function (status, response) {
+  if (response.status === "S01") {
+    window.location.href = app.props.baseUrl + app.props.dashboard;
+  } else {
+    Toast.send(
+      "Login failed",
+      "The provided username or password is incorrect.",
+      "alert"
+    );
+  }
 });

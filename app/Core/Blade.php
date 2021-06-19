@@ -38,15 +38,6 @@ class Blade
         $this->baseMethods();
     }
 
-    public function isDebug(?bool $debug = null)
-    {
-        if ($debug === null) {
-            return $this->debug;
-        }
-
-        $this->debug = $debug;
-    }
-
     public function setViewPath(string $path)
     {
         $this->viewPath = $path;
@@ -90,15 +81,15 @@ class Blade
     protected function baseDirectives()
     {
         $this->addDirective('translate', function ($text) {
-            return '<?php echo Polkryptex\Core\Components\Translator::translate(' . $text . '); ?>';
+            return '<?php echo Polkryptex\Core\Registry::get(\'Translator\')->translate(' . $text . '); ?>';
         });
 
         $this->addDirective('option', function ($name, $default = null) {
-            return '<?php echo Polkryptex\Core\Registry::get(\'Options\')::get(' . $name . ', ' . $default . '); ?>';
+            return '<?php echo Polkryptex\Core\Registry::get(\'Options\')->get(' . $name . ', ' . $default . '); ?>';
         });
 
         $this->addDirective('nonce', function ($action) {
-            return '<?php echo Polkryptex\Core\Shared\Crypter::encrypt(\'ajax_' . str_replace('\'', '', $action) . '_nonce\', \'nonce\'); ?>';
+            return '<?php echo Polkryptex\Core\Components\Crypter::encrypt(\'ajax_' . str_replace('\'', '', $action) . '_nonce\', \'nonce\'); ?>';
         });
 
         $this->addDirective('media', function ($media) {

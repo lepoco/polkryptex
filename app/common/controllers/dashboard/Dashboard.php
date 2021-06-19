@@ -19,7 +19,7 @@ final class Dashboard extends Controller
 {
     public function init()
     {
-        if(!Registry::get('User')->isLoggedIn())
+        if(!Registry::get('Account')->currentUser()->isLoggedIn())
         {
             $this->redirect('signin'); //home
         }

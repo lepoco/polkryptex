@@ -1,63 +1,95 @@
-import Toast from './toast.js'
+import Toast from "./toast.js";
 
-export const name = 'Request';
+export const name = "Request";
 
 export default class Request {
+  static register(form, action) {
+    document
+      .querySelector(form)
+      .addEventListener("submit", (event) =>
+        Request.ajax(event, document.querySelector(form), action)
+      );
+  }
 
-    static register(form, action) {
-        document.querySelector(form).addEventListener('submit', event => Request.ajax(event, document.querySelector(form), action));
+  static ajax(event, form, callAction) {
+    event.preventDefault();
+
+    const METHOD = 'GET';
+    const ENDPOINT = app.props.ajax;
+    const XHR = new XMLHttpRequest();
+
+    let formData = new FormData(form);
+    Request.lockForm(form);
+
+    XHR.open(METHOD, ENDPOINT + Request.urlEncode(formData), true);
+    XHR.onload = function () {
+      Request.unlockForm(form);
+
+      if (app.props.debug) {
+        console.log(this.responseText);
+      }
+
+      if (Request.isJson(this.responseText)) {
+        if (app.props.debug) {
+          console.log(JSON.parse(this.responseText));
+        }
+        //Action
+        callAction("OK", JSON.parse(this.responseText));
+      } else {
+        Toast.send(
+          "Error",
+          "An error occurred while submitting the form.",
+          "alert"
+        );
+      }
+    };
+
+    XHR.send();
+  }
+
+  static lockForm(form) {
+    Array.prototype.forEach.call(form.elements, (child) => {
+      child.disabled = true;
+    });
+  }
+
+  static unlockForm(form) {
+    window.setTimeout(function () {
+      Array.prototype.forEach.call(form.elements, (child) => {
+        child.disabled = false;
+      });
+    }, 512);
+  }
+
+  static urlEncode(fd) {
+    var s = '';
+    function encode(s) { return encodeURIComponent(s).replace(/%20/g, '+'); }
+    for (var pair of fd.entries()) {
+      if (typeof pair[1] == 'string') {
+        s += (s ? '&' : '') + encode(pair[0]) + '=' + encode(pair[1]);
+      }
     }
+    return '?' + s;
+  }
 
-    static ajax(event, form, callAction) {
-        event.preventDefault();
-
-        Request.lockForm(form);
-
-        const ENDPOINT = app.props.ajax;
-        let data = new FormData(form);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', ENDPOINT, true);
-        xhr.onload = function () {
-            Request.unlockForm(form);
-
-            if(app.props.debug)
-            {
-                console.log(this.responseText);
-            }
-
-            if (Request.isJson(this.responseText)) {
-                if (app.props.debug) {
-                    console.log(JSON.parse(this.responseText));
-                }
-                //Action
-                callAction('OK', JSON.parse(this.responseText));
-            }
-            else {
-                Toast.send('Error', 'An error occurred while submitting the form.', 'alert');
-            }
-        };
-        xhr.send(data);
+  static isJson(string) {
+    if (string == "") {
+      return false;
     }
-
-    static lockForm(form)
-    {
-        Array.prototype.forEach.call(form.elements, child => {
-            child.disabled = true;
-        });
+    if (
+      /^[\],:{ }\s]*$/.test(
+        string
+          .replace(/\\["\\\/bfnrtu]/g, "@")
+          .replace(
+            /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+            "]"
+          )
+          .replace(/(?:^|:|,)(?:\s*\[)+/g, "")
+      )
+    ) {
+      return true;
+    } else {
+      return false;
     }
-
-    static unlockForm(form)
-    {
-        window.setTimeout(function () {
-            Array.prototype.forEach.call(form.elements, child => {
-                child.disabled = false;
-            });
-        }, 512);
-    }
-
-    static isJson(string) {
-        if (string == '') { return false; }
-        if (/^[\],:{ }\s]*$/.test(string.replace(/\\["\\\/bfnrtu]/g, "@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]").replace(/(?:^|:|,)(?:\s*\[)+/g, ""))) { return true; } else { return false; }
-    }
+  }
 }

@@ -9,6 +9,8 @@
 
 namespace Polkryptex\Common\Requests;
 
+use Polkryptex\Core\Components\User;
+use Polkryptex\Core\Registry;
 use Polkryptex\Core\Request;
 
 /**
@@ -19,20 +21,33 @@ final class SignIn extends Request
     public function action(): void
     {
         $this->isSet([
-            'email',
+            'username',
             'password'
         ]);
 
         $this->isEmpty([
-            'email',
+            'username',
             'password'
         ]);
 
-        $this->filter([
-            ['email'],
-            ['password']
+        $this->validate([
+            ['username', FILTER_SANITIZE_STRING],
+            ['password', FILTER_SANITIZE_STRING]
         ]);
 
+        $user = User::find($this->getData('username'));
+
+        if(!$user->isValid())
+        {
+            $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
+        }
+
+        if(!$user->checkPassword($this->getData('password')))
+        {
+            $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
+        }
+
+        Registry::get('Account')->signIn($user);
         $this->finish(self::CODE_SUCCESS);
     }
 }

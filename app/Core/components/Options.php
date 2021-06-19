@@ -16,31 +16,31 @@ use Polkryptex\Core\Registry;
  */
 final class Options
 {
-    protected static array $cache = [];
+    protected array $cache = [];
 
-    public static function get(string $name, $default = null)
+    public function get(string $name, $default = null)
     {
-        if (in_array($name, self::$cache)) {
-            return self::$cache[$name];
+        if (in_array($name, $this->cache)) {
+            return $this->cache[$name];
         }
 
-        $query = self::getDatabase($name);
+        $query = $this->getFromDatabase($name);
         if (empty($query)) {
             return $default;
         }
-        self::$cache[$name] = $query['option_value'];
+        $this->cache[$name] = $query['option_value'];
 
         return $query['option_value'];
     }
 
-    public static function update(string $name, $value)
+    public function update(string $name, $value)
     {
-        if (self::updateDatabase($name, $value)) {
-            self::$cache[$name] = $value;
+        if ($this->updateDatabase($name, $value)) {
+            $this->cache[$name] = $value;
         }
     }
 
-    private static function getDatabase(string $name)
+    private function getFromDatabase(string $name)
     {
         $database = Registry::get('Database');
         if (!$database->isConnected()) {
@@ -50,14 +50,14 @@ final class Options
         return $database->query("SELECT option_value FROM pkx_options WHERE option_name = ?", $name)->fetchArray(); //fetchAll
     }
 
-    private static function updateDatabase(string $name, $value): bool
+    private function updateDatabase(string $name, $value): bool
     {
         $database = Registry::get('Database');
         if (!$database->isConnected()) {
             return false;
         }
 
-        if (empty(self::getDatabase($name))) {
+        if (empty($this->getFromDatabase($name))) {
             $query = $database->query("INSERT INTO pkx_options (option_name, option_value) VALUES (?,?)", $name, self::serializeType($value));
         } else {
             $query = $database->query("UPDATE pkx_options SET option_value = ? WHERE option_name = ?", self::serializeType($value), $name);

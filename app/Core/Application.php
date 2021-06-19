@@ -23,26 +23,52 @@ final class Application
         Registry::register('Debug', new Debug());
         Registry::register('Variables', new Variables());
         Registry::register('Database', new Database(), ['\Polkryptex\Core\Components\Queries']);
-
         Registry::register('Options', new Components\Options(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
-        Registry::register('User', Components\User::fetch(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
+        Registry::register('Account', new Components\Account());
 
-        Components\Translator::init();
+        $this->registerSession();
+        $this->registerTranslation();
+        $this->registerRouter();
+    }
 
-        Components\Router::init(
-            [
-                ['', 'Home'],
-                ['/register', 'Register'],
-                ['/signin', 'SignIn'],
-                ['/plans', 'Plans'],
-                ['/help', 'Help'],
+    private function registerSession()
+    {
+        Registry::register('Session', new \Nette\Http\Session(new \Nette\Http\Request(new \Nette\Http\UrlScript()), new \Nette\Http\Response()));
+        Registry::get('Session')->start();
+    }
 
-                ['/dashboard', [
-                    ['', 'Dashboard\\Dashboard'],
-                    ['/wallet', 'Dashboard\\Wallet']
-                ]]
-            ]
-        );
+    private function registerTranslation()
+    {
+        $translator = new Components\Translator();
+
+        switch (Registry::get('Options')->get('language', 'en')) {
+            case 'pl':
+                $translator->setLanguage('pl_PL');
+                break;
+            default:
+                $translator->setLanguage('en_US');
+                break;
+        }
+        
+        Registry::register('Translator', $translator);
+    }
+
+    private function registerRouter()
+    {
+        $router = new Components\Router();
+
+        if(defined('APP_VERSION')) {
+            $router->register('', 'Home');
+            $router->register('/register', 'Register');
+            $router->register('/signin', 'SignIn');
+            $router->register('/plans', 'Plans');
+            $router->register('/help', 'Help');
+    
+            $router->register('/dashboard', 'Dashboard\\Dashboard');
+            $router->register('/dashboard/wallet', 'Dashboard\\Wallet');
+        }
+
+        $router->run();
     }
 
     /**

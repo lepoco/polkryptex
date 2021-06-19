@@ -19,6 +19,9 @@ CREATE TABLE IF NOT EXISTS pkx_users (
 	user_display_name VARCHAR (128),
 	user_email VARCHAR (256),
 	user_password VARCHAR (1024) NOT NULL,
+	user_image VARCHAR (1024),
+	user_timezone VARCHAR (32),
+	user_location VARCHAR (32),
 	user_session_token VARCHAR (256),
 	user_cookie_token VARCHAR (256),
 	user_role INT (6) UNSIGNED DEFAULT NULL,
@@ -27,6 +30,21 @@ CREATE TABLE IF NOT EXISTS pkx_users (
 	user_registered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	user_last_login DATETIME DEFAULT NULL,
 	user_uuid VARCHAR (32)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+-- Users billing
+CREATE TABLE IF NOT EXISTS pkx_billing (
+	billing_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	billing_user_id INT (6) UNSIGNED DEFAULT NULL,
+	CONSTRAINT fk_billing_user_id FOREIGN KEY (billing_user_id) REFERENCES pkx_users (user_id),
+	billing_firstname VARCHAR (128),
+	billing_lastname VARCHAR (128),
+	billing_street VARCHAR (128),
+	billing_postal VARCHAR (32),
+	billing_city VARCHAR (128),
+	billing_phone VARCHAR (64),
+	billing_email VARCHAR (64),
+	billing_timezone VARCHAR (64)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Currencies 
@@ -43,18 +61,21 @@ CREATE TABLE IF NOT EXISTS pkx_wallets (
 	wallet_currency_id INT (6) UNSIGNED DEFAULT NULL,
 	CONSTRAINT fk_wallet_currency_id FOREIGN KEY (wallet_currency_id) REFERENCES pkx_currency (currency_id),
 	wallet_user_id INT (6) UNSIGNED DEFAULT NULL,
-	CONSTRAINT fk_wallet_user_id FOREIGN KEY (wallet_user_id) REFERENCES pkx_users (user_id)
+	CONSTRAINT fk_wallet_user_id FOREIGN KEY (wallet_user_id) REFERENCES pkx_users (user_id),
+	wallet_virtual_balance FLOAT NOT NULL
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Transactions
 CREATE TABLE IF NOT EXISTS pkx_transactions (
-	transaction_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	transaction_id INT (16) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	transaction_user_id INT (6) UNSIGNED DEFAULT NULL,
 	CONSTRAINT fk_transaction_user_id FOREIGN KEY (transaction_user_id) REFERENCES pkx_users (user_id),
 	transaction_from_wallet_id INT (6) UNSIGNED DEFAULT NULL,
 	CONSTRAINT fk_transaction_from_wallet_id FOREIGN KEY (transaction_from_wallet_id) REFERENCES pkx_wallets (wallet_id),
 	transaction_to_wallet_id INT (6) UNSIGNED DEFAULT NULL,
 	CONSTRAINT fk_transaction_to_wallet_id FOREIGN KEY (transaction_to_wallet_id) REFERENCES pkx_wallets (wallet_id),
+	transaction_amount FLOAT NOT NULL,
+	transaction_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	transaction_uuid VARCHAR (32)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 

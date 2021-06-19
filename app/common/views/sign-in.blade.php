@@ -8,8 +8,8 @@
             <input type="hidden" name="action" value="SignIn"/>
             <input type="hidden" name="nonce" value="@nonce('signin')"/>
             <div class="mb-3 pr-2">
-                <label for="email" class="form-label">@translate('Email address')</label>
-                <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
+                <label for="username" class="form-label">@translate('Username')</label>
+                <input type="text" class="form-control" name="username">
             </div>
             <div class="mb-3 pr-2">
                 <label for="password" class="form-label">@translate('Password')</label>

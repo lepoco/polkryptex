@@ -32,11 +32,20 @@ final class Router
         $this->routes = $routes;
         $this->router = new \Bramus\Router\Router();
 
-        $this->registerRoutes();
+        $this->registerBaseRoutes();
+    }
+
+    public function run(): void
+    {
         $this->router->run();
     }
 
-    private function registerRoutes(): void
+    public function register($path, $namespace): void
+    {
+        $this->router->get($path, fn () => $this->view($namespace));
+    }
+
+    private function registerBaseRoutes(): void
     {
         $this->router->post('/request', fn () => $this->request());
         $this->router->get('/request', fn () => $this->request());
@@ -59,7 +68,7 @@ final class Router
         }
     }
 
-    private function view(string $namespace)
+    private function view(string $namespace): object
     {
         $controller = self::CONTROLLER_NAMESPACE . $namespace;
         if (!class_exists($controller)) {
@@ -69,7 +78,7 @@ final class Router
         return new $controller($namespace);
     }
 
-    private function request()
+    private function request(): object
     {
         $requestController = self::REQUEST_NAMESPACE . filter_var($_REQUEST['action'] ?? '__UNKNOWN', FILTER_SANITIZE_STRING, ['default' => '__UNKNOWN']);
         if (!isset($_REQUEST['action']) || !class_exists($requestController)) {

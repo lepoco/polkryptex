@@ -11,6 +11,7 @@ namespace Polkryptex\Core;
 
 use Nette\Http\Response;
 use Nette\Http\Request;
+use Polkryptex\Core\Components\Utils;
 //use Illuminate\View\Component;
 /**
  * @author Leszek P.
@@ -63,13 +64,13 @@ class Controller extends Blade
         $this->name = strtolower(str_replace('\\', '-', $namespace));
         $this->viewData['title'] = $this->name;
 
-        $this->setViewPath(Shared\Utils::namespaceToBlade($namespace));
+        $this->setViewPath(Utils::namespaceToBlade($namespace));
     }
 
     private function setupController(): void
     {
         parent::__construct();
-        $this->baseUrl = $this->getOption('baseurl', ($this->request->isSecured() ? 'https://' : 'http://') .$this->request->url->host . '/');
+        $this->baseUrl = $this->getOption('baseurl', ($this->request->isSecured() ? 'https://' : 'http://') . $this->request->url->host . '/');
 
         $this->registerTranslation();
         $this->registerCoreScripts();
@@ -79,14 +80,12 @@ class Controller extends Blade
     protected function print(): void
     {
         $this->setDefaultViewData();
-        $this->isDebug($this->getVariable('debug'));
         $this->bladePrint();
     }
 
     private function registerTranslation(): void
     {
-        Registry::get('Translator')->setLanguage('pl_PL');
-        $this->addData('language', 'pl');
+        $this->addData('language', $this->getOption('language', 'en'));
         $this->addData('noTranslate', false);
     }
 
@@ -100,8 +99,7 @@ class Controller extends Blade
 
     private function registerPageScript(): void
     {
-        if(is_file(ABSPATH . 'public/js/pages/' . $this->name . '.js'))
-        {
+        if (is_file(ABSPATH . 'public/js/pages/' . $this->name . '.js')) {
             $this->queueInternalScript('pages/' . $this->name);
         }
     }
@@ -117,15 +115,15 @@ class Controller extends Blade
     protected function setDefaultViewData(): void
     {
         $this->addData('installed', defined('APP_VERSION'), false);
-        $this->addData('debug', ($this->getVariable('debug') || !defined('APP_VERSION')));
-
+        $this->addData('debug', $this->isDebug());
         $this->addData('baseUrl', $this->baseUrl);
+        $this->addData('dashboard', $this->getOption('dashboard', 'dashboard'));
         $this->addData('ajax', $this->baseUrl . 'request/');
         $this->addData('bodyClasses', implode(' ', $this->bodyClasses));
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
         $this->addData('fullscreen', $this->fullScreen);
-        $this->addData('csrfToken', \Polkryptex\Core\Shared\Crypter::salter(64), false);
+        $this->addData('csrfToken', \Polkryptex\Core\Components\Crypter::salter(64), false);
 
         $this->addData('auth', ['user' => ''], false);
 
@@ -191,6 +189,15 @@ class Controller extends Blade
         $this->fullScreen = true;
     }
 
+    protected function isDebug(): bool
+    {
+        if (!defined('APP_DEBUG')) {
+            return true;
+        }
+
+        return APP_DEBUG;
+    }
+
     protected function redirect(?string $path = null): void
     {
         $response = new Response();
@@ -199,11 +206,11 @@ class Controller extends Blade
 
     protected function getOption(string $name, $default = null)
     {
-        return \Polkryptex\Core\Registry::get('Options')::get($name, $default);
+        return \Polkryptex\Core\Registry::get('Options')->get($name, $default);
     }
 
     protected function __(string $text, ?array $variables = null): ?string
     {
-        return \Polkryptex\Core\Components\Translator::translate($text);
+        return \Polkryptex\Core\Registry::get('Translator')->translate($text, $variables);
     }
 }

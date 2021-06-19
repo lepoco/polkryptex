@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
 use Polkryptex\Core\Database;
 use Polkryptex\Core\Request;
 use Polkryptex\Core\Registry;
-use Polkryptex\Core\Shared\Crypter;
+use Polkryptex\Core\Components\Crypter;
 
 /**
  * @author Leszek P.
@@ -48,7 +48,7 @@ final class Install extends Request
             'admin_password'
         ]);
 
-        $this->filter([
+        $this->validate([
             ['user'],
             ['password'],
             ['host'],
@@ -116,7 +116,9 @@ final class Install extends Request
     private function createHtaccess(string $dir = '/'): void
     {
         if ($dir == '/')
+        {
             $dir = '';
+        }
 
         $htaccess  = 'Options All -Indexes';
         $htaccess .= "\n" . '<IfModule mod_rewrite.c>';
@@ -176,7 +178,6 @@ final class Install extends Request
         $baseurl = ($this->request->isSecured() ? 'https://' : 'http://' ) . $this->request->url->host . '/';
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('baseurl', ?)", $baseurl);
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('home', ?)", $baseurl);
-        
 
         $database->query(
             "INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES " .
@@ -207,10 +208,10 @@ final class Install extends Request
 
         $database->query(
             "INSERT IGNORE INTO pkx_user_roles (role_name, role_permissions) VALUES " .
-                "('administrator', '{permissions:[\"all\"]}'), " .
-                "('manager', '{permissions:[]}'), " .
-                "('analyst', '{permissions:[]}'), " .
-                "('client', '{permissions:[]}')"
+            "('administrator', '{permissions:[\"all\"]}'), " .
+            "('manager', '{\"permissions\":[]}'), " .
+            "('analyst', '{\"permissions\":[]}'), " .
+            "('client', '{\"permissions\":[]}')"
         );
 
         //At this point, we need a configuration file
