@@ -36,6 +36,11 @@ final class Debug
         $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'debug.log', Logger::WARNING));
     }
 
+    public static function isDebug(): bool
+    {
+        return (defined('APP_DEBUG') && APP_DEBUG) || !defined('APP_VERSION');
+    }
+
     public function info(string $message, ?array $data = []): void
     {
         if ($this->monolog != null) {

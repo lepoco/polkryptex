@@ -52,11 +52,6 @@ final class Router
 
         $this->router->set404(fn () => $this->view('NotFound'));
 
-        if (!defined('APP_VERSION')) {
-            $this->router->get('/', fn () => $this->view('Installer'));
-            return;
-        }
-
         foreach ($this->routes as $route) {
             if (is_array($route[1])) {
                 foreach ($route[1] as $subroute) {

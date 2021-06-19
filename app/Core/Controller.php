@@ -30,8 +30,6 @@ class Controller extends Blade
 
     protected ?string $baseUrl;
 
-    protected array $variables = [];
-
     protected array $bodyClasses = [];
 
     protected array $scripts = [];
@@ -41,6 +39,7 @@ class Controller extends Blade
     public function __construct(string $namespace)
     {
         $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
+        $this->debug = Debug::isDebug();
 
         $this->setupNamespace($namespace);
         $this->setupController();
@@ -138,15 +137,6 @@ class Controller extends Blade
         $this->addData('props', $this->vueProps);
     }
 
-    protected function getVariable(string $name, bool $update = false)
-    {
-        if (empty($this->variables) || $update) {
-            $this->variables = Registry::get('Variables')->getAll();
-        }
-
-        return $this->variables[$name] ?? null;
-    }
-
     protected function queueScript(string $url, ?string $sri = null, ?string $version = null, ?string $type = "text/javascript")
     {
         $this->scripts[] = [
@@ -158,7 +148,7 @@ class Controller extends Blade
 
     protected function queueInternalScript(string $path): void
     {
-        $this->queueScript($this->baseUrl . 'js/' . $path . '.js', null, $this->getVariable('version'), 'module');
+        $this->queueScript($this->baseUrl . 'js/' . $path . '.js', null, APP_VERSION, 'module');
     }
 
     protected function queueStyle(string $url, ?string $sri = null, ?string $version = null): void
@@ -171,7 +161,7 @@ class Controller extends Blade
 
     protected function queueInternalStyle(string $path): void
     {
-        $this->queueStyle($this->baseUrl . 'css/' . $path . '.css', null, $this->getVariable('version'));
+        $this->queueStyle($this->baseUrl . 'css/' . $path . '.css', null, APP_VERSION);
     }
 
     protected function addBodyClass(string $class): void
@@ -191,11 +181,7 @@ class Controller extends Blade
 
     protected function isDebug(): bool
     {
-        if (!defined('APP_DEBUG')) {
-            return true;
-        }
-
-        return APP_DEBUG;
+        return Debug::isDebug();
     }
 
     protected function redirect(?string $path = null): void

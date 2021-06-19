@@ -21,7 +21,6 @@ final class Application
     private function __construct()
     {
         Registry::register('Debug', new Debug());
-        Registry::register('Variables', new Variables());
         Registry::register('Database', new Database(), ['\Polkryptex\Core\Components\Queries']);
         Registry::register('Options', new Components\Options(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
         Registry::register('Account', new Components\Account());
@@ -57,16 +56,25 @@ final class Application
     {
         $router = new Components\Router();
 
-        if(defined('APP_VERSION')) {
-            $router->register('', 'Home');
-            $router->register('/register', 'Register');
-            $router->register('/signin', 'SignIn');
-            $router->register('/plans', 'Plans');
-            $router->register('/help', 'Help');
-    
-            $router->register('/dashboard', 'Dashboard\\Dashboard');
-            $router->register('/dashboard/wallet', 'Dashboard\\Wallet');
+        if(!defined('APP_VERSION')) {
+            $router->register('', 'Installer');
+            $router->run();
+
+            return;
         }
+
+        if(Debug::isDebug()) {
+            $router->register('/debug', 'Debug');
+        }
+
+        $router->register('', 'Home');
+        $router->register('/register', 'Register');
+        $router->register('/signin', 'SignIn');
+        $router->register('/plans', 'Plans');
+        $router->register('/help', 'Help');
+    
+        $router->register('/dashboard', 'Dashboard\\Dashboard');
+        $router->register('/dashboard/wallet', 'Dashboard\\Wallet');
 
         $router->run();
     }
