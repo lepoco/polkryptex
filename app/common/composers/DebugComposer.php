@@ -14,7 +14,7 @@ use Illuminate\View\View;
 /**
  * @author Leszek P.
  */
-final class HomeComposer
+final class DebugComposer
 {
     public function compose(View $view)
     {

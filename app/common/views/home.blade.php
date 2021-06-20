@@ -38,10 +38,5 @@
     </div>
 </div>
 
-<div class="container py-4">
-    <footer class="pt-3 mt-4 text-muted border-top">
-        Polkryptex © {{ date('Y') }}
-    </footer>
-</div>
-
+@include('components.expanded-footer')
 @include('components.footer')

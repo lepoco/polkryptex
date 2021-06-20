@@ -10,4 +10,5 @@
     </div>
 </div>
 
+@include('components.expanded-footer')
 @include('components.footer')
