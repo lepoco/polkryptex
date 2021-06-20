@@ -5,7 +5,7 @@ import Toast from "./../components/toast.js";
 
 Request.register("#signin", function (status, response) {
   if (response.status === "S01") {
-    Cookies.set('user', response.content.token);
+    Cookies.set('user', response.content.token, { expires: 7, path: '/', secure: true });
     window.location.href = app.props.baseUrl + app.props.dashboard;
   } else {
     Toast.send(

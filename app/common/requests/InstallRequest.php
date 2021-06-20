@@ -37,6 +37,7 @@ final class InstallRequest extends Request
             'host',
             'table',
             'admin_username',
+            'admin_email',
             'admin_password'
         ]);
 
@@ -45,6 +46,7 @@ final class InstallRequest extends Request
             'host',
             'table',
             'admin_username',
+            'admin_email',
             'admin_password'
         ]);
 
@@ -54,6 +56,7 @@ final class InstallRequest extends Request
             ['host'],
             ['table'],
             ['admin_username'],
+            ['admin_email'],
             ['admin_password']
         ]);
 
@@ -224,9 +227,10 @@ final class InstallRequest extends Request
         //drop database polkryptex;create database polkryptex;
 
         $database->query(
-            "INSERT IGNORE INTO pkx_users (user_name, user_display_name, user_password, user_uuid, user_role, user_status) VALUES (?,?,?,?,1,1)",
+            "INSERT IGNORE INTO pkx_users (user_name, user_display_name, user_email, user_password, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,1,1)",
             $this->getData('admin_username'),
             $this->getData('admin_username'),
+            $this->getData('admin_email'),
             Crypter::encrypt($this->getData('admin_password'), 'password', $this->passwordSalt, $this->passwordAlgo),
             Uuid::uuid5($this->usersNamespace, 'user/'.$this->getData('admin_username'))->toString()
         );

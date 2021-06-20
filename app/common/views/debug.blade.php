@@ -50,6 +50,11 @@
             @php
             dump(\Polkryptex\Core\Registry::get('Account')->isLoggedIn());
             @endphp
+
+            <strong>\Polkryptex\Core\Registry::get('Response')</strong>
+            @php
+            dump(\Polkryptex\Core\Registry::get('Response'));
+            @endphp
         </div>
         <div class="col-12 col-lg-6">
             <strong>\Polkryptex\Core\Registry::get('Request')</strong>

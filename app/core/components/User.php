@@ -40,13 +40,20 @@ final class User
 
     private ?string $cookieToken = null;
 
-    public static function find($username): self
+    public static function findByName($username): self
     {
         $query = Query::getUserByName($username);
 
         if (empty($query)) {
-            $query = Query::getUserByEmail($username);
+            return new self();
         }
+
+        return (new self())->__fromDB($query);
+    }
+
+    public static function findByEmail($email): self
+    {
+        $query = Query::getUserByEmail($email);
 
         if (empty($query)) {
             return new self();

@@ -22,21 +22,21 @@ final class SignInRequest extends Request
     public function action(): void
     {
         $this->isSet([
-            'username',
+            'email',
             'password'
         ]);
 
         $this->isEmpty([
-            'username',
+            'email',
             'password'
         ]);
 
         $this->validate([
-            ['username', FILTER_SANITIZE_STRING],
+            ['email', FILTER_SANITIZE_STRING],
             ['password', FILTER_SANITIZE_STRING]
         ]);
 
-        $user = User::find($this->getData('username'));
+        $user = User::findByEmail($this->getData('email'));
 
         if (!$user->isValid()) {
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
@@ -46,7 +46,7 @@ final class SignInRequest extends Request
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
-        $cookieToken = Crypter::salter(32);
+        $cookieToken = Crypter::salter(64, 'ULN');
         $this->addContent('token', $cookieToken);
 
         Registry::get('Account')->signIn($user, $cookieToken);

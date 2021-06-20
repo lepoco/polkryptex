@@ -43,6 +43,10 @@
                     <input type="text" class="form-control" name="admin_username" placeholder="User">
                 </div>
                 <div class="col-auto mb-1 pr-2">
+                    <label for="admin_email" class="form-label">@translate('Email')</label>
+                    <input type="email" class="form-control" name="admin_email" placeholder="Email">
+                </div>
+                <div class="col-auto mb-1 pr-2">
                     <label for="admin_password" class="form-label">@translate('Password')</label>
                     <input type="text" class="form-control" name="admin_password" placeholder="Password">
                 </div>

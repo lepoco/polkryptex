@@ -118,6 +118,10 @@ final class Database
             $this->query->close();
         }
 
+        if(null === $this->connection) {
+            return $this;
+        }
+
         if ($this->query = $this->connection->prepare($query)) {
             if (func_num_args() > 1) {
                 $x = func_get_args();

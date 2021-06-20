@@ -79,7 +79,7 @@ final class Account
 
     public function signOut(): void
     {
-        Registry::get('Response')->setCookie('user', '', '100 days');
+        Registry::get('Response')->setCookie('user', '', '100 days', '/', null, true, true);
         Registry::get('Session')->getSection('User')->remove();
         Registry::get('Session')->destroy();
     }
