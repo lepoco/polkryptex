@@ -9,6 +9,7 @@
 
 namespace Polkryptex\Core\Components;
 
+use \DateTime;
 use Polkryptex\Core\Registry;
 
 /**
@@ -37,7 +38,7 @@ final class Account
         return $this->currentUser;
     }
 
-    public function signIn(User $user): void
+    public function signIn(User $user, string $cookieToken): void
     {
         if (!$user->isValid()) {
             return;
@@ -51,27 +52,34 @@ final class Account
         $userSession->token = $token;
 
         Query::setUserToken($user->getId(), Crypter::encrypt($token, 'session'));
+        Query::setCookieToken($user->getId(), Crypter::encrypt($cookieToken, 'cookie'));
         Query::setLastLogin($user->getId());
         $userSession->setExpiration('20 minutes');
         Registry::get('Session')->regenerateId();
     }
-    
+
     public function isLoggedIn(): bool
     {
         $user = $this->currentUser();
 
-        if(!$user->isValid())
-        {
+        if (!$user->isValid()) {
             return false;
         }
 
         $userSession = Registry::get('Session')->getSection('User');
+        $userCookie = Registry::get('Request')->getCookie('user');
 
-        return $user->checkSessionToken($userSession->token);
+        if(null === $userCookie)
+        {
+            return false;
+        }
+
+        return $user->checkSessionToken($userSession->token) && $user->checkCookieToken($userCookie);
     }
 
     public function signOut(): void
     {
+        Registry::get('Response')->setCookie('user', '', '100 days');
         Registry::get('Session')->getSection('User')->remove();
         Registry::get('Session')->destroy();
     }

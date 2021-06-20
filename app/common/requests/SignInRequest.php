@@ -9,9 +9,10 @@
 
 namespace Polkryptex\Common\Requests;
 
-use Polkryptex\Core\Components\User;
 use Polkryptex\Core\Registry;
 use Polkryptex\Core\Request;
+use Polkryptex\Core\Components\User;
+use Polkryptex\Core\Components\Crypter;
 
 /**
  * @author Szymon K.
@@ -37,17 +38,18 @@ final class SignInRequest extends Request
 
         $user = User::find($this->getData('username'));
 
-        if(!$user->isValid())
-        {
+        if (!$user->isValid()) {
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
-        if(!$user->checkPassword($this->getData('password')))
-        {
+        if (!$user->checkPassword($this->getData('password'))) {
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
-        Registry::get('Account')->signIn($user);
+        $cookieToken = Crypter::salter(32);
+        $this->addContent('token', $cookieToken);
+
+        Registry::get('Account')->signIn($user, $cookieToken);
         $this->finish(self::CODE_SUCCESS);
     }
 }

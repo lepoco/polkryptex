@@ -52,7 +52,10 @@
             @endphp
         </div>
         <div class="col-12 col-lg-6">
-            
+            <strong>\Polkryptex\Core\Registry::get('Request')</strong>
+            @php
+            dump(\Polkryptex\Core\Registry::get('Request'));
+            @endphp
         </div>
     </div>
 </div>

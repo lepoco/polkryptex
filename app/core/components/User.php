@@ -36,7 +36,9 @@ final class User
 
     private ?string $password = null;
 
-    private ?string $token = null;
+    private ?string $sessionToken = null;
+
+    private ?string $cookieToken = null;
 
     public static function find($username): self
     {
@@ -75,7 +77,8 @@ final class User
         $this->displayName = $database['user_display_name'] ?? '';
         $this->email = $database['user_email'] ?? '';
         $this->image = $database['user_image'] ?? '';
-        $this->token = $database['user_session_token'] ?? '';
+        $this->sessionToken = $database['user_session_token'] ?? '';
+        $this->cookieToken = $database['user_cookie_token'] ?? '';
 
         return $this;
     }
@@ -137,7 +140,12 @@ final class User
 
     public function checkSessionToken(string $token): bool
     {
-        return Crypter::compare($token, $this->token, 'session');
+        return Crypter::compare($token, $this->sessionToken, 'session');
+    }
+
+    public function checkCookieToken(string $token): bool
+    {
+        return Crypter::compare($token, $this->cookieToken, 'cookie');
     }
 
     public function isValid(): bool

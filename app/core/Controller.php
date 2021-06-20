@@ -9,7 +9,6 @@
 
 namespace Polkryptex\Core;
 
-use Nette\Http\Response;
 use Nette\Http\Request;
 use Polkryptex\Core\Components\Utils;
 
@@ -203,8 +202,7 @@ class Controller extends Blade
 
     protected function redirect(?string $path = null): void
     {
-        $response = new Response();
-        $response->redirect($this->baseUrl . $path);
+        Registry::get('Response')->redirect($this->baseUrl . $path);
     }
 
     protected function getAppVersion(): string

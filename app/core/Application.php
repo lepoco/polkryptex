@@ -23,6 +23,7 @@ final class Application
         Registry::register('Debug', new Debug());
         Registry::register('Database', new Database(), ['\Polkryptex\Core\Components\Queries']);
         Registry::register('Options', new Components\Options(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
+        Registry::register('Response', new \Nette\Http\Response());
         Registry::register('Request', (new \Nette\Http\RequestFactory())->fromGlobals());
         Registry::register('Account', new Components\Account());
 
@@ -33,7 +34,7 @@ final class Application
 
     private function registerSession()
     {
-        Registry::register('Session', new \Nette\Http\Session(Registry::get('Request'), new \Nette\Http\Response()));
+        Registry::register('Session', new \Nette\Http\Session(Registry::get('Request'), Registry::get('Response')));
         Registry::get('Session')->start();
     }
 

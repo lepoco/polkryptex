@@ -49,7 +49,7 @@ final class Query
         return $query->affectedRows() > 0;
     }
 
-    public static function getUserToken(int $id): string
+    public static function getUserToken(int $id): ?string
     {
         $query = Registry::get('Database')->query("SELECT user_session_token FROM " . self::USERS_TABLE . " WHERE user_id = ?", $id)->fetchArray();
 
@@ -67,7 +67,7 @@ final class Query
         return $query->affectedRows() > 0;
     }
 
-    public static function getCookieToken(int $id): string
+    public static function getCookieToken(int $id): ?string
     {
         $query = Registry::get('Database')->query("SELECT user_cookie_token FROM " . self::USERS_TABLE . " WHERE user_id = ?", $id)->fetchArray();
 

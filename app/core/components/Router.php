@@ -53,9 +53,7 @@ final class Router
             }
 
             $baseUrl = Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/');
-            $response = new Response();
-
-            $response->redirect($baseUrl);
+            Registry::get('Response')->redirect($baseUrl);
         });
 
         $this->router->set404(fn () => $this->view('NotFound', ['title' => 'Page not found', 'fullscreen' => true]));

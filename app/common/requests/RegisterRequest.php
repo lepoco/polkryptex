@@ -11,6 +11,7 @@ namespace Polkryptex\Common\Requests;
 
 use Polkryptex\Core\Request;
 use Polkryptex\Core\Registry;
+use Polkryptex\Core\Components\Crypter;
 use Polkryptex\Core\Components\Query;
 
 /**
