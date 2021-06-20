@@ -170,7 +170,7 @@ class Controller extends Blade
 
     protected function queueInternalScript(string $path): void
     {
-        $this->queueScript($this->baseUrl . 'js/' . $path . '.js', null, APP_VERSION, 'module');
+        $this->queueScript($this->baseUrl . 'js/' . $path . '.js', null, $this->getAppVersion(), 'module');
     }
 
     protected function queueStyle(string $url, ?string $sri = null, ?string $version = null): void
@@ -183,7 +183,7 @@ class Controller extends Blade
 
     protected function queueInternalStyle(string $path): void
     {
-        $this->queueStyle($this->baseUrl . 'css/' . $path . '.css', null, APP_VERSION);
+        $this->queueStyle($this->baseUrl . 'css/' . $path . '.css', null, $this->getAppVersion());
     }
 
     protected function addBodyClass(string $class): void
@@ -205,6 +205,15 @@ class Controller extends Blade
     {
         $response = new Response();
         $response->redirect($this->baseUrl . $path);
+    }
+
+    protected function getAppVersion(): string
+    {
+        if(defined('APP_VERSION')) {
+            return APP_VERSION;
+        }
+
+        return '0.0.0';
     }
 
     protected function getOption(string $name, $default = null)

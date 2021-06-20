@@ -18,6 +18,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/busisness">@translate('Business')</a>
                 </li>
+                @if($debug)
+                    <li class="nav-item">
+                        <a class="nav-link" href="/debug">@translate('Debug')</a>
+                    </li>
+                @endif
             </ul>
             <div class="d-flex mr-1">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">

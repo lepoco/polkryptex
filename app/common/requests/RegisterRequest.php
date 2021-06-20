@@ -10,9 +10,11 @@
 namespace Polkryptex\Common\Requests;
 
 use Polkryptex\Core\Request;
+use Polkryptex\Core\Registry;
+use Polkryptex\Core\Components\Query;
 
 /**
- * @author Szymon K.
+ * @author Szymon K. Leszek P.
  */
 final class RegisterRequest extends Request
 {
@@ -48,6 +50,20 @@ final class RegisterRequest extends Request
         {
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
+
+        $query = Query::getUserByName($this->getData('username'));
+        if(!empty($query))
+        {
+            $this->finish(self::ERROR_USER_NAME_EXISTS);
+        }
+
+        $query = Query::getUserByEmail($this->getData('email'));
+        if(!empty($query))
+        {
+            $this->finish(self::ERROR_USER_EMAIL_EXISTS);
+        }
+
+        Query::addUser($this->getData('username'), $this->getData('email'), $this->getData('password'));
 
         $this->finish(self::CODE_SUCCESS);
     }

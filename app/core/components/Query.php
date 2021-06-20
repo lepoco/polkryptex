@@ -9,7 +9,10 @@
 
 namespace Polkryptex\Core\Components;
 
+use \DateTime;
+use Ramsey\Uuid\Uuid;
 use Polkryptex\Core\Registry;
+use Polkryptex\Core\Components\Crypter;
 
 /**
  * @author Leszek P.
@@ -50,8 +53,7 @@ final class Query
     {
         $query = Registry::get('Database')->query("SELECT user_session_token FROM " . self::USERS_TABLE . " WHERE user_id = ?", $id)->fetchArray();
 
-        if(!isset($query['user_session_token']))
-        {
+        if (!isset($query['user_session_token'])) {
             return null;
         }
 
@@ -69,11 +71,47 @@ final class Query
     {
         $query = Registry::get('Database')->query("SELECT user_cookie_token FROM " . self::USERS_TABLE . " WHERE user_id = ?", $id)->fetchArray();
 
-        if(!isset($query['user_cookie_token']))
-        {
+        if (!isset($query['user_cookie_token'])) {
             return null;
         }
 
         return $query['user_cookie_token'];
+    }
+
+    public static function setLastLogin(int $id): bool
+    {
+        //TODO fix timezone
+        $query = Registry::get('Database')->query("UPDATE " . self::USERS_TABLE . " SET user_last_login = ? WHERE user_id = ?", (new DateTime())->format('Y-m-d H:i:s'), $id);
+
+        return $query->affectedRows() > 0;
+    }
+
+    public static function addUser(string $username, string $email, string $plainPassword): bool
+    {
+        $roles = self::getRoles();
+        $role = 4;
+
+        if (!empty($roles)) {
+            foreach ($roles as $id => $role) {
+                if ('client' === $role['role_name']) {
+                    $role = ($id + 1); //MySQL runs the index from 1 not from 0
+                    break;
+                }
+            }
+        }
+
+        $token = Crypter::salter(32);
+        $query = Registry::get('Database')->query(
+            "INSERT INTO pkx_users (user_name, user_display_name, user_email, user_password, user_session_token, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,?,?,0)",
+            $username,
+            $username,
+            $email,
+            Crypter::encrypt($plainPassword, 'password'),
+            Crypter::encrypt($token, 'session'),
+            Uuid::uuid5(APP_USERS_NAMESPACE, 'user/' . $username)->toString(),
+            intval($role)
+        );
+
+        return $query->affectedRows() > 0;
     }
 }

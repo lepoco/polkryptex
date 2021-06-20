@@ -44,13 +44,14 @@ final class Account
         }
 
         $userSession = Registry::get('Session')->getSection('User');
-        $token = Crypter::salter(32);;
+        $token = Crypter::salter(32);
 
         $userSession->loggedIn = true;
         $userSession->id = $user->getId();
         $userSession->token = $token;
 
         Query::setUserToken($user->getId(), Crypter::encrypt($token, 'session'));
+        Query::setLastLogin($user->getId());
         $userSession->setExpiration('20 minutes');
         Registry::get('Session')->regenerateId();
     }

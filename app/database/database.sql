@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS pkx_users (
 	user_status BOOLEAN DEFAULT false,
 	user_registered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	user_last_login DATETIME DEFAULT NULL,
-	user_uuid VARCHAR (32)
+	user_uuid VARCHAR (64)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Users billing
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS pkx_transactions (
 	CONSTRAINT fk_transaction_to_wallet_id FOREIGN KEY (transaction_to_wallet_id) REFERENCES pkx_wallets (wallet_id),
 	transaction_amount FLOAT NOT NULL,
 	transaction_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	transaction_uuid VARCHAR (32)
+	transaction_uuid VARCHAR (64)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Statistics tags

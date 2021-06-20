@@ -20,7 +20,7 @@
                 <input type="password" class="form-control" name="password">
             </div>
             <div class="mb-3 pr-2">
-                <label for="password_confirm" class="form-label">@translate('confirm password')</label>
+                <label for="password_confirm" class="form-label">@translate('Confirm Password')</label>
                 <input type="password" class="form-control" name="password_confirm">
             </div>
             <button type="submit" class="btn btn-secondary">@translate('Register')</button>

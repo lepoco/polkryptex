@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-06-12 16:35+0200\n"
-"PO-Revision-Date: 2021-06-12 16:35+0200\n"
+"POT-Creation-Date: 2021-06-20 14:25+0200\n"
+"PO-Revision-Date: 2021-06-20 14:25+0200\n"
 "Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
 "Language-Team: Polkryptex\n"
 "Language: pl_PL\n"
@@ -18,23 +18,8 @@ msgstr ""
 "esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2;setTitle\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: views\n"
-"X-Poedit-SearchPath-1: controllers\n"
-
-#: controllers/Home.php:21 views/components/navigation.blade.php:30
-msgid "Home"
-msgstr "Home"
-
-#: controllers/Installer.php:21 views/installer.blade.php:6
-msgid "Installer"
-msgstr "Instalator"
-
-#: controllers/NotFound.php:21
-msgid "Page not found"
-msgstr "Strona nie znaleziona"
-
-#: controllers/SignIn.php:21 views/sign-in.blade.php:6
-msgid "Sign In"
-msgstr "Zaloguj się"
+"X-Poedit-SearchPath-1: composers\n"
+"X-Poedit-SearchPath-2: requests\n"
 
 #: views/components/cookie.blade.php:7
 msgid "We use  🍪 to personalize the content you see on Polkryptex pages."
@@ -53,73 +38,86 @@ msgstr "Zarządzaj ciasteczkami"
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: views/components/navigation.blade.php:33
+#: views/components/navigation.blade.php:13
+msgid "Home"
+msgstr "Home"
+
+#: views/components/navigation.blade.php:16
 msgid "Private"
 msgstr "Prywatnie"
 
-#: views/components/navigation.blade.php:36
+#: views/components/navigation.blade.php:19
 msgid "Business"
 msgstr "Przedsiębiorca"
 
-#: views/components/navigation.blade.php:42
+#: views/components/navigation.blade.php:23
+msgid "Debug"
+msgstr "Debugowanie"
+
+#: views/components/navigation.blade.php:30
 msgid "Features"
 msgstr "Funkcje"
 
-#: views/components/navigation.blade.php:45 views/plans.blade.php:8
+#: views/components/navigation.blade.php:33 views/plans.blade.php:8
 msgid "Plans"
 msgstr "Plany"
 
-#: views/components/navigation.blade.php:48 views/help.blade.php:8
+#: views/components/navigation.blade.php:36 views/help.blade.php:8
 msgid "Help"
 msgstr "Pomoc"
 
-#: views/components/navigation.blade.php:53 views/register.blade.php:16
-#: views/sign-in.blade.php:16
-msgid "Sign in"
-msgstr "Zaloguj się"
-
-#: views/components/navigation.blade.php:54
-msgid "Register for free"
-msgstr "Zarejestruj się za darmo"
-
+#: views/components/navigation.blade.php:42
 #: views/dashboard/dashboard.blade.php:8
 msgid "Dashboard"
 msgstr "Kokpit"
+
+#: views/components/navigation.blade.php:43
+msgid "Sign Out"
+msgstr "Wyloguj się"
+
+#: views/components/navigation.blade.php:45 views/sign-in.blade.php:18
+msgid "Sign in"
+msgstr "Zaloguj się"
+
+#: views/components/navigation.blade.php:46
+msgid "Register for free"
+msgstr "Zarejestruj się za darmo"
 
 #: views/dashboard/wallet.blade.php:8
 msgid "Wallet"
 msgstr "Portfel"
 
-#: views/home.blade.php:8
-msgid "Home page"
-msgstr "Strona główna"
+#: views/installer.blade.php:6
+msgid "Installer"
+msgstr "Instalator"
 
-#: views/installer.blade.php:11
+#: views/installer.blade.php:12
 msgid "Database"
 msgstr "Baza danych"
 
-#: views/installer.blade.php:15 views/installer.blade.php:37
+#: views/installer.blade.php:16 views/installer.blade.php:38
 msgid "User"
 msgstr "Użytkownik"
 
-#: views/installer.blade.php:19 views/installer.blade.php:45
-#: views/register.blade.php:13 views/sign-in.blade.php:13
+#: views/installer.blade.php:20 views/installer.blade.php:46
+#: views/register.blade.php:19 views/sign-in.blade.php:15
 msgid "Password"
 msgstr "Hasło"
 
-#: views/installer.blade.php:26
+#: views/installer.blade.php:27
 msgid "Host"
 msgstr "Serwer"
 
-#: views/installer.blade.php:30
+#: views/installer.blade.php:31
 msgid "Table"
 msgstr "Tablica"
 
-#: views/installer.blade.php:41
+#: views/installer.blade.php:42 views/register.blade.php:11
+#: views/sign-in.blade.php:11
 msgid "Username"
 msgstr "Użytkownik"
 
-#: views/installer.blade.php:52
+#: views/installer.blade.php:51
 msgid "Begin installation"
 msgstr "Rozpocznij instalację"
 
@@ -135,13 +133,27 @@ msgstr "Strona, której szukasz nie została znaleziona."
 msgid "Back to the home page"
 msgstr "Wróć na stronę główną"
 
-#: views/register.blade.php:6
+#: views/register.blade.php:6 views/register.blade.php:26
 msgid "Register"
 msgstr "Zarejestruj się"
 
-#: views/register.blade.php:9 views/sign-in.blade.php:9
+#: views/register.blade.php:15
 msgid "Email address"
 msgstr "Adres e-mail"
+
+#: views/register.blade.php:23
+msgid "Confirm Password"
+msgstr "Potwierdź hasło"
+
+#: views/sign-in.blade.php:6
+msgid "Sign In"
+msgstr "Zaloguj się"
+
+#~ msgid "Page not found"
+#~ msgstr "Strona nie znaleziona"
+
+#~ msgid "Home page"
+#~ msgstr "Strona główna"
 
 #, fuzzy
 #~| msgid "Home page"
