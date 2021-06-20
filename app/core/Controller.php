@@ -131,6 +131,7 @@ class Controller extends Blade
     protected function setDefaultViewData(): void
     {
         $this->addData('installed', defined('APP_VERSION'), false);
+        $this->addData('pagenow', strtolower($this->name));
         $this->addData('debug', Debug::isDebug());
         $this->addData('baseUrl', $this->baseUrl);
         $this->addData('dashboard', $this->getOption('dashboard', 'dashboard'));

@@ -10,19 +10,15 @@
 namespace Polkryptex\Common\Composers;
 
 use Illuminate\View\View;
+use Polkryptex\Core\Registry;
 
 /**
  * @author Leszek P.
  */
-final class HomeComposer
+final class AccountComposer
 {
     public function compose(View $view)
     {
-        $view->with('testMethod', $this->testMethod());
-    }
-
-    public function testMethod()
-    {
-        return 'hello world';
+        $view->with('user', Registry::get('Account')->currentUser());
     }
 }
