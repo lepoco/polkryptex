@@ -9,6 +9,7 @@
 
 namespace Polkryptex\Core\Components;
 
+use Polkryptex\Core\Registry;
 use Polkryptex\Core\Components\Query;
 use Polkryptex\Core\Components\Crypter;
 
@@ -35,6 +36,8 @@ final class User
 
     private ?string $password = null;
 
+    private ?string $token = null;
+
     public static function find($username): self
     {
         $query = Query::getUserByName($username);
@@ -42,6 +45,17 @@ final class User
         if (empty($query)) {
             $query = Query::getUserByEmail($username);
         }
+
+        if (empty($query)) {
+            return new self();
+        }
+
+        return (new self())->__fromDB($query);
+    }
+
+    public static function fromId(int $id): self
+    {
+        $query = Query::getUserById($id);
 
         if (empty($query)) {
             return new self();
@@ -61,6 +75,7 @@ final class User
         $this->displayName = $database['user_display_name'] ?? '';
         $this->email = $database['user_email'] ?? '';
         $this->image = $database['user_image'] ?? '';
+        $this->token = $database['user_session_token'] ?? '';
 
         return $this;
     }
@@ -120,14 +135,14 @@ final class User
         return Crypter::compare($password, $this->password, 'password');
     }
 
+    public function checkSessionToken(string $token): bool
+    {
+        return Crypter::compare($token, $this->token, 'session');
+    }
+
     public function isValid(): bool
     {
         return $this->id != null && $this->id > 0;
-    }
-
-    public function isLoggedIn(): bool
-    {
-        return false;
     }
 
     public function isAdmin(): bool

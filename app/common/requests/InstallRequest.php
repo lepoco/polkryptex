@@ -97,6 +97,7 @@ final class InstallRequest extends Request
         $config .= "\n" . 'define(\'APP_DB_PASS\', \'' . $this->getData('password') . '\');';
         $config .= "\n";
         $config .= "\n" . 'define(\'APP_SESSION_SALT\', \'' . Crypter::salter(64) . '\');';
+        $config .= "\n" . 'define(\'APP_COOKIE_SALT\', \'' . Crypter::salter(64) . '\');';
         $config .= "\n" . 'define(\'APP_PASSWORD_SALT\', \'' . $this->passwordSalt . '\');';
         $config .= "\n" . 'define(\'APP_NONCE_SALT\', \'' . Crypter::salter(64) . '\');';
         $config .= "\n";

@@ -19,12 +19,14 @@
 <div class="container py-4">
     <div class="row">
         <div class="col-12 col-lg-6">
-
-            @component('Components::Home')
-
             <strong>\Polkryptex\Core\Registry::get('Session')</strong>
             @php
             dump(\Polkryptex\Core\Registry::get('Session'));
+            @endphp
+
+            <strong>$_SESSION</strong>
+            @php
+            dump($_SESSION);
             @endphp
         </div>
         <div class="col-12 col-lg-6">
@@ -37,6 +39,20 @@
         <div class="col-12 col-lg-6">
             <strong>Blade Debug</strong>
             @debug
+        </div>
+        <div class="col-12 col-lg-6">
+            <strong>\Polkryptex\Core\Registry::get('Account')->currentUser()</strong>
+            @php
+            dump(\Polkryptex\Core\Registry::get('Account')->currentUser());
+            @endphp
+
+            <strong>\Polkryptex\Core\Registry::get('Account')->isLoggedIn()</strong>
+            @php
+            dump(\Polkryptex\Core\Registry::get('Account')->isLoggedIn());
+            @endphp
+        </div>
+        <div class="col-12 col-lg-6">
+            
         </div>
     </div>
 </div>

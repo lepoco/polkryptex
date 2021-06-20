@@ -26,7 +26,8 @@ final class Crypter
             'algo'      => defined('APP_ALGO') ? APP_ALGO : '',
             'password'  => defined('APP_PASSWORD_SALT') ? APP_PASSWORD_SALT : '',
             'nonce'     => defined('APP_NONCE_SALT') ? APP_NONCE_SALT : '',
-            'token'     => defined('APP_SESSION_SALT') ? APP_SESSION_SALT : ''
+            'session'     => defined('APP_SESSION_SALT') ? APP_SESSION_SALT : '',
+            'cookie'     => defined('APP_COOKIE_SALT') ? APP_COOKIE_SALT : ''
         ];
     }
 
@@ -56,8 +57,12 @@ final class Crypter
             $salts['nonce'] = $customSalt;
         }
 
-        if (empty($salts['token'])) {
-            $salts['token'] = $customSalt;
+        if (empty($salts['session'])) {
+            $salts['session'] = $customSalt;
+        }
+
+        if (empty($salts['cookie'])) {
+            $salts['cookie'] = $customSalt;
         }
 
         if (empty($salts['algo'])) {
@@ -66,14 +71,18 @@ final class Crypter
 
         switch ($type) {
             case 'password':
-                return (!empty($salts['password']) ? password_hash(hash_hmac( 'sha256', $text, $salts['password']), $salts['algo']) : '');
+                return (!empty($salts['password']) ? password_hash(hash_hmac('sha256', $text, $salts['password']), $salts['algo']) : '');
 
             case 'nonce':
                 return (!empty($salts['nonce']) ? hash_hmac('sha1', $text . date('Y-m-d h'), $salts['nonce']) : '');
                 break;
 
-            case 'token':
-                return (!empty($salts['token']) ? hash_hmac('sha256', $text, $salts['token']) : '');
+            case 'session':
+                return (!empty($salts['session']) ? hash_hmac('sha256', $text, $salts['session']) : '');
+                break;
+
+            case 'cookie':
+                return (!empty($salts['cookie']) ? hash_hmac('sha256', $text, $salts['cookie']) : '');
                 break;
 
             default:
@@ -111,31 +120,26 @@ final class Crypter
             $salts['nonce'] = $customSalt;
         }
 
-        if (empty($salts['token'])) {
-            $salts['token'] = $customSalt;
+        if (empty($salts['session'])) {
+            $salts['session'] = $customSalt;
+        }
+
+        if (empty($salts['cookie'])) {
+            $salts['cookie'] = $customSalt;
         }
 
         switch ($type) {
             case 'password':
-                if (password_verify(($plain ? hash_hmac('sha256', $text, $salts['password']) : $text), $compare_text)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return password_verify(($plain ? hash_hmac('sha256', $text, $salts['password']) : $text), $compare_text);
 
             case 'nonce':
-                if (($plain ? hash_hmac('sha1', $text . date('Y-m-d h'), $salts['nonce']) : $text) == $compare_text) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ($plain ? hash_hmac('sha1', $text . date('Y-m-d h'), $salts['nonce']) : $text) == $compare_text;
 
-            case 'token':
-                if (($plain ? hash_hmac('sha256', $text, $salts['session']) : $text) == $compare_text) {
-                    return true;
-                } else {
-                    return false;
-                }
+            case 'session':
+                return ($plain ? hash_hmac('sha256', $text, $salts['session']) : $text) == $compare_text;
+
+            case 'cookie':
+                return ($plain ? hash_hmac('sha256', $text, $salts['cookie']) : $text) == $compare_text;
 
             default:
                 return false;

@@ -38,11 +38,11 @@ class Controller extends Blade
 
     public function __construct(string $namespace, array $arguments = [])
     {
-        $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
+        $this->request = Registry::get('Request');
 
         $this->setupNamespace($namespace);
-        $this->setupArguments($arguments);
         $this->setupController();
+        $this->setupArguments($arguments);
 
         if (method_exists($this, 'init')) {
             $this->{'init'}();
@@ -70,7 +70,7 @@ class Controller extends Blade
     private function setupArguments(array $arguments): void
     {
         if (isset($arguments['requireLogin']) && true === $arguments['requireLogin']) {
-            if (!Registry::get('Account')->currentUser()->isLoggedIn()) {
+            if (!Registry::get('Account')->isLoggedIn()) {
                 $this->redirect('signin');
             }
         }
@@ -142,7 +142,11 @@ class Controller extends Blade
         $this->addData('fullscreen', $this->fullScreen);
         $this->addData('csrfToken', \Polkryptex\Core\Components\Crypter::salter(64), false);
 
-        $this->addData('auth', ['user' => ''], false);
+        $this->addData('auth', [
+            'loggedIn' => Registry::get('Account')->isLoggedIn(),
+            'user' => Registry::get('Account')->currentUser()->getId(),
+            'email' => Registry::get('Account')->currentUser()->getEmail()
+        ], false);
 
         $this->addData('importmap', [
             'imports' => [

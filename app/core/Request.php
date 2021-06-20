@@ -55,7 +55,7 @@ class Request
 
     public function __construct()
     {
-        $this->request = (new \Nette\Http\RequestFactory())->fromGlobals();
+        $this->request = Registry::get('Request');
 
         if (empty($this->request->post) && empty($this->request->url->getQueryParameters())) {
             exit('BAD GATEWAY');

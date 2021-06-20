@@ -33,8 +33,13 @@
                 </ul>
             </div>
             <div class="d-flex">
-                <a href="/signin" class="btn btn-secondary mr-1" type="submit">@translate('Sign in')</a>
-                <a href="/register" class="btn btn-dark" type="submit">@translate('Register for free')</a>
+                @if($auth['loggedIn'])
+                    <a href="/dashboard" class="btn btn-secondary mr-1" type="submit">@translate('Dashboard')</a>
+                    <a href="/signout" class="btn btn-dark" type="submit">@translate('Sign Out')</a>
+                @else
+                    <a href="/signin" class="btn btn-secondary mr-1" type="submit">@translate('Sign in')</a>
+                    <a href="/register" class="btn btn-dark" type="submit">@translate('Register for free')</a>
+                @endif
             </div>
         </div>
     </div>

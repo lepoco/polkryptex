@@ -9,6 +9,9 @@
 
 namespace Polkryptex\Core\Components;
 
+use Polkryptex\Core\Registry;
+use Nette\Http\Response;
+
 /**
  * @author Leszek P.
  */
@@ -43,12 +46,23 @@ final class Router
         $this->router->post('/request', fn () => $this->request());
         $this->router->get('/request', fn () => $this->request());
 
+        $this->router->get('/signout', function () {
+
+            if (Registry::get('Account')->isLoggedIn()) {
+                Registry::get('Account')->signOut();
+            }
+
+            $baseUrl = Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/');
+            $response = new Response();
+
+            $response->redirect($baseUrl);
+        });
+
         $this->router->set404(fn () => $this->view('NotFound', ['title' => 'Page not found', 'fullscreen' => true]));
 
         foreach ($this->routes as $route) {
 
-            if(!isset($route[2]))
-            {
+            if (!isset($route[2])) {
                 $route = [];
             }
 
