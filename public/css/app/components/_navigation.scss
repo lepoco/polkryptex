@@ -1,0 +1,30 @@
+
+.navbar-brand {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  
+    img {
+      width: 100%;
+      max-width: 3rem;
+    }
+  
+    p {
+      margin: 0;
+      color: $c-dark;
+      font-family: $f-secondary;
+      font-weight: 700;
+    }
+  }
+  
+  .nav-link {
+    padding: 1.5rem 1rem;
+  }
+  
+  @media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+  }
+  

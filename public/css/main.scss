@@ -5,14 +5,18 @@
  */
 
 @import "app/fonts";
-@import "app/colors";
+@import "app/variables";
 
 @import "bootstrap/bootstrap";
 
-@import "app/default";
+@import "app/global";
 @import "app/animations";
 
 @import "app/components/cookie";
+@import "app/components/navigation";
 @import "app/components/footer";
 @import "app/components/toast";
 @import "app/components/hero";
+@import "app/components/forms";
+
+@import "pages/account";

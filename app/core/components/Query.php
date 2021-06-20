@@ -78,10 +78,24 @@ final class Query
         return $query['user_cookie_token'];
     }
 
-    public static function setLastLogin(int $id): bool
+    public static function updateLastLogin(int $id): bool
     {
         //TODO fix timezone
         $query = Registry::get('Database')->query("UPDATE " . self::USERS_TABLE . " SET user_last_login = ? WHERE user_id = ?", (new DateTime())->format('Y-m-d H:i:s'), $id);
+
+        return $query->affectedRows() > 0;
+    }
+
+    public static function updateUserDisplayName(int $id, string $name): bool
+    {
+        $query = Registry::get('Database')->query("UPDATE " . self::USERS_TABLE . " SET user_display_name = ? WHERE user_id = ?", $name, $id);
+
+        return $query->affectedRows() > 0;
+    }
+
+    public static function updateUserImage(int $id, string $image): bool
+    {
+        $query = Registry::get('Database')->query("UPDATE " . self::USERS_TABLE . " SET user_image = ? WHERE user_id = ?", $image, $id);
 
         return $query->affectedRows() > 0;
     }
@@ -100,10 +114,12 @@ final class Query
             }
         }
 
+        $userIdName = preg_replace("/[^a-zA-Z0-9]+/", "", trim(strtolower($username)));
+
         $token = Crypter::salter(32);
         $query = Registry::get('Database')->query(
             "INSERT INTO pkx_users (user_name, user_display_name, user_email, user_password, user_session_token, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,?,?,0)",
-            $username,
+            $userIdName,
             $username,
             $email,
             Crypter::encrypt($plainPassword, 'password'),

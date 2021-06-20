@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-06-20 16:00+0200\n"
-"PO-Revision-Date: 2021-06-20 16:00+0200\n"
+"POT-Creation-Date: 2021-06-20 21:54+0200\n"
+"PO-Revision-Date: 2021-06-20 21:54+0200\n"
 "Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
 "Language-Team: Polkryptex\n"
 "Language: pl_PL\n"
@@ -38,62 +38,157 @@ msgstr "Zarządzaj ciasteczkami"
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: views/components/navigation.blade.php:15
+#: views/components/expanded-footer.blade.php:12
+#: views/components/navigation.blade.php:43
+msgid "Account"
+msgstr "Konto"
+
+#: views/components/expanded-footer.blade.php:15
+msgid "Budget & Analytics"
+msgstr "Budżet & Analityka"
+
+#: views/components/expanded-footer.blade.php:18
+#: views/components/navigation.blade.php:40 views/dashboard/wallet.blade.php:8
+msgid "Wallet"
+msgstr "Portfel"
+
+#: views/components/expanded-footer.blade.php:21
+msgid "Crypto"
+msgstr "Krypto"
+
+#: views/components/expanded-footer.blade.php:24
+msgid "Credit cards"
+msgstr "Karty kredytowe"
+
+#: views/components/expanded-footer.blade.php:31
+msgid "Payments"
+msgstr "Płatności"
+
+#: views/components/expanded-footer.blade.php:34
+msgid "Money transfers"
+msgstr "Przelewy"
+
+#: views/components/expanded-footer.blade.php:37
+msgid "Group bills"
+msgstr "Rachunki grupowe"
+
+#: views/components/expanded-footer.blade.php:40
+msgid "Subscriptions"
+msgstr "Subskrypcje"
+
+#: views/components/expanded-footer.blade.php:43
+msgid "Rewards"
+msgstr "Nagrody"
+
+#: views/components/expanded-footer.blade.php:50
+msgid "Company"
+msgstr "Firma"
+
+#: views/components/expanded-footer.blade.php:53
+msgid "About us"
+msgstr "O nas"
+
+#: views/components/expanded-footer.blade.php:56
+msgid "Carriers"
+msgstr "Dostawcy"
+
+#: views/components/expanded-footer.blade.php:59
+msgid "Affiliates"
+msgstr "Program partnerski"
+
+#: views/components/expanded-footer.blade.php:62
+msgid "Contact"
+msgstr "Kontakt"
+
+#: views/components/expanded-footer.blade.php:69
+#: views/components/navigation.blade.php:53 views/help.blade.php:8
+msgid "Help"
+msgstr "Pomoc"
+
+#: views/components/expanded-footer.blade.php:72
+msgid "Help Centre"
+msgstr "Centrum pomocy"
+
+#: views/components/expanded-footer.blade.php:75
+msgid "Community"
+msgstr "Społeczność"
+
+#: views/components/expanded-footer.blade.php:78
+msgid "Security"
+msgstr "Bezpieczeństwo"
+
+#: views/components/expanded-footer.blade.php:81
+msgid "Developer APIs"
+msgstr "Interfejsy API"
+
+#: views/components/expanded-footer.blade.php:94
+msgid "Website Terms"
+msgstr "Warunki"
+
+#: views/components/expanded-footer.blade.php:97
+msgid "Legal Agreements"
+msgstr "Umowy prawne"
+
+#: views/components/expanded-footer.blade.php:100
+msgid "Privacy Policy"
+msgstr "Polityka Prywatności"
+
+#: views/components/expanded-footer.blade.php:103
+msgid "Currency Disclaimer"
+msgstr "Wyłączenie odpowiedzialności walutowej"
+
+#: views/components/navigation.blade.php:16
 msgid "Home"
 msgstr "Home"
 
-#: views/components/navigation.blade.php:18
+#: views/components/navigation.blade.php:19
 msgid "Private"
 msgstr "Prywatnie"
 
-#: views/components/navigation.blade.php:21
+#: views/components/navigation.blade.php:22
 msgid "Business"
 msgstr "Przedsiębiorca"
 
-#: views/components/navigation.blade.php:27
+#: views/components/navigation.blade.php:28
 msgid "Debug"
 msgstr "Debugowanie"
 
-#: views/components/navigation.blade.php:36
+#: views/components/navigation.blade.php:37
 #: views/dashboard/dashboard.blade.php:8
 msgid "Dashboard"
 msgstr "Kokpit"
 
-#: views/components/navigation.blade.php:39 views/dashboard/wallet.blade.php:8
-msgid "Wallet"
-msgstr "Portfel"
-
-#: views/components/navigation.blade.php:42
-msgid "Account"
-msgstr "Konto"
-
-#: views/components/navigation.blade.php:46
+#: views/components/navigation.blade.php:47
 msgid "Features"
 msgstr "Funkcje"
 
-#: views/components/navigation.blade.php:49 views/plans.blade.php:8
+#: views/components/navigation.blade.php:50 views/plans.blade.php:8
 msgid "Plans"
 msgstr "Plany"
 
-#: views/components/navigation.blade.php:52 views/help.blade.php:8
-msgid "Help"
-msgstr "Pomoc"
-
-#: views/components/navigation.blade.php:61
+#: views/components/navigation.blade.php:62
 msgid "Sign Out"
 msgstr "Wyloguj się"
 
-#: views/components/navigation.blade.php:63 views/sign-in.blade.php:18
+#: views/components/navigation.blade.php:64 views/sign-in.blade.php:18
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: views/components/navigation.blade.php:64
+#: views/components/navigation.blade.php:65
 msgid "Register for free"
 msgstr "Zarejestruj się za darmo"
 
-#: views/dashboard/account.blade.php:8
-msgid "My Account"
-msgstr "Moje Konto"
+#: views/dashboard/account.blade.php:17
+msgid "Hello,"
+msgstr "Cześć,"
+
+#: views/dashboard/account.blade.php:19
+msgid "Make a new transfer"
+msgstr "Zrób przelew"
+
+#: views/dashboard/account.blade.php:19
+msgid "Top up"
+msgstr "Doładuj konto"
 
 #: views/installer.blade.php:6
 msgid "Installer"
@@ -156,9 +251,16 @@ msgstr "Adres e-mail"
 msgid "Confirm Password"
 msgstr "Potwierdź hasło"
 
+#: views/register.blade.php:26 views/sign-in.blade.php:18
+msgid "Back to home"
+msgstr "Wróć na stronę główną"
+
 #: views/sign-in.blade.php:6
 msgid "Sign In"
 msgstr "Zaloguj się"
+
+#~ msgid "My Account"
+#~ msgstr "Moje Konto"
 
 #~ msgid "Page not found"
 #~ msgstr "Strona nie znaleziona"

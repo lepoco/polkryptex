@@ -38,6 +38,7 @@ class Request
     protected const ERROR_USER_EMAIL_EXISTS        = 'E17';
     protected const ERROR_USER_NAME_EXISTS         = 'E18';
     protected const ERROR_MYSQL_UNKNOWN            = 'E19';
+    protected const ERROR_INVALID_USER             = 'E20';
 
     protected const CODE_SUCCESS                   = 'S01';
 

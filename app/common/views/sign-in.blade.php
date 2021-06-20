@@ -8,14 +8,18 @@
             <input type="hidden" name="action" value="SignIn"/>
             <input type="hidden" name="nonce" value="@nonce('signin')"/>
             <div class="mb-3 pr-2">
-                <label for="email" class="form-label">@translate('Email')</label>
-                <input type="email" class="form-control" name="email">
+                <div class="floating-input">
+                    <input class="floating-input__field" type="email" name="email" placeholder="@translate('Email')">
+                    <label for="email">@translate('Email')</label>
+                </div>
             </div>
             <div class="mb-3 pr-2">
-                <label for="password" class="form-label">@translate('Password')</label>
-                <input type="password" class="form-control" name="password">
+                <div class="floating-input">
+                    <input class="floating-input__field" type="password" name="password" placeholder="@translate('Password')">
+                    <label for="password">@translate('Password')</label>
+                </div>
             </div>
-            <button type="submit" class="btn btn-secondary">@translate('Sign in')</button>
+            <button type="submit" class="btn btn-dark">@translate('Sign in')</button> <a href="{{ $baseUrl }}" class="btn btn-secondary">@translate('Back to home')</a>
         </form>
     </div>
     <div class="hero__column">

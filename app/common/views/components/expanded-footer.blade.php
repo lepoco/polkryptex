@@ -9,76 +9,76 @@
                     <div class="col-12 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
-                                Account
+                                @translate('Account')
                             </li>
                             <li>
-                                <a href="#">Budget & Analytics</a>
+                                <a href="#">@translate('Budget & Analytics')</a>
                             </li>
                             <li>
-                                <a href="#">Loans</a>
+                                <a href="#">@translate('Wallet')</a>
                             </li>
                             <li>
-                                <a href="#">Crypto</a>
+                                <a href="#">@translate('Crypto')</a>
                             </li>
                             <li>
-                                <a href="#">Credit cards</a>
+                                <a href="#">@translate('Credit cards')</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-12 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
-                                Payments
+                                @translate('Payments')
                             </li>
                             <li>
-                                <a href="#">Money transfers</a>
+                                <a href="#">@translate('Money transfers')</a>
                             </li>
                             <li>
-                                <a href="#">Group bills</a>
+                                <a href="#">@translate('Group bills')</a>
                             </li>
                             <li>
-                                <a href="#">Subscriptions</a>
+                                <a href="#">@translate('Subscriptions')</a>
                             </li>
                             <li>
-                                <a href="#">Rewards</a>
+                                <a href="#">@translate('Rewards')</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-12 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
-                                Company
+                                @translate('Company')
                             </li>
                             <li>
-                                <a href="#">About us</a>
+                                <a href="#">@translate('About us')</a>
                             </li>
                             <li>
-                                <a href="#">Carriers</a>
+                                <a href="#">@translate('Carriers')</a>
                             </li>
                             <li>
-                                <a href="#">Affiliates</a>
+                                <a href="#">@translate('Affiliates')</a>
                             </li>
                             <li>
-                                <a href="#">Contact</a>
+                                <a href="#">@translate('Contact')</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-12 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
-                                Help
+                                @translate('Help')
                             </li>
                             <li>
-                                <a href="#">Help Centre</a>
+                                <a href="#">@translate('Help Centre')</a>
                             </li>
                             <li>
-                                <a href="#">Community</a>
+                                <a href="#">@translate('Community')</a>
                             </li>
                             <li>
-                                <a href="#">Security</a>
+                                <a href="#">@translate('Security')</a>
                             </li>
                             <li>
-                                <a href="#">Developer APIs</a>
+                                <a href="#">@translate('Developer APIs')</a>
                             </li>
                         </ul>
                     </div>
@@ -91,16 +91,16 @@
                         © {{ date('Y') }} Polkryptex Inc
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">Website Terms</a>
+                        <a href="#">@translate('Website Terms')</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">Legal Agreements</a>
+                        <a href="#">@translate('Legal Agreements')</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">Privacy Policy</a>
+                        <a href="#">@translate('Privacy Policy')</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">Currency Disclaimer</a>
+                        <a href="#">@translate('Currency Disclaimer')</a>
                     </li>
                 </ul>
             </div>

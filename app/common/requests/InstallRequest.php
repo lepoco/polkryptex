@@ -228,7 +228,7 @@ final class InstallRequest extends Request
 
         $database->query(
             "INSERT IGNORE INTO pkx_users (user_name, user_display_name, user_email, user_password, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,1,1)",
-            $this->getData('admin_username'),
+            preg_replace("/[^a-zA-Z0-9]+/", "", trim(strtolower($this->getData('admin_username')))),
             $this->getData('admin_username'),
             $this->getData('admin_email'),
             Crypter::encrypt($this->getData('admin_password'), 'password', $this->passwordSalt, $this->passwordAlgo),

@@ -80,7 +80,7 @@ final class User
         $this->status = (1 === $database['user_status']);
         $this->password = $database['user_password'] ?? '';
         $this->uuid = $database['user_uuid'] ?? '';
-        $this->username = $database['user_id'] ?? '';
+        $this->username = $database['user_name'] ?? '';
         $this->displayName = $database['user_display_name'] ?? '';
         $this->email = $database['user_email'] ?? '';
         $this->image = $database['user_image'] ?? '';

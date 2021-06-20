@@ -1,2 +1,2 @@
-import Cookie from './components/cookie.js'
+import Cookie from "./components/cookie.js";
 new Cookie();

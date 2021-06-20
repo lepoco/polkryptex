@@ -14,14 +14,19 @@ export default class Request {
   static ajax(event, form, callAction) {
     event.preventDefault();
 
-    const METHOD = 'GET';
-    const ENDPOINT = app.props.ajax;
+    const METHOD = form.method.toUpperCase();
     const XHR = new XMLHttpRequest();
 
+    let endpoint = app.props.ajax;
     let formData = new FormData(form);
+
     Request.lockForm(form);
 
-    XHR.open(METHOD, ENDPOINT + Request.urlEncode(formData), true);
+    if (METHOD == "GET") {
+      endpoint += Request.urlEncode(formData);
+    }
+
+    XHR.open(METHOD, endpoint, true);
     XHR.onload = function () {
       Request.unlockForm(form);
 
@@ -44,7 +49,11 @@ export default class Request {
       }
     };
 
-    XHR.send();
+    if (METHOD == "POST") {
+      XHR.send(formData);
+    } else {
+      XHR.send();
+    }
   }
 
   static lockForm(form) {
@@ -56,20 +65,26 @@ export default class Request {
   static unlockForm(form) {
     window.setTimeout(function () {
       Array.prototype.forEach.call(form.elements, (child) => {
+        if (child.classList.contains("-keep-disabled")) {
+          return;
+        }
+
         child.disabled = false;
       });
     }, 512);
   }
 
   static urlEncode(fd) {
-    var s = '';
-    function encode(s) { return encodeURIComponent(s).replace(/%20/g, '+'); }
+    var s = "";
+    function encode(s) {
+      return encodeURIComponent(s).replace(/%20/g, "+");
+    }
     for (var pair of fd.entries()) {
-      if (typeof pair[1] == 'string') {
-        s += (s ? '&' : '') + encode(pair[0]) + '=' + encode(pair[1]);
+      if (typeof pair[1] == "string") {
+        s += (s ? "&" : "") + encode(pair[0]) + "=" + encode(pair[1]);
       }
     }
-    return '?' + s;
+    return "?" + s;
   }
 
   static isJson(string) {
