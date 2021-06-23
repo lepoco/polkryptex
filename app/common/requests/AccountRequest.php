@@ -76,9 +76,6 @@ final class AccountRequest extends Request
             $this->addContent('picture', $imageUrl);
         }
 
-
-
-
         $this->finish(self::CODE_SUCCESS);
     }
 

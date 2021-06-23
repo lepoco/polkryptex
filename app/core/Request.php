@@ -18,6 +18,30 @@ use App\Core\Components\Crypter;
  */
 class Request
 {
+    protected const STATUS_OK                    = 200;
+    protected const STATUS_CREATED               = 201;
+    protected const STATUS_ACCEPTED              = 202;
+    protected const STATUS_NO_CONTENT            = 204;
+    protected const STATUS_MOVED_PERMANENTLY     = 301;
+    protected const STATUS_FOUND                 = 302;
+    protected const STATUS_NOT_MODIFIED          = 304;
+    protected const STATUS_TEMPORARY_REDIRECT    = 307;
+    protected const STATUS_PERMANENT_REDIRECT    = 308;
+    protected const STATUS_BAD_REQUEST           = 400;
+    protected const STATUS_UNAUTHORIZED          = 401;
+    protected const STATUS_FORBIDDEN             = 403;
+    protected const STATUS_NOT_FOUND             = 404;
+    protected const STATUS_REQUEST_TIMEOUT       = 408;
+    protected const STATUS_GONE                  = 410;
+    protected const STATUS_UNSUPPORTED_MEDIA     = 415;
+    protected const STATUS_IM_A_TEAPOT           = 418;
+    protected const STATUS_UNPROCESSABLE_ENTITY  = 422;
+    protected const STATUS_INTERNAL_ERROR        = 500;
+    protected const STATUS_NOT_IMPLEMENTED       = 501;
+    protected const STATUS_BAD_GATEWAY           = 502;
+    protected const STATUS_SERVICE_UNAVAILABLE   = 503;
+    protected const STATUS_GATEWAY_TIMEOUT       = 504;
+
     protected const ERROR_UNKNOWN                  = 'E00';
     protected const ERROR_MISSING_ACTION           = 'E01';
     protected const ERROR_MISSING_NONCE            = 'E02';
@@ -59,6 +83,7 @@ class Request
         $this->request = Registry::get('Request');
 
         if (empty($this->request->post) && empty($this->request->url->getQueryParameters())) {
+            http_response_code(self::STATUS_BAD_GATEWAY);
             exit('BAD GATEWAY');
         }
 
@@ -69,7 +94,7 @@ class Request
         if (method_exists($this, 'action')) {
             $this->{'action'}();
         } else {
-            $this->finish(self::ERROR_INVALID_ACTION);
+            $this->finish(self::ERROR_INVALID_ACTION, self::STATUS_BAD_REQUEST);
         }
 
         $this->finish();
@@ -85,13 +110,19 @@ class Request
         $this->response['status'] = $status;
     }
 
-    protected function finish(?string $status = null): void
+    protected function finish(?string $status = null, int $responseCode = 200): void
     {
         if ($status !== null) {
             $this->setStatus($status);
         }
 
+        http_response_code($responseCode);
         \App\Core\Application::stop(json_encode($this->response, JSON_UNESCAPED_UNICODE));
+    }
+
+    protected function isAjax(): bool
+    {
+        return 'XMLHttpRequest' === $this->request->getHeader('x-requested-with');
     }
 
     protected function isSet(array $fields): void
@@ -107,7 +138,7 @@ class Request
         if (count($notSetField) > 0) {
             $this->addContent('notice', 'not-exists');
             $this->addContent('fields', $notSetField);
-            $this->finish(self::ERROR_MISSING_ARGUMENTS);
+            $this->finish(self::ERROR_MISSING_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -123,7 +154,7 @@ class Request
         if (count($emptyField) > 0) {
             $this->addContent('notice', 'empty');
             $this->addContent('fields', $emptyField);
-            $this->finish(self::ERROR_EMPTY_ARGUMENTS);
+            $this->finish(self::ERROR_EMPTY_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -179,13 +210,13 @@ class Request
     private function validateAction(): void
     {
         if (!isset($this->incomeData['action'])) {
-            $this->finish(self::ERROR_MISSING_ACTION);
+            $this->finish(self::ERROR_MISSING_ACTION, self::STATUS_BAD_REQUEST);
         }
 
         $this->action = filter_var($this->incomeData['action'], FILTER_SANITIZE_STRING);
 
         if (empty($this->action)) {
-            $this->finish(self::ERROR_MISSING_ACTION);
+            $this->finish(self::ERROR_MISSING_ACTION, self::STATUS_BAD_REQUEST);
         }
     }
 
@@ -196,11 +227,11 @@ class Request
         }
 
         if (!isset($this->incomeData['nonce'])) {
-            $this->finish(self::ERROR_MISSING_NONCE);
+            $this->finish(self::ERROR_MISSING_NONCE, self::STATUS_BAD_REQUEST);
         }
 
         if (!Crypter::compare('ajax_' . strtolower($this->action) . '_nonce', $this->incomeData['nonce'], 'nonce')) {
-            $this->finish(self::ERROR_INVALID_NONCE);
+            $this->finish(self::ERROR_INVALID_NONCE, self::STATUS_BAD_REQUEST);
         }
     }
 }

@@ -18,7 +18,7 @@ final class DebugComposer
 {
     public function compose(View $view)
     {
-        $view->with('testMethod', $this->testMethod());
+        $view->with('testVariable', $this->testMethod());
     }
 
     public function testMethod()
