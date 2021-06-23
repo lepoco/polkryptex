@@ -7,9 +7,9 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core\Components;
+namespace App\Core\Components;
 
-use Polkryptex\Core\Registry;
+use App\Core\Registry;
 use Nette\Http\Response;
 
 /**
@@ -17,7 +17,7 @@ use Nette\Http\Response;
  */
 final class Router
 {
-    private const REQUEST_NAMESPACE = 'Polkryptex\\Common\\Requests\\';
+    private const REQUEST_NAMESPACE = 'App\\Common\\Requests\\';
 
     private \Bramus\Router\Router $router;
 
@@ -76,14 +76,14 @@ final class Router
 
     private function view(string $namespace, array $arguments = []): object
     {
-        return new \Polkryptex\Core\Controller($namespace, $arguments);
+        return new \App\Core\Controller($namespace, $arguments);
     }
 
     private function request(): object
     {
         $requestController = self::REQUEST_NAMESPACE . filter_var($_REQUEST['action'] ?? '__UNKNOWN', FILTER_SANITIZE_STRING, ['default' => '__UNKNOWN']) . 'Request';
         if (!isset($_REQUEST['action']) || !class_exists($requestController)) {
-            return new \Polkryptex\Core\Request();
+            return new \App\Core\Request();
         }
 
         return new $requestController();

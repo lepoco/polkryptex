@@ -1,14 +1,21 @@
+@extends('layouts.app')
+@section('content')
 
-@include('components.header')
-@include('components.navigation')
-
-<div class="container">
+<div class="wallet container pt-5 pb-5">
     <div class="row">
         <div class="col-12">
-            <h2>@translate('Wallet')</h2>
+            <div class="wallet__banner h-100 p-5 bg-light rounded-3">
+                <div>
+                    @placeholder('100x100')
+                </div>
+                <div>
+                    <h2>1000` EUR</h2>
+                    <p>currency</p>
+                    <a href="{{ $baseUrl . 'dashboard/wallet/transfer' }}" class="btn btn-outline-dark" type="button">@translate('Select currency')</a> <a href="{{ $baseUrl . 'dashboard/wallet/topup' }}" class="btn btn-dark" type="button">@translate('Transfer')</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-@include('components.expanded-footer')
-@include('components.footer')
+@endsection

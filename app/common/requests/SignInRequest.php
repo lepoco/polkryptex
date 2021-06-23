@@ -7,12 +7,12 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Common\Requests;
+namespace App\Common\Requests;
 
-use Polkryptex\Core\Registry;
-use Polkryptex\Core\Request;
-use Polkryptex\Core\Components\User;
-use Polkryptex\Core\Components\Crypter;
+use App\Core\Registry;
+use App\Core\Request;
+use App\Core\Components\User;
+use App\Core\Components\Crypter;
 
 /**
  * @author Szymon K.

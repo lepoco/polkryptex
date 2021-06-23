@@ -7,10 +7,10 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core\Components;
+namespace App\Core\Components;
 
 use \DateTime;
-use Polkryptex\Core\Registry;
+use App\Core\Registry;
 
 /**
  * @author Leszek P.
@@ -33,7 +33,7 @@ final class Account
             return new User();
         }
 
-        $this->currentUser = \Polkryptex\Core\Components\User::fromId(intval($userSession->id));
+        $this->currentUser = \App\Core\Components\User::fromId(intval($userSession->id));
 
         return $this->currentUser;
     }

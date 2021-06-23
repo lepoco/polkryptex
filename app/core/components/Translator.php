@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core\Components;
+namespace App\Core\Components;
 
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use Symfony\Component\Translation\Loader\MoFileLoader;
@@ -41,7 +41,7 @@ final class Translator
         }
 
         if ($code != 'en_US') {
-            \Polkryptex\Core\Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
+            \App\Core\Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
         }
     }
 

@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace App\Core;
 
 use ReflectionMethod;
 
@@ -16,7 +16,7 @@ use ReflectionMethod;
  */
 abstract class Blade
 {
-    protected const COMPOSERS_NAMESPACE = '\\Polkryptex\\Common\\Composers\\';
+    protected const COMPOSERS_NAMESPACE = '\\App\\Common\\Composers\\';
 
     protected const VIEWS_PATH = 'common\\views\\';
 
@@ -81,15 +81,15 @@ abstract class Blade
     protected function registerDirectives()
     {
         $this->addDirective('translate', function ($text) {
-            return '<?php echo Polkryptex\Core\Registry::get(\'Translator\')->translate(' . $text . '); ?>';
+            return '<?php echo App\Core\Registry::get(\'Translator\')->translate(' . $text . '); ?>';
         });
 
         $this->addDirective('option', function ($name, $default = null) {
-            return '<?php echo Polkryptex\Core\Registry::get(\'Options\')->get(' . $name . ', ' . $default . '); ?>';
+            return '<?php echo App\Core\Registry::get(\'Options\')->get(' . $name . ', ' . $default . '); ?>';
         });
 
         $this->addDirective('nonce', function ($action) {
-            return '<?php echo Polkryptex\Core\Components\Crypter::encrypt(\'ajax_' . str_replace('\'', '', $action) . '_nonce\', \'nonce\'); ?>';
+            return '<?php echo App\Core\Components\Crypter::encrypt(\'ajax_' . str_replace('\'', '', $action) . '_nonce\', \'nonce\'); ?>';
         });
 
         $this->addDirective('media', function ($media) {

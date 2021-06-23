@@ -1,16 +1,17 @@
+@extends('layouts.app')
+@section('content')
 
-@include('components.header')
-@include('components.navigation')
-
-<div class="account container">
+<div class="account container pt-5 pb-5">
     <div class="row">
         <div class="col-12 account__section">
             <div class="account__banner h-100 p-5 bg-light rounded-3">
-                <div>
+                <div class="account__banner__picture">
                     @if(!empty($user->getImage()))
-                        <img src="{{ $user->getImage() }}" alt="" />
+                        <img class="profile_picture" src="{{ $user->getImage() }}" alt="" />
                     @else
-                        @placeholder('100x100')
+                        <div class="profile_placeholder">
+                            @placeholder('100x100')
+                        </div>
                     @endif
                 </div>
                 <div>
@@ -57,5 +58,4 @@
     </div>
 </div>
 
-@include('components.expanded-footer')
-@include('components.footer')
+@endsection

@@ -1,6 +1,5 @@
-
-@include('components.header')
-@include('components.navigation')
+@extends('layouts.app')
+@section('content')
 
 <div class="container py-4">
     <div class="row">
@@ -19,9 +18,9 @@
 <div class="container py-4">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <strong>\Polkryptex\Core\Registry::get('Session')</strong>
+            <strong>\App\Core\Registry::get('Session')</strong>
             @php
-            dump(\Polkryptex\Core\Registry::get('Session'));
+            dump(\App\Core\Registry::get('Session'));
             @endphp
 
             <strong>$_SESSION</strong>
@@ -30,9 +29,9 @@
             @endphp
         </div>
         <div class="col-12 col-lg-6">
-            <strong>\Polkryptex\Core\Components\Query::getUserById(1)</strong>
+            <strong>\App\Core\Components\Query::getUserById(1)</strong>
             @php
-            $query = \Polkryptex\Core\Components\Query::getUserById(1);
+            $query = \App\Core\Components\Query::getUserById(1);
             dump($query);
             @endphp
         </div>
@@ -41,29 +40,28 @@
             @debug
         </div>
         <div class="col-12 col-lg-6">
-            <strong>\Polkryptex\Core\Registry::get('Account')->currentUser()</strong>
+            <strong>\App\Core\Registry::get('Account')->currentUser()</strong>
             @php
-            dump(\Polkryptex\Core\Registry::get('Account')->currentUser());
+            dump(\App\Core\Registry::get('Account')->currentUser());
             @endphp
 
-            <strong>\Polkryptex\Core\Registry::get('Account')->isLoggedIn()</strong>
+            <strong>\App\Core\Registry::get('Account')->isLoggedIn()</strong>
             @php
-            dump(\Polkryptex\Core\Registry::get('Account')->isLoggedIn());
+            dump(\App\Core\Registry::get('Account')->isLoggedIn());
             @endphp
 
-            <strong>\Polkryptex\Core\Registry::get('Response')</strong>
+            <strong>\App\Core\Registry::get('Response')</strong>
             @php
-            dump(\Polkryptex\Core\Registry::get('Response'));
+            dump(\App\Core\Registry::get('Response'));
             @endphp
         </div>
         <div class="col-12 col-lg-6">
-            <strong>\Polkryptex\Core\Registry::get('Request')</strong>
+            <strong>\App\Core\Registry::get('Request')</strong>
             @php
-            dump(\Polkryptex\Core\Registry::get('Request'));
+            dump(\App\Core\Registry::get('Request'));
             @endphp
         </div>
     </div>
 </div>
 
-@include('components.expanded-footer')
-@include('components.footer')
+@endsection

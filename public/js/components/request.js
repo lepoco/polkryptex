@@ -49,6 +49,8 @@ export default class Request {
       }
     };
 
+    XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
     if (METHOD == "POST") {
       XHR.send(formData);
     } else {

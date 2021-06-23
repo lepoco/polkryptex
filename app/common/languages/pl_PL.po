@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-06-20 21:54+0200\n"
-"PO-Revision-Date: 2021-06-20 21:54+0200\n"
+"POT-Creation-Date: 2021-06-21 14:02+0200\n"
+"PO-Revision-Date: 2021-06-21 14:02+0200\n"
 "Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
 "Language-Team: Polkryptex\n"
 "Language: pl_PL\n"
@@ -48,7 +48,7 @@ msgid "Budget & Analytics"
 msgstr "Budżet & Analityka"
 
 #: views/components/expanded-footer.blade.php:18
-#: views/components/navigation.blade.php:40 views/dashboard/wallet.blade.php:8
+#: views/components/navigation.blade.php:40
 msgid "Wallet"
 msgstr "Portfel"
 
@@ -101,7 +101,7 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #: views/components/expanded-footer.blade.php:69
-#: views/components/navigation.blade.php:53 views/help.blade.php:8
+#: views/components/navigation.blade.php:53 views/help.blade.php:7
 msgid "Help"
 msgstr "Pomoc"
 
@@ -110,16 +110,17 @@ msgid "Help Centre"
 msgstr "Centrum pomocy"
 
 #: views/components/expanded-footer.blade.php:75
-msgid "Community"
-msgstr "Społeczność"
-
-#: views/components/expanded-footer.blade.php:78
 msgid "Security"
 msgstr "Bezpieczeństwo"
 
-#: views/components/expanded-footer.blade.php:81
+#: views/components/expanded-footer.blade.php:78
 msgid "Developer APIs"
 msgstr "Interfejsy API"
+
+#: views/components/expanded-footer.blade.php:81
+#: views/static/licenses.blade.php:7
+msgid "Licenses"
+msgstr "Licencje"
 
 #: views/components/expanded-footer.blade.php:94
 msgid "Website Terms"
@@ -154,7 +155,7 @@ msgid "Debug"
 msgstr "Debugowanie"
 
 #: views/components/navigation.blade.php:37
-#: views/dashboard/dashboard.blade.php:8
+#: views/dashboard/dashboard.blade.php:7
 msgid "Dashboard"
 msgstr "Kokpit"
 
@@ -162,7 +163,7 @@ msgstr "Kokpit"
 msgid "Features"
 msgstr "Funkcje"
 
-#: views/components/navigation.blade.php:50 views/plans.blade.php:8
+#: views/components/navigation.blade.php:50 views/plans.blade.php:7
 msgid "Plans"
 msgstr "Plany"
 
@@ -170,7 +171,7 @@ msgstr "Plany"
 msgid "Sign Out"
 msgstr "Wyloguj się"
 
-#: views/components/navigation.blade.php:64 views/sign-in.blade.php:18
+#: views/components/navigation.blade.php:64 views/sign-in.blade.php:20
 msgid "Sign in"
 msgstr "Zaloguj się"
 
@@ -178,86 +179,111 @@ msgstr "Zaloguj się"
 msgid "Register for free"
 msgstr "Zarejestruj się za darmo"
 
-#: views/dashboard/account.blade.php:17
+#: views/dashboard/account.blade.php:18
 msgid "Hello,"
 msgstr "Cześć,"
 
-#: views/dashboard/account.blade.php:19
+#: views/dashboard/account.blade.php:20
 msgid "Make a new transfer"
 msgstr "Zrób przelew"
 
-#: views/dashboard/account.blade.php:19
+#: views/dashboard/account.blade.php:20
 msgid "Top up"
 msgstr "Doładuj konto"
 
-#: views/installer.blade.php:6
-msgid "Installer"
-msgstr "Instalator"
-
-#: views/installer.blade.php:12
-msgid "Database"
-msgstr "Baza danych"
-
-#: views/installer.blade.php:16 views/installer.blade.php:38
-msgid "User"
-msgstr "Użytkownik"
-
-#: views/installer.blade.php:20 views/installer.blade.php:50
-#: views/register.blade.php:19 views/sign-in.blade.php:15
-msgid "Password"
-msgstr "Hasło"
-
-#: views/installer.blade.php:27
-msgid "Host"
-msgstr "Serwer"
-
-#: views/installer.blade.php:31
-msgid "Table"
-msgstr "Tablica"
-
-#: views/installer.blade.php:42 views/register.blade.php:11
-msgid "Username"
-msgstr "Użytkownik"
-
-#: views/installer.blade.php:46 views/sign-in.blade.php:11
+#: views/dashboard/account.blade.php:33 views/installer.blade.php:43
+#: views/sign-in.blade.php:11
 msgid "Email"
 msgstr "Email"
 
-#: views/installer.blade.php:55
+#: views/dashboard/account.blade.php:38 views/installer.blade.php:39
+#: views/register.blade.php:12
+msgid "Username"
+msgstr "Użytkownik"
+
+#: views/dashboard/account.blade.php:43
+msgid "Display name"
+msgstr "Nazwa wyświetlana"
+
+#: views/dashboard/account.blade.php:48
+msgid "Profile picture"
+msgstr "Obrazek profilowy"
+
+#: views/dashboard/account.blade.php:51
+msgid "Update"
+msgstr "Aktualizuj"
+
+#: views/dashboard/wallet.blade.php:14
+msgid "Select currency"
+msgstr "Wybierz walutę"
+
+#: views/dashboard/wallet.blade.php:14
+msgid "Transfer"
+msgstr "Przelew"
+
+#: views/installer.blade.php:4
+msgid "Installer"
+msgstr "Instalator"
+
+#: views/installer.blade.php:9
+msgid "Database"
+msgstr "Baza danych"
+
+#: views/installer.blade.php:13 views/installer.blade.php:35
+msgid "User"
+msgstr "Użytkownik"
+
+#: views/installer.blade.php:17 views/installer.blade.php:47
+#: views/register.blade.php:24 views/sign-in.blade.php:17
+msgid "Password"
+msgstr "Hasło"
+
+#: views/installer.blade.php:24
+msgid "Host"
+msgstr "Serwer"
+
+#: views/installer.blade.php:28
+msgid "Table"
+msgstr "Tablica"
+
+#: views/installer.blade.php:52
 msgid "Begin installation"
 msgstr "Rozpocznij instalację"
 
-#: views/not-found.blade.php:6
+#: views/not-found.blade.php:4
 msgid "Ups!"
 msgstr "Ojej!"
 
-#: views/not-found.blade.php:7
+#: views/not-found.blade.php:5
 msgid "The page you are looking for has not been found."
 msgstr "Strona, której szukasz nie została znaleziona."
 
-#: views/not-found.blade.php:9
+#: views/not-found.blade.php:6
 msgid "Back to the home page"
 msgstr "Wróć na stronę główną"
 
-#: views/register.blade.php:6 views/register.blade.php:26
+#: views/register.blade.php:5 views/register.blade.php:33
 msgid "Register"
 msgstr "Zarejestruj się"
 
-#: views/register.blade.php:15
+#: views/register.blade.php:18
 msgid "Email address"
 msgstr "Adres e-mail"
 
-#: views/register.blade.php:23
+#: views/register.blade.php:30
 msgid "Confirm Password"
 msgstr "Potwierdź hasło"
 
-#: views/register.blade.php:26 views/sign-in.blade.php:18
+#: views/register.blade.php:33 views/sign-in.blade.php:20
 msgid "Back to home"
 msgstr "Wróć na stronę główną"
 
-#: views/sign-in.blade.php:6
+#: views/sign-in.blade.php:4
 msgid "Sign In"
 msgstr "Zaloguj się"
+
+#~ msgid "Community"
+#~ msgstr "Społeczność"
 
 #~ msgid "My Account"
 #~ msgstr "Moje Konto"

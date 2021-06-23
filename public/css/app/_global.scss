@@ -58,6 +58,13 @@ form,
   padding-right: 2rem;
 }
 
+.pl-1 {
+  padding-left: 1rem;
+}
+.pl-2 {
+  padding-left: 2rem;
+}
+
 .btn {
   display: inline-flex;
   justify-content: center;
@@ -81,4 +88,17 @@ form,
     color: $c-light;
     background: $c-dark;
   }
+}
+
+.-font-primary {
+  font-family: $f-primary;
+}
+
+.-font-secondary {
+  font-family: $f-secondary;
+}
+
+.-justify {
+  text-align: justify;
+    text-justify: inter-word;
 }

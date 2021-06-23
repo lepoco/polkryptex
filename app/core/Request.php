@@ -7,11 +7,11 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace App\Core;
 
 use Ramsey\Uuid\Uuid;
 use Nette\Http\Request as NetteRequest;
-use Polkryptex\Core\Components\Crypter;
+use App\Core\Components\Crypter;
 
 /**
  * @author Leszek P.
@@ -91,7 +91,7 @@ class Request
             $this->setStatus($status);
         }
 
-        \Polkryptex\Core\Application::stop(json_encode($this->response, JSON_UNESCAPED_UNICODE));
+        \App\Core\Application::stop(json_encode($this->response, JSON_UNESCAPED_UNICODE));
     }
 
     protected function isSet(array $fields): void

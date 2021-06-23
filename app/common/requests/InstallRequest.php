@@ -7,14 +7,14 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Common\Requests;
+namespace App\Common\Requests;
 
 use Mysqli;
 use Ramsey\Uuid\Uuid;
-use Polkryptex\Core\Database;
-use Polkryptex\Core\Request;
-use Polkryptex\Core\Registry;
-use Polkryptex\Core\Components\Crypter;
+use App\Core\Database;
+use App\Core\Request;
+use App\Core\Registry;
+use App\Core\Components\Crypter;
 
 /**
  * @author Leszek P.
@@ -87,7 +87,7 @@ final class InstallRequest extends Request
         $config .= "\n" . ' * @license   https://www.gnu.org/licenses/gpl-3.0.txt';
         $config .= "\n" . ' */';
         $config .= "\n";
-        $config .= "\n" . 'namespace Polkryptex;';
+        $config .= "\n" . 'namespace App;';
         $config .= "\n";
         $config .= "\n" . 'defined(\'ABSPATH\') or die(\'No script kiddies please!\');';
         $config .= "\n";
@@ -107,14 +107,14 @@ final class InstallRequest extends Request
         $config .= "\n" . 'define(\'APP_USERS_NAMESPACE\', \'' . $this->usersNamespace . '\');';
         $config .= "\n" . 'define(\'APP_TRANSACTIONS_NAMESPACE\', \'' . $this->transationsNamespace . '\');';
         $config .= "\n";
-        $config .= "\n" . 'define(\'APP_DEBUG\', false);';
-        $config .= "\n" . 'define(\'APP_DEBUG_DISPLAY\', false);';
+        $config .= "\n" . 'define(\'APP_DEBUG\', true);';
+        $config .= "\n" . 'define(\'APP_DEBUG_DISPLAY\', true);';
         $config .= "\n";
 
         $path = ABSPATH . APPDIR . 'config.php';
         file_put_contents($path, $config);
 
-        Registry::get('Debug')->info('Configuration file has been created', ['request' => 'Polkryptex\Common\Requests\Install']);
+        Registry::get('Debug')->info('Configuration file has been created', ['request' => 'App\Common\Requests\Install']);
     }
 
     private function createHtaccess(string $dir = '/'): void
@@ -138,7 +138,7 @@ final class InstallRequest extends Request
         $path = ABSPATH . 'public/.htaccess';
         file_put_contents($path, $htaccess);
 
-        Registry::get('Debug')->info('.htaccess file has been created', ['request' => 'Polkryptex\Common\Requests\Install']);
+        Registry::get('Debug')->info('.htaccess file has been created', ['request' => 'App\Common\Requests\Install']);
     }
 
     private function createDatabase(): void
@@ -165,7 +165,7 @@ final class InstallRequest extends Request
 
         unset($database);
 
-        Registry::get('Debug')->info('Tables for the database have been created', ['request' => 'Polkryptex\Common\Requests\Install', 'sql' => ABSPATH . APPDIR . 'database/database.sql']);
+        Registry::get('Debug')->info('Tables for the database have been created', ['request' => 'App\Common\Requests\Install', 'sql' => ABSPATH . APPDIR . 'database/database.sql']);
     }
 
     private function fillDatabase(): void

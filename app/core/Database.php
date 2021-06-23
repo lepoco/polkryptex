@@ -7,10 +7,10 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace App\Core;
 
 use Mysqli;
-use Polkryptex\Core\Singleton as App;
+use App\Core\Singleton as App;
 
 /**
  * @author David Adams

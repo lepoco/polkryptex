@@ -7,10 +7,10 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Common\Composers;
+namespace App\Common\Composers;
 
 use Illuminate\View\View;
-use Polkryptex\Core\Registry;
+use App\Core\Registry;
 
 /**
  * @author Leszek P.

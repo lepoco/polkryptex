@@ -72,13 +72,13 @@
                                 <a href="#">@translate('Help Centre')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Community')</a>
-                            </li>
-                            <li>
                                 <a href="#">@translate('Security')</a>
                             </li>
                             <li>
                                 <a href="#">@translate('Developer APIs')</a>
+                            </li>
+                            <li>
+                                <a href="{{ $baseUrl . 'licenses' }}">@translate('Licenses')</a>
                             </li>
                         </ul>
                     </div>

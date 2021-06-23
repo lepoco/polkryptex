@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace App\Core;
 
 /**
  * @author Leszek P.
@@ -21,7 +21,7 @@ final class Registry
 
     public static function dump(): array
     {
-        return defined('POLKRYPTEX_DEBUG') && POLKRYPTEX_DEBUG ? self::$objects : [];
+        return defined('APP_DEBUG') && APP_DEBUG ? self::$objects : [];
     }
 
     public static function register(string $name, $object, array $access = []): void

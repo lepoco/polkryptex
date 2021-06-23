@@ -7,10 +7,10 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace App\Core;
 
 use Nette\Http\Request;
-use Polkryptex\Core\Components\Utils;
+use App\Core\Components\Utils;
 
 /**
  * @author Leszek P.
@@ -53,7 +53,7 @@ class Controller extends Blade
             $this->{'done'}();
         }
 
-        \Polkryptex\Core\Application::stop();
+        \App\Core\Application::stop();
     }
 
     private function setupNamespace(string $namespace): void
@@ -140,7 +140,7 @@ class Controller extends Blade
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
         $this->addData('fullscreen', $this->fullScreen);
-        $this->addData('csrfToken', \Polkryptex\Core\Components\Crypter::salter(64), false);
+        $this->addData('csrfToken', \App\Core\Components\Crypter::salter(64), false);
 
         $this->addData('auth', [
             'loggedIn' => Registry::get('Account')->isLoggedIn(),
@@ -217,11 +217,11 @@ class Controller extends Blade
 
     protected function getOption(string $name, $default = null)
     {
-        return \Polkryptex\Core\Registry::get('Options')->get($name, $default);
+        return \App\Core\Registry::get('Options')->get($name, $default);
     }
 
     protected function __(string $text, ?array $variables = null): ?string
     {
-        return \Polkryptex\Core\Registry::get('Translator')->translate($text, $variables);
+        return \App\Core\Registry::get('Translator')->translate($text, $variables);
     }
 }

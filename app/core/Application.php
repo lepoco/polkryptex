@@ -7,7 +7,7 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Polkryptex\Core;
+namespace App\Core;
 
 /**
  * @author Leszek P.
@@ -21,8 +21,8 @@ final class Application
     private function __construct()
     {
         Registry::register('Debug', new Debug());
-        Registry::register('Database', new Database(), ['\Polkryptex\Core\Components\Queries']);
-        Registry::register('Options', new Components\Options(), ['\Polkryptex\Core\Controller', '\Polkryptex\Core\Request']);
+        Registry::register('Database', new Database(), ['\App\Core\Components\Queries']);
+        Registry::register('Options', new Components\Options(), ['\App\Core\Controller', '\App\Core\Request']);
         Registry::register('Response', new \Nette\Http\Response());
         Registry::register('Request', (new \Nette\Http\RequestFactory())->fromGlobals());
         Registry::register('Account', new Components\Account());
@@ -79,6 +79,7 @@ final class Application
         $router->register('/dashboard/wallet', 'Dashboard\\Wallet', ['title' => 'Wallet', 'requireLogin' => true]);
         $router->register('/dashboard/account', 'Dashboard\\Account', ['title' => 'Account', 'requireLogin' => true]);
 
+        $router->register('/licenses', 'Static\\Licenses', ['title' => 'Licenses']);
         $router->run();
     }
 
