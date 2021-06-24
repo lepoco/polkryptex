@@ -11,7 +11,7 @@
                 <div>
                     <h2>1000` EUR</h2>
                     <p>currency</p>
-                    <a href="{{ $baseUrl . 'dashboard/wallet/transfer' }}" class="btn btn-outline-dark" type="button">@translate('Select currency')</a> <a href="{{ $baseUrl . 'dashboard/wallet/topup' }}" class="btn btn-dark" type="button">@translate('Transfer')</a>
+                    <a href="@dashurl('wallet/transfer')" class="btn btn-outline-dark" type="button">@translate('Select currency')</a> <a href="@dashurl('wallet/topup')" class="btn btn-dark" type="button">@translate('Transfer')</a>
                 </div>
             </div>
         </div>

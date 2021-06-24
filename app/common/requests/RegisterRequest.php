@@ -61,10 +61,12 @@ final class RegisterRequest extends Request
         $query = Query::getUserByEmail($this->getData('email'));
         if(!empty($query))
         {
+            Registry::get('Debug')->warning('Attempting to register an existing account', ['user' => $this->getData('email')]);
             $this->finish(self::ERROR_USER_EMAIL_EXISTS);
         }
 
         Query::addUser($this->getData('username'), $this->getData('email'), $this->getData('password'));
+        Registry::get('Debug')->info('User has registered', ['user' => $this->getData('email')]);
 
         $this->finish(self::CODE_SUCCESS);
     }

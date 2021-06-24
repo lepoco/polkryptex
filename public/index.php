@@ -27,7 +27,15 @@ date_default_timezone_set('UTC');
 
 require_once ABSPATH . 'vendor/autoload.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+if (defined('APP_DEBUG') && APP_DEBUG) {
+
+    if (defined('APP_DEBUG_DISPLAY') && APP_DEBUG_DISPLAY) {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    } else {
+        error_reporting(0);
+    }
+}
+
 App\Core\Application::start();

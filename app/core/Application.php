@@ -14,10 +14,6 @@ namespace App\Core;
  */
 final class Application
 {
-    /**
-     * @link https://packagist.org/packages/monolog/monolog
-     * @link https://github.com/bramus/router
-     */
     private function __construct()
     {
         Registry::register('Debug', new Debug());
@@ -32,12 +28,18 @@ final class Application
         $this->registerRouter();
     }
 
+    /**
+     * @see https://doc.nette.org/en/3.1/sessions
+     */
     private function registerSession()
     {
         Registry::register('Session', new \Nette\Http\Session(Registry::get('Request'), Registry::get('Response')));
         Registry::get('Session')->start();
     }
 
+    /**
+     * @see https://symfony.com/doc/current/translation.html
+     */
     private function registerTranslation()
     {
         $translator = new Components\Translator();
@@ -50,22 +52,25 @@ final class Application
                 $translator->setLanguage('en_US');
                 break;
         }
-        
+
         Registry::register('Translator', $translator);
     }
 
+    /**
+     * @see https://github.com/bramus/router
+     */
     private function registerRouter()
     {
         $router = new Components\Router();
 
-        if(!defined('APP_VERSION')) {
+        if (!defined('APP_VERSION')) {
             $router->register('', 'Installer', ['title' => 'Installer', 'fullscreen' => true]);
             $router->run();
 
             return;
         }
 
-        if(Debug::isDebug()) {
+        if (Debug::isDebug()) {
             $router->register('/debug', 'Debug');
         }
 
@@ -74,26 +79,34 @@ final class Application
         $router->register('/signin', 'SignIn', ['title' => 'Sign In', 'fullscreen' => true]);
         $router->register('/plans', 'Plans', ['title' => 'Plans']);
         $router->register('/help', 'Help', ['title' => 'Help']);
-    
+
         $router->register('/dashboard', 'Dashboard\\Dashboard', ['title' => 'Dashboard', 'requireLogin' => true]);
         $router->register('/dashboard/wallet', 'Dashboard\\Wallet', ['title' => 'Wallet', 'requireLogin' => true]);
         $router->register('/dashboard/account', 'Dashboard\\Account', ['title' => 'Account', 'requireLogin' => true]);
+        $router->register('/dashboard/account/change-password', 'Dashboard\\AccountNewPassword', ['title' => 'Change your password', 'requireLogin' => true]);
 
+        $router->register('/private', 'Static\\Private', ['title' => 'Private']);
+        $router->register('/business', 'Static\\Business', ['title' => 'Business']);
         $router->register('/licenses', 'Static\\Licenses', ['title' => 'Licenses']);
+
         $router->run();
     }
 
     /**
      * Returns a new application instance, should be triggered by public/index.php
-     * @return Application
      */
     static function start(): self
     {
         return new self();
     }
 
+    /**
+     * Exits the application and closes the session. Optionally, it can display the given string.
+     * @param null|string $message Optional message to display
+     */
     static function stop(?string $message = null): void
     {
+        Registry::get('Debug')->close();
         Registry::get('Session')->close();
         exit($message);
     }

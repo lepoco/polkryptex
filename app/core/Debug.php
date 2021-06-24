@@ -14,6 +14,7 @@ use Monolog\Handler\StreamHandler;
 
 /**
  * @author Leszek P.
+ * @see https://packagist.org/packages/monolog/monolog
  */
 final class Debug
 {
@@ -21,19 +22,8 @@ final class Debug
 
     public function __construct()
     {
-        if (defined('APP_DEBUG') && APP_DEBUG) {
-
-            if (defined('APP_DEBUG_DISPLAY') && APP_DEBUG_DISPLAY) {
-                ini_set('display_errors', 1);
-                ini_set('display_startup_errors', 1);
-                error_reporting(E_ALL);
-            } else {
-                error_reporting(0);
-            }
-        }
-
-        $this->monolog = new Logger('Polkryptex');
-        $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'debug.log', Logger::WARNING));
+        $this->monolog = new Logger('APP');
+        $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . date('Y-m-d').'.log'));
     }
 
     public static function isDebug(): bool
@@ -41,24 +31,36 @@ final class Debug
         return (defined('APP_DEBUG') && APP_DEBUG) || !defined('APP_VERSION');
     }
 
-    public function info(string $message, ?array $data = []): void
+    public function close(): void
+    {
+        $this->monolog->close();
+    }
+
+    public function info(string $message, ?array $context = []): void
     {
         if ($this->monolog != null) {
-            $this->monolog->info($message, $data);
+            $this->monolog->addRecord(Logger::INFO, $message, $context);
         }
     }
 
-    public function error(string$message, ?array $data = []): void
+    public function error(string$message, ?array $context = []): void
     {
         if ($this->monolog != null) {
-            $this->monolog->error($message, $data);
+            $this->monolog->addRecord(Logger::ERROR, $message, $context);
         }
     }
 
-    public function warning(string$message, ?array $data = []): void
+    public function warning(string$message, ?array $context = []): void
     {
         if ($this->monolog != null) {
-            $this->monolog->warning($message, $data);
+            $this->monolog->addRecord(Logger::WARNING, $message, $context);
+        }
+    }
+
+    public function critical(string$message, ?array $context = []): void
+    {
+        if ($this->monolog != null) {
+            $this->monolog->addRecord(Logger::CRITICAL, $message, $context);
         }
     }
 

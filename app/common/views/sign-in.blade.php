@@ -17,7 +17,7 @@
                 <label for="password">@translate('Password')</label>
             </div>
         </div>
-        <button type="submit" class="btn btn-dark">@translate('Sign in')</button> <a href="{{ $baseUrl }}" class="btn btn-secondary">@translate('Back to home')</a>
+        <button type="submit" class="btn btn-dark">@translate('Sign in')</button> <a href="@url" class="btn btn-secondary">@translate('Back to home')</a>
     </form>
 @endsection
 

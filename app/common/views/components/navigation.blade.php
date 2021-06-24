@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="@url">
             {{-- <img src="@media('favicon.svg')" alt="Polkryptex"/> --}}
             <p>Polkryptex</p>
         </a>
@@ -13,19 +13,19 @@
 
                 @if(!$auth['loggedIn'])
                     <li class="nav-item">
-                        <a class="nav-link{{ $pagenow === 'home' ? ' active' : '' }}" aria-current="page" href="/">@translate('Home')</a>
+                        <a class="nav-link{{ $pagenow === 'home' ? ' active' : '' }}" aria-current="page" href="@url">@translate('Home')</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{{ $pagenow === 'private' ? ' active' : '' }}" href="{{ $baseUrl . 'private'}}">@translate('Private')</a>
+                        <a class="nav-link{{ $pagenow === 'private' ? ' active' : '' }}" href="@url('private')">@translate('Private')</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{{ $pagenow === 'busisness' ? ' active' : '' }}" href="{{ $baseUrl . 'busisness'}}">@translate('Business')</a>
+                        <a class="nav-link{{ $pagenow === 'business' ? ' active' : '' }}" href="@url('business')">@translate('Business')</a>
                     </li>
                 @endif
 
                 @if($debug)
                     <li class="nav-item">
-                        <a class="nav-link{{ $pagenow === 'debug' ? ' active' : '' }}" href="{{ $baseUrl . 'debug'}}">@translate('Debug')</a>
+                        <a class="nav-link{{ $pagenow === 'debug' ? ' active' : '' }}" href="@url('debug')">@translate('Debug')</a>
                     </li>
                 @endif
             </ul>
@@ -34,23 +34,23 @@
 
                     @if($auth['loggedIn'])
                         <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'dashboard-dashboard' ? ' active' : '' }}" aria-current="page" href="{{ $baseUrl . 'dashboard'}}">@translate('Dashboard')</a>
+                            <a class="nav-link{{ $pagenow === 'dashboard-dashboard' ? ' active' : '' }}" href="@dashurl">@translate('Dashboard')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'dashboard-wallet' ? ' active' : '' }}" aria-current="page" href="{{ $baseUrl . 'dashboard/wallet'}}">@translate('Wallet')</a>
+                            <a class="nav-link{{ $pagenow === 'dashboard-wallet' ? ' active' : '' }}" href="@dashurl('wallet')">@translate('Wallet')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'dashboard-account' ? ' active' : '' }}" aria-current="page" href="{{ $baseUrl . 'dashboard/account'}}">@translate('Account')</a>
+                            <a class="nav-link{{ $pagenow === 'dashboard-account' ? ' active' : '' }}" href="@dashurl('account')">@translate('Account')</a>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'features' ? ' active' : '' }}" aria-current="page" href="{{ $baseUrl . 'features'}}">@translate('Features')</a>
+                            <a class="nav-link{{ $pagenow === 'features' ? ' active' : '' }}" href="@url('features')">@translate('Features')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'plans' ? ' active' : '' }}" aria-current="page" href="{{ $baseUrl . 'plans'}}">@translate('Plans')</a>
+                            <a class="nav-link{{ $pagenow === 'plans' ? ' active' : '' }}" href="@url('plans')">@translate('Plans')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'help' ? ' active' : '' }}" aria-current="page" href="{{ $baseUrl . 'help'}}">@translate('Help')</a>
+                            <a class="nav-link{{ $pagenow === 'help' ? ' active' : '' }}" href="@url('help')">@translate('Help')</a>
                         </li>
                     @endif
 
@@ -59,10 +59,10 @@
             <div class="d-flex">
 
                 @if($auth['loggedIn'])
-                    <a href="{{ $baseUrl . 'signout'}}" class="btn btn-dark" type="submit">@translate('Sign Out')</a>
+                    <a href="@url('signout')" class="btn btn-dark" type="submit">@translate('Sign Out')</a>
                 @else
-                    <a href="{{ $baseUrl . 'signin'}}" class="btn btn-secondary mr-1" type="submit">@translate('Sign in')</a>
-                    <a href="{{ $baseUrl . 'register'}}" class="btn btn-dark" type="submit">@translate('Register for free')</a>
+                    <a href="@url('signin')" class="btn btn-secondary mr-1" type="submit">@translate('Sign in')</a>
+                    <a href="@url('register')" class="btn btn-dark" type="submit">@translate('Register for free')</a>
                 @endif
 
             </div>

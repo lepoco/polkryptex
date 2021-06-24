@@ -43,6 +43,7 @@ final class SignInRequest extends Request
         }
 
         if (!$user->checkPassword($this->getData('password'))) {
+            Registry::get('Debug')->warning('Login failed. Password incorrect', ['user' => $this->getData('email')]);
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
@@ -50,6 +51,7 @@ final class SignInRequest extends Request
         $this->addContent('token', $cookieToken);
 
         Registry::get('Account')->signIn($user, $cookieToken);
+        Registry::get('Debug')->info('User has logged in', ['user' => $this->getData('email')]);
         $this->finish(self::CODE_SUCCESS);
     }
 }

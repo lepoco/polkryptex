@@ -84,6 +84,14 @@ abstract class Blade
             return '<?php echo App\Core\Registry::get(\'Translator\')->translate(' . $text . '); ?>';
         });
 
+        $this->addDirective('url', function ($path = null) {
+            return '<?php echo $baseUrl' . (!empty($path) ? ' . ' . $path : '') . '; ?>';
+        });
+
+        $this->addDirective('dashurl', function ($path = null) {
+            return '<?php echo $baseUrl . $dashPath . \'/\'' . (!empty($path) ? ' . ' . $path : '') . '; ?>';
+        });
+
         $this->addDirective('option', function ($name, $default = null) {
             return '<?php echo App\Core\Registry::get(\'Options\')->get(' . $name . ', ' . $default . '); ?>';
         });

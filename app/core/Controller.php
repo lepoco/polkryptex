@@ -134,6 +134,7 @@ class Controller extends Blade
         $this->addData('pagenow', strtolower($this->name));
         $this->addData('debug', Debug::isDebug());
         $this->addData('baseUrl', $this->baseUrl);
+        $this->addData('dashPath', $this->getOption('dashboard', 'dashboard'));
         $this->addData('dashboard', $this->getOption('dashboard', 'dashboard'));
         $this->addData('ajax', $this->baseUrl . 'request/');
         $this->addData('bodyClasses', $this->bodyClasses);

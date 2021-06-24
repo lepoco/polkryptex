@@ -49,10 +49,17 @@ final class Router
         $this->router->get('/signout', function () {
 
             if (Registry::get('Account')->isLoggedIn()) {
+
+                Registry::get('Debug')->info('User has logged out', ['user' => Registry::get('Account')->currentUser()->getEmail()]);
                 Registry::get('Account')->signOut();
             }
 
-            $baseUrl = Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/');
+            $baseUrl = Registry::get('Options')->get('baseurl', null);
+
+            if (null === $baseUrl) {
+                $baseUrl = (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/';
+            }
+
             Registry::get('Response')->redirect($baseUrl);
         });
 

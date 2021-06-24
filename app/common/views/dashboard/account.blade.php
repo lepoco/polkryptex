@@ -17,11 +17,10 @@
                 <div>
                     <h2>@translate('Hello,') {{ $user->getDisplayName() }}</h2>
                     <p>{{ $user->getEmail() }}</p>
-                    <a href="{{ $baseUrl . 'dashboard/wallet/transfer' }}" class="btn btn-outline-dark" type="button">@translate('Make a new transfer')</a> <a href="{{ $baseUrl . 'dashboard/wallet/topup' }}" class="btn btn-dark" type="button">@translate('Top up')</a>
+                    <a href="@dashurl('wallet/transfer')" class="btn btn-outline-dark" type="button">@translate('Make a new transfer')</a> <a href="@dashurl('wallet/topup')" class="btn btn-dark" type="button">@translate('Top up')</a>
                 </div>
             </div>
         </div>
-
         <div class="col-12">
             <form id="account" method="POST">
                 <input type="hidden" name="action" value="Account"/>
@@ -48,7 +47,7 @@
                     <label for="picture">@translate('Profile picture')</label>
                 </div>
 
-                <button type="submit" class="btn btn-dark">@translate('Update')</button>
+                <button type="submit" class="btn btn-dark">@translate('Update')</button> <a href="@dashurl('account/change-password')" class="btn btn-outline-dark">@translate('Change your password')</a>
             </form>
         </div>
 

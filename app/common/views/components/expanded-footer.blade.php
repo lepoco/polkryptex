@@ -12,16 +12,16 @@
                                 @translate('Account')
                             </li>
                             <li>
-                                <a href="#">@translate('Budget & Analytics')</a>
+                                <a href="@url('#')">@translate('Budget & Analytics')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Wallet')</a>
+                                <a href="@url('#')">@translate('Wallet')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Crypto')</a>
+                                <a href="@url('#')">@translate('Crypto')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Credit cards')</a>
+                                <a href="@url('#')">@translate('Credit cards')</a>
                             </li>
                         </ul>
                     </div>
@@ -31,16 +31,16 @@
                                 @translate('Payments')
                             </li>
                             <li>
-                                <a href="#">@translate('Money transfers')</a>
+                                <a href="@url('#')">@translate('Money transfers')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Group bills')</a>
+                                <a href="@url('#')">@translate('Group bills')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Subscriptions')</a>
+                                <a href="@url('#')">@translate('Subscriptions')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Rewards')</a>
+                                <a href="@url('#')">@translate('Rewards')</a>
                             </li>
                         </ul>
                     </div>
@@ -50,16 +50,16 @@
                                 @translate('Company')
                             </li>
                             <li>
-                                <a href="#">@translate('About us')</a>
+                                <a href="@url('#')">@translate('About us')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Carriers')</a>
+                                <a href="@url('#')">@translate('Carriers')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Affiliates')</a>
+                                <a href="@url('#')">@translate('Affiliates')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Contact')</a>
+                                <a href="@url('#')">@translate('Contact')</a>
                             </li>
                         </ul>
                     </div>
@@ -69,16 +69,16 @@
                                 @translate('Help')
                             </li>
                             <li>
-                                <a href="#">@translate('Help Centre')</a>
+                                <a href="@url('#')">@translate('Help Centre')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Security')</a>
+                                <a href="@url('#')">@translate('Security')</a>
                             </li>
                             <li>
-                                <a href="#">@translate('Developer APIs')</a>
+                                <a href="@url('#')">@translate('Developer APIs')</a>
                             </li>
                             <li>
-                                <a href="{{ $baseUrl . 'licenses' }}">@translate('Licenses')</a>
+                                <a href="@url('licenses')">@translate('Licenses')</a>
                             </li>
                         </ul>
                     </div>
@@ -91,16 +91,16 @@
                         © {{ date('Y') }} Polkryptex Inc
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">@translate('Website Terms')</a>
+                        <a href="@url('#')">@translate('Website Terms')</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">@translate('Legal Agreements')</a>
+                        <a href="@url('#')">@translate('Legal Agreements')</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">@translate('Privacy Policy')</a>
+                        <a href="@url('#')">@translate('Privacy Policy')</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#">@translate('Currency Disclaimer')</a>
+                        <a href="@url('#')">@translate('Currency Disclaimer')</a>
                     </li>
                 </ul>
             </div>
