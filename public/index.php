@@ -7,6 +7,10 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 define('POLKRYPTEX_VERSION', '1.0.1');
 define('APPDIR', 'app\\');
 define('ABSPATH', dirname(__FILE__) . '\\..\\');
@@ -26,16 +30,5 @@ if (is_file(ABSPATH . APPDIR . 'config.php')) {
 date_default_timezone_set('UTC');
 
 require_once ABSPATH . 'vendor/autoload.php';
-
-if (defined('APP_DEBUG') && APP_DEBUG) {
-
-    if (defined('APP_DEBUG_DISPLAY') && APP_DEBUG_DISPLAY) {
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-    } else {
-        error_reporting(0);
-    }
-}
 
 App\Core\Application::start();

@@ -33,11 +33,6 @@
 				</div>
 
                 <div class="floating-input">
-                    <input disabled="disabled" class="floating-input__field -keep-disabled" type="text" placeholder="@translate('Username')" value="{{ $user->getName() }}" name="username">
-                    <label for="username">@translate('Username')</label>
-                </div>
-
-                <div class="floating-input">
                     <input class="floating-input__field" type="text" placeholder="@translate('Display name')" value="{{ $user->getDisplayName() }}" name="displayname">
                     <label for="displayname">@translate('Display name')</label>
                 </div>
@@ -49,10 +44,6 @@
 
                 <button type="submit" class="btn btn-dark">@translate('Update')</button> <a href="@dashurl('account/change-password')" class="btn btn-outline-dark">@translate('Change your password')</a>
             </form>
-        </div>
-
-        <div class="col-12">
-            {{-- @dump($user) --}}
         </div>
     </div>
 </div>

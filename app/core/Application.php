@@ -23,9 +23,16 @@ final class Application
         Registry::register('Request', (new \Nette\Http\RequestFactory())->fromGlobals());
         Registry::register('Account', new Components\Account());
 
+        $this->registerExceptions();
         $this->registerSession();
         $this->registerTranslation();
         $this->registerRouter();
+    }
+
+    private function registerExceptions(): void
+    {
+        set_error_handler([Registry::get('Debug'), 'errorHandler']);
+        set_exception_handler([Registry::get('Debug'), 'exceptionHandler']);
     }
 
     /**
