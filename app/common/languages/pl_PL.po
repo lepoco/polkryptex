@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-06-21 14:02+0200\n"
-"PO-Revision-Date: 2021-06-21 14:02+0200\n"
+"POT-Creation-Date: 2021-06-25 17:36+0200\n"
+"PO-Revision-Date: 2021-06-25 17:36+0200\n"
 "Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
 "Language-Team: Polkryptex\n"
 "Language: pl_PL\n"
@@ -118,7 +118,7 @@ msgid "Developer APIs"
 msgstr "Interfejsy API"
 
 #: views/components/expanded-footer.blade.php:81
-#: views/static/licenses.blade.php:7
+#: views/static/licenses.blade.php:15
 msgid "Licenses"
 msgstr "Licencje"
 
@@ -142,11 +142,11 @@ msgstr "Wyłączenie odpowiedzialności walutowej"
 msgid "Home"
 msgstr "Home"
 
-#: views/components/navigation.blade.php:19
+#: views/components/navigation.blade.php:19 views/static/private.blade.php:8
 msgid "Private"
 msgstr "Prywatnie"
 
-#: views/components/navigation.blade.php:22
+#: views/components/navigation.blade.php:22 views/static/business.blade.php:8
 msgid "Business"
 msgstr "Przedsiębiorca"
 
@@ -179,9 +179,43 @@ msgstr "Zaloguj się"
 msgid "Register for free"
 msgstr "Zarejestruj się za darmo"
 
+#: views/components/signout-modal.blade.php:7
+msgid "You will be logged out soon"
+msgstr "Wkrótce zostaniesz wylogowany"
+
+#: views/components/signout-modal.blade.php:8
+msgid ""
+"You have been inactive for several minutes, your session will be closed in a "
+"few seconds."
+msgstr ""
+"Byłeś nieaktywny przez kilka minut, sesja zostanie zamknięta w ciągu kilku "
+"sekund."
+
+#: views/components/signout-modal.blade.php:12
+msgid "Keep me logged in"
+msgstr "Zapamiętaj mnie"
+
+#: views/dashboard/account-new-password.blade.php:18
 #: views/dashboard/account.blade.php:18
 msgid "Hello,"
 msgstr "Cześć,"
+
+#: views/dashboard/account-new-password.blade.php:31
+msgid "Current password"
+msgstr "Aktualne hasło"
+
+#: views/dashboard/account-new-password.blade.php:36
+msgid "New password"
+msgstr "Nowe hasło"
+
+#: views/dashboard/account-new-password.blade.php:41
+msgid "Confirm new password"
+msgstr "Potwierdź nowe hasło"
+
+#: views/dashboard/account-new-password.blade.php:44
+#: views/dashboard/account.blade.php:45
+msgid "Change your password"
+msgstr "Zmień hasło"
 
 #: views/dashboard/account.blade.php:20
 msgid "Make a new transfer"
@@ -191,25 +225,20 @@ msgstr "Zrób przelew"
 msgid "Top up"
 msgstr "Doładuj konto"
 
-#: views/dashboard/account.blade.php:33 views/installer.blade.php:43
+#: views/dashboard/account.blade.php:32 views/installer.blade.php:43
 #: views/sign-in.blade.php:11
 msgid "Email"
 msgstr "Email"
 
-#: views/dashboard/account.blade.php:38 views/installer.blade.php:39
-#: views/register.blade.php:12
-msgid "Username"
-msgstr "Użytkownik"
-
-#: views/dashboard/account.blade.php:43
+#: views/dashboard/account.blade.php:37
 msgid "Display name"
 msgstr "Nazwa wyświetlana"
 
-#: views/dashboard/account.blade.php:48
+#: views/dashboard/account.blade.php:42
 msgid "Profile picture"
 msgstr "Obrazek profilowy"
 
-#: views/dashboard/account.blade.php:51
+#: views/dashboard/account.blade.php:45
 msgid "Update"
 msgstr "Aktualizuj"
 
@@ -246,6 +275,10 @@ msgstr "Serwer"
 msgid "Table"
 msgstr "Tablica"
 
+#: views/installer.blade.php:39 views/register.blade.php:12
+msgid "Username"
+msgstr "Użytkownik"
+
 #: views/installer.blade.php:52
 msgid "Begin installation"
 msgstr "Rozpocznij instalację"
@@ -281,6 +314,10 @@ msgstr "Wróć na stronę główną"
 #: views/sign-in.blade.php:4
 msgid "Sign In"
 msgstr "Zaloguj się"
+
+#: views/static/licenses.blade.php:23
+msgid "Open source licenses"
+msgstr "Licencje open source"
 
 #~ msgid "Community"
 #~ msgstr "Społeczność"

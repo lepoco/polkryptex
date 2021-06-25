@@ -59,6 +59,11 @@ export default class Cookie {
 
   setCookie() {
     //TODO
-    Cookies.set("cookies-policy", "{0,0,0,0}");
+    Cookies.set("cookies-policy", "{0,0,0,0}", {
+      expires: 365,
+      path: "/",
+      secure: app.props.secured,
+      sameSite: "Lax",
+    });
   }
 }

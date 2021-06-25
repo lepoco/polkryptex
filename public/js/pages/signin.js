@@ -7,7 +7,7 @@ Request.register("#signin", function (status, response) {
     Cookies.set("user", response.content.token, {
       expires: 7,
       path: "/",
-      secure: !app.props.debug,
+      secure: app.props.secured,
       sameSite: "Lax",
     });
     window.location.href = app.props.baseUrl + app.props.dashboard + "/account";

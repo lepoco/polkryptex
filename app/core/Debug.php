@@ -19,11 +19,15 @@ use Monolog\Handler\StreamHandler;
 final class Debug
 {
     private ?Logger $monolog = null;
+    private ?Logger $errorLog = null;
 
     public function __construct()
     {
         $this->monolog = new Logger('APP');
-        $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . date('Y-m-d') . '.log'));
+        $this->monolog->pushHandler(new StreamHandler(ABSPATH . 'logs/info/' . date('Y-m-d') . '.log'));
+
+        $this->errorLog = new Logger('APP');
+        $this->errorLog->pushHandler(new StreamHandler(ABSPATH . 'logs/error/' . date('Y-m-d') . '.log'));
     }
 
     public static function isDebug(): bool
@@ -36,43 +40,91 @@ final class Debug
         $this->monolog->close();
     }
 
-    public function info(string $message, ?array $context = []): void
+    public function info(string $message, ?array $context = [], bool $errorLog = false): void
     {
+        $context = $this->updateContext($context);
+
+        if ($errorLog && $this->monolog != null) {
+            $this->errorLog->addRecord(Logger::INFO, $message, $context);
+
+            return;
+        }
+
         if ($this->monolog != null) {
             $this->monolog->addRecord(Logger::INFO, $message, $context);
         }
     }
 
-    public function error(string $message, ?array $context = []): void
+    public function error(string $message, ?array $context = [], bool $errorLog = false): void
     {
+        $context = $this->updateContext($context);
+
+        if ($errorLog && $this->monolog != null) {
+            $this->errorLog->addRecord(Logger::ERROR, $message, $context);
+
+            return;
+        }
+
         if ($this->monolog != null) {
             $this->monolog->addRecord(Logger::ERROR, $message, $context);
         }
     }
 
-    public function warning(string $message, ?array $context = []): void
+    public function warning(string $message, ?array $context = [], bool $errorLog = false): void
     {
+        $context = $this->updateContext($context);
+
+        if ($errorLog && $this->monolog != null) {
+            $this->errorLog->addRecord(Logger::WARNING, $message, $context);
+
+            return;
+        }
+
         if ($this->monolog != null) {
             $this->monolog->addRecord(Logger::WARNING, $message, $context);
         }
     }
 
-    public function critical(string $message, ?array $context = []): void
+    public function critical(string $message, ?array $context = [], bool $errorLog = false): void
     {
+        $context = $this->updateContext($context);
+
+        if ($errorLog && $this->monolog != null) {
+            $this->errorLog->addRecord(Logger::CRITICAL, $message, $context);
+
+            return;
+        }
+
         if ($this->monolog != null) {
             $this->monolog->addRecord(Logger::CRITICAL, $message, $context);
         }
     }
 
-    public function alert(string $message, ?array $context = []): void
+    public function alert(string $message, ?array $context = [], bool $errorLog = false): void
     {
+        $context = $this->updateContext($context);
+
+        if ($errorLog && $this->monolog != null) {
+            $this->errorLog->addRecord(Logger::ALERT, $message, $context);
+
+            return;
+        }
+
         if ($this->monolog != null) {
             $this->monolog->addRecord(Logger::ALERT, $message, $context);
         }
     }
 
-    public function emergency(string $message, ?array $context = []): void
+    public function emergency(string $message, ?array $context = [], bool $errorLog = false): void
     {
+        $context = $this->updateContext($context);
+
+        if ($errorLog && $this->monolog != null) {
+            $this->errorLog->addRecord(Logger::EMERGENCY, $message, $context);
+
+            return;
+        }
+
         if ($this->monolog != null) {
             $this->monolog->addRecord(Logger::EMERGENCY, $message, $context);
         }
@@ -96,21 +148,21 @@ final class Debug
                 $context['type'] = 'E_USER_ERROR';
 
                 dump("[$errno] $errstr", $context);
-                $this->emergency("[$errno] $errstr", $context);
+                $this->emergency("[$errno] $errstr", $context, true);
                 exit(1);
 
             case E_USER_WARNING:
                 $context['type'] = 'E_USER_WARNING';
-                $this->alert("[$errno] $errstr", $context);
+                $this->alert("[$errno] $errstr", $context, true);
                 break;
 
             case E_USER_NOTICE:
                 $context['type'] = 'E_USER_NOTICE';
-                $this->critical("[$errno] $errstr", $context);
+                $this->critical("[$errno] $errstr", $context, true);
                 break;
 
             default:
-                $this->emergency("[$errno] $errstr", $context);
+                $this->emergency("[$errno] $errstr", $context, true);
                 break;
         }
 
@@ -146,7 +198,7 @@ final class Debug
             );
         }
 
-        $this->emergency('EXCEPTION: ' . $errstr, $context);
+        $this->emergency('EXCEPTION: ' . $errstr, $context, true);
         $this->showError(true, $errstr, $exception->getLine(), $exception->getFile(), null, $result);
 
         return true;
@@ -156,6 +208,16 @@ final class Debug
     {
         $this->critical('EXCEPTION: ' . $exception->getMessage());
         echo $exception->getMessage();
+    }
+
+    private function updateContext(array $context): array
+    {
+        $context['ip'] = Registry::get('Request')->getRemoteAddress();
+        $context['path'] = Registry::get('Request')->getUrl()->getPath();
+        $context['port'] = Registry::get('Request')->getUrl()->getPort();
+        $context['user-agent'] = Registry::get('Request')->getHeader('User-Agent');
+
+        return $context;
     }
 
     private function showError(bool $exception = false, ?string $message, ?string $line, ?string $file, ?string $errorNumber = null, ?array $trace = null): void

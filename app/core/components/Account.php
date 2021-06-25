@@ -55,7 +55,8 @@ final class Account
         Query::setCookieToken($user->getId(), Crypter::encrypt($cookieToken, 'cookie'));
         Query::updateLastLogin($user->getId());
         
-        $userSession->setExpiration('10 minutes');
+        $timeout = Registry::get('Options')->get('login_timeout', '10') . ' minutes';
+        $userSession->setExpiration($timeout);
         Registry::get('Session')->regenerateId();
     }
 
@@ -75,8 +76,9 @@ final class Account
             return false;
         }
 
-        //Kill user session after 10 minutes of inactivity
-        $userSession->setExpiration('10 minutes');
+        //Kill user session after n minutes of inactivity
+        $timeout = Registry::get('Options')->get('login_timeout', '10') . ' minutes';
+        $userSession->setExpiration($timeout);
         Registry::get('Session')->regenerateId();
 
         return $user->checkSessionToken($userSession->token) && $user->checkCookieToken($userCookie);

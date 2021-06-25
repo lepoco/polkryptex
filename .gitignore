@@ -22,6 +22,7 @@ app/config.php
 app/config-sample.php
 
 # Logs
+logs/*
 logs
 *.log
 npm-debug.log*

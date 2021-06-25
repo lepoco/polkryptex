@@ -124,16 +124,39 @@ final class InstallRequest extends Request
             $dir = '';
         }
 
-        $htaccess  = 'Options All -Indexes';
-        $htaccess .= "\n" . '<IfModule mod_rewrite.c>';
-        $htaccess .= "\n" . 'RewriteEngine On';
-        $htaccess .= "\n" . 'RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]';
-        $htaccess .= "\n" . 'RewriteBase /';
-        $htaccess .= "\n" . 'RewriteRule ^index\.php$ - [L]';
-        $htaccess .= "\n" . 'RewriteCond %{REQUEST_FILENAME} !-f';
-        $htaccess .= "\n" . 'RewriteCond %{REQUEST_FILENAME} !-d';
-        $htaccess .= "\n" . 'RewriteRule . ' . $dir . 'index.php [L]';
+        $htaccess =         'Options All -Indexes';
+        $htaccess .= "\n" . 'AddDefaultCharset UTF-8';
+        $htaccess .= "\n";
+        $htaccess .= "\n" . '<IfModule mod_headers.c>';
+        $htaccess .= "\n" . '  Header unset ETag';
         $htaccess .= "\n" . '</IfModule>';
+        $htaccess .= "\n" . 'FileETag None';
+        $htaccess .= "\n";
+        $htaccess .= "\n" . '<IfModule mod_expires.c>';
+        $htaccess .= "\n" . '    ExpiresActive off';
+        $htaccess .= "\n" . '</IfModule>';
+        $htaccess .= "\n";
+        $htaccess .= "\n" . '<IfModule mod_rewrite.c>';
+        $htaccess .= "\n" . '    RewriteEngine On';
+        $htaccess .= "\n" . '    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]';
+        $htaccess .= "\n" . '    RewriteBase /';
+        $htaccess .= "\n" . '    RewriteRule ^index\.php$ - [L]';
+        $htaccess .= "\n" . '    RewriteCond %{REQUEST_FILENAME} !-f';
+        $htaccess .= "\n" . '    RewriteCond %{REQUEST_FILENAME} !-d';
+        $htaccess .= "\n" . '    RewriteRule . ' . $dir . 'index.php [L]';
+        $htaccess .= "\n" . '</IfModule>';
+        $htaccess .= "\n";
+        $htaccess .= "\n" . '<FilesMatch "\.(webmanifest)$">';
+        $htaccess .= "\n" . '    Header set Content-Type "application/manifest+json; charset=utf-8"';
+        $htaccess .= "\n" . '    Header set Cache-Control "max-age=31536000, immutable"';
+        $htaccess .= "\n" . '    Header set X-Content-Type-Options "nosniff"';
+        $htaccess .= "\n" . '</FilesMatch>';
+        $htaccess .= "\n";
+        $htaccess .= "\n" . '<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|css|svg|svg+xml|json|js)$">';
+        $htaccess .= "\n" . '    AddDefaultCharset UTF-8';
+        $htaccess .= "\n" . '    Header set Cache-Control "max-age=31536000, immutable"';
+        $htaccess .= "\n" . '    Header set X-Content-Type-Options "nosniff"';
+        $htaccess .= "\n" . '</FilesMatch>';
 
         $path = ABSPATH . 'public/.htaccess';
         file_put_contents($path, $htaccess);
@@ -198,6 +221,7 @@ final class InstallRequest extends Request
                 "('gzip', 'false'),  " .
                 "('language', 'pl'),  " .
                 "('language_mode', '1'),  " .
+                "('login_timeout', '10'),  " .
                 "('signin_captcha', 'false'), " .
                 "('captcha_public', ''), " .
                 "('captcha_secret', ''), " .

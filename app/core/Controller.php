@@ -37,6 +37,7 @@ class Controller extends Blade
 
     public function __construct(string $namespace, array $arguments = [])
     {
+        parent::__construct();
         $this->request = Registry::get('Request');
 
         $this->setupNamespace($namespace);
@@ -136,8 +137,10 @@ class Controller extends Blade
         $this->addData('baseUrl', $this->baseUrl);
         $this->addData('dashPath', $this->getOption('dashboard', 'dashboard'));
         $this->addData('dashboard', $this->getOption('dashboard', 'dashboard'));
+        $this->addData('loginTimeout', $this->getOption('login_timeout', '10'));
         $this->addData('ajax', $this->baseUrl . 'request/');
         $this->addData('bodyClasses', $this->bodyClasses);
+        $this->addData('secured', $this->request->isSecured());
         $this->addData('styles', $this->styles, false);
         $this->addData('scripts', $this->scripts, false);
         $this->addData('fullscreen', $this->fullScreen);

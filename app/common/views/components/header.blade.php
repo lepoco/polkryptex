@@ -3,8 +3,8 @@
 <html lang="@option('language', 'en')">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=5, viewport-fit=cover, user-scalable=0">
+    <meta http-equiv="Cache-control" content="private">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover, user-scalable=0">
     <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 @if($noTranslate)
     <meta name="google" value="notranslate" />
@@ -13,8 +13,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - {{ $title }}</title>
-    <link rel="icon" href="@media('favicon.svg')"/>
-    <link rel="manifest" href="@media('manifest.json')">
+    <link rel="icon" href="@media('icons/favicon.ico')"/>
+    <link rel="manifest" href="@media('m.webmanifest')">
     <script type="importmap">@json( $importmap )</script>
 
 @foreach($styles as $style)

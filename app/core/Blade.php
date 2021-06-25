@@ -14,7 +14,7 @@ use ReflectionMethod;
 /**
  * @author Leszek P.
  */
-abstract class Blade
+abstract class Blade extends Renderable
 {
     protected const COMPOSERS_NAMESPACE = '\\App\\Common\\Composers\\';
 
@@ -34,6 +34,7 @@ abstract class Blade
 
     public function __construct()
     {
+        parent::__construct();
         $this->blade = new \Jenssegers\Blade\Blade(ABSPATH . APPDIR . self::VIEWS_PATH, ABSPATH . APPDIR . self::CACHE_PATH);
 
         $this->registerDirectives();

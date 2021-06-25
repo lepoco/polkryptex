@@ -16,7 +16,7 @@ use App\Core\Components\Crypter;
 /**
  * @author Leszek P.
  */
-class Request
+class Request extends Renderable
 {
     protected const STATUS_OK                    = 200;
     protected const STATUS_CREATED               = 201;
@@ -80,6 +80,7 @@ class Request
 
     public function __construct()
     {
+        parent::__construct();
         $this->request = Registry::get('Request');
 
         if (empty($this->request->post) && empty($this->request->url->getQueryParameters())) {
@@ -94,6 +95,7 @@ class Request
         if (method_exists($this, 'action')) {
             $this->{'action'}();
         } else {
+            $this->addContent('error', 'Non-existent action');
             $this->finish(self::ERROR_INVALID_ACTION, self::STATUS_BAD_REQUEST);
         }
 
@@ -117,6 +119,7 @@ class Request
         }
 
         http_response_code($responseCode);
+        header('Content-Type: application/json; charset=utf-8');
         \App\Core\Application::stop(json_encode($this->response, JSON_UNESCAPED_UNICODE));
     }
 
@@ -136,6 +139,7 @@ class Request
         }
 
         if (count($notSetField) > 0) {
+            $this->addContent('error', 'Non-existent field');
             $this->addContent('notice', 'not-exists');
             $this->addContent('fields', $notSetField);
             $this->finish(self::ERROR_MISSING_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
@@ -152,6 +156,7 @@ class Request
         }
 
         if (count($emptyField) > 0) {
+            $this->addContent('error', 'Empty field');
             $this->addContent('notice', 'empty');
             $this->addContent('fields', $emptyField);
             $this->finish(self::ERROR_EMPTY_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
@@ -210,12 +215,14 @@ class Request
     private function validateAction(): void
     {
         if (!isset($this->incomeData['action'])) {
+            $this->addContent('error', 'Missing action');
             $this->finish(self::ERROR_MISSING_ACTION, self::STATUS_BAD_REQUEST);
         }
 
         $this->action = filter_var($this->incomeData['action'], FILTER_SANITIZE_STRING);
 
         if (empty($this->action)) {
+            $this->addContent('error', 'Invalid action');
             $this->finish(self::ERROR_MISSING_ACTION, self::STATUS_BAD_REQUEST);
         }
     }
@@ -227,10 +234,12 @@ class Request
         }
 
         if (!isset($this->incomeData['nonce'])) {
+            $this->addContent('error', 'Missing nonce');
             $this->finish(self::ERROR_MISSING_NONCE, self::STATUS_BAD_REQUEST);
         }
 
         if (!Crypter::compare('ajax_' . strtolower($this->action) . '_nonce', $this->incomeData['nonce'], 'nonce')) {
+            $this->addContent('error', 'Invalid nonce');
             $this->finish(self::ERROR_INVALID_NONCE, self::STATUS_BAD_REQUEST);
         }
     }
