@@ -14,55 +14,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a {
-  text-decoration: none;
-  color: $c-hyperlink;
-
-  &.faded {
-    color: $c-hyperlink-faded;
-
-    &:hover {
-      color: black;
-    }
-  }
+.-flex {
+  display: flex;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-  &.accent {
-    font-family: $f-primary;
-    font-weight: 700;
-  }
+.-flex-center {
+  display: flex;
+  align-items: center;
 }
 
-h1 {
-  font-size: 6rem;
-}
-
-form,
-.form {
-  width: 100%;
-}
-
-.mr-1 {
-  margin-right: 1rem;
-}
-
-.pr-1 {
-  padding-right: 1rem;
-}
-.pr-2 {
-  padding-right: 2rem;
-}
-
-.pl-1 {
-  padding-left: 1rem;
-}
-.pl-2 {
-  padding-left: 2rem;
+.-flex-justify-center {
+  justify-content: center;
 }
 
 .-font-primary {
@@ -73,39 +35,57 @@ form,
   font-family: $f-secondary;
 }
 
-.-justify {
+.-text-center {
+  text-align: center;
+}
+
+.-text-justify {
   text-align: justify;
-    text-justify: inter-word;
+  text-justify: inter-word;
 }
 
-.btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.75rem;
-  padding: 0px 1.5rem;
-  line-height: 1.5rem;
-  font-size: 0.85rem;
-  height: 2.5rem;
-}
-
-.btn-dark {
-  &:hover {
-    color: $c-dark;
-    background: transparent;
+@each $weight in $font-weights {
+  .-fw-#{$weight} {
+    font-weight: $weight;
   }
 }
 
-.btn-secondary {
-  &:hover {
-    color: $c-light;
-    background: $c-dark;
+@for $i from 1 through 5 {
+  h#{$i} {
+    font-size: #{7 - $i}rem;
   }
 }
 
-.modal {
-  .modal-title {
-    font-family: $f-secondary;
-    font-weight: 700;
+@for $i from 1 through 10 {
+  .-mh-#{$i * 10} {
+    min-height: #{$i * 10}vh;
+  }
+}
+
+@for $i from 1 through 10 {
+  .-mr-#{$i} {
+    margin-right: #{$i}rem;
+  }
+  .-ml-#{$i} {
+    margin-left: #{$i}rem;
+  }
+  .-mt-#{$i} {
+    margin-top: #{$i}rem;
+  }
+  .-mb-#{$i} {
+    margin-bottom: #{$i}rem;
+  }
+
+  .-pt-#{$i} {
+    padding-top: #{$i}rem;
+  }
+  .-pb-#{$i} {
+    padding-bottom: #{$i}rem;
+  }
+  .-pl-#{$i} {
+    padding-left: #{$i}rem;
+  }
+  .-pr-#{$i} {
+    padding-right: #{$i}rem;
   }
 }

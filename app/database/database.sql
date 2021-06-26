@@ -12,6 +12,13 @@ CREATE TABLE IF NOT EXISTS pkx_user_roles (
 	role_permissions VARCHAR (256) NOT NULL
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+-- User's plans 
+CREATE TABLE IF NOT EXISTS pkx_user_plans (
+	plan_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	plan_name VARCHAR (64) NOT NULL,
+	plan_capabilities VARCHAR (256) NOT NULL
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 -- Users
 CREATE TABLE IF NOT EXISTS pkx_users (
 	user_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +33,8 @@ CREATE TABLE IF NOT EXISTS pkx_users (
 	user_cookie_token VARCHAR (256),
 	user_role INT (6) UNSIGNED DEFAULT NULL,
 	CONSTRAINT fk_user_role FOREIGN KEY (user_role) REFERENCES pkx_user_roles (role_id),
+	user_plan INT (6) UNSIGNED DEFAULT NULL,
+	CONSTRAINT fk_user_plan FOREIGN KEY (user_plan) REFERENCES pkx_user_plans (plan_id),
 	user_status BOOLEAN DEFAULT false,
 	user_registered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	user_last_login DATETIME DEFAULT NULL,

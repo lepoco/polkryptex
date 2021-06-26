@@ -1,9 +1,8 @@
-
-@extends('layouts.box')
+@extends('layouts.box', ['background' => $baseUrl . 'media/images/pexels-person-holding-bitcoin.jpeg'])
 
 @section('content')
-    <h1 class="accent">@translate('Register')</h1>
-        <form id="register">
+    <h4 class="-font-secondary -fw-700 -pb-3">@translate('Register')</h4>
+    <form id="register">
         <input type="hidden" name="action" value="Register"/>
         <input type="hidden" name="nonce" value="@nonce('register')"/>
         <div class="mb-3 pr-2">
@@ -35,5 +34,4 @@
 @endsection
 
 @section('banner')
-😅
 @endsection

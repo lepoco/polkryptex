@@ -9,11 +9,14 @@
                     @placeholder('100x100')
                 </div>
                 <div>
-                    <h2>1000` EUR</h2>
+                    <h5>1000` EUR</h5>
                     <p>currency</p>
                     <a href="@dashurl('wallet/transfer')" class="btn btn-outline-dark" type="button">@translate('Select currency')</a> <a href="@dashurl('wallet/topup')" class="btn btn-dark" type="button">@translate('Transfer')</a>
                 </div>
             </div>
+        </div>
+        <div class="col-12">
+            @debug
         </div>
     </div>
 </div>

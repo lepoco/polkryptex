@@ -10,7 +10,7 @@ Request.register("#signin", function (status, response) {
       secure: app.props.secured,
       sameSite: "Lax",
     });
-    window.location.href = app.props.baseUrl + app.props.dashboard + "/account";
+    window.location.href = app.props.baseUrl + app.props.dashboard;
   } else {
     Toast.send(
       "Login failed",

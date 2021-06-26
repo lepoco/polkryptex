@@ -31,8 +31,8 @@ final class Application
 
     private function registerExceptions(): void
     {
-        set_error_handler([Registry::get('Debug'), 'errorHandler']);
-        set_exception_handler([Registry::get('Debug'), 'exceptionHandler']);
+        //set_error_handler([Registry::get('Debug'), 'errorHandler']);
+        //set_exception_handler([Registry::get('Debug'), 'exceptionHandler']);
     }
 
     /**

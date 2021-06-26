@@ -236,10 +236,18 @@ final class InstallRequest extends Request
 
         $database->query(
             "INSERT IGNORE INTO pkx_user_roles (role_name, role_permissions) VALUES " .
-            "('administrator', '{permissions:[\"all\"]}'), " .
+            "('administrator', '{\"permissions\":[\"all\"]}'), " .
             "('manager', '{\"permissions\":[]}'), " .
             "('analyst', '{\"permissions\":[]}'), " .
             "('client', '{\"permissions\":[]}')"
+        );
+
+        $database->query(
+            "INSERT IGNORE INTO pkx_user_plans (plan_name, plan_capabilities) VALUES " .
+            "('standard', '{\"capabilities\":[]}'), " .
+            "('plus', '{\"capabilities\":[]}'), " .
+            "('premium', '{\"capabilities\":[]}'), " .
+            "('trader', '{\"capabilities\":[\"all\"]}')"
         );
 
         //At this point, we need a configuration file

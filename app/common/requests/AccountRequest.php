@@ -12,7 +12,6 @@ namespace App\Common\Requests;
 use App\Core\Registry;
 use App\Core\Request;
 use App\Core\Components\Query;
-use App\Core\Components\User;
 use App\Core\Components\Crypter;
 
 /**
@@ -66,17 +65,69 @@ final class AccountRequest extends Request
             // var_dump($profilePicture->isImage());
             // var_dump($profilePicture->getImageFileExtension());
 
-            $pictureName = $user->getUUID() . '-' . Crypter::salter(32, 'LN') . '.' . $profilePicture->getImageFileExtension();
-            $imagePath = $this->getImagePath($pictureName);
-            $imageUrl = $this->getImageUrl($pictureName);
+            $pictureName = $user->getUUID() . '-' . Crypter::salter(32, 'LN');
+            $pictureNameExt = $pictureName . '.' . $profilePicture->getImageFileExtension();
+
+            $imagePath = $this->getImagePath($pictureNameExt);
+            $imageUrl = $this->getImageUrl($pictureName . '-300x300' . '.jpg');
 
             $profilePicture->move($imagePath);
-            Query::updateUserImage($user->getId(), $imageUrl);
+            $this->compressImage($imagePath, $this->getImagePath($pictureName . '-300x300' . '.jpg'), 300, 300, false, true);
 
+            Query::updateUserImage($user->getId(), $imageUrl);
             $this->addContent('picture', $imageUrl);
         }
 
         $this->finish(self::CODE_SUCCESS);
+    }
+
+    /**
+     * @see https://www.php.net/manual/en/function.imagejpeg.php
+     * @see https://www.php.net/manual/en/function.imagescale.php
+     */
+    private function compressImage(string $sourcePath, string $destinationPath, int $inputWidth, int $inputHeight, bool $crop = false, bool $removeSource = false): bool
+    {
+        list($width, $height) = getimagesize($sourcePath);
+        $r = $width / $height;
+
+        $info = getimagesize($sourcePath);
+
+        if ($info['mime'] == 'image/jpeg') {
+            $sourceImage = imagecreatefromjpeg($sourcePath);
+        } elseif ($info['mime'] == 'image/gif') {
+            $sourceImage = imagecreatefromgif($sourcePath);
+        } elseif ($info['mime'] == 'image/png') {
+            $sourceImage = imagecreatefrompng($sourcePath);
+        }
+
+        if ($crop) {
+            if ($width > $height) {
+                $width = ceil($width - ($width * abs($r - $inputWidth / $inputHeight)));
+            } else {
+                $height = ceil($height - ($height * abs($r - $inputWidth / $inputHeight)));
+            }
+            $newWidth = $inputWidth;
+            $newHeight = $inputHeight;
+        } else {
+            if ($inputWidth / $inputHeight > $r) {
+                $newWidth = $inputHeight * $r;
+                $newHeight = $inputHeight;
+            } else {
+                $newHeight = $inputWidth / $r;
+                $newWidth = $inputWidth;
+            }
+        }
+
+        $destinationImage = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($destinationImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        imagejpeg($destinationImage, $destinationPath);
+
+        if ($removeSource) {
+            unlink($sourcePath);
+        }
+
+        return true;
     }
 
     private function getImageUrl(string $name): string
@@ -89,58 +140,4 @@ final class AccountRequest extends Request
     {
         return ABSPATH . 'public/media/uploads/' . $name;
     }
-
-    /**
-     * @see https://www.php.net/manual/en/function.imagejpeg.php
-     * @see https://www.php.net/manual/en/function.imagescale.php
-     */
-    private function compressImage($source, $destination, $quality) {
-
-        $info = getimagesize($source);
-      
-        if ($info['mime'] == 'image/jpeg') 
-          $image = imagecreatefromjpeg($source);
-      
-        elseif ($info['mime'] == 'image/gif') 
-          $image = imagecreatefromgif($source);
-      
-        elseif ($info['mime'] == 'image/png') 
-          $image = imagecreatefrompng($source);
-      
-        imagejpeg($image, $destination, $quality);
-      
-      }
-
-      //$img = resize_image(‘/path/to/some/image.jpg’, 200, 200);
-
-      function resize_image($file, $w, $h, $crop=FALSE) {
-        list($width, $height) = getimagesize($file);
-        $r = $width / $height;
-        if ($crop) {
-            if ($width > $height) {
-                $width = ceil($width-($width*abs($r-$w/$h)));
-            } else {
-                $height = ceil($height-($height*abs($r-$w/$h)));
-            }
-            $newwidth = $w;
-            $newheight = $h;
-        } else {
-            if ($w/$h > $r) {
-                $newwidth = $h*$r;
-                $newheight = $h;
-            } else {
-                $newheight = $w/$r;
-                $newwidth = $w;
-            }
-        }
-        $src = imagecreatefromjpeg($file);
-        $dst = imagecreatetruecolor($newwidth, $newheight);
-        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    
-        return $dst;
-    }
-
-    //$image = imagecreatefromjpeg($image_name);
-    //$imgResized = imagescale($image , 500, 400); // width=500 and height = 400
-    //  $imgResized is our final product
 }

@@ -9,7 +9,7 @@
                 'dark' => true,
                 'button' => 'Go back to the home page',
                 'button_link' => $baseUrl,
-                'text' => 'This page is used to debug the application. It is activated by APP_DEBUG in config.php. The page should not be active in production.'
+                'text' => 'This page is used to debug the application. It is activated by APP_DEBUG in config.php. Turn off this variable in production.'
             ])
         </div>
     </div>

@@ -15,7 +15,7 @@
                     @endif
                 </div>
                 <div>
-                    <h2>@translate('Hello,') {{ $user->getDisplayName() }}</h2>
+                    <h5>@translate('Hello,') {{ $user->getDisplayName() }}</h5>
                     <p>{{ $user->getEmail() }}</p>
                     <a href="@dashurl('wallet/transfer')" class="btn btn-outline-dark" type="button">@translate('Make a new transfer')</a> <a href="@dashurl('wallet/topup')" class="btn btn-dark" type="button">@translate('Top up')</a>
                 </div>

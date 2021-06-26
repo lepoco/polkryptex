@@ -31,4 +31,4 @@
 
 @include('components.cookie')
 
-<section id="app">
+<div id="app">

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-06-25 17:36+0200\n"
-"PO-Revision-Date: 2021-06-25 17:36+0200\n"
+"POT-Creation-Date: 2021-06-26 23:03+0200\n"
+"PO-Revision-Date: 2021-06-26 23:04+0200\n"
 "Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
 "Language-Team: Polkryptex\n"
 "Language: pl_PL\n"
@@ -225,7 +225,7 @@ msgstr "Zrób przelew"
 msgid "Top up"
 msgstr "Doładuj konto"
 
-#: views/dashboard/account.blade.php:32 views/installer.blade.php:43
+#: views/dashboard/account.blade.php:32 views/installer.blade.php:53
 #: views/sign-in.blade.php:11
 msgid "Email"
 msgstr "Email"
@@ -250,6 +250,46 @@ msgstr "Wybierz walutę"
 msgid "Transfer"
 msgstr "Przelew"
 
+#: views/home.blade.php:8
+msgid "Create your cryptocurrency wallet today"
+msgstr "Stwórz swój portfel kryptowalutowy już dziś"
+
+#: views/home.blade.php:10
+msgid "Polkryptex is a simple way to buy and sell cryptocurrencies."
+msgstr "Polkryptex to prosty sposób na kupowanie i sprzedawanie kryptowalut."
+
+#: views/home.blade.php:12
+msgid "Open your free account now"
+msgstr "Otwórz swoje darmowe konto już teraz"
+
+#: views/home.blade.php:25
+msgid ""
+"All currencies\n"
+"in one place"
+msgstr ""
+"Wszystkie waluty\n"
+"w jednym miejscu"
+
+#: views/home.blade.php:27
+msgid ""
+"With the help of Polkryptex you can exchange traditional currencies\n"
+"for crypto and vice versa. It's fast, convenient and safe."
+msgstr ""
+"Z pomocą Polkryptex możesz wymieniać tradycyjne waluty\n"
+"na krypto i odwrotnie. To szybkie, wygodne i bezpieczne."
+
+#: views/home.blade.php:29
+msgid "Find out more about our wallets"
+msgstr "Dowiedz się więcej o naszych portfelach"
+
+#: views/home.blade.php:36
+msgid "Choose a plan for yourself"
+msgstr "Wybierz plan dla siebie"
+
+#: views/home.blade.php:37
+msgid "Tailored to your needs, no surprises"
+msgstr "Dostosowane do Twoich potrzeb, bez niespodzianek"
+
 #: views/installer.blade.php:4
 msgid "Installer"
 msgstr "Instalator"
@@ -258,28 +298,28 @@ msgstr "Instalator"
 msgid "Database"
 msgstr "Baza danych"
 
-#: views/installer.blade.php:13 views/installer.blade.php:35
+#: views/installer.blade.php:15 views/installer.blade.php:43
 msgid "User"
 msgstr "Użytkownik"
 
-#: views/installer.blade.php:17 views/installer.blade.php:47
-#: views/register.blade.php:24 views/sign-in.blade.php:17
+#: views/installer.blade.php:21 views/installer.blade.php:57
+#: views/register.blade.php:23 views/sign-in.blade.php:17
 msgid "Password"
 msgstr "Hasło"
 
-#: views/installer.blade.php:24
+#: views/installer.blade.php:30
 msgid "Host"
 msgstr "Serwer"
 
-#: views/installer.blade.php:28
+#: views/installer.blade.php:36
 msgid "Table"
 msgstr "Tablica"
 
-#: views/installer.blade.php:39 views/register.blade.php:12
+#: views/installer.blade.php:49 views/register.blade.php:11
 msgid "Username"
 msgstr "Użytkownik"
 
-#: views/installer.blade.php:52
+#: views/installer.blade.php:62
 msgid "Begin installation"
 msgstr "Rozpocznij instalację"
 
@@ -295,19 +335,19 @@ msgstr "Strona, której szukasz nie została znaleziona."
 msgid "Back to the home page"
 msgstr "Wróć na stronę główną"
 
-#: views/register.blade.php:5 views/register.blade.php:33
+#: views/register.blade.php:4 views/register.blade.php:32
 msgid "Register"
 msgstr "Zarejestruj się"
 
-#: views/register.blade.php:18
+#: views/register.blade.php:17
 msgid "Email address"
 msgstr "Adres e-mail"
 
-#: views/register.blade.php:30
+#: views/register.blade.php:29
 msgid "Confirm Password"
 msgstr "Potwierdź hasło"
 
-#: views/register.blade.php:33 views/sign-in.blade.php:20
+#: views/register.blade.php:32 views/sign-in.blade.php:20
 msgid "Back to home"
 msgstr "Wróć na stronę główną"
 

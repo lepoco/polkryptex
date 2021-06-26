@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg navbar-light">
+<section class="navbar navbar-expand-lg navbar-light {{ $navbarClass ?? '' }}">
     <div class="container">
         <a class="navbar-brand" href="@url">
             {{-- <img src="@media('favicon.svg')" alt="Polkryptex"/> --}}
@@ -61,11 +61,11 @@
                 @if($auth['loggedIn'])
                     <a href="@url('signout')" class="btn btn-dark" type="submit">@translate('Sign Out')</a>
                 @else
-                    <a href="@url('signin')" class="btn btn-secondary mr-1" type="submit">@translate('Sign in')</a>
+                    <a href="@url('signin')" class="btn btn-secondary -mr-1" type="submit">@translate('Sign in')</a>
                     <a href="@url('register')" class="btn btn-dark" type="submit">@translate('Register for free')</a>
                 @endif
 
             </div>
         </div>
     </div>
-</nav>
+</section>

@@ -82,7 +82,7 @@ abstract class Blade extends Renderable
     protected function registerDirectives()
     {
         $this->addDirective('translate', function ($text) {
-            return '<?php echo App\Core\Registry::get(\'Translator\')->translate(' . $text . '); ?>';
+            return '<?php echo str_replace(\'\n\', \'<br>\', App\Core\Registry::get(\'Translator\')->translate(' . $text . ')); ?>';
         });
 
         $this->addDirective('url', function ($path = null) {
@@ -106,7 +106,10 @@ abstract class Blade extends Renderable
         });
 
         $this->addDirective('debug', function () {
-            return '<?php dump(get_defined_vars()); ?>';
+            $html = '<strong>@debug</strong><br>';
+            $html .= '<small><?php echo get_defined_vars()[\'__path\']; ?></small><hr>';
+            $html .= '<?php dump(get_defined_vars()[\'__data\']); ?>';
+            return $html;
         });
 
         $this->addDirective('placeholder', function ($size = '100', $text = 'POLKRYPTEX') {
@@ -123,12 +126,12 @@ abstract class Blade extends Renderable
             }
 
             $textH = $width / 10;
-            $textX = $width / 2 - (($textH / 1.5) * strlen($text) / 2);
-            $textY = $height / 2 + ($textH / 2);
+            $textX = $width / 6;
+            $textY = 1 + $height / 2;
 
             $svg = '<svg version="1.1" width="' . $width . '" height="' . $height . '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ' . $width . ' ' . $height . '" xml:space="preserve">';
             $svg .= '<rect fill="#000" width="' . $width . '" height="' . $height . '"/>';
-            $svg .= '<text fill="#FFF" font-size="' . $textH . 'px" font-weight="bold" font-family="Raleway, Helvetica, sans-serif" transform="matrix(1 0 0 1 ' . $textX . ' ' . $textY . ')">' . $text . '</text></svg>';
+            $svg .= '<text alignment-baseline="middle" fill="#FFF" x="0" y="0" font-size="' . $textH . 'px" font-weight="bold" font-family="Montserrat, Raleway, Helvetica, sans-serif" transform="matrix(1 0 0 1 ' . $textX . ' ' . $textY . ')">' . $text . '</text></svg>';
 
             return '<?php echo \'' . $svg . '\'; ?>';
         });
