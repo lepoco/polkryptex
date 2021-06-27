@@ -31,6 +31,7 @@ final class Registry
 
     public static function get(string $name): ?object
     {
+        //todo
         // if (!empty(self::$objects[$name][self::ACCESS_KEY]) && !in_array(self::getCallingClass(), self::$objects[$name][self::ACCESS_KEY])) {
         //     throw new \LogicException('Insufficient class permissions to a get aregistry object');
         // }

@@ -101,6 +101,13 @@ final class Query
         return $query->affectedRows() > 0;
     }
 
+    public static function updateUserPassword(int $id, string $plainPassword): bool
+    {
+        $query = Registry::get('Database')->query("UPDATE " . self::USERS_TABLE . " SET user_password = ? WHERE user_id = ?", Crypter::encrypt($plainPassword, 'password'), $id);
+
+        return $query->affectedRows() > 0;
+    }
+
     public static function addUser(string $username, string $email, string $plainPassword): bool
     {
         $roles = self::getRoles();
@@ -117,7 +124,7 @@ final class Query
 
         $token = Crypter::salter(32);
         $query = Registry::get('Database')->query(
-            "INSERT INTO pkx_users (user_name, user_display_name, user_email, user_password, user_session_token, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,?,?,0)",
+            "INSERT INTO " . self::USERS_TABLE . " (user_name, user_display_name, user_email, user_password, user_session_token, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,?,?,0)",
             Utils::alphaUsername($username),
             $username,
             $email,

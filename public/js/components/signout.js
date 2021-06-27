@@ -1,4 +1,4 @@
-import * as Bootstrap from "./bootstrap-core.js";
+import * as Bootstrap from "./bootstrap-core.js?v=5.0.1";
 
 export const name = "SignOut";
 

@@ -1,4 +1,4 @@
-import { Toast as BootstrapToast } from "./bootstrap-core.js";
+import { Toast as BootstrapToast } from "./bootstrap-core.js?v=5.0.1";
 
 export const name = "Toast";
 

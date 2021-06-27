@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import Request from "./../components/request.js";
+import Request from "./../components/request.js?v=1.0.1";
 
 Request.register("#signin", function (status, response) {
   if (response.status === "S01") {

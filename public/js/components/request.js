@@ -1,4 +1,4 @@
-import Toast from "./toast.js";
+import Toast from "./toast.js?v=1.0.1";
 
 export const name = "Request";
 

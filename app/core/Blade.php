@@ -102,7 +102,7 @@ abstract class Blade extends Renderable
         });
 
         $this->addDirective('media', function ($media) {
-            return '<?php echo $baseUrl . \'media/' . str_replace('\'', '', $media) . '\'; ?>';
+            return '<?php echo $baseUrl . \'media/' . str_replace('\'', '', $media) . '\' . \'?v=\' . $version; ?>';
         });
 
         $this->addDirective('debug', function () {

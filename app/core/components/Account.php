@@ -54,7 +54,7 @@ final class Account
         Query::setUserToken($user->getId(), Crypter::encrypt($token, 'session'));
         Query::setCookieToken($user->getId(), Crypter::encrypt($cookieToken, 'cookie'));
         Query::updateLastLogin($user->getId());
-        
+
         $timeout = Registry::get('Options')->get('login_timeout', '10') . ' minutes';
         $userSession->setExpiration($timeout);
         Registry::get('Session')->regenerateId();
@@ -71,8 +71,7 @@ final class Account
         $userSession = Registry::get('Session')->getSection('User');
         $userCookie = Registry::get('Request')->getCookie('user');
 
-        if(null === $userCookie || null === $userSession->token)
-        {
+        if (null === $userCookie || null === $userSession->token) {
             return false;
         }
 
@@ -93,7 +92,7 @@ final class Account
 
     public function getRoles(): array
     {
-        if (isset($this->roles)) {
+        if (!empty($this->roles)) {
             return $this->roles;
         }
 
@@ -101,18 +100,38 @@ final class Account
 
         $this->roles = [];
         foreach ($dbRoles as $key => $role) {
+            $permissions = [];
+            $json = json_decode($role['role_permissions'], true);
+
+            if (array_key_exists('permissions', $json)) {
+                $permissions = array_map(fn ($permission) => $permission, $json['permissions']);
+            }
+
             $this->roles[] = [
-                'id' => $role['role_id'],
+                'id' => (int)$role['role_id'],
                 'name' => $role['role_name'],
-                'permissions' => json_decode($role['role_permissions'])
+                'permissions' => $permissions
             ];
         }
 
         return $this->roles;
     }
 
-    public static function hasPermission(string $permission): bool
+    public function hasPermission(string $permission): bool
     {
-        return true;
+        $user = $this->currentUser();
+
+        if (!$user->isValid()) {
+            return false;
+        }
+
+        $roles = $this->getRoles();
+        $userRole = $user->getRole();
+
+        if (!isset($roles[$userRole - 1])) {
+            return false;
+        }
+
+        return in_array($permission, $roles[$userRole - 1]['permissions']);
     }
 }

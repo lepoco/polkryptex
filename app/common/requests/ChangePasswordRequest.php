@@ -11,8 +11,7 @@ namespace App\Common\Requests;
 
 use App\Core\Registry;
 use App\Core\Request;
-use App\Core\Components\User;
-use App\Core\Components\Crypter;
+use App\Core\Components\Query;
 
 /**
  * @author Szymon K.
@@ -70,6 +69,8 @@ final class ChangePasswordRequest extends Request
             $this->addContent('message', $this->translate('The new password does not match its confirmation.'));
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
+
+        Query::updateUserPassword($user->getId(), $this->getData('new_password'));
 
         $this->addContent('message', $this->translate('Your password has been successfully changed.'));
         $this->finish(self::CODE_SUCCESS);

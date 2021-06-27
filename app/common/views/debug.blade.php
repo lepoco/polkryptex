@@ -54,6 +54,10 @@
             @php
             dump(\App\Core\Registry::get('Response'));
             @endphp
+            <strong>\App\Core\Registry::get('Account')->hasPermission('all')</strong>
+            @php
+            dump(\App\Core\Registry::get('Account')->hasPermission('all'));
+            @endphp
         </div>
         <div class="col-12 col-lg-6">
             <strong>\App\Core\Registry::get('Request')</strong>

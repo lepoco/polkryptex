@@ -1,5 +1,6 @@
 Options All -Indexes
 AddDefaultCharset UTF-8
+AddCharset utf-8 .css .js
 
 <IfModule mod_headers.c>
   Header unset ETag
@@ -26,8 +27,7 @@ FileETag None
     Header set X-Content-Type-Options "nosniff"
 </FilesMatch>
 
-<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|css|svg|svg+xml|json|js)$">
-    AddDefaultCharset UTF-8
+<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|svg|css|svg+xml|json|js)$">
     Header set Cache-Control "max-age=31536000, immutable"
     Header set X-Content-Type-Options "nosniff"
 </FilesMatch>

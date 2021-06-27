@@ -108,7 +108,7 @@ class Controller extends Blade
 
     private function registerCoreScripts(): void
     {
-        $this->queueInternalScript('app.min');
+        $this->queueInternalScript('app');
         $this->queueInternalStyle('main.min');
 
         $this->registerPageScript();
@@ -132,6 +132,7 @@ class Controller extends Blade
     protected function setDefaultViewData(): void
     {
         $this->addData('installed', defined('APP_VERSION'), false);
+        $this->addData('version', defined('APP_VERSION') ? APP_VERSION : '1.0.0');
         $this->addData('pagenow', strtolower($this->name));
         $this->addData('debug', Debug::isDebug());
         $this->addData('baseUrl', $this->baseUrl);
