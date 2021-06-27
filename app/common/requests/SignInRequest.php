@@ -39,11 +39,15 @@ final class SignInRequest extends Request
         $user = User::findByEmail($this->getData('email'));
 
         if (!$user->isValid()) {
+            $this->addContent('message', $this->translate('The provided username or password is incorrect.'));
+
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
         if (!$user->checkPassword($this->getData('password'))) {
+            $this->addContent('message', $this->translate('The provided username or password is incorrect.'));
             Registry::get('Debug')->warning('Login failed. Password incorrect', ['user' => $this->getData('email')]);
+
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
@@ -52,6 +56,8 @@ final class SignInRequest extends Request
 
         Registry::get('Account')->signIn($user, $cookieToken);
         Registry::get('Debug')->info('User has logged in', ['user' => $this->getData('email')]);
+
+        $this->addContent('message', $this->translate('Signed in successfully, you will be redirected in a moment...'));
         $this->finish(self::CODE_SUCCESS);
     }
 }

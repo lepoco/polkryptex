@@ -13,6 +13,7 @@ use \DateTime;
 use Ramsey\Uuid\Uuid;
 use App\Core\Registry;
 use App\Core\Components\Crypter;
+use App\Core\Components\Utils;
 
 /**
  * @author Leszek P.
@@ -114,12 +115,10 @@ final class Query
             }
         }
 
-        $userIdName = preg_replace("/[^a-zA-Z0-9]+/", "", trim(strtolower($username)));
-
         $token = Crypter::salter(32);
         $query = Registry::get('Database')->query(
             "INSERT INTO pkx_users (user_name, user_display_name, user_email, user_password, user_session_token, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,?,?,0)",
-            $userIdName,
+            Utils::alphaUsername($username),
             $username,
             $email,
             Crypter::encrypt($plainPassword, 'password'),

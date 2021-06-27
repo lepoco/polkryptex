@@ -136,6 +136,7 @@ class Controller extends Blade
         $this->addData('debug', Debug::isDebug());
         $this->addData('baseUrl', $this->baseUrl);
         $this->addData('dashPath', $this->getOption('dashboard', 'dashboard'));
+        $this->addData('uploadsPath', defined('APP_UPLOADS') ? APP_UPLOADS : 'media/uploads/');
         $this->addData('dashboard', $this->getOption('dashboard', 'dashboard'));
         $this->addData('loginTimeout', $this->getOption('login_timeout', '10'));
         $this->addData('ajax', $this->baseUrl . 'request/');
@@ -197,7 +198,7 @@ class Controller extends Blade
 
     protected function setTitle($title): void
     {
-        $this->viewData['title'] = $this->__($title);
+        $this->viewData['title'] = $this->translate($title);
     }
 
     protected function setAsFullScreen(): void
@@ -224,7 +225,7 @@ class Controller extends Blade
         return \App\Core\Registry::get('Options')->get($name, $default);
     }
 
-    protected function __(string $text, ?array $variables = null): ?string
+    protected function translate(string $text, ?array $variables = null): ?string
     {
         return \App\Core\Registry::get('Translator')->translate($text, $variables);
     }

@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
 use App\Core\Database;
 use App\Core\Request;
 use App\Core\Registry;
+use App\Core\Components\Utils;
 use App\Core\Components\Crypter;
 
 /**
@@ -107,6 +108,7 @@ final class InstallRequest extends Request
         $config .= "\n" . 'define(\'APP_USERS_NAMESPACE\', \'' . $this->usersNamespace . '\');';
         $config .= "\n" . 'define(\'APP_TRANSACTIONS_NAMESPACE\', \'' . $this->transationsNamespace . '\');';
         $config .= "\n";
+        $config .= "\n" . 'define(\'APP_UPLOADS\', \'media/uploads/\');';
         $config .= "\n" . 'define(\'APP_DEBUG\', true);';
         $config .= "\n" . 'define(\'APP_DEBUG_DISPLAY\', true);';
         $config .= "\n";
@@ -119,8 +121,7 @@ final class InstallRequest extends Request
 
     private function createHtaccess(string $dir = '/'): void
     {
-        if ($dir == '/')
-        {
+        if ($dir == '/') {
             $dir = '';
         }
 
@@ -202,7 +203,7 @@ final class InstallRequest extends Request
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('host', ?)", $this->request->url->host);
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('seured', ?)", $this->request->isSecured() ? 'true' : 'false');
 
-        $baseurl = ($this->request->isSecured() ? 'https://' : 'http://' ) . $this->request->url->host . '/';
+        $baseurl = ($this->request->isSecured() ? 'https://' : 'http://') . $this->request->url->host . '/';
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('baseurl', ?)", $baseurl);
         $database->query("INSERT IGNORE INTO pkx_options (option_name, option_value) VALUES ('home', ?)", $baseurl);
 
@@ -236,18 +237,18 @@ final class InstallRequest extends Request
 
         $database->query(
             "INSERT IGNORE INTO pkx_user_roles (role_name, role_permissions) VALUES " .
-            "('administrator', '{\"permissions\":[\"all\"]}'), " .
-            "('manager', '{\"permissions\":[]}'), " .
-            "('analyst', '{\"permissions\":[]}'), " .
-            "('client', '{\"permissions\":[]}')"
+                "('administrator', '{\"permissions\":[\"all\"]}'), " .
+                "('manager', '{\"permissions\":[]}'), " .
+                "('analyst', '{\"permissions\":[]}'), " .
+                "('client', '{\"permissions\":[]}')"
         );
 
         $database->query(
             "INSERT IGNORE INTO pkx_user_plans (plan_name, plan_capabilities) VALUES " .
-            "('standard', '{\"capabilities\":[]}'), " .
-            "('plus', '{\"capabilities\":[]}'), " .
-            "('premium', '{\"capabilities\":[]}'), " .
-            "('trader', '{\"capabilities\":[\"all\"]}')"
+                "('standard', '{\"capabilities\":[]}'), " .
+                "('plus', '{\"capabilities\":[]}'), " .
+                "('premium', '{\"capabilities\":[]}'), " .
+                "('trader', '{\"capabilities\":[\"all\"]}')"
         );
 
         //At this point, we need a configuration file
@@ -260,11 +261,11 @@ final class InstallRequest extends Request
 
         $database->query(
             "INSERT IGNORE INTO pkx_users (user_name, user_display_name, user_email, user_password, user_uuid, user_role, user_status) VALUES (?,?,?,?,?,1,1)",
-            preg_replace("/[^a-zA-Z0-9]+/", "", trim(strtolower($this->getData('admin_username')))),
+            Utils::alphaUsername($this->getData('admin_username')),
             $this->getData('admin_username'),
             $this->getData('admin_email'),
             Crypter::encrypt($this->getData('admin_password'), 'password', $this->passwordSalt, $this->passwordAlgo),
-            Uuid::uuid5($this->usersNamespace, 'user/'.$this->getData('admin_username'))->toString()
+            Uuid::uuid5($this->usersNamespace, 'user/' . $this->getData('admin_username'))->toString()
         );
         unset($database);
     }

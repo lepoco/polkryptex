@@ -12,7 +12,7 @@
     <div class="row">
 
         <div class="col-12 pb-5">
-            <h2 class="-font-secondary">@translate('Licenses')</h2>
+            <h5 class="-font-secondary">@translate('Licenses')</h5>
             <hr>
             <p class="-justify">Polkryptex is a web portal whose content management system has been released under the open-source GNU GENERAL PUBLIC LICENSE, version 3.0 license. It uses a number of other open-source technologies, a list of which can be found below.</p>
             <a href="https://github.com/Polkryptex/Polkryptex" target="_blank" rel="noopener nofollow">https://github.com/Polkryptex/Polkryptex</a>

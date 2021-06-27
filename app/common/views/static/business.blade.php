@@ -5,7 +5,7 @@
     <div class="row">
 
         <div class="col-12 pb-5">
-            <h2 class="-font-secondary">@translate('Business')</h2>
+            <h5 class="-font-secondary">@translate('Business')</h5>
             <hr>
             <p>Polkryptex for Business</p>
         </div>

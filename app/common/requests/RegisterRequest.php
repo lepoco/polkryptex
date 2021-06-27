@@ -11,6 +11,7 @@ namespace App\Common\Requests;
 
 use App\Core\Request;
 use App\Core\Registry;
+use App\Core\Components\Utils;
 use App\Core\Components\Crypter;
 use App\Core\Components\Query;
 
@@ -44,17 +45,20 @@ final class RegisterRequest extends Request
 
         if(strlen($this->getData('password')) < 8)
         {
+            $this->addContent('message', $this->translate('The password provided is too short.'));
             $this->finish(self::ERROR_PASSWORD_TOO_SHORT);
         }
 
         if($this->getData('password') != $this->getData('password_confirm'))
         {
+            $this->addContent('message', $this->translate('Password does not match its confirmation.'));
             $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
         }
 
-        $query = Query::getUserByName($this->getData('username'));
+        $query = Query::getUserByName(Utils::alphaUsername($this->getData('username')));
         if(!empty($query))
         {
+            $this->addContent('message', $this->translate('This username is already taken.'));
             $this->finish(self::ERROR_USER_NAME_EXISTS);
         }
 
@@ -62,12 +66,14 @@ final class RegisterRequest extends Request
         if(!empty($query))
         {
             Registry::get('Debug')->warning('Attempting to register an existing account', ['user' => $this->getData('email')]);
+            $this->addContent('message', $this->translate('This email is already taken.'));
             $this->finish(self::ERROR_USER_EMAIL_EXISTS);
         }
 
         Query::addUser($this->getData('username'), $this->getData('email'), $this->getData('password'));
         Registry::get('Debug')->info('User has registered', ['user' => $this->getData('email')]);
 
+        $this->addContent('message', $this->translate('Registration was successful, you will be redirected in a moment..'));
         $this->finish(self::CODE_SUCCESS);
     }
 }

@@ -63,6 +63,7 @@ class Request extends Renderable
     protected const ERROR_USER_NAME_EXISTS         = 'E18';
     protected const ERROR_MYSQL_UNKNOWN            = 'E19';
     protected const ERROR_INVALID_USER             = 'E20';
+    protected const ERROR_PASSWORD_CANNOT_BE_SAME  = 'E21';
 
     protected const CODE_SUCCESS                   = 'S01';
 
@@ -142,6 +143,8 @@ class Request extends Renderable
             $this->addContent('error', 'Non-existent field');
             $this->addContent('notice', 'not-exists');
             $this->addContent('fields', $notSetField);
+
+            $this->addContent('message', $this->translate('Some fields are missing.'));
             $this->finish(self::ERROR_MISSING_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
         }
     }
@@ -159,6 +162,7 @@ class Request extends Renderable
             $this->addContent('error', 'Empty field');
             $this->addContent('notice', 'empty');
             $this->addContent('fields', $emptyField);
+            $this->addContent('message', $this->translate('Not all fields are correctly filled.'));
             $this->finish(self::ERROR_EMPTY_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
         }
     }
@@ -240,7 +244,18 @@ class Request extends Renderable
 
         if (!Crypter::compare('ajax_' . strtolower($this->action) . '_nonce', $this->incomeData['nonce'], 'nonce')) {
             $this->addContent('error', 'Invalid nonce');
+            $this->addContent('message', $this->translate('The time verification key does not match, please try refreshing the page.'));
             $this->finish(self::ERROR_INVALID_NONCE, self::STATUS_BAD_REQUEST);
         }
+    }
+
+    protected function getOption(string $name, $default = null)
+    {
+        return \App\Core\Registry::get('Options')->get($name, $default);
+    }
+
+    protected function translate(string $text, ?array $variables = null): ?string
+    {
+        return \App\Core\Registry::get('Translator')->translate($text, $variables);
     }
 }

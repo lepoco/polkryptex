@@ -125,8 +125,14 @@ final class User
         return $this->email;
     }
 
-    public function getImage(): ?string
+    public function getImage(bool $fullPath = true): ?string
     {
+        if ($fullPath) {
+            $baseUrl = Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/');
+
+            return $baseUrl . APP_UPLOADS . $this->image;
+        }
+
         return $this->image;
     }
 

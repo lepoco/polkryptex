@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-06-26 23:03+0200\n"
-"PO-Revision-Date: 2021-06-26 23:04+0200\n"
+"POT-Creation-Date: 2021-06-27 14:18+0200\n"
+"PO-Revision-Date: 2021-06-27 14:19+0200\n"
 "Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
 "Language-Team: Polkryptex\n"
 "Language: pl_PL\n"
@@ -10,180 +10,222 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
-"X-Poedit-Basepath: ..\n"
+"X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
 "|| n%100>14) ? 1 : 2);\n"
 "X-Poedit-KeywordsList: translate;trans;__;_e;_n:1,2;_x:1,2c;_ex:1,2c;"
 "_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
 "esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2;setTitle\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: views\n"
-"X-Poedit-SearchPath-1: composers\n"
-"X-Poedit-SearchPath-2: requests\n"
+"X-Poedit-SearchPath-0: common/views\n"
+"X-Poedit-SearchPath-1: common/composers\n"
+"X-Poedit-SearchPath-2: common/requests\n"
+"X-Poedit-SearchPath-3: core\n"
 
-#: views/components/cookie.blade.php:7
+#: common/requests/AccountRequest.php:42
+msgid "User is invalid."
+msgstr "Użytkownik jest nieprawidłowy."
+
+#: common/requests/AccountRequest.php:83
+msgid "Your account details have been successfully updated."
+msgstr "Dane twojego konta zostały pomyślnie zaktualizowane."
+
+#: common/requests/ChangePasswordRequest.php:52
+msgid "The current password provided is incorrect."
+msgstr "Bieżące hasło jest niepoprawne."
+
+#: common/requests/ChangePasswordRequest.php:58
+msgid "The password cannot be the same."
+msgstr "Hasło nie może być takie samo."
+
+#: common/requests/ChangePasswordRequest.php:64
+msgid "The new password cannot be the same as the old password."
+msgstr "Nowe hasło nie może być takie samo jak stare hasło."
+
+#: common/requests/ChangePasswordRequest.php:70
+msgid "The new password does not match its confirmation."
+msgstr "Nowe hasło nie jest zgodne z jego potwierdzeniem."
+
+#: common/requests/ChangePasswordRequest.php:74
+msgid "Your password has been successfully changed."
+msgstr "Twoje hasło zostało pomyślnie zmienione."
+
+#: common/requests/SignInRequest.php:42 common/requests/SignInRequest.php:48
+msgid "The provided username or password is incorrect."
+msgstr "Hasło lub nazwa użytkownika są niepoprawne."
+
+#: common/requests/SignInRequest.php:60
+msgid "Signed in successfully, you will be redirected in a moment..."
+msgstr "Zalogowano pomyślnie, zostaniesz przekierowany za chwilę..."
+
+#: common/views/components/cookie.blade.php:7
 msgid "We use  🍪 to personalize the content you see on Polkryptex pages."
 msgstr ""
 "Używamy  🍪 do zarządzania treściami, które widzisz na stronach Polkryptex."
 
-#: views/components/cookie.blade.php:7
+#: common/views/components/cookie.blade.php:7
 msgid "Find out more"
 msgstr "Zobacz więcej"
 
-#: views/components/cookie.blade.php:10
+#: common/views/components/cookie.blade.php:10
 msgid "Manage cookies"
 msgstr "Zarządzaj ciasteczkami"
 
-#: views/components/cookie.blade.php:10
+#: common/views/components/cookie.blade.php:10
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: views/components/expanded-footer.blade.php:12
-#: views/components/navigation.blade.php:43
+#: common/views/components/expanded-footer.blade.php:12
+#: common/views/components/navigation.blade.php:43
 msgid "Account"
 msgstr "Konto"
 
-#: views/components/expanded-footer.blade.php:15
+#: common/views/components/expanded-footer.blade.php:15
 msgid "Budget & Analytics"
 msgstr "Budżet & Analityka"
 
-#: views/components/expanded-footer.blade.php:18
-#: views/components/navigation.blade.php:40
+#: common/views/components/expanded-footer.blade.php:18
+#: common/views/components/navigation.blade.php:40
 msgid "Wallet"
 msgstr "Portfel"
 
-#: views/components/expanded-footer.blade.php:21
+#: common/views/components/expanded-footer.blade.php:21
 msgid "Crypto"
 msgstr "Krypto"
 
-#: views/components/expanded-footer.blade.php:24
+#: common/views/components/expanded-footer.blade.php:24
 msgid "Credit cards"
 msgstr "Karty kredytowe"
 
-#: views/components/expanded-footer.blade.php:31
+#: common/views/components/expanded-footer.blade.php:31
 msgid "Payments"
 msgstr "Płatności"
 
-#: views/components/expanded-footer.blade.php:34
+#: common/views/components/expanded-footer.blade.php:34
 msgid "Money transfers"
 msgstr "Przelewy"
 
-#: views/components/expanded-footer.blade.php:37
+#: common/views/components/expanded-footer.blade.php:37
 msgid "Group bills"
 msgstr "Rachunki grupowe"
 
-#: views/components/expanded-footer.blade.php:40
+#: common/views/components/expanded-footer.blade.php:40
 msgid "Subscriptions"
 msgstr "Subskrypcje"
 
-#: views/components/expanded-footer.blade.php:43
+#: common/views/components/expanded-footer.blade.php:43
 msgid "Rewards"
 msgstr "Nagrody"
 
-#: views/components/expanded-footer.blade.php:50
+#: common/views/components/expanded-footer.blade.php:50
 msgid "Company"
 msgstr "Firma"
 
-#: views/components/expanded-footer.blade.php:53
+#: common/views/components/expanded-footer.blade.php:53
 msgid "About us"
 msgstr "O nas"
 
-#: views/components/expanded-footer.blade.php:56
+#: common/views/components/expanded-footer.blade.php:56
 msgid "Carriers"
 msgstr "Dostawcy"
 
-#: views/components/expanded-footer.blade.php:59
+#: common/views/components/expanded-footer.blade.php:59
 msgid "Affiliates"
 msgstr "Program partnerski"
 
-#: views/components/expanded-footer.blade.php:62
+#: common/views/components/expanded-footer.blade.php:62
 msgid "Contact"
 msgstr "Kontakt"
 
-#: views/components/expanded-footer.blade.php:69
-#: views/components/navigation.blade.php:53 views/help.blade.php:7
+#: common/views/components/expanded-footer.blade.php:69
+#: common/views/components/navigation.blade.php:53
+#: common/views/help.blade.php:7
 msgid "Help"
 msgstr "Pomoc"
 
-#: views/components/expanded-footer.blade.php:72
+#: common/views/components/expanded-footer.blade.php:72
 msgid "Help Centre"
 msgstr "Centrum pomocy"
 
-#: views/components/expanded-footer.blade.php:75
+#: common/views/components/expanded-footer.blade.php:75
 msgid "Security"
 msgstr "Bezpieczeństwo"
 
-#: views/components/expanded-footer.blade.php:78
+#: common/views/components/expanded-footer.blade.php:78
 msgid "Developer APIs"
 msgstr "Interfejsy API"
 
-#: views/components/expanded-footer.blade.php:81
-#: views/static/licenses.blade.php:15
+#: common/views/components/expanded-footer.blade.php:81
+#: common/views/static/licenses.blade.php:15
 msgid "Licenses"
 msgstr "Licencje"
 
-#: views/components/expanded-footer.blade.php:94
+#: common/views/components/expanded-footer.blade.php:94
 msgid "Website Terms"
 msgstr "Warunki"
 
-#: views/components/expanded-footer.blade.php:97
+#: common/views/components/expanded-footer.blade.php:97
 msgid "Legal Agreements"
 msgstr "Umowy prawne"
 
-#: views/components/expanded-footer.blade.php:100
+#: common/views/components/expanded-footer.blade.php:100
 msgid "Privacy Policy"
 msgstr "Polityka Prywatności"
 
-#: views/components/expanded-footer.blade.php:103
+#: common/views/components/expanded-footer.blade.php:103
 msgid "Currency Disclaimer"
 msgstr "Wyłączenie odpowiedzialności walutowej"
 
-#: views/components/navigation.blade.php:16
+#: common/views/components/navigation.blade.php:16
 msgid "Home"
 msgstr "Home"
 
-#: views/components/navigation.blade.php:19 views/static/private.blade.php:8
+#: common/views/components/navigation.blade.php:19
+#: common/views/static/private.blade.php:8
 msgid "Private"
 msgstr "Prywatnie"
 
-#: views/components/navigation.blade.php:22 views/static/business.blade.php:8
+#: common/views/components/navigation.blade.php:22
+#: common/views/static/business.blade.php:8
 msgid "Business"
 msgstr "Przedsiębiorca"
 
-#: views/components/navigation.blade.php:28
+#: common/views/components/navigation.blade.php:28
 msgid "Debug"
 msgstr "Debugowanie"
 
-#: views/components/navigation.blade.php:37
-#: views/dashboard/dashboard.blade.php:7
+#: common/views/components/navigation.blade.php:37
+#: common/views/dashboard/dashboard.blade.php:7
 msgid "Dashboard"
 msgstr "Kokpit"
 
-#: views/components/navigation.blade.php:47
+#: common/views/components/navigation.blade.php:47
 msgid "Features"
 msgstr "Funkcje"
 
-#: views/components/navigation.blade.php:50 views/plans.blade.php:7
+#: common/views/components/navigation.blade.php:50
+#: common/views/plans.blade.php:7
 msgid "Plans"
 msgstr "Plany"
 
-#: views/components/navigation.blade.php:62
+#: common/views/components/navigation.blade.php:62
 msgid "Sign Out"
 msgstr "Wyloguj się"
 
-#: views/components/navigation.blade.php:64 views/sign-in.blade.php:20
+#: common/views/components/navigation.blade.php:64
+#: common/views/sign-in.blade.php:20
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: views/components/navigation.blade.php:65
+#: common/views/components/navigation.blade.php:65
 msgid "Register for free"
 msgstr "Zarejestruj się za darmo"
 
-#: views/components/signout-modal.blade.php:7
+#: common/views/components/signout-modal.blade.php:7
 msgid "You will be logged out soon"
 msgstr "Wkrótce zostaniesz wylogowany"
 
-#: views/components/signout-modal.blade.php:8
+#: common/views/components/signout-modal.blade.php:8
 msgid ""
 "You have been inactive for several minutes, your session will be closed in a "
 "few seconds."
@@ -191,78 +233,78 @@ msgstr ""
 "Byłeś nieaktywny przez kilka minut, sesja zostanie zamknięta w ciągu kilku "
 "sekund."
 
-#: views/components/signout-modal.blade.php:12
+#: common/views/components/signout-modal.blade.php:12
 msgid "Keep me logged in"
 msgstr "Zapamiętaj mnie"
 
-#: views/dashboard/account-new-password.blade.php:18
-#: views/dashboard/account.blade.php:18
+#: common/views/dashboard/account-new-password.blade.php:18
+#: common/views/dashboard/account.blade.php:18
 msgid "Hello,"
 msgstr "Cześć,"
 
-#: views/dashboard/account-new-password.blade.php:31
+#: common/views/dashboard/account-new-password.blade.php:31
 msgid "Current password"
 msgstr "Aktualne hasło"
 
-#: views/dashboard/account-new-password.blade.php:36
+#: common/views/dashboard/account-new-password.blade.php:36
 msgid "New password"
 msgstr "Nowe hasło"
 
-#: views/dashboard/account-new-password.blade.php:41
+#: common/views/dashboard/account-new-password.blade.php:41
 msgid "Confirm new password"
 msgstr "Potwierdź nowe hasło"
 
-#: views/dashboard/account-new-password.blade.php:44
-#: views/dashboard/account.blade.php:45
+#: common/views/dashboard/account-new-password.blade.php:44
+#: common/views/dashboard/account.blade.php:45
 msgid "Change your password"
 msgstr "Zmień hasło"
 
-#: views/dashboard/account.blade.php:20
+#: common/views/dashboard/account.blade.php:20
 msgid "Make a new transfer"
 msgstr "Zrób przelew"
 
-#: views/dashboard/account.blade.php:20
+#: common/views/dashboard/account.blade.php:20
 msgid "Top up"
 msgstr "Doładuj konto"
 
-#: views/dashboard/account.blade.php:32 views/installer.blade.php:53
-#: views/sign-in.blade.php:11
+#: common/views/dashboard/account.blade.php:32
+#: common/views/installer.blade.php:53 common/views/sign-in.blade.php:11
 msgid "Email"
 msgstr "Email"
 
-#: views/dashboard/account.blade.php:37
+#: common/views/dashboard/account.blade.php:37
 msgid "Display name"
 msgstr "Nazwa wyświetlana"
 
-#: views/dashboard/account.blade.php:42
+#: common/views/dashboard/account.blade.php:42
 msgid "Profile picture"
 msgstr "Obrazek profilowy"
 
-#: views/dashboard/account.blade.php:45
+#: common/views/dashboard/account.blade.php:45
 msgid "Update"
 msgstr "Aktualizuj"
 
-#: views/dashboard/wallet.blade.php:14
+#: common/views/dashboard/wallet.blade.php:14
 msgid "Select currency"
 msgstr "Wybierz walutę"
 
-#: views/dashboard/wallet.blade.php:14
+#: common/views/dashboard/wallet.blade.php:14
 msgid "Transfer"
 msgstr "Przelew"
 
-#: views/home.blade.php:8
+#: common/views/home.blade.php:8
 msgid "Create your cryptocurrency wallet today"
 msgstr "Stwórz swój portfel kryptowalutowy już dziś"
 
-#: views/home.blade.php:10
+#: common/views/home.blade.php:10
 msgid "Polkryptex is a simple way to buy and sell cryptocurrencies."
 msgstr "Polkryptex to prosty sposób na kupowanie i sprzedawanie kryptowalut."
 
-#: views/home.blade.php:12
+#: common/views/home.blade.php:12
 msgid "Open your free account now"
 msgstr "Otwórz swoje darmowe konto już teraz"
 
-#: views/home.blade.php:25
+#: common/views/home.blade.php:25
 msgid ""
 "All currencies\n"
 "in one place"
@@ -270,7 +312,7 @@ msgstr ""
 "Wszystkie waluty\n"
 "w jednym miejscu"
 
-#: views/home.blade.php:27
+#: common/views/home.blade.php:27
 msgid ""
 "With the help of Polkryptex you can exchange traditional currencies\n"
 "for crypto and vice versa. It's fast, convenient and safe."
@@ -278,86 +320,99 @@ msgstr ""
 "Z pomocą Polkryptex możesz wymieniać tradycyjne waluty\n"
 "na krypto i odwrotnie. To szybkie, wygodne i bezpieczne."
 
-#: views/home.blade.php:29
+#: common/views/home.blade.php:29
 msgid "Find out more about our wallets"
 msgstr "Dowiedz się więcej o naszych portfelach"
 
-#: views/home.blade.php:36
+#: common/views/home.blade.php:36
 msgid "Choose a plan for yourself"
 msgstr "Wybierz plan dla siebie"
 
-#: views/home.blade.php:37
+#: common/views/home.blade.php:37
 msgid "Tailored to your needs, no surprises"
 msgstr "Dostosowane do Twoich potrzeb, bez niespodzianek"
 
-#: views/installer.blade.php:4
+#: common/views/installer.blade.php:4
 msgid "Installer"
 msgstr "Instalator"
 
-#: views/installer.blade.php:9
+#: common/views/installer.blade.php:9
 msgid "Database"
 msgstr "Baza danych"
 
-#: views/installer.blade.php:15 views/installer.blade.php:43
+#: common/views/installer.blade.php:15 common/views/installer.blade.php:43
 msgid "User"
 msgstr "Użytkownik"
 
-#: views/installer.blade.php:21 views/installer.blade.php:57
-#: views/register.blade.php:23 views/sign-in.blade.php:17
+#: common/views/installer.blade.php:21 common/views/installer.blade.php:57
+#: common/views/register.blade.php:23 common/views/sign-in.blade.php:17
 msgid "Password"
 msgstr "Hasło"
 
-#: views/installer.blade.php:30
+#: common/views/installer.blade.php:30
 msgid "Host"
 msgstr "Serwer"
 
-#: views/installer.blade.php:36
+#: common/views/installer.blade.php:36
 msgid "Table"
 msgstr "Tablica"
 
-#: views/installer.blade.php:49 views/register.blade.php:11
+#: common/views/installer.blade.php:49 common/views/register.blade.php:11
 msgid "Username"
 msgstr "Użytkownik"
 
-#: views/installer.blade.php:62
+#: common/views/installer.blade.php:62
 msgid "Begin installation"
 msgstr "Rozpocznij instalację"
 
-#: views/not-found.blade.php:4
+#: common/views/not-found.blade.php:4
 msgid "Ups!"
 msgstr "Ojej!"
 
-#: views/not-found.blade.php:5
+#: common/views/not-found.blade.php:5
 msgid "The page you are looking for has not been found."
 msgstr "Strona, której szukasz nie została znaleziona."
 
-#: views/not-found.blade.php:6
+#: common/views/not-found.blade.php:6
 msgid "Back to the home page"
 msgstr "Wróć na stronę główną"
 
-#: views/register.blade.php:4 views/register.blade.php:32
+#: common/views/register.blade.php:4 common/views/register.blade.php:32
 msgid "Register"
 msgstr "Zarejestruj się"
 
-#: views/register.blade.php:17
+#: common/views/register.blade.php:17
 msgid "Email address"
 msgstr "Adres e-mail"
 
-#: views/register.blade.php:29
+#: common/views/register.blade.php:29
 msgid "Confirm Password"
 msgstr "Potwierdź hasło"
 
-#: views/register.blade.php:32 views/sign-in.blade.php:20
+#: common/views/register.blade.php:32 common/views/sign-in.blade.php:20
 msgid "Back to home"
 msgstr "Wróć na stronę główną"
 
-#: views/sign-in.blade.php:4
+#: common/views/sign-in.blade.php:4
 msgid "Sign In"
 msgstr "Zaloguj się"
 
-#: views/static/licenses.blade.php:23
+#: common/views/static/licenses.blade.php:23
 msgid "Open source licenses"
 msgstr "Licencje open source"
+
+#: core/Request.php:147
+msgid "Some fields are missing."
+msgstr "Brakuje niektórych pól."
+
+#: core/Request.php:165
+msgid "Not all fields are correctly filled."
+msgstr "Nie wszystkie pola są poprawnie wypełnione."
+
+#: core/Request.php:247
+msgid ""
+"The time verification key does not match, please try refreshing the page."
+msgstr "Klucz weryfikacji czasu nie jest zgodny, spróbuj odświeżyć stronę."
 
 #~ msgid "Community"
 #~ msgstr "Społeczność"

@@ -23,7 +23,7 @@
         <div class="col-12">
             <form id="changePassword" method="POST">
                 <input type="hidden" name="action" value="ChangePassword"/>
-                <input type="hidden" name="nonce" value="@nonce('account')"/>
+                <input type="hidden" name="nonce" value="@nonce('changepassword')"/>
                 <input type="hidden" name="id" value="{{ $user->getId() }}"/>
 
                 <div class="floating-input">

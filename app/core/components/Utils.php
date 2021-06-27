@@ -14,6 +14,11 @@ namespace App\Core\Components;
  */
 final class Utils
 {
+    public static function alphaUsername(?string $username): string
+    {
+        return preg_replace("/[^a-zA-Z0-9]+/", "", trim(strtolower($username)));
+    }
+
     public static function pascalToKebab(string $input, string $separator = '-'): string
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);

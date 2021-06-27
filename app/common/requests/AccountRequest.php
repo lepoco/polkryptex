@@ -39,6 +39,8 @@ final class AccountRequest extends Request
         $user = Registry::get('Account')->currentUser();
 
         if ($user->getId() != $this->getData('id')) {
+            $this->addContent('message', $this->translate('User is invalid.'));
+
             $this->finish(self::ERROR_INVALID_USER);
         }
 
@@ -67,17 +69,19 @@ final class AccountRequest extends Request
 
             $pictureName = $user->getUUID() . '-' . Crypter::salter(32, 'LN');
             $pictureNameExt = $pictureName . '.' . $profilePicture->getImageFileExtension();
+            $pictureNameCompressed = $pictureName . '-300x300' . '.jpg';
 
             $imagePath = $this->getImagePath($pictureNameExt);
-            $imageUrl = $this->getImageUrl($pictureName . '-300x300' . '.jpg');
+            $imageUrl = $this->getImageUrl($pictureNameCompressed);
 
             $profilePicture->move($imagePath);
-            $this->compressImage($imagePath, $this->getImagePath($pictureName . '-300x300' . '.jpg'), 300, 300, false, true);
+            $this->compressImage($imagePath, $this->getImagePath($pictureNameCompressed), 300, 300, false, true);
 
-            Query::updateUserImage($user->getId(), $imageUrl);
+            Query::updateUserImage($user->getId(), $pictureNameCompressed);
             $this->addContent('picture', $imageUrl);
         }
 
+        $this->addContent('message', $this->translate('Your account details have been successfully updated.'));
         $this->finish(self::CODE_SUCCESS);
     }
 
@@ -133,11 +137,11 @@ final class AccountRequest extends Request
     private function getImageUrl(string $name): string
     {
         $baseUrl = Registry::get('Options')->get('baseurl', ($this->request->isSecured() ? 'https://' : 'http://') . $this->request->url->host . '/');
-        return $baseUrl . 'media/uploads/' . $name;
+        return $baseUrl . APP_UPLOADS . $name;
     }
 
     private function getImagePath(string $name): string
     {
-        return ABSPATH . 'public/media/uploads/' . $name;
+        return ABSPATH . 'public/' . APP_UPLOADS . $name;
     }
 }

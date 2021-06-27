@@ -38,7 +38,18 @@ export default class Request {
         if (app.props.debug) {
           console.log(JSON.parse(this.responseText));
         }
-        //Action
+
+        let parsedResponse = JSON.parse(this.responseText);
+
+        if (parsedResponse.content.hasOwnProperty("message")) {
+          if ("S01" === parsedResponse.status) {
+            Toast.send("Cool!", parsedResponse.content.message, "success");
+          } else {
+            Toast.send("Oh no...", parsedResponse.content.message, "alert");
+          }
+        }
+
+        //User action
         callAction("OK", JSON.parse(this.responseText));
       } else {
         Toast.send(

@@ -4,7 +4,7 @@
 <div class="dashboard container pt-5 pb-5">
     <div class="row">
         <div class="col-12">
-            <h2>@translate('Dashboard')</h2>
+            <h5>@translate('Dashboard')</h5>
         </div>
     </div>
 </div>
