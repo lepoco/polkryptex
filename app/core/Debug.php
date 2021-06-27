@@ -220,7 +220,7 @@ final class Debug
         return $context;
     }
 
-    private function showError(bool $exception = false, ?string $message, ?string $line, ?string $file, ?string $errorNumber = null, ?array $trace = null): void
+    private function showError(bool $exception, ?string $message, ?string $line, ?string $file, ?string $errorNumber = null, ?array $trace = null): void
     {
         if (!defined('APP_DEBUG_DISPLAY')) {
             return;
