@@ -32,6 +32,8 @@ final class InstallRequest extends Request
 
     public function action(): void
     {
+        $this->isInstalled();
+
         $this->isSet([
             'user',
             'password',
@@ -61,9 +63,7 @@ final class InstallRequest extends Request
             ['admin_password']
         ]);
 
-        $this->isInstalled();
         $this->isMysql();
-
         $this->createConfig();
         $this->createHtaccess();
         $this->createDatabase();
@@ -293,7 +293,7 @@ final class InstallRequest extends Request
         error_reporting(0);
         $database = new Mysqli($this->getData('host'), $this->getData('user'), $this->getData('password'), $this->getData('table'));
         if ($database->connect_error) {
-            $this->finish(self::ERROR_MYSQL_UNKNOWN);
+            $this->finish(self::ERROR_MYSQL_UNKNOWN, self::STATUS_GONE);
         }
 
         unset($database);
@@ -302,7 +302,7 @@ final class InstallRequest extends Request
     private function isInstalled(): void
     {
         if (defined('APP_VERSION')) {
-            $this->finish(self::ERROR_ENTRY_EXISTS);
+            $this->finish(self::ERROR_ENTRY_EXISTS, self::STATUS_UNAUTHORIZED);
         }
     }
 }

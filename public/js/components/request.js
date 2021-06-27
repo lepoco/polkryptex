@@ -1,4 +1,5 @@
 import Toast from "./toast.js?v=1.0.1";
+import Translator from "./translator.js?v=1.0.1";
 
 export const name = "Request";
 

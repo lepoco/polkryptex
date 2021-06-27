@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
     <title>Polkryptex - {{ $title }}</title>
-    <link rel="icon" href="@media('icons/favicon.ico'){!! '?v=' . $version !!}"/>
+    <link rel="icon" href="{!! $baseUrl . 'favicon.ico?v=' . $version !!}"/>
     <link rel="manifest" href="@media('m.webmanifest'){!! '?v=' . $version !!}">
     <script type="importmap">@json( $importmap )</script>
 
