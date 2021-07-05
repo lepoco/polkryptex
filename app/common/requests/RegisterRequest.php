@@ -12,6 +12,7 @@ namespace App\Common\Requests;
 use App\Core\Request;
 use App\Core\Registry;
 use App\Core\Components\Utils;
+use App\Core\Components\Emails;
 use App\Core\Components\Crypter;
 use App\Core\Components\Query;
 
@@ -71,6 +72,7 @@ final class RegisterRequest extends Request
         }
 
         Query::addUser($this->getData('username'), $this->getData('email'), $this->getData('password'));
+        Emails::sendEmailConfirmation($this->getData('email'), 'https://example.com/confirmemail');
         Registry::get('Debug')->info('User has registered', ['user' => $this->getData('email')]);
 
         $this->addContent('message', $this->translate('Registration was successful, you will be redirected in a moment..'));

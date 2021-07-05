@@ -35,6 +35,11 @@ final class Debug
         return (defined('APP_DEBUG') && APP_DEBUG) || !defined('APP_VERSION');
     }
 
+    public static function isMailDebug(): bool
+    {
+        return (defined('APP_DEBUG_MAIL') && APP_DEBUG_MAIL);
+    }
+
     public function close(): void
     {
         $this->monolog->close();

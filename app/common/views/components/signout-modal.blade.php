@@ -8,7 +8,7 @@
             <p>@translate('You have been inactive for several minutes, your session will be closed in a few seconds.')</p>
         </div>
         <div class="modal-footer">
-            <h4 class="signout__modal-timer">00:60</h4>
+            <strong class="signout__modal-timer">00:60</strong>
             <button type="button" class="signout__modal-button btn btn-dark">@translate('Keep me logged in')</button>
         </div>
         </div>

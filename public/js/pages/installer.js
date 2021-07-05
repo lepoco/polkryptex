@@ -13,7 +13,7 @@ Request.register("#install", function (status, response) {
       );
       window.setTimeout(function () {
         window.location.href = app.props.baseUrl;
-      }, 4000);
+      }, 500);
       break;
 
     case "E07":

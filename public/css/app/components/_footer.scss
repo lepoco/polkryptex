@@ -8,6 +8,7 @@
   a {
     color: rgb(139, 149, 158);
     text-decoration: none;
+    font-size: 1.2rem;
   }
 
   h1,
@@ -22,13 +23,17 @@
 
   &__list {
     padding-top: 3rem;
-    font-size: 0.7rem;
+    font-size: 1.2rem;
     text-align: justify;
     text-justify: inter-word;
+
+    li {
+      font-size: 1.2rem;
+    }
   }
 
   &__bottom {
-    font-size: 0.6rem;
+    font-size: 1rem;
     text-align: justify;
     text-justify: inter-word;
   }
@@ -38,15 +43,16 @@
       color: rgb(120, 129, 136);
       font-family: $f-secondary;
       font-weight: 700;
+      font-size: 1.5rem;
     }
 
     li {
       display: block;
-      padding-bottom: 0.2rem;
+      padding-bottom: .5rem;
     }
 
     a {
-      font-size: 0.7rem;
+      font-size: 1.2rem;
     }
   }
 }

@@ -1,12 +1,20 @@
 
 @include('components.header')
 
-<div class="box full">
-    <div class="box__column">
-        @yield('content')
+<div class="boxpage --full">
+    <div class="boxpage__background">
+        <div class="boxpage__background__column"></div>
+        <div class="boxpage__background__column"@isset($background) style="background-image: url('{{ $background }}')"@endisset></div>
     </div>
-    <div class="box__column"@isset($background) style="background-image: url('{{ $background }}')"@endisset>
-        @yield('banner')
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                @yield('content')
+            </div>
+            <div class="col-12 col-lg-6">
+                @yield('banner')
+            </div>
+        </div>
     </div>
 </div>
 

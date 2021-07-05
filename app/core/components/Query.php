@@ -61,6 +61,24 @@ final class Query
         return $query['user_session_token'];
     }
 
+    public static function setUserEmailToken(int $id, string $token): bool
+    {
+        $query = Registry::get('Database')->query("UPDATE " . self::USERS_TABLE . " SET user_email_token = ? WHERE user_id = ?", $token, $id);
+
+        return $query->affectedRows() > 0;
+    }
+
+    public static function getUserEmailToken(int $id): ?string
+    {
+        $query = Registry::get('Database')->query("SELECT user_email_token FROM " . self::USERS_TABLE . " WHERE user_id = ?", $id)->fetchArray();
+
+        if (!isset($query['user_email_token'])) {
+            return null;
+        }
+
+        return $query['user_email_token'];
+    }
+
     public static function setCookieToken(int $id, string $token): bool
     {
         $query = Registry::get('Database')->query("UPDATE " . self::USERS_TABLE . " SET user_cookie_token = ? WHERE user_id = ?", $token, $id);

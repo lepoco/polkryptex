@@ -21,16 +21,17 @@ final class Options
     public function get(string $name, $default = null)
     {
         if (in_array($name, $this->cache)) {
-            return $this->cache[$name];
+            return self::deserializeType($this->cache[$name]);
         }
 
         $query = $this->getFromDatabase($name);
         if (empty($query)) {
             return $default;
         }
+
         $this->cache[$name] = $query['option_value'];
 
-        return $query['option_value'];
+        return self::deserializeType($query['option_value']);
     }
 
     public function update(string $name, $value)
@@ -64,6 +65,17 @@ final class Options
         }
 
         return $query->affectedRows() > 0 ? true : false;
+    }
+
+    private static function deserializeType($option)
+    {
+        if ($option === 'true' || $option === true) {
+            return true;
+        } else if ($option === 'false' || $option === false) {
+            return false;
+        } else {
+            return $option;
+        }
     }
 
     private static function serializeType($option)

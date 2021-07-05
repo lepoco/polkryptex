@@ -1,3 +1,8 @@
+.navbar {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .navbar-brand {
     display: inline-flex;
     justify-content: center;
@@ -11,6 +16,7 @@
     p {
       margin: 0;
       color: $c-dark;
+      font-size: 2rem;
       font-family: $f-secondary;
       font-weight: 700;
     }

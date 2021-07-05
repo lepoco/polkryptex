@@ -75,6 +75,16 @@ class Controller extends Blade
             }
         }
 
+        if (isset($arguments['permissions']) && is_array($arguments['permissions'])) {
+            foreach ($arguments['permissions'] as $permission) {
+                if (! Registry::get('Account')->hasPermission($permission)) {
+                    
+                    $this->showNotFound();
+                    return;
+                }
+            }
+        }
+
         if (isset($arguments['title'])) {
             $this->setTitle($arguments['title']);
         }
@@ -207,6 +217,12 @@ class Controller extends Blade
         $this->fullScreen = true;
     }
 
+    protected function showNotFound(): void
+    {
+        $this->setupNamespace('NotFound');
+        $this->viewData['title'] = $this->translate('Page not found');
+    }
+
     protected function redirect(?string $path = null): void
     {
         Registry::get('Response')->redirect($this->baseUrl . $path);
@@ -214,7 +230,7 @@ class Controller extends Blade
 
     protected function getAppVersion(): string
     {
-        if(defined('APP_VERSION')) {
+        if (defined('APP_VERSION')) {
             return APP_VERSION;
         }
 

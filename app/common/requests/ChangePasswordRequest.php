@@ -12,6 +12,7 @@ namespace App\Common\Requests;
 use App\Core\Registry;
 use App\Core\Request;
 use App\Core\Components\Query;
+use App\Core\Components\Emails;
 
 /**
  * @author Szymon K.
@@ -71,6 +72,7 @@ final class ChangePasswordRequest extends Request
         }
 
         Query::updateUserPassword($user->getId(), $this->getData('new_password'));
+        Emails::sendPasswordChanged($user);
 
         $this->addContent('message', $this->translate('Your password has been successfully changed.'));
         $this->finish(self::CODE_SUCCESS);

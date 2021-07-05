@@ -15,7 +15,7 @@
                     @endif
                 </div>
                 <div>
-                    <h5>@translate('Hello,') {{ $user->getDisplayName() }}</h5>
+                    <h4>@translate('Hello,') {{ $user->getDisplayName() }}</h4>
                     <p>{{ $user->getEmail() }}</p>
                 </div>
             </div>

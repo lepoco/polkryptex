@@ -13,9 +13,6 @@
 
                 @if(!$auth['loggedIn'])
                     <li class="nav-item">
-                        <a class="nav-link{{ $pagenow === 'home' ? ' active' : '' }}" aria-current="page" href="@url">@translate('Home')</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link{{ $pagenow === 'private' ? ' active' : '' }}" href="@url('private')">@translate('Private')</a>
                     </li>
                     <li class="nav-item">
@@ -29,7 +26,7 @@
                     </li>
                 @endif
             </ul>
-            <div class="d-flex mr-1">
+            <div class="d-flex -mr-2">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                     @if($auth['loggedIn'])
@@ -42,18 +39,13 @@
                         <li class="nav-item">
                             <a class="nav-link{{ $pagenow === 'dashboard-account' ? ' active' : '' }}" href="@dashurl('account')">@translate('Account')</a>
                         </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'features' ? ' active' : '' }}" href="@url('features')">@translate('Features')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'plans' ? ' active' : '' }}" href="@url('plans')">@translate('Plans')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'help' ? ' active' : '' }}" href="@url('help')">@translate('Help')</a>
-                        </li>
-                    @endif
 
+                        @permission('all')
+                        <li class="nav-item">
+                            <a class="nav-link{{ $pagenow === 'admin' ? ' active' : '' }}" href="@url('admin')">@translate('Admin')</a>
+                        </li>
+                        @endpermission
+                    @endif
                 </ul>
             </div>
             <div class="d-flex">

@@ -6,7 +6,7 @@
         <div class="col-12 account__section">
             <div class="account__banner h-100 p-5 bg-light rounded-3">
                 <div class="account__banner__picture">
-                    @if(!empty($user->getImage()))
+                    @if(!empty($user->getImage(false)))
                         <img class="profile_picture" src="{{ $user->getImage() }}" alt="" />
                     @else
                         <div class="profile_placeholder">
@@ -15,7 +15,7 @@
                     @endif
                 </div>
                 <div>
-                    <h5>@translate('Hello,') {{ $user->getDisplayName() }}</h5>
+                    <h4>@translate('Hello,') {{ $user->getDisplayName() }}</h4>
                     <p>{{ $user->getEmail() }}</p>
                     <a href="@dashurl('wallet/transfer')" class="btn btn-outline-dark" type="button">@translate('Make a new transfer')</a> <a href="@dashurl('wallet/topup')" class="btn btn-dark" type="button">@translate('Top up')</a>
                 </div>

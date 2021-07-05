@@ -5,7 +5,7 @@
         
         <div class="col-12 col-lg-6 -pb-3 -mh-70 -flex-center">
             <div>
-                <h3 class="-font-secondary -fw-700">@translate('Create your cryptocurrency wallet today')</h3>
+                <h2 class="-font-secondary -fw-700">@translate('Create your cryptocurrency wallet today')</h2>
                 <p>
                     @translate('Polkryptex is a simple way to buy and sell cryptocurrencies.')
                     <br>
@@ -22,7 +22,7 @@
         </div>
         <div class="col-12 col-lg-6 -pb-3 -mh-70 -flex-center">
             <div>
-                <h4 class="-font-secondary -fw-700">@translate('All currencies\nin one place')</h4>
+                <h3 class="-font-secondary -fw-700">@translate('All currencies\nin one place')</h3>
                 <p>
                     @translate('With the help of Polkryptex you can exchange traditional currencies\nfor crypto and vice versa. It\'s fast, convenient and safe.')
                     <br>
@@ -33,7 +33,7 @@
 
         <div class="col-12 -pt-6 -pb-3 -flex-center -flex-justify-center -text-center">
             <div>
-                <h5 class="-font-secondary -fw-700">@translate('Choose a plan for yourself')</h5>
+                <h4 class="-font-secondary -fw-700">@translate('Choose a plan for yourself')</h4>
                 <p>@translate('Tailored to your needs, no surprises')</p>
             </div>
         </div>

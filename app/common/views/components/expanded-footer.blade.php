@@ -2,7 +2,7 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-12 col-lg-4">
-                <h5>Polkryptex</h5>
+                <h4>Polkryptex</h4>
             </div>
             <div class="col-12 col-lg-8">
                 <div class="row">

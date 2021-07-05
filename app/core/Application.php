@@ -89,9 +89,17 @@ final class Application
 
         $router->register('/dashboard', 'Dashboard\\Dashboard', ['title' => 'Dashboard', 'requireLogin' => true]);
         $router->register('/dashboard/wallet', 'Dashboard\\Wallet', ['title' => 'Wallet', 'requireLogin' => true]);
+        $router->register('/dashboard/wallet/transfer', 'Dashboard\\WalletTransfer', ['title' => 'Transfer', 'requireLogin' => true]);
+        $router->register('/dashboard/wallet/exchange', 'Dashboard\\WalletExchange', ['title' => 'Exchange', 'requireLogin' => true]);
+        $router->register('/dashboard/wallet/topup', 'Dashboard\\WalletTopup', ['title' => 'Top Up', 'requireLogin' => true]);
         $router->register('/dashboard/account', 'Dashboard\\Account', ['title' => 'Account', 'requireLogin' => true]);
         $router->register('/dashboard/account/change-password', 'Dashboard\\AccountNewPassword', ['title' => 'Change your password', 'requireLogin' => true]);
 
+        $router->register('/admin', 'Admin\\Admin', ['title' => 'Admin Dashboard', 'requireLogin' => true, 'permissions' => ['all']]);
+        $router->register('/admin/users', 'Admin\\AdminUsers', ['title' => 'Admin Users', 'requireLogin' => true, 'permissions' => ['all']]);
+        $router->register('/admin/configuration', 'Admin\\AdminConfiguration', ['title' => 'Admin Configuration', 'requireLogin' => true, 'permissions' => ['all']]);
+        $router->register('/admin/tools', 'Admin\\AdminTools', ['title' => 'Admin Tools', 'requireLogin' => true, 'permissions' => ['all']]);
+        
         $router->register('/private', 'Static\\Private', ['title' => 'Private']);
         $router->register('/business', 'Static\\Business', ['title' => 'Business']);
         $router->register('/licenses', 'Static\\Licenses', ['title' => 'Licenses']);

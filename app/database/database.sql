@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS pkx_users (
 	user_location VARCHAR (32),
 	user_session_token VARCHAR (256),
 	user_cookie_token VARCHAR (256),
+	user_email_token VARCHAR (256),
 	user_role INT (6) UNSIGNED DEFAULT NULL,
 	CONSTRAINT fk_user_role FOREIGN KEY (user_role) REFERENCES pkx_user_roles (role_id),
 	user_plan INT (6) UNSIGNED DEFAULT NULL,
@@ -56,10 +57,20 @@ CREATE TABLE IF NOT EXISTS pkx_billing (
 	billing_timezone VARCHAR (64)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+-- Newsletter
+CREATE TABLE IF NOT EXISTS pkx_newsletter (
+	news_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	news_user_id INT (6) UNSIGNED DEFAULT NULL,
+	CONSTRAINT fk_news_user_id FOREIGN KEY (news_user_id) REFERENCES pkx_users (user_id),
+	news_unsubscribe_token VARCHAR (256),
+	news_active BOOLEAN DEFAULT false
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 -- Currencies 
 CREATE TABLE IF NOT EXISTS pkx_currency (
 	currency_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	currency_name VARCHAR (64) NOT NULL,
+	currency_symbol VARCHAR (16) NOT NULL,
+	currency_name VARCHAR (128) NOT NULL,
 	currency_rate FLOAT NOT NULL,
 	currency_is_crypto BOOLEAN DEFAULT false
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;

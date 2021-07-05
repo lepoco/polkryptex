@@ -213,6 +213,7 @@ final class InstallRequest extends Request
                 "('site_name', 'Polkryptex'),  " .
                 "('site_description', 'Trust us with your money'),  " .
                 "('dashboard', 'dashboard'),  " .
+                "('admin', 'admin'),  " .
                 "('timezone', 'UTC'), " .
                 "('date_format', 'j F Y'), " .
                 "('time_format', 'H:i'), " .
@@ -222,6 +223,14 @@ final class InstallRequest extends Request
                 "('gzip', 'false'),  " .
                 "('language', 'pl'),  " .
                 "('language_mode', '1'),  " .
+                "('login_timeout', '10'),  " .
+                "('mail_smtp', 'false'),  " .
+                "('mail_title', 'Polkryptex INC'),  " .
+                "('mail_footer', 'Polkryptex INC, NY Box 1002/1'),  " .
+                "('mail_logo', '" . $baseurl . 'media/icons/192.png' . "'),  " .
+                "('mail_sendname', 'Polkryptex'),  " .
+                "('mail_sendfrom', 'mail@example.com'),  " .
+                "('mail_replyto', 'mail@example.com'),  " .
                 "('login_timeout', '10'),  " .
                 "('signin_captcha', 'false'), " .
                 "('captcha_public', ''), " .
@@ -234,6 +243,13 @@ final class InstallRequest extends Request
                 "('redirect_home_direction', ''), " .
                 "('google_analytics', '')"
         );
+
+        $database->query(
+            "INSERT IGNORE INTO pkx_currency (currency_symbol, currency_name, currency_rate, currency_is_crypto) VALUES " .
+                "('USD', 'US Dollar', 1, 0),  " .
+                "('USD', 'US Dollar', 1, 0)"
+        );
+
 
         $database->query(
             "INSERT IGNORE INTO pkx_user_roles (role_name, role_permissions) VALUES " .

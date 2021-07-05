@@ -105,6 +105,14 @@ abstract class Blade extends Renderable
             return '<?php echo $baseUrl . \'media/' . str_replace('\'', '', $media) . '\' . \'?v=\' . $version; ?>';
         });
 
+        $this->addDirective('permission', function ($media) {
+            return '<?php if(\App\Core\Registry::get(\'Account\')->hasPermission('.$media.')): ?>';
+        });
+
+        $this->addDirective('endpermission', function ($media) {
+            return '<?php endif; ?>';
+        });
+
         $this->addDirective('debug', function () {
             $html = '<strong>@debug</strong><br>';
             $html .= '<small><?php echo get_defined_vars()[\'__path\']; ?></small><hr>';
