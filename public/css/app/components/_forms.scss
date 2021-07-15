@@ -64,9 +64,9 @@
 
       & + label,
       & + .floating-input__label {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         font-weight: 500;
-        top: -0.75rem;
+        top: -1rem;
         left: 1rem;
         z-index: 5;
         color: $c-dark;
@@ -78,9 +78,9 @@
       &:not(:focus) {
         & + label,
         & + .floating-input__label {
-          font-size: 1.2rem;
+          font-size: 1.3rem;
           font-weight: 500;
-          top: -0.75rem;
+          top: -1rem;
           left: 1rem;
           z-index: 5;
         }

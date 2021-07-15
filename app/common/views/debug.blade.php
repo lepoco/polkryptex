@@ -65,6 +65,15 @@
             dump(\App\Core\Registry::get('Request'));
             @endphp
         </div>
+
+        <div class="col-12">
+        <pre>
+        @php
+        phpinfo();
+        //var_dump(\App\Core\Components\Query::getUserById(1));
+        @endphp
+        </pre>
+        </div>
     </div>
 </div>
 

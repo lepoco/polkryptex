@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Polkryptex\n"
-"POT-Creation-Date: 2021-06-27 14:18+0200\n"
-"PO-Revision-Date: 2021-06-27 14:19+0200\n"
+"POT-Creation-Date: 2021-07-06 17:58+0200\n"
+"PO-Revision-Date: 2021-07-06 18:00+0200\n"
 "Last-Translator: Leszek Pomianowski <kontakt@rapiddev.pl>\n"
 "Language-Team: Polkryptex\n"
 "Language: pl_PL\n"
@@ -10,23 +10,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
-"X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
-"|| n%100>14) ? 1 : 2);\n"
-"X-Poedit-KeywordsList: translate;trans;__;_e;_n:1,2;_x:1,2c;_ex:1,2c;"
-"_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
-"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2;setTitle\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Poedit-KeywordsList: translate;trans;__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2;setTitle\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: common/views\n"
-"X-Poedit-SearchPath-1: common/composers\n"
-"X-Poedit-SearchPath-2: common/requests\n"
-"X-Poedit-SearchPath-3: core\n"
+"X-Poedit-SearchPath-0: app\n"
+"X-Poedit-SearchPath-1: public\n"
+"X-Poedit-SearchPathExcluded-0: app/cache\n"
+"X-Poedit-SearchPathExcluded-1: app/database\n"
 
 #: common/requests/AccountRequest.php:42
 msgid "User is invalid."
 msgstr "Użytkownik jest nieprawidłowy."
 
-#: common/requests/AccountRequest.php:83
+#: common/requests/AccountRequest.php:84
 msgid "Your account details have been successfully updated."
 msgstr "Dane twojego konta zostały pomyślnie zaktualizowane."
 
@@ -35,8 +32,9 @@ msgid "The current password provided is incorrect."
 msgstr "Bieżące hasło jest niepoprawne."
 
 #: common/requests/ChangePasswordRequest.php:58
-msgid "The password cannot be the same."
-msgstr "Hasło nie może być takie samo."
+#: common/requests/RegisterRequest.php:49
+msgid "The password provided is too short."
+msgstr "Podane hasło jest za krótkie."
 
 #: common/requests/ChangePasswordRequest.php:64
 msgid "The new password cannot be the same as the old password."
@@ -46,9 +44,25 @@ msgstr "Nowe hasło nie może być takie samo jak stare hasło."
 msgid "The new password does not match its confirmation."
 msgstr "Nowe hasło nie jest zgodne z jego potwierdzeniem."
 
-#: common/requests/ChangePasswordRequest.php:74
+#: common/requests/ChangePasswordRequest.php:77
 msgid "Your password has been successfully changed."
 msgstr "Twoje hasło zostało pomyślnie zmienione."
+
+#: common/requests/RegisterRequest.php:55
+msgid "Password does not match its confirmation."
+msgstr "Hasło nie jest zgodne z jego potwierdzeniem."
+
+#: common/requests/RegisterRequest.php:62
+msgid "This username is already taken."
+msgstr "Ta nazwa użytkownika jest już zajęta."
+
+#: common/requests/RegisterRequest.php:70
+msgid "This email is already taken."
+msgstr "Ten e-mail jest już zajęty."
+
+#: common/requests/RegisterRequest.php:78
+msgid "Registration was successful, you will be redirected in a moment.."
+msgstr "Rejestracja zakończyła się pomyślnie, zostaniesz przekierowany za chwilę.."
 
 #: common/requests/SignInRequest.php:42 common/requests/SignInRequest.php:48
 msgid "The provided username or password is incorrect."
@@ -58,348 +72,9 @@ msgstr "Hasło lub nazwa użytkownika są niepoprawne."
 msgid "Signed in successfully, you will be redirected in a moment..."
 msgstr "Zalogowano pomyślnie, zostaniesz przekierowany za chwilę..."
 
-#: common/views/components/cookie.blade.php:7
-msgid "We use  🍪 to personalize the content you see on Polkryptex pages."
-msgstr ""
-"Używamy  🍪 do zarządzania treściami, które widzisz na stronach Polkryptex."
-
-#: common/views/components/cookie.blade.php:7
-msgid "Find out more"
-msgstr "Zobacz więcej"
-
-#: common/views/components/cookie.blade.php:10
-msgid "Manage cookies"
-msgstr "Zarządzaj ciasteczkami"
-
-#: common/views/components/cookie.blade.php:10
-msgid "Accept"
-msgstr "Akceptuj"
-
-#: common/views/components/expanded-footer.blade.php:12
-#: common/views/components/navigation.blade.php:43
-msgid "Account"
-msgstr "Konto"
-
-#: common/views/components/expanded-footer.blade.php:15
-msgid "Budget & Analytics"
-msgstr "Budżet & Analityka"
-
-#: common/views/components/expanded-footer.blade.php:18
-#: common/views/components/navigation.blade.php:40
-msgid "Wallet"
-msgstr "Portfel"
-
-#: common/views/components/expanded-footer.blade.php:21
-msgid "Crypto"
-msgstr "Krypto"
-
-#: common/views/components/expanded-footer.blade.php:24
-msgid "Credit cards"
-msgstr "Karty kredytowe"
-
-#: common/views/components/expanded-footer.blade.php:31
-msgid "Payments"
-msgstr "Płatności"
-
-#: common/views/components/expanded-footer.blade.php:34
-msgid "Money transfers"
-msgstr "Przelewy"
-
-#: common/views/components/expanded-footer.blade.php:37
-msgid "Group bills"
-msgstr "Rachunki grupowe"
-
-#: common/views/components/expanded-footer.blade.php:40
-msgid "Subscriptions"
-msgstr "Subskrypcje"
-
-#: common/views/components/expanded-footer.blade.php:43
-msgid "Rewards"
-msgstr "Nagrody"
-
-#: common/views/components/expanded-footer.blade.php:50
-msgid "Company"
-msgstr "Firma"
-
-#: common/views/components/expanded-footer.blade.php:53
-msgid "About us"
-msgstr "O nas"
-
-#: common/views/components/expanded-footer.blade.php:56
-msgid "Carriers"
-msgstr "Dostawcy"
-
-#: common/views/components/expanded-footer.blade.php:59
-msgid "Affiliates"
-msgstr "Program partnerski"
-
-#: common/views/components/expanded-footer.blade.php:62
-msgid "Contact"
-msgstr "Kontakt"
-
-#: common/views/components/expanded-footer.blade.php:69
-#: common/views/components/navigation.blade.php:53
-#: common/views/help.blade.php:7
-msgid "Help"
-msgstr "Pomoc"
-
-#: common/views/components/expanded-footer.blade.php:72
-msgid "Help Centre"
-msgstr "Centrum pomocy"
-
-#: common/views/components/expanded-footer.blade.php:75
-msgid "Security"
-msgstr "Bezpieczeństwo"
-
-#: common/views/components/expanded-footer.blade.php:78
-msgid "Developer APIs"
-msgstr "Interfejsy API"
-
-#: common/views/components/expanded-footer.blade.php:81
-#: common/views/static/licenses.blade.php:15
-msgid "Licenses"
-msgstr "Licencje"
-
-#: common/views/components/expanded-footer.blade.php:94
-msgid "Website Terms"
-msgstr "Warunki"
-
-#: common/views/components/expanded-footer.blade.php:97
-msgid "Legal Agreements"
-msgstr "Umowy prawne"
-
-#: common/views/components/expanded-footer.blade.php:100
-msgid "Privacy Policy"
-msgstr "Polityka Prywatności"
-
-#: common/views/components/expanded-footer.blade.php:103
-msgid "Currency Disclaimer"
-msgstr "Wyłączenie odpowiedzialności walutowej"
-
-#: common/views/components/navigation.blade.php:16
-msgid "Home"
-msgstr "Home"
-
-#: common/views/components/navigation.blade.php:19
-#: common/views/static/private.blade.php:8
-msgid "Private"
-msgstr "Prywatnie"
-
-#: common/views/components/navigation.blade.php:22
-#: common/views/static/business.blade.php:8
-msgid "Business"
-msgstr "Przedsiębiorca"
-
-#: common/views/components/navigation.blade.php:28
-msgid "Debug"
-msgstr "Debugowanie"
-
-#: common/views/components/navigation.blade.php:37
-#: common/views/dashboard/dashboard.blade.php:7
-msgid "Dashboard"
-msgstr "Kokpit"
-
-#: common/views/components/navigation.blade.php:47
-msgid "Features"
-msgstr "Funkcje"
-
-#: common/views/components/navigation.blade.php:50
-#: common/views/plans.blade.php:7
-msgid "Plans"
-msgstr "Plany"
-
-#: common/views/components/navigation.blade.php:62
-msgid "Sign Out"
-msgstr "Wyloguj się"
-
-#: common/views/components/navigation.blade.php:64
-#: common/views/sign-in.blade.php:20
-msgid "Sign in"
-msgstr "Zaloguj się"
-
-#: common/views/components/navigation.blade.php:65
-msgid "Register for free"
-msgstr "Zarejestruj się za darmo"
-
-#: common/views/components/signout-modal.blade.php:7
-msgid "You will be logged out soon"
-msgstr "Wkrótce zostaniesz wylogowany"
-
-#: common/views/components/signout-modal.blade.php:8
-msgid ""
-"You have been inactive for several minutes, your session will be closed in a "
-"few seconds."
-msgstr ""
-"Byłeś nieaktywny przez kilka minut, sesja zostanie zamknięta w ciągu kilku "
-"sekund."
-
-#: common/views/components/signout-modal.blade.php:12
-msgid "Keep me logged in"
-msgstr "Zapamiętaj mnie"
-
-#: common/views/dashboard/account-new-password.blade.php:18
-#: common/views/dashboard/account.blade.php:18
-msgid "Hello,"
-msgstr "Cześć,"
-
-#: common/views/dashboard/account-new-password.blade.php:31
-msgid "Current password"
-msgstr "Aktualne hasło"
-
-#: common/views/dashboard/account-new-password.blade.php:36
-msgid "New password"
-msgstr "Nowe hasło"
-
-#: common/views/dashboard/account-new-password.blade.php:41
-msgid "Confirm new password"
-msgstr "Potwierdź nowe hasło"
-
-#: common/views/dashboard/account-new-password.blade.php:44
-#: common/views/dashboard/account.blade.php:45
-msgid "Change your password"
-msgstr "Zmień hasło"
-
-#: common/views/dashboard/account.blade.php:20
-msgid "Make a new transfer"
-msgstr "Zrób przelew"
-
-#: common/views/dashboard/account.blade.php:20
-msgid "Top up"
-msgstr "Doładuj konto"
-
-#: common/views/dashboard/account.blade.php:32
-#: common/views/installer.blade.php:53 common/views/sign-in.blade.php:11
-msgid "Email"
-msgstr "Email"
-
-#: common/views/dashboard/account.blade.php:37
-msgid "Display name"
-msgstr "Nazwa wyświetlana"
-
-#: common/views/dashboard/account.blade.php:42
-msgid "Profile picture"
-msgstr "Obrazek profilowy"
-
-#: common/views/dashboard/account.blade.php:45
-msgid "Update"
-msgstr "Aktualizuj"
-
-#: common/views/dashboard/wallet.blade.php:14
-msgid "Select currency"
-msgstr "Wybierz walutę"
-
-#: common/views/dashboard/wallet.blade.php:14
-msgid "Transfer"
-msgstr "Przelew"
-
-#: common/views/home.blade.php:8
-msgid "Create your cryptocurrency wallet today"
-msgstr "Stwórz swój portfel kryptowalutowy już dziś"
-
-#: common/views/home.blade.php:10
-msgid "Polkryptex is a simple way to buy and sell cryptocurrencies."
-msgstr "Polkryptex to prosty sposób na kupowanie i sprzedawanie kryptowalut."
-
-#: common/views/home.blade.php:12
-msgid "Open your free account now"
-msgstr "Otwórz swoje darmowe konto już teraz"
-
-#: common/views/home.blade.php:25
-msgid ""
-"All currencies\n"
-"in one place"
-msgstr ""
-"Wszystkie waluty\n"
-"w jednym miejscu"
-
-#: common/views/home.blade.php:27
-msgid ""
-"With the help of Polkryptex you can exchange traditional currencies\n"
-"for crypto and vice versa. It's fast, convenient and safe."
-msgstr ""
-"Z pomocą Polkryptex możesz wymieniać tradycyjne waluty\n"
-"na krypto i odwrotnie. To szybkie, wygodne i bezpieczne."
-
-#: common/views/home.blade.php:29
-msgid "Find out more about our wallets"
-msgstr "Dowiedz się więcej o naszych portfelach"
-
-#: common/views/home.blade.php:36
-msgid "Choose a plan for yourself"
-msgstr "Wybierz plan dla siebie"
-
-#: common/views/home.blade.php:37
-msgid "Tailored to your needs, no surprises"
-msgstr "Dostosowane do Twoich potrzeb, bez niespodzianek"
-
-#: common/views/installer.blade.php:4
-msgid "Installer"
-msgstr "Instalator"
-
-#: common/views/installer.blade.php:9
-msgid "Database"
-msgstr "Baza danych"
-
-#: common/views/installer.blade.php:15 common/views/installer.blade.php:43
-msgid "User"
-msgstr "Użytkownik"
-
-#: common/views/installer.blade.php:21 common/views/installer.blade.php:57
-#: common/views/register.blade.php:23 common/views/sign-in.blade.php:17
-msgid "Password"
-msgstr "Hasło"
-
-#: common/views/installer.blade.php:30
-msgid "Host"
-msgstr "Serwer"
-
-#: common/views/installer.blade.php:36
-msgid "Table"
-msgstr "Tablica"
-
-#: common/views/installer.blade.php:49 common/views/register.blade.php:11
-msgid "Username"
-msgstr "Użytkownik"
-
-#: common/views/installer.blade.php:62
-msgid "Begin installation"
-msgstr "Rozpocznij instalację"
-
-#: common/views/not-found.blade.php:4
-msgid "Ups!"
-msgstr "Ojej!"
-
-#: common/views/not-found.blade.php:5
-msgid "The page you are looking for has not been found."
-msgstr "Strona, której szukasz nie została znaleziona."
-
-#: common/views/not-found.blade.php:6
-msgid "Back to the home page"
-msgstr "Wróć na stronę główną"
-
-#: common/views/register.blade.php:4 common/views/register.blade.php:32
-msgid "Register"
-msgstr "Zarejestruj się"
-
-#: common/views/register.blade.php:17
-msgid "Email address"
-msgstr "Adres e-mail"
-
-#: common/views/register.blade.php:29
-msgid "Confirm Password"
-msgstr "Potwierdź hasło"
-
-#: common/views/register.blade.php:32 common/views/sign-in.blade.php:20
-msgid "Back to home"
-msgstr "Wróć na stronę główną"
-
-#: common/views/sign-in.blade.php:4
-msgid "Sign In"
-msgstr "Zaloguj się"
-
-#: common/views/static/licenses.blade.php:23
-msgid "Open source licenses"
-msgstr "Licencje open source"
+#: core/Controller.php:223
+msgid "Page not found"
+msgstr "Strona nie znaleziona"
 
 #: core/Request.php:147
 msgid "Some fields are missing."
@@ -410,23 +85,294 @@ msgid "Not all fields are correctly filled."
 msgstr "Nie wszystkie pola są poprawnie wypełnione."
 
 #: core/Request.php:247
-msgid ""
-"The time verification key does not match, please try refreshing the page."
+msgid "The time verification key does not match, please try refreshing the page."
 msgstr "Klucz weryfikacji czasu nie jest zgodny, spróbuj odświeżyć stronę."
 
-#~ msgid "Community"
-#~ msgstr "Społeczność"
+#: core/components/Emails.php:25
+msgid "Thank you for your registration."
+msgstr "Dziękujemy za rejestrację."
 
-#~ msgid "My Account"
-#~ msgstr "Moje Konto"
+#: core/components/Emails.php:26
+msgid "You have successfully registered on the Polkryptex website. Confirm your email address with the button below to validate your account and log in."
+msgstr "Pomyślnie zarejestrowałeś się na stronie Internetowej Polkryptex. Potwierdź swój adres e-mail za pomocą poniższego przycisku, aby zweryfikować swoje konto i zalogować się."
 
-#~ msgid "Page not found"
-#~ msgstr "Strona nie znaleziona"
+#: core/components/Emails.php:27
+msgid "Confirm your email"
+msgstr "Potwierdź swój email"
 
-#~ msgid "Home page"
-#~ msgstr "Strona główna"
+#: core/components/Emails.php:31
+msgid "Welcome to the Polkryptex army!"
+msgstr "Witamy w armii Polkryptex!"
 
-#, fuzzy
-#~| msgid "Home page"
-#~ msgid "Home pagasdasde"
-#~ msgstr "Strona główna"
+#: core/components/Emails.php:39
+msgid "Your password has been changed."
+msgstr "Twoje hasło zostało zmienione."
+
+#: core/components/Emails.php:40
+msgid "Your password has been changed under your user account. You can log in using the button below."
+msgstr "Twoje hasło zostało zmienione w ramach twojego konta użytkownika. Możesz zalogować się za pomocą przycisku poniżej."
+
+#: core/components/Emails.php:41
+msgid "Log in to your account"
+msgstr "Zaloguj się na swoje konto"
+
+#: core/components/Emails.php:45
+msgid "Your password has been changed"
+msgstr "Twoje hasło zostało zmienione"
+
+msgid "The password cannot be the same."
+msgstr "Hasło nie może być takie samo."
+
+msgid "We use  🍪 to personalize the content you see on Polkryptex pages."
+msgstr "Używamy  🍪 do zarządzania treściami, które widzisz na stronach Polkryptex."
+
+msgid "Find out more"
+msgstr "Zobacz więcej"
+
+msgid "Manage cookies"
+msgstr "Zarządzaj ciasteczkami"
+
+msgid "Accept"
+msgstr "Akceptuj"
+
+msgid "Account"
+msgstr "Konto"
+
+msgid "Budget & Analytics"
+msgstr "Budżet & Analityka"
+
+msgid "Wallet"
+msgstr "Portfel"
+
+msgid "Crypto"
+msgstr "Krypto"
+
+msgid "Credit cards"
+msgstr "Karty kredytowe"
+
+msgid "Payments"
+msgstr "Płatności"
+
+msgid "Money transfers"
+msgstr "Przelewy"
+
+msgid "Group bills"
+msgstr "Rachunki grupowe"
+
+msgid "Subscriptions"
+msgstr "Subskrypcje"
+
+msgid "Rewards"
+msgstr "Nagrody"
+
+msgid "Company"
+msgstr "Firma"
+
+msgid "About us"
+msgstr "O nas"
+
+msgid "Carriers"
+msgstr "Dostawcy"
+
+msgid "Affiliates"
+msgstr "Program partnerski"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Help"
+msgstr "Pomoc"
+
+msgid "Help Centre"
+msgstr "Centrum pomocy"
+
+msgid "Security"
+msgstr "Bezpieczeństwo"
+
+msgid "Developer APIs"
+msgstr "Interfejsy API"
+
+msgid "Licenses"
+msgstr "Licencje"
+
+msgid "Website Terms"
+msgstr "Warunki"
+
+msgid "Legal Agreements"
+msgstr "Umowy prawne"
+
+msgid "Privacy Policy"
+msgstr "Polityka Prywatności"
+
+msgid "Currency Disclaimer"
+msgstr "Wyłączenie odpowiedzialności walutowej"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Private"
+msgstr "Prywatnie"
+
+msgid "Business"
+msgstr "Przedsiębiorca"
+
+msgid "Debug"
+msgstr "Debugowanie"
+
+msgid "Dashboard"
+msgstr "Kokpit"
+
+msgid "Features"
+msgstr "Funkcje"
+
+msgid "Plans"
+msgstr "Plany"
+
+msgid "Sign Out"
+msgstr "Wyloguj się"
+
+msgid "Sign in"
+msgstr "Zaloguj się"
+
+msgid "Register for free"
+msgstr "Zarejestruj się za darmo"
+
+msgid "You will be logged out soon"
+msgstr "Wkrótce zostaniesz wylogowany"
+
+msgid "You have been inactive for several minutes, your session will be closed in a few seconds."
+msgstr "Byłeś nieaktywny przez kilka minut, sesja zostanie zamknięta w ciągu kilku sekund."
+
+msgid "Keep me logged in"
+msgstr "Zapamiętaj mnie"
+
+msgid "Hello,"
+msgstr "Cześć,"
+
+msgid "Current password"
+msgstr "Aktualne hasło"
+
+msgid "New password"
+msgstr "Nowe hasło"
+
+msgid "Confirm new password"
+msgstr "Potwierdź nowe hasło"
+
+msgid "Change your password"
+msgstr "Zmień hasło"
+
+msgid "Make a new transfer"
+msgstr "Zrób przelew"
+
+msgid "Top up"
+msgstr "Doładuj konto"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Display name"
+msgstr "Nazwa wyświetlana"
+
+msgid "Profile picture"
+msgstr "Obrazek profilowy"
+
+msgid "Update"
+msgstr "Aktualizuj"
+
+msgid "Select currency"
+msgstr "Wybierz walutę"
+
+msgid "Transfer"
+msgstr "Przelew"
+
+msgid "Create your cryptocurrency wallet today"
+msgstr "Stwórz swój portfel kryptowalutowy już dziś"
+
+msgid "Polkryptex is a simple way to buy and sell cryptocurrencies."
+msgstr "Polkryptex to prosty sposób na kupowanie i sprzedawanie kryptowalut."
+
+msgid "Open your free account now"
+msgstr "Otwórz swoje darmowe konto już teraz"
+
+msgid ""
+"All currencies\n"
+"in one place"
+msgstr ""
+"Wszystkie waluty\n"
+"w jednym miejscu"
+
+msgid ""
+"With the help of Polkryptex you can exchange traditional currencies\n"
+"for crypto and vice versa. It's fast, convenient and safe."
+msgstr ""
+"Z pomocą Polkryptex możesz wymieniać tradycyjne waluty\n"
+"na krypto i odwrotnie. To szybkie, wygodne i bezpieczne."
+
+msgid "Find out more about our wallets"
+msgstr "Dowiedz się więcej o naszych portfelach"
+
+msgid "Choose a plan for yourself"
+msgstr "Wybierz plan dla siebie"
+
+msgid "Tailored to your needs, no surprises"
+msgstr "Dostosowane do Twoich potrzeb, bez niespodzianek"
+
+msgid "Installer"
+msgstr "Instalator"
+
+msgid "Database"
+msgstr "Baza danych"
+
+msgid "User"
+msgstr "Użytkownik"
+
+msgid "Password"
+msgstr "Hasło"
+
+msgid "Host"
+msgstr "Serwer"
+
+msgid "Table"
+msgstr "Tablica"
+
+msgid "Username"
+msgstr "Użytkownik"
+
+msgid "Begin installation"
+msgstr "Rozpocznij instalację"
+
+msgid "Ups!"
+msgstr "Ojej!"
+
+msgid "The page you are looking for has not been found."
+msgstr "Strona, której szukasz nie została znaleziona."
+
+msgid "Back to the home page"
+msgstr "Wróć na stronę główną"
+
+msgid "Register"
+msgstr "Zarejestruj się"
+
+msgid "Email address"
+msgstr "Adres e-mail"
+
+msgid "Confirm Password"
+msgstr "Potwierdź hasło"
+
+msgid "Back to home"
+msgstr "Wróć na stronę główną"
+
+msgid "Sign In"
+msgstr "Zaloguj się"
+
+msgid "Open source licenses"
+msgstr "Licencje open source"
+
+msgid "Community"
+msgstr "Społeczność"
+
+msgid "My Account"
+msgstr "Moje Konto"
+
+msgid "Home page"
+msgstr "Strona główna"

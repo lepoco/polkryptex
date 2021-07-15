@@ -31,8 +31,8 @@ final class Application
 
     private function registerExceptions(): void
     {
-        //set_error_handler([Registry::get('Debug'), 'errorHandler']);
-        //set_exception_handler([Registry::get('Debug'), 'exceptionHandler']);
+        set_error_handler([Registry::get('Debug'), 'errorHandler']);
+        set_exception_handler([Registry::get('Debug'), 'exceptionHandler']);
     }
 
     /**
@@ -93,6 +93,7 @@ final class Application
         $router->register('/dashboard/wallet/exchange', 'Dashboard\\WalletExchange', ['title' => 'Exchange', 'requireLogin' => true]);
         $router->register('/dashboard/wallet/topup', 'Dashboard\\WalletTopup', ['title' => 'Top Up', 'requireLogin' => true]);
         $router->register('/dashboard/account', 'Dashboard\\Account', ['title' => 'Account', 'requireLogin' => true]);
+        $router->register('/dashboard/account/two-step', 'Dashboard\\AccountTwoStep', ['title' => '2FA Authentication', 'requireLogin' => true]);
         $router->register('/dashboard/account/change-password', 'Dashboard\\AccountNewPassword', ['title' => 'Change your password', 'requireLogin' => true]);
 
         $router->register('/admin', 'Admin\\Admin', ['title' => 'Admin Dashboard', 'requireLogin' => true, 'permissions' => ['all']]);

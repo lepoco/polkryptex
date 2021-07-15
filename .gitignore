@@ -16,6 +16,9 @@ composer.phar
 # Cache
 app/cache/
 
+# Certificates and authentication
+app/cert/
+
 # Configuration
 app/config.php
 app/config-sample.php

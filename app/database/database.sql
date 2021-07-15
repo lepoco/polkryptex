@@ -42,6 +42,23 @@ CREATE TABLE IF NOT EXISTS pkx_users (
 	user_uuid VARCHAR (64)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+-- Authentication types
+CREATE TABLE IF NOT EXISTS pkx_auth_types (
+	authtype_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	authtype_name VARCHAR (256),
+	authtype_description VARCHAR (1024)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+-- User's authentication
+CREATE TABLE IF NOT EXISTS pkx_auth (
+	auth_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	auth_user_id INT (6) UNSIGNED DEFAULT NULL,
+	CONSTRAINT fk_auth_user_id FOREIGN KEY (auth_user_id) REFERENCES pkx_users (user_id),
+	auth_type INT (6) UNSIGNED DEFAULT NULL,
+	CONSTRAINT fk_auth_type FOREIGN KEY (auth_type) REFERENCES pkx_auth_types (authtype_id),
+	auth_token VARCHAR (1024) NOT NULL
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 -- Users billing
 CREATE TABLE IF NOT EXISTS pkx_billing (
 	billing_id INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,

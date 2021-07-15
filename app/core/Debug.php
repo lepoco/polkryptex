@@ -28,6 +28,11 @@ final class Debug
 
         $this->errorLog = new Logger('APP');
         $this->errorLog->pushHandler(new StreamHandler(ABSPATH . 'logs/error/' . date('Y-m-d') . '.log'));
+
+        if(function_exists('xdebug_break')) {
+            ini_set('xdebug.client_port', 9005);
+            ini_set('xdebug.log', ABSPATH . 'logs/xdebug.log');
+        }
     }
 
     public static function isDebug(): bool
@@ -171,9 +176,7 @@ final class Debug
                 break;
         }
 
-        $this->showError(false, $errstr, $errline, $errfile, $errno);
-
-        return true;
+        return false;
     }
 
     public function exceptionHandler($exception): bool
@@ -204,9 +207,8 @@ final class Debug
         }
 
         $this->emergency('EXCEPTION: ' . $errstr, $context, true);
-        $this->showError(true, $errstr, $exception->getLine(), $exception->getFile(), null, $result);
 
-        return true;
+        return false;
     }
 
     public function exception($exception): void

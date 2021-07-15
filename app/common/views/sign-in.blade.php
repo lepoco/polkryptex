@@ -1,7 +1,7 @@
 @extends('layouts.box', ['background' => $baseUrl . 'media/images/pexels-person-holding-bitcoin.jpeg'])
 
 @section('content')
-    <h4 class="-font-secondary -fw-700 -pb-3">@translate('Sign In')</h4>
+    <h2 class="-font-secondary -fw-700 -pb-3">@translate('Sign In')</h2>
     <form id="signin">
         <input type="hidden" name="action" value="SignIn"/>
         <input type="hidden" name="nonce" value="@nonce('signin')"/>

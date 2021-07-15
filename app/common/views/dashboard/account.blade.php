@@ -42,7 +42,7 @@
                     <label for="picture">@translate('Profile picture')</label>
                 </div>
 
-                <button type="submit" class="btn btn-dark">@translate('Update')</button> <a href="@dashurl('account/change-password')" class="btn btn-outline-dark">@translate('Change your password')</a>
+                <button type="submit" class="btn btn-dark">@translate('Update')</button> <a href="@dashurl('account/change-password')" class="btn btn-outline-dark">@translate('Change your password')</a> <a href="@dashurl('account/two-step')" class="btn btn-outline-dark" type="button">@translate('Two-step authentication')</a>
             </form>
         </div>
     </div>

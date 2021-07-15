@@ -25,6 +25,11 @@
                         <a class="nav-link{{ $pagenow === 'debug' ? ' active' : '' }}" href="@url('debug')">@translate('Debug')</a>
                     </li>
                 @endif
+                @permission('all')
+                    <li class="nav-item">
+                        <a class="nav-link{{ $pagenow === 'admin' ? ' active' : '' }}" href="@url('admin')">@translate('Admin')</a>
+                    </li>
+                @endpermission
             </ul>
             <div class="d-flex -mr-2">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -39,12 +44,6 @@
                         <li class="nav-item">
                             <a class="nav-link{{ $pagenow === 'dashboard-account' ? ' active' : '' }}" href="@dashurl('account')">@translate('Account')</a>
                         </li>
-
-                        @permission('all')
-                        <li class="nav-item">
-                            <a class="nav-link{{ $pagenow === 'admin' ? ' active' : '' }}" href="@url('admin')">@translate('Admin')</a>
-                        </li>
-                        @endpermission
                     @endif
                 </ul>
             </div>

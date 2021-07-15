@@ -1,7 +1,7 @@
 @extends('layouts.box', ['background' => $baseUrl . 'media/images/pexels-person-holding-bitcoin.jpeg'])
 
 @section('content')
-    <h4 class="-font-secondary -fw-700 -pb-3">@translate('Installer')</h4>
+    <h2 class="-font-secondary -fw-700 -pb-3">@translate('Installer')</h2>
     <form id="install" class="-pr-2">
         <input type="hidden" name="action" value="Install"/>
         <div class="row">
