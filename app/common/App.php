@@ -17,6 +17,4 @@ use App\Core\Application;
 final class App extends Application
 {
   public const APP_NAME = 'Polkryptex';
-
-  public const REQUEST_NAMESPACE = 'App\\Common\\Requests\\';
 }

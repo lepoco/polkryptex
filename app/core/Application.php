@@ -14,7 +14,7 @@ namespace App\Core;
  */
 abstract class Application
 {
-  public const APP_NAME = 'Polkryptex';
+  public const APP_NAME = 'App';
 
   public const REQUEST_NAMESPACE = 'App\\Common\\Requests\\';
 
@@ -27,15 +27,14 @@ abstract class Application
     Registry::register('Database', new Database(), ['\App\Core\Components\Queries']);
     Registry::register('Options', new Components\Options(), ['\App\Core\Controller', '\App\Core\Request']);
     Registry::register('Account', new Components\Account($request, $response));
-
-    $this->registerExceptions();
-    $this->registerTranslation();
-
     /**
      * @see https://doc.nette.org/en/3.1/sessions
      */
     Registry::register('Session', new \Nette\Http\Session($request, $response));
     Registry::get('Session')->start();
+
+    $this->registerExceptions();
+    $this->registerTranslation();
 
     /**
      * @see https://github.com/bramus/router
