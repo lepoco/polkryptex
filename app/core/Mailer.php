@@ -196,4 +196,14 @@ final class Mailer
 
     return $plainMessage;
   }
+
+  public static function getUrl(?string $path = null): string
+  {
+    return Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/') . $path;
+  }
+
+  public static function translate(string $text, ?array $variables = null): ?string
+  {
+    return Registry::get('Translator')->translate($text, $variables);
+  }
 }

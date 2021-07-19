@@ -109,8 +109,6 @@ final class Controller extends Blade
 
   protected function print(): void
   {
-    \App\Core\Components\Emails::sendEmailConfirmation('lechu.pomian@gmail.com', 'https://lepo.co/');
-
     $this->setDefaultViewData();
     $this->bladePrint();
   }

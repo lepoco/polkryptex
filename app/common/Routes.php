@@ -10,23 +10,11 @@
 namespace App\Common;
 
 use App\Core\Router;
-use App\Core\Debug;
 
 final class Routes extends Router
 {
-  public function initialize(): void
+  protected function initialize(): void
   {
-    if (!defined('APP_VERSION')) {
-      $this->register('', 'Installer', ['title' => 'Installer', 'fullscreen' => true]);
-      $this->run();
-
-      return;
-    }
-
-    if (Debug::isDebug()) {
-      $this->register('/debug', 'Debug');
-    }
-
     $this->register('', 'Home', ['title' => 'Home']);
     $this->register('/register', 'Register', ['title' => 'Register', 'fullscreen' => true]);
     $this->register('/signin', 'SignIn', ['title' => 'Sign In', 'fullscreen' => true]);

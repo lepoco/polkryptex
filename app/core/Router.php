@@ -32,6 +32,17 @@ abstract class Router
     $this->routes = $routes;
     $this->router = new \Bramus\Router\Router();
 
+    if (!defined('APP_VERSION')) {
+      $this->register('', 'Installer', ['title' => 'Installer', 'fullscreen' => true]);
+      $this->run();
+
+      return;
+    }
+
+    if (Debug::isDebug()) {
+      $this->register('/debug', 'Debug');
+    }
+
     $this->registerBaseRoutes();
 
     if (method_exists($this, 'initialize')) {

@@ -12,9 +12,9 @@ namespace App\Common\Requests;
 use App\Core\Request;
 use App\Core\Registry;
 use App\Core\Components\Utils;
-use App\Core\Components\Emails;
 use App\Core\Components\Crypter;
 use App\Core\Components\Query;
+use App\Common\Emails;
 
 /**
  * @author Szymon K. Leszek P.
