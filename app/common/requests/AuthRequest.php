@@ -19,8 +19,8 @@ use App\Core\Components\Crypter;
  */
 final class AuthRequest extends Request
 {
-    public function action(): void
-    {
-        $this->finish(self::CODE_SUCCESS);
-    }
+  public function action(): void
+  {
+    $this->finish(self::CODE_SUCCESS);
+  }
 }

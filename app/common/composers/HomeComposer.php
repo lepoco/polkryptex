@@ -16,9 +16,9 @@ use Illuminate\View\View;
  */
 final class HomeComposer
 {
-    public function compose(View $view)
-    {
-        //$view->with('navbarClass', 'fixed-top');
-        //$view->with('navbarClass', 'sticky-top');
-    }
+  public function compose(View $view)
+  {
+    //$view->with('navbarClass', 'fixed-top');
+    //$view->with('navbarClass', 'sticky-top');
+  }
 }

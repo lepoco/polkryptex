@@ -16,13 +16,13 @@ use Illuminate\View\View;
  */
 final class DebugComposer
 {
-    public function compose(View $view)
-    {
-        $view->with('testVariable', $this->testMethod());
-    }
+  public function compose(View $view)
+  {
+    $view->with('testVariable', $this->testMethod());
+  }
 
-    public function testMethod()
-    {
-        return 'hello world';
-    }
+  public function testMethod()
+  {
+    return 'hello world';
+  }
 }

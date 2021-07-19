@@ -18,40 +18,40 @@ use Symfony\Component\Translation\Loader\MoFileLoader;
 final class Translator
 {
 
-    protected const DEFAULT_LANGUAGE = 'en_US';
+  protected const DEFAULT_LANGUAGE = 'en_US';
 
-    protected ?SymfonyTranslator $symfonyTranslator = null;
+  protected ?SymfonyTranslator $symfonyTranslator = null;
 
-    public function setLanguage(string $code = null): void
-    {
-        if ($code == null) {
-            $code = self::DEFAULT_LANGUAGE;
-        }
-
-        if ($this->symfonyTranslator == null) {
-            $this->symfonyTranslator = new SymfonyTranslator($code);
-            $this->symfonyTranslator->addLoader('mo', new MoFileLoader());
-        }
-
-        $moFile = ABSPATH . 'app/common/languages/' . $code . '.mo';
-        if (is_file($moFile)) {
-            $this->symfonyTranslator->addResource('mo', $moFile, $code);
-
-            return;
-        }
-
-        if ($code != 'en_US') {
-            \App\Core\Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
-        }
+  public function setLanguage(string $code = null): void
+  {
+    if ($code == null) {
+      $code = self::DEFAULT_LANGUAGE;
     }
 
-    public function translate(string $text, $variables = null): ?string
-    {
-        if ($this->symfonyTranslator == null) {
-            $this->symfonyTranslator = new SymfonyTranslator(self::DEFAULT_LANGUAGE);
-            $this->symfonyTranslator->addLoader('mo', new MoFileLoader());
-        }
-
-        return $this->symfonyTranslator->trans($text);
+    if ($this->symfonyTranslator == null) {
+      $this->symfonyTranslator = new SymfonyTranslator($code);
+      $this->symfonyTranslator->addLoader('mo', new MoFileLoader());
     }
+
+    $moFile = ABSPATH . 'app/common/languages/' . $code . '.mo';
+    if (is_file($moFile)) {
+      $this->symfonyTranslator->addResource('mo', $moFile, $code);
+
+      return;
+    }
+
+    if ($code != 'en_US') {
+      \App\Core\Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
+    }
+  }
+
+  public function translate(string $text, $variables = null): ?string
+  {
+    if ($this->symfonyTranslator == null) {
+      $this->symfonyTranslator = new SymfonyTranslator(self::DEFAULT_LANGUAGE);
+      $this->symfonyTranslator->addLoader('mo', new MoFileLoader());
+    }
+
+    return $this->symfonyTranslator->trans($text);
+  }
 }

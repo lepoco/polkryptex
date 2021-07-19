@@ -16,13 +16,13 @@ use Illuminate\View\View;
  */
 final class WalletComposer
 {
-    public function compose(View $view)
-    {
-        $view->with('wallets', $this->getUserWallets());
-    }
+  public function compose(View $view)
+  {
+    $view->with('wallets', $this->getUserWallets());
+  }
 
-    public function getUserWallets()
-    {
-        return ['hello world'];
-    }
+  public function getUserWallets()
+  {
+    return ['hello world'];
+  }
 }

@@ -14,40 +14,40 @@ namespace App\Core;
  */
 final class Registry
 {
-    private const OBJECT_KEY = 0;
-    private const ACCESS_KEY = 1;
+  private const OBJECT_KEY = 0;
+  private const ACCESS_KEY = 1;
 
-    private static array $objects = [];
+  private static array $objects = [];
 
-    public static function dump(): array
-    {
-        return defined('APP_DEBUG') && APP_DEBUG ? self::$objects : [];
+  public static function dump(): array
+  {
+    return defined('APP_DEBUG') && APP_DEBUG ? self::$objects : [];
+  }
+
+  public static function register(string $name, $object, array $access = []): void
+  {
+    self::$objects[$name] = [$object, $access];
+  }
+
+  public static function get(string $name): ?object
+  {
+    //todo
+    // if (!empty(self::$objects[$name][self::ACCESS_KEY]) && !in_array(self::getCallingClass(), self::$objects[$name][self::ACCESS_KEY])) {
+    //     throw new \LogicException('Insufficient class permissions to a get aregistry object');
+    // }
+
+    return self::$objects[$name][self::OBJECT_KEY] ?? null;
+  }
+
+  private static function getCallingClass()
+  {
+    $trace = debug_backtrace();
+    $class = $trace[1]['class'];
+
+    for ($i = 1; $i < count($trace); $i++) {
+      if (isset($trace[$i]) && $class != $trace[$i]['class']) {
+        return $trace[$i]['class'];
+      }
     }
-
-    public static function register(string $name, $object, array $access = []): void
-    {
-        self::$objects[$name] = [$object, $access];
-    }
-
-    public static function get(string $name): ?object
-    {
-        //todo
-        // if (!empty(self::$objects[$name][self::ACCESS_KEY]) && !in_array(self::getCallingClass(), self::$objects[$name][self::ACCESS_KEY])) {
-        //     throw new \LogicException('Insufficient class permissions to a get aregistry object');
-        // }
-
-        return self::$objects[$name][self::OBJECT_KEY] ?? null;
-    }
-
-    private static function getCallingClass()
-    {
-        $trace = debug_backtrace();
-        $class = $trace[1]['class'];
-
-        for ($i = 1; $i < count($trace); $i++) {
-            if (isset($trace[$i]) && $class != $trace[$i]['class']) {
-                return $trace[$i]['class'];
-            }
-        }
-    }
+  }
 }

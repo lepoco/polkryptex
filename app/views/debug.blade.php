@@ -69,7 +69,7 @@
         <div class="col-12">
         <pre>
         @php
-        phpinfo();
+        //phpinfo();
         //var_dump(\App\Core\Components\Query::getUserById(1));
         @endphp
         </pre>

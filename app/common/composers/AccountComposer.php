@@ -17,8 +17,8 @@ use App\Core\Registry;
  */
 final class AccountComposer
 {
-    public function compose(View $view)
-    {
-        $view->with('user', Registry::get('Account')->currentUser());
-    }
+  public function compose(View $view)
+  {
+    $view->with('user', Registry::get('Account')->currentUser());
+  }
 }
