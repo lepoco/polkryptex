@@ -9,15 +9,16 @@
 
 namespace App\Core;
 
-use Nette\Http\Request;
 use App\Core\Components\Utils;
 
 /**
  * @author Leszek P.
  */
-class Controller extends Blade
+final class Controller extends Blade
 {
-  protected Request $request;
+  protected \Nette\Http\Response $response;
+
+  protected \Nette\Http\Request $request;
 
   protected bool $fullScreen = false;
 
@@ -35,10 +36,12 @@ class Controller extends Blade
 
   protected array $styles = [];
 
-  public function __construct(string $namespace, array $arguments = [])
+  public function __construct(\Nette\Http\Response $response, \Nette\Http\Request $request, string $namespace, array $arguments = [])
   {
+    $this->response = $response;
+    $this->request = $request;
+
     parent::__construct();
-    $this->request = Registry::get('Request');
 
     $this->setupNamespace($namespace);
     $this->setupController();
@@ -227,7 +230,7 @@ class Controller extends Blade
 
   protected function redirect(?string $path = null): void
   {
-    Registry::get('Response')->redirect($this->baseUrl . $path);
+    $this->response->redirect($this->baseUrl . $path);
   }
 
   protected function getAppVersion(): string

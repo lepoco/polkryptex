@@ -10,7 +10,6 @@
 namespace App\Core;
 
 use Ramsey\Uuid\Uuid;
-use Nette\Http\Request as NetteRequest;
 use App\Core\Components\Crypter;
 
 /**
@@ -67,22 +66,24 @@ class Request extends Renderable
 
   protected const CODE_SUCCESS                   = 'S01';
 
-  protected NetteRequest $request;
+  protected \Nette\Http\Response $response;
+
+  protected \Nette\Http\Request $request;
 
   protected string $action;
 
   protected string $method;
 
-  private array $response = [];
+  protected array $responseData = [];
 
-  private array $incomeData = [];
+  protected array $incomeData = [];
 
-  private array $requestData = [];
+  protected array $requestData = [];
 
-  public function __construct()
+  public function __construct(\Nette\Http\Response $response, \Nette\Http\Request $request)
   {
-    parent::__construct();
-    $this->request = Registry::get('Request');
+    $this->response = $response;
+    $this->request = $request;
 
     if (empty($this->request->post) && empty($this->request->url->getQueryParameters())) {
       http_response_code(self::STATUS_BAD_GATEWAY);
@@ -105,12 +106,12 @@ class Request extends Renderable
 
   protected function addContent(string $id, $content): void
   {
-    $this->response['content'][$id] = $content;
+    $this->responseData['content'][$id] = $content;
   }
 
   protected function setStatus(string $status): void
   {
-    $this->response['status'] = $status;
+    $this->responseData['status'] = $status;
   }
 
   protected function finish(?string $status = null, int $responseCode = 200): void
@@ -121,7 +122,7 @@ class Request extends Renderable
 
     http_response_code($responseCode);
     header('Content-Type: application/json; charset=utf-8');
-    \App\Core\Application::stop(json_encode($this->response, JSON_UNESCAPED_UNICODE));
+    \App\Core\Application::stop(json_encode($this->responseData, JSON_UNESCAPED_UNICODE));
   }
 
   protected function isAjax(): bool
@@ -206,7 +207,7 @@ class Request extends Renderable
       $this->incomeData = $this->request->post;
     }
 
-    $this->response = [
+    $this->responseData = [
       'status' => self::ERROR_UNKNOWN,
       'type' => $this->method,
       'content' => [

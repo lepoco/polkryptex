@@ -14,34 +14,39 @@ namespace App\Core;
  */
 final class Application
 {
+  public const APP_NAME = 'Polkryptex';
+
+  public const REQUEST_NAMESPACE = 'App\\Common\\Requests\\';
+
   private function __construct()
   {
-    Registry::register('Debug', new Debug());
+    $response = new \Nette\Http\Response();
+    $request = (new \Nette\Http\RequestFactory())->fromGlobals();
+
+    Registry::register('Debug', new Debug($request));
     Registry::register('Database', new Database(), ['\App\Core\Components\Queries']);
     Registry::register('Options', new Components\Options(), ['\App\Core\Controller', '\App\Core\Request']);
-    Registry::register('Response', new \Nette\Http\Response());
-    Registry::register('Request', (new \Nette\Http\RequestFactory())->fromGlobals());
-    Registry::register('Account', new Components\Account());
+    Registry::register('Account', new Components\Account($request, $response));
 
     $this->registerExceptions();
-    $this->registerSession();
     $this->registerTranslation();
-    $this->registerRouter();
+
+    /**
+     * @see https://doc.nette.org/en/3.1/sessions
+     */
+    Registry::register('Session', new \Nette\Http\Session($request, $response));
+    Registry::get('Session')->start();
+
+    /**
+     * @see https://github.com/bramus/router
+     */
+    (new \App\Common\Routes($request, $response));
   }
 
   private function registerExceptions(): void
   {
     //set_error_handler([Registry::get('Debug'), 'errorHandler']);
     //set_exception_handler([Registry::get('Debug'), 'exceptionHandler']);
-  }
-
-  /**
-   * @see https://doc.nette.org/en/3.1/sessions
-   */
-  private function registerSession()
-  {
-    Registry::register('Session', new \Nette\Http\Session(Registry::get('Request'), Registry::get('Response')));
-    Registry::get('Session')->start();
   }
 
   /**
@@ -61,51 +66,6 @@ final class Application
     }
 
     Registry::register('Translator', $translator);
-  }
-
-  /**
-   * @see https://github.com/bramus/router
-   */
-  private function registerRouter()
-  {
-    $router = new Components\Router();
-
-    if (!defined('APP_VERSION')) {
-      $router->register('', 'Installer', ['title' => 'Installer', 'fullscreen' => true]);
-      $router->run();
-
-      return;
-    }
-
-    if (Debug::isDebug()) {
-      $router->register('/debug', 'Debug');
-    }
-
-    $router->register('', 'Home', ['title' => 'Home']);
-    $router->register('/register', 'Register', ['title' => 'Register', 'fullscreen' => true]);
-    $router->register('/signin', 'SignIn', ['title' => 'Sign In', 'fullscreen' => true]);
-    $router->register('/plans', 'Plans', ['title' => 'Plans']);
-    $router->register('/help', 'Help', ['title' => 'Help']);
-
-    $router->register('/dashboard', 'Dashboard\\Dashboard', ['title' => 'Dashboard', 'requireLogin' => true]);
-    $router->register('/dashboard/wallet', 'Dashboard\\Wallet', ['title' => 'Wallet', 'requireLogin' => true]);
-    $router->register('/dashboard/wallet/transfer', 'Dashboard\\WalletTransfer', ['title' => 'Transfer', 'requireLogin' => true]);
-    $router->register('/dashboard/wallet/exchange', 'Dashboard\\WalletExchange', ['title' => 'Exchange', 'requireLogin' => true]);
-    $router->register('/dashboard/wallet/topup', 'Dashboard\\WalletTopup', ['title' => 'Top Up', 'requireLogin' => true]);
-    $router->register('/dashboard/account', 'Dashboard\\Account', ['title' => 'Account', 'requireLogin' => true]);
-    $router->register('/dashboard/account/two-step', 'Dashboard\\AccountTwoStep', ['title' => '2FA Authentication', 'requireLogin' => true]);
-    $router->register('/dashboard/account/change-password', 'Dashboard\\AccountNewPassword', ['title' => 'Change your password', 'requireLogin' => true]);
-
-    $router->register('/admin', 'Admin\\Admin', ['title' => 'Admin Dashboard', 'requireLogin' => true, 'permissions' => ['all']]);
-    $router->register('/admin/users', 'Admin\\AdminUsers', ['title' => 'Admin Users', 'requireLogin' => true, 'permissions' => ['all']]);
-    $router->register('/admin/configuration', 'Admin\\AdminConfiguration', ['title' => 'Admin Configuration', 'requireLogin' => true, 'permissions' => ['all']]);
-    $router->register('/admin/tools', 'Admin\\AdminTools', ['title' => 'Admin Tools', 'requireLogin' => true, 'permissions' => ['all']]);
-
-    $router->register('/private', 'Static\\Private', ['title' => 'Private']);
-    $router->register('/business', 'Static\\Business', ['title' => 'Business']);
-    $router->register('/licenses', 'Static\\Licenses', ['title' => 'Licenses']);
-
-    $router->run();
   }
 
   /**

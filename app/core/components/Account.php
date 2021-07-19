@@ -9,7 +9,7 @@
 
 namespace App\Core\Components;
 
-use \DateTime;
+use DateTime;
 use App\Core\Registry;
 
 /**
@@ -17,9 +17,19 @@ use App\Core\Registry;
  */
 final class Account
 {
+  protected \Nette\Http\Request $request;
+
+  protected \Nette\Http\Response $response;
+
   private ?User $currentUser = null;
 
   private array $roles = [];
+
+  public function __construct(\Nette\Http\Request $request, \Nette\Http\Response $response)
+  {
+    $this->request = $request;
+    $this->response = $response;
+  }
 
   public function currentUser(): User
   {
@@ -69,7 +79,7 @@ final class Account
     }
 
     $userSession = Registry::get('Session')->getSection('User');
-    $userCookie = Registry::get('Request')->getCookie('user');
+    $userCookie =  $this->request->getCookie('user');
 
     if (null === $userCookie || null === $userSession->token) {
       return false;
@@ -85,7 +95,7 @@ final class Account
 
   public function signOut(): void
   {
-    Registry::get('Response')->setCookie('user', '', '100 days', '/', null, true, true);
+    $this->response->setCookie('user', '', '100 days', '/', null, true, true);
     Registry::get('Session')->getSection('User')->remove();
     Registry::get('Session')->destroy();
   }

@@ -21,8 +21,12 @@ final class Debug
   private ?Logger $monolog = null;
   private ?Logger $errorLog = null;
 
-  public function __construct()
+  private \Nette\Http\Request $request;
+
+  public function __construct(\Nette\Http\Request $request)
   {
+    $this->request = $request;
+
     $this->monolog = new Logger('APP');
     $this->monolog->pushHandler(new StreamHandler(ABSPATH . 'logs/info/' . date('Y-m-d') . '.log'));
 
@@ -219,10 +223,10 @@ final class Debug
 
   private function updateContext(array $context): array
   {
-    $context['ip'] = Registry::get('Request')->getRemoteAddress();
-    $context['path'] = Registry::get('Request')->getUrl()->getPath();
-    $context['port'] = Registry::get('Request')->getUrl()->getPort();
-    $context['user-agent'] = Registry::get('Request')->getHeader('User-Agent');
+    $context['ip'] = $this->request->getRemoteAddress();
+    $context['path'] = $this->request->getUrl()->getPath();
+    $context['port'] = $this->request->getUrl()->getPort();
+    $context['user-agent'] = $this->request->getHeader('User-Agent');
 
     return $context;
   }
