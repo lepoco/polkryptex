@@ -31,4 +31,4 @@ date_default_timezone_set('UTC');
 
 require_once ABSPATH . 'vendor/autoload.php';
 
-App\Core\Application::start();
+(new App\Common\App());

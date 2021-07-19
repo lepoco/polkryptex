@@ -12,13 +12,13 @@ namespace App\Core;
 /**
  * @author Leszek P.
  */
-final class Application
+abstract class Application
 {
   public const APP_NAME = 'Polkryptex';
 
   public const REQUEST_NAMESPACE = 'App\\Common\\Requests\\';
 
-  private function __construct()
+  public function __construct()
   {
     $response = new \Nette\Http\Response();
     $request = (new \Nette\Http\RequestFactory())->fromGlobals();
@@ -41,6 +41,21 @@ final class Application
      * @see https://github.com/bramus/router
      */
     (new \App\Common\Routes($request, $response));
+  }
+
+  public static function getOption(string $name, $default = null): string
+  {
+    return Registry::get('Options')->get($name, $default);
+  }
+
+  public static function getUrl(?string $path = null): string
+  {
+    return Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/') . $path;
+  }
+
+  public static function translate(string $text, ?array $variables = null): ?string
+  {
+    return Registry::get('Translator')->translate($text, $variables);
   }
 
   private function registerExceptions(): void
@@ -66,14 +81,6 @@ final class Application
     }
 
     Registry::register('Translator', $translator);
-  }
-
-  /**
-   * Returns a new application instance, should be triggered by public/index.php
-   */
-  static function start(): self
-  {
-    return new self();
   }
 
   /**

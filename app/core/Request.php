@@ -252,11 +252,11 @@ class Request extends Renderable
 
   protected function getOption(string $name, $default = null)
   {
-    return \App\Core\Registry::get('Options')->get($name, $default);
+    return \App\Core\Application::getOption($name, $default);
   }
 
   protected function translate(string $text, ?array $variables = null): ?string
   {
-    return \App\Core\Registry::get('Translator')->translate($text, $variables);
+    return \App\Core\Application::translate($text, $variables);
   }
 }
