@@ -28,10 +28,10 @@ final class Debug
     $this->request = $request;
 
     $this->monolog = new Logger('APP');
-    $this->monolog->pushHandler(new StreamHandler(ABSPATH . 'logs/info/' . date('Y-m-d') . '.log'));
+    $this->monolog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'storage/logs/info/' . date('Y-m-d') . '.log'));
 
     $this->errorLog = new Logger('APP');
-    $this->errorLog->pushHandler(new StreamHandler(ABSPATH . 'logs/error/' . date('Y-m-d') . '.log'));
+    $this->errorLog->pushHandler(new StreamHandler(ABSPATH . APPDIR . 'storage/logs/error/' . date('Y-m-d') . '.log'));
 
     if (function_exists('xdebug_break')) {
       ini_set('xdebug.client_port', 9005);

@@ -15,6 +15,7 @@ composer.phar
 
 # Cache
 app/cache/
+app/storage/cache/
 
 # Certificates and authentication
 app/cert/
@@ -24,6 +25,8 @@ app/config.php
 app/config-sample.php
 
 # Logs
+app/logs/
+app/storage/logs/
 logs/*
 logs
 *.log

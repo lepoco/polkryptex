@@ -18,9 +18,9 @@ abstract class Blade extends Renderable
 {
   protected const COMPOSERS_NAMESPACE = '\\App\\Common\\Composers\\';
 
-  protected const VIEWS_PATH = 'views\\';
+  protected const VIEWS_PATH = 'views/';
 
-  protected const CACHE_PATH = 'cache\\';
+  protected const CACHE_PATH = 'storage/cache';
 
   protected ?\Jenssegers\Blade\Blade $blade = null;
 
