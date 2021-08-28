@@ -1,4 +1,6 @@
 <?php
+
+namespace Tests;
 /**
  * @see https://pestphp.com/docs/skipping-tests
  */

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 test('PHP version at least 7.4', function () {
   expect(version_compare($ver = PHP_VERSION, $req = '7.4.0', '>='))->toBeTrue();
 });

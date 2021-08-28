@@ -35,7 +35,7 @@ final class Debug
 
     if (function_exists('xdebug_break')) {
       ini_set('xdebug.client_port', 9005);
-      ini_set('xdebug.log', ABSPATH . 'logs/xdebug.log');
+      ini_set('xdebug.log', ABSPATH . APPDIR . 'storage/logs/xdebug.log');
     }
   }
 
