@@ -9,7 +9,6 @@
 
 namespace App\Common\Requests;
 
-use App\Core\Registry;
 use App\Core\Request;
 use App\Core\Components\Query;
 use App\Common\Emails;
@@ -42,7 +41,7 @@ final class ChangePasswordRequest extends Request
       ['confirm_new_password', FILTER_SANITIZE_STRING]
     ]);
 
-    $user = Registry::get('Account')->currentUser();
+    $user = \App\Common\App::Account()->currentUser();
 
     if ($user->getId() != $this->getData('id')) {
       $this->finish(self::ERROR_INVALID_USER);

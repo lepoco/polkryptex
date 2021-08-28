@@ -19,6 +19,16 @@ Polkryptex is a revolutionary cryptocurrency management tool. It allows you to e
 - [ ] Exchange of cryptocurrencies with their current rates and historical rates presented in the charts
 - [ ] (Optional) Forecasting further rate of a given cryptocurrency
 
+## How to test
+To run unit tests, install composer:
+```powershell
+composer install
+```
+and then run the command:
+```powershell
+./vendor/bin/pest.bat
+```
+
 ## Technologies & Tools
 - PHP
 - GNU gettext

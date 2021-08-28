@@ -10,7 +10,6 @@
 namespace App\Common\Composers;
 
 use Illuminate\View\View;
-use App\Core\Registry;
 
 /**
  * @author Leszek P.
@@ -19,6 +18,6 @@ final class AccountNewPasswordComposer
 {
   public function compose(View $view)
   {
-    $view->with('user', Registry::get('Account')->currentUser());
+    $view->with('user', \App\Common\App::Account()->currentUser());
   }
 }

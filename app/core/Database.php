@@ -73,7 +73,7 @@ final class Database
    *
    * @access public
    */
-  public function __construct(?string $host = null, ?string $user = null, ?string $password = null, ?string $table = null)
+  public function __construct(?string $name = null, ?string $host = null, ?string $user = null, ?string $password = null)
   {
     if (defined('APP_DEBUG') && APP_DEBUG) {
       $this->show_errors = true;
@@ -87,11 +87,11 @@ final class Database
       ($host !== null ? $host : APP_DB_HOST),
       ($host !== null ? $user : APP_DB_USER),
       ($host !== null ? $password : APP_DB_PASS),
-      ($host !== null ? $table : APP_DB_NAME)
+      ($host !== null ? $name : APP_DB_NAME)
     );
 
     if ($this->connection->connect_error) {
-      Registry::get('Debug')->exception('Failed to connect to MySQL - ' . $this->connection->connect_error);
+      Application::Debug()->exception('Failed to connect to MySQL - ' . $this->connection->connect_error);
     } else {
       $this->is_connected = true;
     }

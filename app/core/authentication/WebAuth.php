@@ -9,7 +9,7 @@
 
 namespace App\Core\Authentication;
 
-use App\Core\Registry;
+use App\Core\Application;
 use App\Core\Components\User;
 use Webauthn\Server;
 use Webauthn\PublicKeyCredentialUserEntity;
@@ -74,7 +74,7 @@ final class WebAuth
 
   private static function getDomain(): string
   {
-    return Registry::get('Options')->get('host', self::WA_APP_DEFAULT_DOMAIN);
+    return Application::getOption('host', self::WA_APP_DEFAULT_DOMAIN);
   }
 
   private static function getIcon(): string

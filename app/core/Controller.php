@@ -9,6 +9,7 @@
 
 namespace App\Core;
 
+use App\Core\Application;
 use App\Core\Components\Utils;
 
 /**
@@ -73,14 +74,14 @@ final class Controller extends Blade
   private function setupArguments(array $arguments): void
   {
     if (isset($arguments['requireLogin']) && true === $arguments['requireLogin']) {
-      if (!Registry::get('Account')->isLoggedIn()) {
+      if (!Application::Account()->isLoggedIn()) {
         $this->redirect('signin');
       }
     }
 
     if (isset($arguments['permissions']) && is_array($arguments['permissions'])) {
       foreach ($arguments['permissions'] as $permission) {
-        if (!Registry::get('Account')->hasPermission($permission)) {
+        if (!Application::Account()->hasPermission($permission)) {
 
           $this->showNotFound();
           return;
@@ -162,9 +163,9 @@ final class Controller extends Blade
     $this->addData('csrfToken', \App\Core\Components\Crypter::salter(64), false);
 
     $this->addData('auth', [
-      'loggedIn' => Registry::get('Account')->isLoggedIn(),
-      'user' => Registry::get('Account')->currentUser()->getId(),
-      'email' => Registry::get('Account')->currentUser()->getEmail()
+      'loggedIn' => Application::Account()->isLoggedIn(),
+      'user' => Application::Account()->currentUser()->getId(),
+      'email' => Application::Account()->currentUser()->getEmail()
     ], false);
 
     $this->addData('importmap', [

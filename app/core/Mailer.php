@@ -65,7 +65,7 @@ final class Mailer
       $this->addData('message', $message);
 
       $this->mail->isHTML(true);
-      $this->mail->Subject = $subject ?? Registry::get('Options')->get('site_name', 'Polkryptex');
+      $this->mail->Subject = $subject ?? Application::getOption('site_name', 'Polkryptex');
 
 
       $this->mail->Body = $this->fromTemplate($template);
@@ -113,7 +113,7 @@ final class Mailer
   {
     $this->blade = new \Jenssegers\Blade\Blade(ABSPATH . APPDIR . self::MAILS_PATH, ABSPATH . APPDIR . self::CACHE_PATH);
     $this->blade->directive('option', function ($name, $default = null) {
-      return '<?php echo App\Core\Registry::get(\'Options\')->get(' . $name . ', ' . $default . '); ?>';
+      return '<?php echo \App\Core\Application::getOption(' . $name . ', ' . $default . '); ?>';
     });
 
     $this->viewData['sections'] = $this->sections;
@@ -128,32 +128,32 @@ final class Mailer
   private function setupMailer(): void
   {
     $this->mail->setFrom(
-      Registry::get('Options')->get('mail_sendfrom', 'mail@example.com'), //sender address
-      Registry::get('Options')->get('mail_sendname', 'Polkryptex') //sender name
+      Application::getOption('mail_sendfrom', 'mail@example.com'), //sender address
+      Application::getOption('mail_sendname', 'Polkryptex') //sender name
     );
 
     $this->mail->addReplyTo(
-      Registry::get('Options')->get('mail_replyto', 'mail@example.com'), //sender name
-      Registry::get('Options')->get('mail_sendname', 'Polkryptex') //sender addres   
+      Application::getOption('mail_replyto', 'mail@example.com'), //sender name
+      Application::getOption('mail_sendname', 'Polkryptex') //sender addres   
     );
 
     $this->mail->CharSet = 'UTF-8';
     //Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 
-    $baseurl = Registry::get('Options')->get('baseurl', 'https://example.com/');
+    $baseurl = Application::getOption('baseurl', 'https://example.com/');
 
     $this->template = 'main';
-    $this->logo = Registry::get('Options')->get('mail_logo', $baseurl . 'media/icons/192.png');
-    $this->url = Registry::get('Options')->get('baseurl', $baseurl);
-    $this->title = Registry::get('Options')->get('mail_title', 'Polkryptex INC');
-    $this->footer = Registry::get('Options')->get('mail_footer', 'Polkryptex INC, NY Box 1002/1');
+    $this->logo = Application::getOption('mail_logo', $baseurl . 'media/icons/192.png');
+    $this->url = Application::getOption('baseurl', $baseurl);
+    $this->title = Application::getOption('mail_title', 'Polkryptex INC');
+    $this->footer = Application::getOption('mail_footer', 'Polkryptex INC, NY Box 1002/1');
     $this->subfooter = 'You received this email to let you know about important changes to your Polkryptex Account and services.';
     //<a class="original-only" style="color: #666666; text-decoration: none;">Unsubscribe</a><span class="original-only" style="font-family: Arial, sans-serif; font-size: 12px; color: #444444;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><a style="color: #666666; text-decoration: none;">View this email in your browser</a>
   }
 
   private function setupSMTP(): void
   {
-    if (!Registry::get('Options')->get('mail_smtp', false)) {
+    if (!Application::getOption('mail_smtp', false)) {
       return;
     }
 

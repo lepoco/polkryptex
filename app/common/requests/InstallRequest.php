@@ -13,7 +13,6 @@ use Mysqli;
 use Ramsey\Uuid\Uuid;
 use App\Core\Database;
 use App\Core\Request;
-use App\Core\Registry;
 use App\Core\Components\Utils;
 use App\Core\Components\Crypter;
 
@@ -116,7 +115,7 @@ final class InstallRequest extends Request
     $path = ABSPATH . APPDIR . 'config.php';
     file_put_contents($path, $config);
 
-    Registry::get('Debug')->info('Configuration file has been created', ['request' => 'App\Common\Requests\Install']);
+    \App\Common\App::Debug()->info('Configuration file has been created', ['request' => 'App\Common\Requests\Install']);
   }
 
   private function createHtaccess(string $dir = '/'): void
@@ -162,7 +161,7 @@ final class InstallRequest extends Request
     $path = ABSPATH . 'public/.htaccess';
     file_put_contents($path, $htaccess);
 
-    Registry::get('Debug')->info('.htaccess file has been created', ['request' => 'App\Common\Requests\Install']);
+    \App\Common\App::Debug()->info('.htaccess file has been created', ['request' => 'App\Common\Requests\Install']);
   }
 
   private function createDatabase(): void
@@ -189,7 +188,7 @@ final class InstallRequest extends Request
 
     unset($database);
 
-    Registry::get('Debug')->info('Tables for the database have been created', ['request' => 'App\Common\Requests\Install', 'sql' => ABSPATH . APPDIR . 'database/database.sql']);
+    \App\Common\App::Debug()->info('Tables for the database have been created', ['request' => 'App\Common\Requests\Install', 'sql' => ABSPATH . APPDIR . 'database/database.sql']);
   }
 
   private function fillDatabase(): void

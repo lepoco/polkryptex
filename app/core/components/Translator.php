@@ -9,6 +9,7 @@
 
 namespace App\Core\Components;
 
+use \App\Core\Application;
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 
@@ -41,7 +42,7 @@ final class Translator
     }
 
     if ($code != 'en_US') {
-      \App\Core\Registry::get('Debug')->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
+      Application::Debug()->exception('The "' . $moFile . '" translation file for the ' . $code . ' language could not be found.');
     }
   }
 

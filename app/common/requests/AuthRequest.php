@@ -9,7 +9,6 @@
 
 namespace App\Common\Requests;
 
-use App\Core\Registry;
 use App\Core\Request;
 use App\Core\Components\Query;
 use App\Core\Components\Crypter;

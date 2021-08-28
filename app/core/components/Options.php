@@ -9,7 +9,7 @@
 
 namespace App\Core\Components;
 
-use App\Core\Registry;
+use App\Core\Application;
 
 /**
  * @author Leszek P.
@@ -43,7 +43,7 @@ final class Options
 
   private function getFromDatabase(string $name)
   {
-    $database = Registry::get('Database');
+    $database = Application::Database();
     if (!$database->isConnected()) {
       return null;
     }
@@ -53,7 +53,7 @@ final class Options
 
   private function updateDatabase(string $name, $value): bool
   {
-    $database = Registry::get('Database');
+    $database = Application::Database();
     if (!$database->isConnected()) {
       return false;
     }

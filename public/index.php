@@ -7,9 +7,11 @@
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-ini_set('error_reporting', E_ALL);
+declare(strict_types=1);
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+ini_set('error_reporting', (string) E_ALL);
 
 define('POLKRYPTEX_VERSION', '1.0.1');
 define('APPDIR', 'app\\');

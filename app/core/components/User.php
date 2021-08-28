@@ -9,7 +9,7 @@
 
 namespace App\Core\Components;
 
-use App\Core\Registry;
+use App\Core\Application;
 use App\Core\Components\Query;
 use App\Core\Components\Crypter;
 
@@ -128,7 +128,7 @@ final class User
   public function getImage(bool $fullPath = true): ?string
   {
     if ($fullPath) {
-      $baseUrl = Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/');
+      $baseUrl = Application::getOption('baseurl', Application::getUrl());
 
       return $baseUrl . APP_UPLOADS . $this->image;
     }

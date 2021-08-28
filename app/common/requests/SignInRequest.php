@@ -9,7 +9,6 @@
 
 namespace App\Common\Requests;
 
-use App\Core\Registry;
 use App\Core\Request;
 use App\Core\Components\User;
 use App\Core\Components\Crypter;
@@ -46,7 +45,7 @@ final class SignInRequest extends Request
 
     if (!$user->checkPassword($this->getData('password'))) {
       $this->addContent('message', $this->translate('The provided username or password is incorrect.'));
-      Registry::get('Debug')->warning('Login failed. Password incorrect', ['user' => $this->getData('email')]);
+      \App\Common\App::Debug()->warning('Login failed. Password incorrect', ['user' => $this->getData('email')]);
 
       $this->finish(self::ERROR_PASSWORDS_DONT_MATCH);
     }
@@ -54,8 +53,8 @@ final class SignInRequest extends Request
     $cookieToken = Crypter::salter(64, 'ULN');
     $this->addContent('token', $cookieToken);
 
-    Registry::get('Account')->signIn($user, $cookieToken);
-    Registry::get('Debug')->info('User has logged in', ['user' => $this->getData('email')]);
+    \App\Common\App::Account()->signIn($user, $cookieToken);
+    \App\Common\App::Debug()->info('User has logged in', ['user' => $this->getData('email')]);
 
     $this->addContent('message', $this->translate('Signed in successfully, you will be redirected in a moment...'));
     $this->finish(self::CODE_SUCCESS);

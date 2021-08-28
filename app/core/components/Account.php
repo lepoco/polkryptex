@@ -10,7 +10,7 @@
 namespace App\Core\Components;
 
 use DateTime;
-use App\Core\Registry;
+use App\Core\Application;
 
 /**
  * @author Leszek P.
@@ -37,7 +37,7 @@ final class Account
       return $this->currentUser;
     }
 
-    $userSession = Registry::get('Session')->getSection('User');
+    $userSession = Application::Session()->getSection('User');
 
     if (!isset($userSession->id) || !isset($userSession->token)) {
       return new User();
@@ -54,7 +54,7 @@ final class Account
       return;
     }
 
-    $userSession = Registry::get('Session')->getSection('User');
+    $userSession = Application::Session()->getSection('User');
     $token = Crypter::salter(32);
 
     $userSession->loggedIn = true;
@@ -65,9 +65,9 @@ final class Account
     Query::setCookieToken($user->getId(), Crypter::encrypt($cookieToken, 'cookie'));
     Query::updateLastLogin($user->getId());
 
-    $timeout = Registry::get('Options')->get('login_timeout', '10') . ' minutes';
+    $timeout = Application::getOption('login_timeout', '10') . ' minutes';
     $userSession->setExpiration($timeout);
-    Registry::get('Session')->regenerateId();
+    Application::Session()->regenerateId();
   }
 
   public function isLoggedIn(): bool
@@ -78,7 +78,7 @@ final class Account
       return false;
     }
 
-    $userSession = Registry::get('Session')->getSection('User');
+    $userSession = Application::Session()->getSection('User');
     $userCookie =  $this->request->getCookie('user');
 
     if (null === $userCookie || null === $userSession->token) {
@@ -86,9 +86,9 @@ final class Account
     }
 
     //Kill user session after n minutes of inactivity
-    $timeout = Registry::get('Options')->get('login_timeout', '10') . ' minutes';
+    $timeout = Application::getOption('login_timeout', '10') . ' minutes';
     $userSession->setExpiration($timeout);
-    Registry::get('Session')->regenerateId();
+    Application::Session()->regenerateId();
 
     return $user->checkSessionToken($userSession->token) && $user->checkCookieToken($userCookie);
   }
@@ -96,8 +96,8 @@ final class Account
   public function signOut(): void
   {
     $this->response->setCookie('user', '', '100 days', '/', null, true, true);
-    Registry::get('Session')->getSection('User')->remove();
-    Registry::get('Session')->destroy();
+    Application::Session()->getSection('User')->remove();
+    Application::Session()->destroy();
   }
 
   public function getRoles(): array

@@ -9,7 +9,6 @@
 
 namespace App\Common\Requests;
 
-use App\Core\Registry;
 use App\Core\Request;
 use App\Core\Components\Query;
 use App\Core\Components\Crypter;
@@ -36,7 +35,7 @@ final class AccountRequest extends Request
       ['displayname', FILTER_SANITIZE_STRING]
     ]);
 
-    $user = Registry::get('Account')->currentUser();
+    $user = \App\Common\App::Account()->currentUser();
 
     if ($user->getId() != $this->getData('id')) {
       $this->addContent('message', $this->translate('User is invalid.'));
@@ -136,7 +135,7 @@ final class AccountRequest extends Request
 
   private function getImageUrl(string $name): string
   {
-    $baseUrl = Registry::get('Options')->get('baseurl', ($this->request->isSecured() ? 'https://' : 'http://') . $this->request->url->host . '/');
+    $baseUrl = \App\Common\App::getOption('baseurl', \App\Common\App::getUrl());
     return $baseUrl . APP_UPLOADS . $name;
   }
 

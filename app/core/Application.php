@@ -16,12 +16,18 @@ abstract class Application
 {
   public const APP_NAME = 'App';
 
+  public const APP_VERSION = '1.0.0';
+
   public const REQUEST_NAMESPACE = 'App\\Common\\Requests\\';
 
   public function __construct()
   {
+    /** @var \Nette\Http\Response */
     $response = new \Nette\Http\Response();
+    /** @var \Nette\Http\Request */
     $request = (new \Nette\Http\RequestFactory())->fromGlobals();
+    /** @var \Nette\Http\Session */
+    $session = new \Nette\Http\Session($request, $response);
 
     Registry::register('Debug', new Debug($request));
     Registry::register('Database', new Database(), ['\App\Core\Components\Queries']);
@@ -31,7 +37,7 @@ abstract class Application
      * @see https://doc.nette.org/en/3.1/sessions
      */
     Registry::register('Session', new \Nette\Http\Session($request, $response));
-    Registry::get('Session')->start();
+    self::Session()->start();
 
     $this->registerExceptions();
     $this->registerTranslation();
@@ -42,14 +48,39 @@ abstract class Application
     (new \App\Common\Routes($request, $response));
   }
 
-  public static function getOption(string $name, $default = null): string
+  public static function Debug(): Debug
+  {
+    return Registry::get('Debug');
+  }
+
+  public static function Database(): Database
+  {
+    return Registry::get('Database');
+  }
+
+  public static function Account(): Components\Account
+  {
+    return Registry::get('Account');
+  }
+
+  public static function Session(): \Nette\Http\Session
+  {
+    return Registry::get('Session');
+  }
+
+  public static function getOption(string $name, $default = null)
   {
     return Registry::get('Options')->get($name, $default);
   }
 
   public static function getUrl(?string $path = null): string
   {
-    return Registry::get('Options')->get('baseurl', (Registry::get('Request')->isSecured() ? 'https://' : 'http://') . Registry::get('Request')->url->host . '/') . $path;
+    return Registry::get('Options')->get('baseurl', strtok(sprintf(
+      "%s://%s%s",
+      isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+      $_SERVER['SERVER_NAME'],
+      $_SERVER['REQUEST_URI']
+    ), '?')) . $path;
   }
 
   public static function translate(string $text, ?array $variables = null): ?string
@@ -70,7 +101,7 @@ abstract class Application
   {
     $translator = new Components\Translator();
 
-    switch (Registry::get('Options')->get('language', 'en')) {
+    switch (self::getOption('language', 'en')) {
       case 'pl':
         $translator->setLanguage('pl_PL');
         break;
@@ -88,8 +119,8 @@ abstract class Application
    */
   static function stop(?string $message = null): void
   {
-    Registry::get('Debug')->close();
-    Registry::get('Session')->close();
+    self::Debug()->close();
+    self::Session()->close();
     exit($message);
   }
 }

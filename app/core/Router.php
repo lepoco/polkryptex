@@ -9,8 +9,6 @@
 
 namespace App\Core;
 
-use App\Core\Registry;
-
 /**
  * @author Leszek P.
  */
@@ -67,15 +65,18 @@ abstract class Router
     $this->router->post('/request', fn () => $this->handleRequest());
     $this->router->get('/request', fn () => $this->handleRequest());
 
+    $this->router->post('/api/.*', fn () => $this->handleRest());
+    $this->router->get('/api/.*', fn () => $this->handleRest());
+
     $this->router->get('/signout', function () {
 
-      if (Registry::get('Account')->isLoggedIn()) {
+      if (Application::Account()->isLoggedIn()) {
 
-        Registry::get('Debug')->info('User has logged out', ['user' => Registry::get('Account')->currentUser()->getEmail()]);
-        Registry::get('Account')->signOut();
+        Application::Debug()->info('User has logged out', ['user' => Application::Account()->currentUser()->getEmail()]);
+        Application::Account()->signOut();
       }
 
-      $baseUrl = Registry::get('Options')->get('baseurl', null);
+      $baseUrl = Application::getOption('baseurl', null);
 
       if (null === $baseUrl) {
         $baseUrl = ($this->request->isSecured() ? 'https://' : 'http://') . $this->request->url->host . '/';
@@ -115,5 +116,10 @@ abstract class Router
     }
 
     return new $requestController($this->response, $this->request);
+  }
+
+  private function handleRest(): object
+  {
+    return new \App\Core\Components\Rest($this->response, $this->request);
   }
 }

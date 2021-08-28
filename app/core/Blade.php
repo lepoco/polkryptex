@@ -82,7 +82,7 @@ abstract class Blade extends Renderable
   protected function registerDirectives()
   {
     $this->addDirective('translate', function ($text) {
-      return '<?php echo str_replace(\'\n\', \'<br>\', App\Core\Registry::get(\'Translator\')->translate(' . $text . ')); ?>';
+      return '<?php echo str_replace(\'\n\', \'<br>\', \App\Core\Application::translate(' . $text . ')); ?>';
     });
 
     $this->addDirective('url', function ($path = null) {
@@ -94,7 +94,7 @@ abstract class Blade extends Renderable
     });
 
     $this->addDirective('option', function ($name, $default = null) {
-      return '<?php echo App\Core\Registry::get(\'Options\')->get(' . $name . ', ' . $default . '); ?>';
+      return '<?php echo \App\Core\Application::getOption(' . $name . ', ' . $default . '); ?>';
     });
 
     $this->addDirective('nonce', function ($action) {
@@ -106,7 +106,7 @@ abstract class Blade extends Renderable
     });
 
     $this->addDirective('permission', function ($media) {
-      return '<?php if(\App\Core\Registry::get(\'Account\')->hasPermission(' . $media . ')): ?>';
+      return '<?php if(\App\Core\Application::Account()->hasPermission(' . $media . ')): ?>';
     });
 
     $this->addDirective('endpermission', function ($media) {
