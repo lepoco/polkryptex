@@ -118,7 +118,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     $injector->inject('DATABASE_PASS', $this->getData('password'), 'const');
     $injector->inject('DATABASE_HOST', $this->getData('host'), 'const');
 
-    //$injector->save();
+    $injector->save();
 
     Config::set('database.connections.default.host', $this->getData('host'));
     Config::set('database.connections.default.database', $this->getData('database'));
