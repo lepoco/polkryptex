@@ -97,7 +97,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     $this->setupAlgorithm();
 
     $injector = new ClassInjector();
-    $injector->setPath(Path::getAppPath('common/App.php'));
+    $injector->setPath(Path::getAppPath('common/Config.php'));
 
     if (!$injector->isValid()) {
       $this->addContent('message', 'Incorrect application configuration. Configuration data injection failed.');

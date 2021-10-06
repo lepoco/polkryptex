@@ -1,3 +1,8 @@
+# We ignore Config.php because configuration data is entered into it.
+# Any changes here require direct editing
+# app/common/Config.php
+
+
 composer.phar
 /vendor/
 /public/media/uploads/

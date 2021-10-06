@@ -16,20 +16,6 @@ use App\Core\Utils\Path;
  */
 final class App extends Bootstrap implements \App\Core\Schema\App
 {
-  private const ENCRYPTION_ALGO = '';
-
-  private const SALT_SESSION = '';
-  private const SALT_COOKIE = '';
-  private const SALT_PASSWORD = '';
-  private const SALT_NONCE = '';
-  private const SALT_TOKEN = '';
-  private const SALT_WEBAUTH = '';
-
-  private const DATABASE_NAME = '';
-  private const DATABASE_USER = '';
-  private const DATABASE_PASS = '';
-  private const DATABASE_HOST = '127.0.0.1';
-
   /**
    * Method triggered in setup.
    */
@@ -50,11 +36,11 @@ final class App extends Bootstrap implements \App\Core\Schema\App
             'connections' => [
               'default' => [
                 'driver' => 'mysql',
-                'host' => self::DATABASE_HOST,
+                'host' => \App\Common\Config::DATABASE_HOST,
                 'port' => '3306',
-                'database' => self::DATABASE_NAME,
-                'username' => self::DATABASE_USER,
-                'password' => self::DATABASE_PASS,
+                'database' => \App\Common\Config::DATABASE_NAME,
+                'username' => \App\Common\Config::DATABASE_USER,
+                'password' => \App\Common\Config::DATABASE_PASS,
                 'collation' => 'utf8_general_ci',
                 'charset' => 'utf8',
                 'strict' => false,
@@ -62,15 +48,15 @@ final class App extends Bootstrap implements \App\Core\Schema\App
             ]
           ],
           'encryption' => [
-            'algorithm' => self::ENCRYPTION_ALGO
+            'algorithm' => \App\Common\Config::ENCRYPTION_ALGO
           ],
           'salts' => [
-            'session' => self::SALT_SESSION,
-            'cookie' => self::SALT_COOKIE,
-            'password' => self::SALT_PASSWORD,
-            'nonce' => self::SALT_NONCE,
-            'token' => self::SALT_TOKEN,
-            'webauth' => self::SALT_WEBAUTH
+            'session' => \App\Common\Config::SALT_SESSION,
+            'cookie' => \App\Common\Config::SALT_COOKIE,
+            'password' => \App\Common\Config::SALT_PASSWORD,
+            'nonce' => \App\Common\Config::SALT_NONCE,
+            'token' => \App\Common\Config::SALT_TOKEN,
+            'webauth' => \App\Common\Config::SALT_WEBAUTH
           ],
           'storage' => [
             'logs' => Path::getAppPath('storage/logs'),
