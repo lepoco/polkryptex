@@ -1,0 +1,60 @@
+a {
+  text-decoration: none;
+  color: $c-hyperlink;
+
+  &.faded {
+    color: $c-hyperlink-faded;
+
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  &.accent {
+    font-family: $f-primary;
+    font-weight: 700;
+  }
+}
+
+form,
+.form {
+  width: 100%;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  padding: 0px 1.5rem;
+  line-height: 1.5rem;
+  font-size: 1.35rem;
+  height: 4rem;
+}
+
+.btn-dark {
+  &:hover {
+    color: $c-dark;
+    background: transparent;
+  }
+}
+
+.btn-secondary {
+  &:hover {
+    color: $c-light;
+    background: $c-dark;
+  }
+}
+
+.modal {
+  .modal-title {
+    font-family: $f-secondary;
+    font-weight: 700;
+  }
+}

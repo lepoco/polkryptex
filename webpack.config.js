@@ -10,7 +10,7 @@ module.exports = {
   mode: "production", //development production
   watch: false,
   entry: {
-    index: "./src/javascript/index.js",
+    index: "./src/scripts/index.js",
   },
   module: {
     rules: [
