@@ -26,7 +26,7 @@ final class Routes extends Router
       'namespace' => 'Register'
     ],
     [
-      'path' => '/singin',
+      'path' => '/signin',
       'namespace' => 'SignIn'
     ]
   ];

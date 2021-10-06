@@ -32,8 +32,85 @@ final class Schema
 
   private static function fill(): void
   {
-  }
+    DB::table('user_roles')->insert([
+      'name' => 'default',
+      'permissions' => '{p:[]}'
+    ]);
 
+    DB::table('user_roles')->insert([
+      'name' => 'manager',
+      'permissions' => '{p:[]}'
+    ]);
+
+    DB::table('user_roles')->insert([
+      'name' => 'admin',
+      'permissions' => '{p:[\'all\']}'
+    ]);
+
+    DB::table('plans')->insert([
+      'name' => 'standard',
+      'capabilities' => '{c:[]}'
+    ]);
+
+    DB::table('plans')->insert([
+      'name' => 'plus',
+      'capabilities' => '{c:[]}'
+    ]);
+
+    DB::table('plans')->insert([
+      'name' => 'premium',
+      'capabilities' => '{c:[]}'
+    ]);
+
+    DB::table('plans')->insert([
+      'name' => 'trader',
+      'capabilities' => '{c:[]}'
+    ]);
+
+    DB::table('users')->insert([
+      'name' => 'dummy',
+      'display_name' => 'dummy',
+      'email' => 'dummy@polkryptex.pl',
+      'password' => '$cW4yTWs0djAwbTRjTi40VA$lQcuXoa/0y3FNdjrwOtxaJvxJ+GS2WHxAUC1qbk/EQg',
+      'role_id' => 1
+    ]);
+
+    DB::table('currencies')->insert([
+      'rate' => 1,
+      'iso_number' => 840,
+      'iso_code' => 'USD',
+      'name' => 'US Dollar',
+      'sign' => '$',
+      'decimal_sign' => '¢',
+      'decimal_name' => 'cent',
+      'is_crypto' => false,
+      'is_master' => true,
+    ]);
+
+    DB::table('currencies')->insert([
+      'rate' => 0.86572246,
+      'iso_number' => 978,
+      'iso_code' => 'EUR',
+      'name' => 'Euro',
+      'sign' => '€',
+      'decimal_sign' => 'c',
+      'decimal_name' => 'cent',
+      'is_crypto' => false,
+      'is_master' => false,
+    ]);
+
+    DB::table('currencies')->insert([
+      'rate' => 0.73666607,
+      'iso_number' => 826,
+      'iso_code' => 'GBP',
+      'name' => 'Pound sterling',
+      'sign' => '£',
+      'decimal_sign' => 'p',
+      'decimal_name' => 'pence',
+      'is_crypto' => false,
+      'is_master' => false,
+    ]);
+  }
   private static function drop(): void
   {
     /**
@@ -51,11 +128,12 @@ final class Schema
 
     DB::schema()->dropIfExists('user_billings');
     DB::schema()->dropIfExists('user_newsletters');
+    DB::schema()->dropIfExists('user_plans');
 
     DB::schema()->dropIfExists('users');
 
     DB::schema()->dropIfExists('user_roles');
-    DB::schema()->dropIfExists('user_plans');
+    DB::schema()->dropIfExists('plans');
   }
 
   private static function tableOptions(): void
@@ -64,8 +142,9 @@ final class Schema
       DB::schema()->create('options', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->longText('value');
-        $table->timestamps();
+        $table->longText('value')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
   }
@@ -77,16 +156,18 @@ final class Schema
         $table->id();
         $table->string('name');
         $table->text('permissions');
-        $table->timestamps();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
 
-    if (!DB::schema()->hasTable('user_plans')) {
-      DB::schema()->create('user_plans', function (Blueprint $table) {
+    if (!DB::schema()->hasTable('plans')) {
+      DB::schema()->create('plans', function (Blueprint $table) {
         $table->id();
         $table->string('name');
         $table->text('capabilities');
-        $table->timestamps();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
 
@@ -95,18 +176,29 @@ final class Schema
         $table->id();
         $table->string('email');
         $table->string('name');
-        $table->string('display_name');
-        $table->string('timezone');
-        $table->string('uuid');
+        $table->string('display_name')->nullable();
+        $table->string('timezone')->nullable();
+        $table->string('uuid')->nullable();
         $table->text('location');
-        $table->text('image');
-        $table->text('password');
-        $table->text('session_token');
-        $table->text('cookie_token');
-        $table->foreignId('plan_id')->references('id')->on('user_plans')->default(1);
-        $table->foreignId('role_id')->references('id')->on('user_roles')->default(1);
-        $table->timestamp('time_last_login');
-        $table->timestamps();
+        $table->text('image')->nullable();
+        $table->text('password')->nullable();
+        $table->text('session_token')->nullable();
+        $table->text('cookie_token')->nullable();
+        $table->foreignId('role_id')->references('id')->on('user_roles');
+        $table->timestamp('time_last_login')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
+      });
+    }
+
+    if (!DB::schema()->hasTable('user_plans')) {
+      DB::schema()->create('user_plans', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->references('id')->on('users');
+        $table->foreignId('plan_id')->references('id')->on('plans');
+        $table->timestamp('expiers_at')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
 
@@ -114,15 +206,16 @@ final class Schema
       DB::schema()->create('user_billings', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->references('id')->on('users');
-        $table->string('firstname');
-        $table->string('lastname');
-        $table->string('street');
-        $table->string('postal');
-        $table->string('city');
-        $table->text('phone');
-        $table->text('email');
-        $table->text('timezone');
-        $table->timestamps();
+        $table->string('firstname')->nullable();
+        $table->string('lastname')->nullable();
+        $table->string('street')->nullable();
+        $table->string('postal')->nullable();
+        $table->string('city')->nullable();
+        $table->text('phone')->nullable();
+        $table->text('email')->nullable();
+        $table->text('timezone')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
 
@@ -132,21 +225,29 @@ final class Schema
         $table->foreignId('user_id')->references('id')->on('users');
         $table->string('unsubscribe_token');
         $table->boolean('active')->default(false);
-        $table->timestamps();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
   }
 
   private static function tableWallets(): void
   {
+    // https://en.wikipedia.org/wiki/ISO_4217
     if (!DB::schema()->hasTable('currencies')) {
       DB::schema()->create('currencies', function (Blueprint $table) {
         $table->id();
-        $table->string('symbol');
-        $table->string('name');
-        $table->float('rate')->default(0);
+        $table->float('rate', 12, 8, false)->default(1);
+        $table->integer('iso_number')->nullable();
+        $table->string('iso_code')->nullable();
+        $table->string('sign')->nullable();
+        $table->string('name')->nullable();
+        $table->string('decimal_sign')->nullable();
+        $table->string('decimal_name')->nullable();
         $table->boolean('is_crypto')->default(false);
-        $table->timestamps();
+        $table->boolean('is_master')->default(false);
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
 
@@ -156,7 +257,8 @@ final class Schema
         $table->foreignId('user_id')->references('id')->on('users');
         $table->foreignId('currency_id')->references('id')->on('currencies')->default(1);
         $table->float('virtual_balance')->default(0);
-        $table->timestamps();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
 
@@ -167,8 +269,9 @@ final class Schema
         $table->foreignId('wallet_from')->references('id')->on('wallets');
         $table->foreignId('wallet_to')->references('id')->on('wallets');
         $table->float('amount')->default(0);
-        $table->string('uuid');
-        $table->timestamps();
+        $table->string('uuid')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
   }
@@ -178,14 +281,14 @@ final class Schema
     if (!DB::schema()->hasTable('statistics_tags')) {
       DB::schema()->create('statistics_tags', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
+        $table->string('name')->nullable();
       });
     }
 
     if (!DB::schema()->hasTable('statistics_types')) {
       DB::schema()->create('statistics_types', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
+        $table->string('name')->nullable();
       });
     }
 
@@ -195,9 +298,10 @@ final class Schema
         $table->foreignId('statistic_tag')->references('id')->on('statistics_tags');
         $table->foreignId('statistic_type')->references('id')->on('statistics_types');
         $table->foreignId('user_id')->nullable()->references('id')->on('users');
-        $table->string('ip');
-        $table->text('ua');
-        $table->timestamps();
+        $table->string('ip')->nullable();
+        $table->text('ua')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
   }

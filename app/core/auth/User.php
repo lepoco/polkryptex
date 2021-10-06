@@ -3,6 +3,7 @@
 namespace App\Core\Auth;
 
 use App\Core\Auth\Billing;
+use App\Core\Utils\Cast;
 
 /**
  * Represents the user
@@ -80,7 +81,6 @@ final class User
       ->setType($properties['type'] ?? 1)
       ->setUuid($properties['uuid'] ?? '')
       ->setEmail($properties['email'] ?? '')
-      ->setName($properties['name'] ?? '')
       ->setDisplayName($properties['display_name'] ?? '')
       ->setImage($properties['image'] ?? '')
       ->setPassword($properties['password'] ?? '')
@@ -160,19 +160,14 @@ final class User
   {
     $this->email = $email;
 
+    $this->name = Cast::emailToUsername($email);
+
     return $this;
   }
 
   public function getEmail(): string
   {
     return $this->email;
-  }
-
-  public function setName(string $name): self
-  {
-    $this->name = $name;
-
-    return $this;
   }
 
   public function getName(): string

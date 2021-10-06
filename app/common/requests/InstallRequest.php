@@ -5,6 +5,7 @@ namespace App\Common\Requests;
 use PDO;
 use PDOException;
 use App\Core\View\Request;
+use App\Core\Auth\{Account, User};
 use App\Core\Facades\{App, Logs, Config};
 use App\Core\Data\{Encryption, Schema};
 use App\Core\Utils\{Path, ClassInjector};
@@ -68,10 +69,9 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     $this->tryConnectDB();
     $this->injectConfig();
     $this->createDatabases();
+    $this->registerAdmin();
 
-    $this->addContent('message', 'Unauthorized access.');
-    $this->finish(self::ERROR_ENTRY_EXISTS, self::STATUS_UNAUTHORIZED);
-    //$this->finish(self::CODE_SUCCESS);
+    $this->finish(self::CODE_SUCCESS, self::STATUS_OK);
   }
 
   private function tryConnectDB(): void
@@ -171,5 +171,23 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     App::connect();
     /** After a successful connection, the tables in the database will be created. */
     Schema::build(true);
+  }
+
+  private function registerAdmin(): void
+  {
+    $encryptedPassword = Encryption::encrypt(
+      $this->getData('admin_password'),
+      'password',
+      $this->salts['password'],
+      $this->passwordAlgo
+    );
+
+    $adminUser = User::build([
+      'display_name' => 'Admin',
+      'email' => $this->getData('admin_email'),
+      'password' => $encryptedPassword
+    ]);
+
+    Account::register($adminUser, $encryptedPassword);
   }
 }

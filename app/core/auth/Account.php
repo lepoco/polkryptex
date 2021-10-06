@@ -3,6 +3,7 @@
 namespace App\Core\Auth;
 
 use App\Core\Auth\User;
+use App\Core\Facades\DB;
 
 /**
  * Used to manage user accounts
@@ -28,8 +29,42 @@ final class Account
     return false;
   }
 
-  public static function register(User $user): bool
+  public static function getRoleId(string $roleName): int
   {
-    return false;
+    $role = DB::table('user_roles')->where('name', $roleName)->first();
+
+    if (empty($role)) {
+      return 1;
+    }
+
+    return (int) $role->id;
+  }
+
+  public static function getPlanId(string $planName): int
+  {
+    $plan = DB::table('user_plans')->where('name', $planName)->first();
+
+    if (empty($plan)) {
+      return 1;
+    }
+
+    return (int) $plan->id;
+  }
+
+  public static function register(User $user, string $encryptedPassword): bool
+  {
+    $users = DB::table('users')->get(['*'])->where('email', $user->getEmail());
+
+    if ($users->count() > 0) {
+      return false;
+    }
+
+    return (bool) DB::table('users')->insert([
+      'email' => $user->getEmail(),
+      'name' => $user->getName(),
+      'display_name' => $user->getDisplayName(),
+      'password' => $encryptedPassword,
+      'role_id' => self::getRoleId('admin')
+    ]);
   }
 }

@@ -24,4 +24,9 @@ final class Cast
 
     return $view;
   }
+
+  public static function emailToUsername(string $email): string
+  {
+    return preg_replace("/[^a-zA-Z0-9]+/", "", trim(strtolower($email)));
+  }
 }
