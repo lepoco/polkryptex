@@ -1,35 +1,37 @@
 {
-    "name":        "polkryptex/polkryptex",
-    "type":        "project",
-    "description": "Cryptocurrency exchange platform",
-    "homepage":    "https://github.com/Pomianowski/zpi",
-    "license":     "GNU-3.0",
-
-    "keywords": [
-        "cryptocurrency",
-        "bitcoin"
-    ],
-    
-    "require": {
-        "php": "^7.4|^8.0",
-        "bramus/router": "^1.5",
-        "monolog/monolog": "^2.2",
-        "symfony/translation": "^5.2",
-        "phpmailer/phpmailer": "^6.5",
-        "jenssegers/blade": "^1.4",
-        "respect/validation": "^2.2",
-        "ramsey/uuid": "^4.1",
-        "nette/http": "^3.1",
-        "web-auth/webauthn-lib": "^3.3"
-    },
-    "require-dev": {
-        "pestphp/pest": "^1.11",
-        "symfony/var-dumper": "^5.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\Core\\": "app\\core",
-            "App\\Common\\": "app\\common"
-        }
+  "name": "polkryptex/polkryptex",
+  "type": "project",
+  "description": "Cryptocurrency exchange platform",
+  "homepage": "https://github.com/Polkryptex/Polkryptex",
+  "license": "GNU-3.0",
+  "keywords": [
+    "cryptocurrency",
+    "bitcoin"
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "illuminate/config": "^8.0",
+    "illuminate/support": "^8.0",
+    "illuminate/view": "^8.0",
+    "illuminate/cache": "^8.0",
+    "illuminate/http": "^8.0",
+    "illuminate/database": "^8.0",
+    "illuminate/session": "^8.0",
+    "illuminate/translation": "^8.0",
+    "illuminate/log": "^8.0",
+    "bramus/router": "^1.5",
+    "phpmailer/phpmailer": "^6.5",
+    "web-auth/webauthn-lib": "^3.3"
+  },
+  "require-dev": {
+    "pestphp/pest": "^1.11",
+    "spatie/ray": "^1.30",
+    "symfony/var-dumper": "^5.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\Core\\": "app\\core",
+      "App\\Common\\": "app\\common"
     }
+  }
 }

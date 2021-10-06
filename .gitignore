@@ -2,6 +2,9 @@ composer.phar
 /vendor/
 /public/media/uploads/
 
+# Node modules
+node_modules/
+
 # Tests
 .phpunit.result.cache
 
@@ -16,9 +19,17 @@ composer.phar
 .vs/
 .tmp/
 
-# Cache
-app/cache/
-app/storage/cache/
+# Builds
+build/
+builds/
+app/build/
+app/builds/
+
+# Temp storage
+app/storage/blade/*
+app/storage/cache/*
+app/storage/logs/*
+app/storage/session/*
 
 # Certificates and authentication
 app/cert/
