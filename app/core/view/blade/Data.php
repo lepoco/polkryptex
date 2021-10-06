@@ -69,21 +69,6 @@ final class Data
 
     $this->set('base_url', $defaultUrl);
 
-    $this->set('styles', [
-      [
-        'src' => $defaultUrl . 'bundle.min.css',
-        'sri' => ''
-      ]
-    ]);
-
-    $this->set('scripts', [
-      [
-        'src'  => $defaultUrl . 'bundle.js',
-        'sri'  => '',
-        'type' => 'module'
-      ]
-    ]);
-
     $this->set('js_data', [
       'props' => [
         'baseUrl' => $defaultUrl,

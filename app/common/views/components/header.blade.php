@@ -12,20 +12,13 @@
   <title>@option('sitename', 'Polkryptex'){{ isset($title) ? ' - ' . $title : '' }}</title>
   <link rel="icon" href="{!! $base_url . 'favicon.ico?v=' . $version !!}" />
   <link rel="manifest" href="@asset('m.webmanifest'){!! '?v=' . $version !!}">
-
-  @foreach($styles as $style)
-  <link type="text/css" rel="stylesheet" href="{{ $style['src'] }}" integrity="{{ $style['sri'] }}"
-    crossorigin="anonymous" />
-  @endforeach
+  <link type="text/css" rel="stylesheet" href="@asset('bundle.min.css'){!! '?v=' . $version !!}" crossorigin="anonymous" />
 
   <script>
     window.app = @json( $js_data, JSON_PRETTY_PRINT );
   </script>
 
-  @foreach($scripts as $script)
-  <script type="{{ $script['type'] }}" src="{{ $script['src'] }}" integrity="{{ $script['sri'] }}"
-    crossorigin="anonymous" defer></script>
-  @endforeach
+  <script src="@asset('bundle.js'){!! '?v=' . $version !!}" crossorigin="anonymous" defer></script>
 
 </head>
 
