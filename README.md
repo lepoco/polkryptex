@@ -64,15 +64,19 @@ To run all tests
 - 01.12.2021 - Optional, PWA support
 
 ## External solutions
-- Bramus Router
-- Jenssegers Blade
-- Database by David Adams
-- Monolog
-- Symfony Translation
-- Symfony var-dumper
-- Chart.js
-- Bootstrap SASS
-- PayPal WebAPI
+- Node.js [nodejs.org](https://nodejs.org/en/)
+- Bramus Router [github.com/bramus](https://github.com/bramus/router)
+- The Laravel Components [github.com/illuminate](https://github.com/illuminate)
+- PHP Mailer [github.com/PHPMailer](https://github.com/PHPMailer/PHPMailer)
+- Web Auth [github.com/web-auth](https://github.com/web-auth/webauthn-lib)
+- Symfony var-dumper [symfony.com](https://symfony.com/doc/current/components/var_dumper.html)
+- Pest [pestphp.com](https://pestphp.com/docs/writing-tests)
+- Spatie Ray [spatie.be](https://spatie.be/products/ray)
+- Bootstrap [getbootstrap.com](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+- Webpack [webpack.js.org](https://webpack.js.org/)
+- Webpack CLI [npmjs.com/package/webpack-cli](https://www.npmjs.com/package/webpack-cli)
+- SASS [npmjs.com/package/sass](https://www.npmjs.com/package/sass)
+- Workbox Webpack [npmjs.com/package/workbox-webpack-plugin](https://www.npmjs.com/package/workbox-webpack-plugin)
 
 ## Roles
 - @Leszek - Core functions and Content Management System
