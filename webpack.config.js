@@ -54,7 +54,7 @@ module.exports = {
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
-      sourcemap: true,
+      sourcemap: false,
       include: [/\.(?:html|css)$/],
     }),
   ],
