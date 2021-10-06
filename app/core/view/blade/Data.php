@@ -69,24 +69,16 @@ final class Data
 
     $this->set('base_url', $defaultUrl);
 
-    $this->set('import_map', [
-      'imports' => [
-        'js-cookie' => 'https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs',
-        'popperjs' => 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
-        'bootstrap' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.js'
-      ]
-    ]);
-
     $this->set('styles', [
       [
-        'src' => $defaultUrl . 'assets/css/app.min.css',
+        'src' => $defaultUrl . 'bundle.min.css',
         'sri' => ''
       ]
     ]);
 
     $this->set('scripts', [
       [
-        'src'  => $defaultUrl . 'assets/js/app.js',
+        'src'  => $defaultUrl . 'bundle.js',
         'sri'  => '',
         'type' => 'module'
       ]

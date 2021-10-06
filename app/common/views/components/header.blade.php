@@ -12,7 +12,6 @@
   <title>@option('sitename', 'Polkryptex'){{ isset($title) ? ' - ' . $title : '' }}</title>
   <link rel="icon" href="{!! $base_url . 'favicon.ico?v=' . $version !!}" />
   <link rel="manifest" href="@asset('m.webmanifest'){!! '?v=' . $version !!}">
-  <script type="importmap">@json( $import_map, JSON_PRETTY_PRINT )</script>
 
   @foreach($styles as $style)
   <link type="text/css" rel="stylesheet" href="{{ $style['src'] }}" integrity="{{ $style['sri'] }}"

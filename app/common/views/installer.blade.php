@@ -1,6 +1,6 @@
 @extends('layouts.box', [
 'title' => 'Installer',
-'background' => $base_url . 'assets/img/pexels-watch-pay.jpeg'
+'background' => $base_url . 'img/pexels-watch-pay.jpeg'
 ])
 
 @section('content')

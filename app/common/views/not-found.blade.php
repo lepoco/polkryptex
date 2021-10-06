@@ -1,6 +1,6 @@
 @extends('layouts.box', [
 'title' => 'Not found',
-'background' => $base_url . 'assets/img/pexels-person-holding-bitcoin.jpeg'
+'background' => $base_url . 'img/pexels-person-holding-bitcoin.jpeg'
 ])
 
 @section('content')
