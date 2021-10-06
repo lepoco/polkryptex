@@ -177,14 +177,13 @@ final class Schema
         $table->string('email');
         $table->string('name');
         $table->string('display_name')->nullable();
-        $table->string('timezone')->nullable();
         $table->string('uuid')->nullable();
-        $table->text('location');
         $table->text('image')->nullable();
         $table->text('password')->nullable();
         $table->text('session_token')->nullable();
         $table->text('cookie_token')->nullable();
         $table->foreignId('role_id')->references('id')->on('user_roles');
+        $table->string('timezone')->default('UTC');
         $table->timestamp('time_last_login')->nullable();
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
@@ -211,6 +210,8 @@ final class Schema
         $table->string('street')->nullable();
         $table->string('postal')->nullable();
         $table->string('city')->nullable();
+        $table->string('country')->nullable();
+        $table->string('province')->nullable();
         $table->text('phone')->nullable();
         $table->text('email')->nullable();
         $table->text('timezone')->nullable();

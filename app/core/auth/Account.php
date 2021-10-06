@@ -4,6 +4,7 @@ namespace App\Core\Auth;
 
 use App\Core\Auth\User;
 use App\Core\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * Used to manage user accounts
@@ -42,7 +43,7 @@ final class Account
 
   public static function getPlanId(string $planName): int
   {
-    $plan = DB::table('user_plans')->where('name', $planName)->first();
+    $plan = DB::table('plans')->where('name', $planName)->first();
 
     if (empty($plan)) {
       return 1;
@@ -62,6 +63,7 @@ final class Account
     return (bool) DB::table('users')->insert([
       'email' => $user->getEmail(),
       'name' => $user->getName(),
+      'uuid' => Str::uuid(),
       'display_name' => $user->getDisplayName(),
       'password' => $encryptedPassword,
       'role_id' => self::getRoleId('admin')
