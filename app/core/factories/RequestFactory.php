@@ -28,15 +28,23 @@ final class RequestFactory implements \App\Core\Schema\Factory
     $requestClass = self::NAMESPACE . $property . 'Request';
 
     if (!class_exists($requestClass)) {
-      header('Content-Type: application/json; charset=utf-8');
-      echo json_encode([
-        'status' => 'error',
-        'content' => ['message' => 'Bad request - ' . (empty($property) ? 'Empty' : $property)]
-      ], JSON_UNESCAPED_UNICODE);
+      self::printBadRequest();
 
       return;
     }
 
     return new $requestClass();
+  }
+
+  private static function printBadRequest(): void
+  {
+    http_response_code(404);
+
+    header('Content-Type: application/json; charset=utf-8');
+
+    echo json_encode([
+      'status' => 'error',
+      'content' => ['message' => 'Bad request - ' . (empty($property) ? 'Empty' : $property)]
+    ], JSON_UNESCAPED_UNICODE);
   }
 }
