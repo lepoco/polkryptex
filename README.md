@@ -5,6 +5,32 @@ Kazimierz Wielki University, Bydgoszcz, Poland
 ## Description
 Polkryptex is a revolutionary cryptocurrency management tool. It allows you to exchange not only cryptocurrencies but also traditional ones. Store all your savings with us! IT'S SAFE!
 
+## Depencies
+The application uses several solutions to improve work and design. They are necessary to work on it.
+- Composer - [getcomposer.org](https://getcomposer.org/download/)
+- Node JS - [nodejs.org](https://nodejs.org/en/download/)
+- PHP 8.0.11 - [php.net](https://windows.php.net/download#php-8.0)
+
+To install all PHP modules, enter comand in the application directory
+```powershell
+composer install
+```
+
+To download all node modules, enter the command
+```powershell
+npm install
+```
+
+To build all the resources and the startup directory
+```powershell
+npm run build
+```
+
+To run all tests
+```powershell
+./vendor/bin/pest.bat
+```
+
 ## Modules
 - [x] URL Routing
 - [x] Accepting Ajax requests
@@ -18,16 +44,6 @@ Polkryptex is a revolutionary cryptocurrency management tool. It allows you to e
 - [ ] Cryptocurrency exchange system
 - [ ] Exchange of cryptocurrencies with their current rates and historical rates presented in the charts
 - [ ] (Optional) Forecasting further rate of a given cryptocurrency
-
-## How to test
-To run unit tests, install composer:
-```powershell
-composer install
-```
-and then run the command:
-```powershell
-./vendor/bin/pest.bat
-```
 
 ## Technologies & Tools
 - PHP

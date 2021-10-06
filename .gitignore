@@ -5,6 +5,9 @@ composer.phar
 # Node modules
 node_modules/
 
+# Node JS lock
+package-lock.json
+
 # Tests
 .phpunit.result.cache
 
