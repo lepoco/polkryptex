@@ -59,7 +59,7 @@ module.exports = {
     }),
   ],
   output: {
-    filename: "bundle.js",
+    filename: "bundle.min.js",
     path: path.resolve(__dirname, "public/"),
     clean: true,
   },
