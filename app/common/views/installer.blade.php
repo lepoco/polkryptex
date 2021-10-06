@@ -62,8 +62,8 @@
         </div>
     </div>
 
-    <input type="hidden" name="submit" id="submit" value="123"/>
+    <input type="hidden" name="submit" id="submit" value="123" />
 
-    <button type="submit" class="btn btn-dark mt-3">@translate('Begin installation')</button>
+    <button type="submit" class="btn btn-dark btn-mobile mt-3">@translate('Begin installation')</button>
 </form>
 @endsection

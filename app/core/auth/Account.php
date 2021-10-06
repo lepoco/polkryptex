@@ -30,6 +30,44 @@ final class Account
     return false;
   }
 
+  public static function isRegistered(string $data, string $type = 'email'): bool
+  {
+    if ('email' === $type && DB::table('users')->get(['*'])->where('email', $data)->count() > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public static function getBy(string $type = 'email', int|string $data = ''): ?User
+  {
+    $query = (object)[];
+
+    if ('id' === $type) {
+      return new User((int) $data);
+    }
+
+    switch ($type) {
+      case 'name':
+        $query = DB::table('users')->where('name', $data)->first();
+        break;
+
+      case 'display_name':
+        $query = DB::table('users')->where('display_name', $data)->first();
+        break;
+
+      default:
+        $query = DB::table('users')->where('email', $data)->first();
+        break;
+    }
+
+    if (empty($query)) {
+      return null;
+    }
+
+    return new User($query->id);
+  }
+
   public static function getRoleId(string $roleName): int
   {
     $role = DB::table('user_roles')->where('name', $roleName)->first();
@@ -66,7 +104,7 @@ final class Account
       'uuid' => Str::uuid(),
       'display_name' => $user->getDisplayName(),
       'password' => $encryptedPassword,
-      'role_id' => self::getRoleId('admin')
+      'role_id' => $user->getRole()
     ]);
   }
 }

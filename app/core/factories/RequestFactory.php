@@ -28,7 +28,7 @@ final class RequestFactory implements \App\Core\Schema\Factory
     $requestClass = self::NAMESPACE . $property . 'Request';
 
     if (!class_exists($requestClass)) {
-      self::printBadRequest();
+      self::printBadRequest($property);
 
       return;
     }
@@ -36,7 +36,7 @@ final class RequestFactory implements \App\Core\Schema\Factory
     return new $requestClass();
   }
 
-  private static function printBadRequest(): void
+  private static function printBadRequest(string $property = ''): void
   {
     http_response_code(404);
 

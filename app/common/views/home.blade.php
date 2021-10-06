@@ -14,11 +14,11 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            @include('components.phone', ['notch' => true, 'image' => $base_url . 'assets/img/home-phone-screen.png?v=' . $version])
+            @include('components.phone', ['notch' => true, 'image' => $base_url . 'img/home-phone-screen.png?v=' . $version])
         </div>
         
         <div class="col-12 col-lg-6">
-            @include('components.phone', ['notch' => true, 'image' => $base_url . 'assets/img/home-phone-screen.png?v=' . $version])
+            @include('components.phone', ['notch' => true, 'image' => $base_url . 'img/home-phone-screen.png?v=' . $version])
         </div>
         <div class="col-12 col-lg-6 -pb-3 -mh-70 -flex-center">
             <div>

@@ -6,7 +6,7 @@ use App\Core\Facades\Request;
 
 /**
  * Abstraction for a view/request, contains the basic logic for all kinds of returned data in the browser.
- * 
+ *
  * @since 1.0.0
  * @author Pomianowski
  * @license https://www.gnu.org/licenses/gpl-3.0.txt

@@ -12,6 +12,15 @@
     <exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
   </rule>
 
+   <rule ref="Generic.Files.LineLength">
+    <properties>
+    <property name="lineLimit" value="256"/>
+    <property name="absoluteLineLimit" value="256"/>
+    </properties>
+  </rule>
+
+  <rule ref="Generic.WhiteSpace.DisallowTabIndent" />
+
   <rule ref="Generic.WhiteSpace.ScopeIndent">
     <properties>
       <property name="indent" value="2" />

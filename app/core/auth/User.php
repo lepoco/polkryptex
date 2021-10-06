@@ -4,6 +4,8 @@ namespace App\Core\Auth;
 
 use App\Core\Auth\Billing;
 use App\Core\Utils\Cast;
+use App\Core\Facades\DB;
+use App\Core\Data\Encryption;
 
 /**
  * Represents the user
@@ -17,8 +19,6 @@ final class User
   private int $id = 0;
 
   private int $role = 0;
-
-  private int $type = 0;
 
   private string $uuid = '';
 
@@ -49,6 +49,8 @@ final class User
   public function __construct(int $id = 0)
   {
     $this->billing = new Billing($id);
+
+    $this->fetch($id);
   }
 
   public function update(): bool
@@ -62,8 +64,15 @@ final class User
    */
   public function comparePassword(string $password): bool
   {
-    // TODO: if ($this->password)
-    return true;
+    return Encryption::compare($password, $this->password, 'password', true);
+  }
+
+  /**
+   * Checks whether the entered session token matches the user's token.
+   */
+  public function compareToken(string $token): bool
+  {
+    return Encryption::compare($token, $this->sessionToken, 'session', true);
   }
 
   /**
@@ -88,10 +97,30 @@ final class User
       ->setBilling($billing);
   }
 
-  private function buildFromDatabase(): bool
+  private function fetch(int $id): bool
   {
-    // TODO:
-    return false;
+    $data = DB::table('users')->where('id', $id)->first();
+
+    if (empty($data)) {
+      return false;
+    }
+
+    $this->id = $data->id ?? 0;
+    $this->email = $data->email ?? '';
+    $this->name = $data->name ?? '';
+    $this->displayName = $data->display_name ?? '';
+    $this->uuid = $data->uuid ?? '';
+    $this->image = $data->image ?? '';
+    $this->password = $data->password ?? '';
+    $this->sessionToken = $data->session_token ?? '';
+    $this->cookieToken = $data->cookie_token ?? '';
+    $this->role = (int) $data->role_id ?? 1;
+    $this->timezone = $data->timezone ?? '';
+    $this->lastLogin = $data->time_last_login ?? '';
+    $this->createdAt = $data->created_at ?? '';
+    $this->updatedAt = $data->updated_at ?? '';
+
+    return true;
   }
 
 

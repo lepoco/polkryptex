@@ -36,6 +36,13 @@ form,
   line-height: 1.5rem;
   font-size: 1.35rem;
   height: 4rem;
+
+  &-mobile {
+    @include media-breakpoint-down(md) {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
 }
 
 .btn-dark {

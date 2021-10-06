@@ -89,8 +89,17 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
     $this->finish(self::ERROR_INTERNAL_ERROR, self::STATUS_IM_A_TEAPOT);
   }
 
-  private function signInUser(): bool
+  private function registerUser(): bool
   {
-    return true;
+    $encryptedPassword = Encryption::encrypt($this->getData('password'), 'password');
+
+    $newUser = User::build([
+      'display_name' => Str::before($this->getData('email'), '@'),
+      'email' => $this->getData('email'),
+      'password' => $encryptedPassword,
+      'role' => Account::getRoleId('default')
+    ]);
+
+    return Account::register($newUser, $encryptedPassword);
   }
 }

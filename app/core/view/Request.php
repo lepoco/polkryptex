@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 /**
  * Abstraction for the request, contains the necessary underlying methods.
- * 
+ *
  * @since 1.0.0
  * @author Pomianowski
  * @license https://www.gnu.org/licenses/gpl-3.0.txt
@@ -19,28 +19,29 @@ use Illuminate\Support\Str;
 abstract class Request extends Renderable implements \App\Core\Schema\Request
 {
   protected const ERROR_UNKNOWN                  = 'E00';
-  protected const ERROR_MISSING_ACTION           = 'E01';
-  protected const ERROR_MISSING_NONCE            = 'E02';
-  protected const ERROR_INVALID_NONCE            = 'E03';
-  protected const ERROR_INVALID_ACTION           = 'E04';
-  protected const ERROR_INSUFFICIENT_PERMISSIONS = 'E05';
-  protected const ERROR_MISSING_ARGUMENTS        = 'E06';
-  protected const ERROR_EMPTY_ARGUMENTS          = 'E07';
-  protected const ERROR_ENTRY_EXISTS             = 'E08';
-  protected const ERROR_ENTRY_DONT_EXISTS        = 'E09';
-  protected const ERROR_INVALID_URL              = 'E10';
-  protected const ERROR_INVALID_PASSWORD         = 'E11';
-  protected const ERROR_PASSWORDS_DONT_MATCH     = 'E12';
-  protected const ERROR_PASSWORD_TOO_SHORT       = 'E13';
-  protected const ERROR_PASSWORD_TOO_SIMPLE      = 'E14';
-  protected const ERROR_INVALID_EMAIL            = 'E15';
-  protected const ERROR_SPECIAL_CHARACTERS       = 'E16';
-  protected const ERROR_USER_EMAIL_EXISTS        = 'E17';
-  protected const ERROR_USER_NAME_EXISTS         = 'E18';
-  protected const ERROR_MYSQL_UNKNOWN            = 'E19';
-  protected const ERROR_INVALID_USER             = 'E20';
-  protected const ERROR_PASSWORD_CANNOT_BE_SAME  = 'E21';
-  protected const ERROR_INTERNAL_ERROR           = 'E22';
+  protected const ERROR_INTERNAL_ERROR           = 'E01';
+  protected const ERROR_MISSING_ARGUMENTS        = 'E02';
+  protected const ERROR_EMPTY_ARGUMENTS          = 'E03';
+  protected const ERROR_ACTION_MISSING           = 'E04';
+  protected const ERROR_ACTION_INVALID           = 'E05';
+  protected const ERROR_NONCE_MISSING            = 'E06';
+  protected const ERROR_NONCE_INVALID            = 'E07';
+
+  protected const ERROR_MYSQL_UNKNOWN            = 'E08';
+  protected const ERROR_SPECIAL_CHARACTERS       = 'E09';
+  protected const ERROR_ENTRY_EXISTS             = 'E10';
+  protected const ERROR_ENTRY_DONT_EXISTS        = 'E11';
+  protected const ERROR_INSUFFICIENT_PERMISSIONS = 'E12';
+  protected const ERROR_INVALID_URL              = 'E13';
+  protected const ERROR_INVALID_EMAIL            = 'E14';
+  protected const ERROR_USER_EMAIL_EXISTS        = 'E15';
+  protected const ERROR_USER_NAME_EXISTS         = 'E16';
+  protected const ERROR_USER_INVALID             = 'E17';
+  protected const ERROR_PASSWORD_INVALID         = 'E18';
+  protected const ERROR_PASSWORDS_DONT_MATCH     = 'E19';
+  protected const ERROR_PASSWORD_TOO_SHORT       = 'E20';
+  protected const ERROR_PASSWORD_TOO_SIMPLE      = 'E21';
+  protected const ERROR_PASSWORD_CANNOT_BE_SAME  = 'E22';
 
   protected const CODE_SUCCESS                   = 'S01';
 
@@ -52,7 +53,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
   protected array $requestData = [];
 
-  public abstract function getAction(): string;
+  abstract public function getAction(): string;
 
   public function print(): void
   {
@@ -67,7 +68,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->{'process'}();
     } else {
       $this->addContent('error', 'Non-existent action');
-      $this->finish(self::ERROR_INVALID_ACTION, self::STATUS_BAD_REQUEST);
+      $this->finish(self::ERROR_ACTION_INVALID, self::STATUS_BAD_REQUEST);
     }
   }
 
@@ -116,17 +117,13 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
   protected function validate(array $fields): self
   {
     foreach ($fields as $field) {
-
       if (!isset($field[1])) {
         $field[1] = FILTER_UNSAFE_RAW;
       }
 
       $value = isset($this->incomeData[$field[0]]) ? $this->incomeData[$field[0]] : '';
 
-      $this->addData(
-        $field[0],
-        filter_var($value, $field[1])
-      );
+      $this->addData($field[0], filter_var($value, $field[1]));
     }
 
     return $this;
@@ -171,13 +168,13 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
     if (!IlluminateRequest::has('nonce')) {
       $this->addContent('error', 'Missing nonce');
-      $this->finish(self::ERROR_MISSING_NONCE, self::STATUS_BAD_REQUEST);
+      $this->finish(self::ERROR_NONCE_MISSING, self::STATUS_BAD_REQUEST);
     }
 
     if (!Encryption::compare('ajax_' . strtolower($this->getAction()) . '_nonce', IlluminateRequest::get('nonce'), 'nonce')) {
       $this->addContent('error', 'Invalid nonce');
       $this->addContent('message', 'The time verification key does not match, please try refreshing the page.');
-      $this->finish(self::ERROR_INVALID_NONCE, self::STATUS_BAD_REQUEST);
+      $this->finish(self::ERROR_NONCE_INVALID, self::STATUS_BAD_REQUEST);
     }
   }
 
