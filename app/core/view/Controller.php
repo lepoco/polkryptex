@@ -2,11 +2,9 @@
 
 namespace App\Core\View;
 
-
-use App\Core\View\Blade\Factory;
-use App\Core\View\Blade\Directives;
+use App\Core\Facades\{App, Config, Response, Session, Request};
+use App\Core\View\Blade\{Factory, Directives};
 use App\Core\Utils\Cast;
-use App\Core\Facades\Config;
 use Illuminate\Support\Str;
 
 /**
@@ -31,7 +29,12 @@ final class Controller extends Factory implements \App\Core\Schema\Controller
   {
     $this->controllerData();
 
-    echo $this->render(Cast::namespaceToBlade($this->namespace));
+    // If we want to redirect the user to the previous page, it's worth not including those responsible for logging in.
+    if (!in_array($this->namespace, ['NotFound', 'SignIn', 'Register', 'Installer'])) {
+      Session::setPreviousUrl(Request::url());
+    }
+
+    Response::setContent($this->render(Cast::namespaceToBlade($this->namespace)));
 
     return $this;
   }

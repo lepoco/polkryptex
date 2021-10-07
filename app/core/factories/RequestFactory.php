@@ -2,6 +2,7 @@
 
 namespace App\Core\Factories;
 
+use App\Core\Facades\{App, Response};
 use App\Core\Facades\Request as IlluminateRequest;
 use Illuminate\Support\Str;
 
@@ -38,13 +39,11 @@ final class RequestFactory implements \App\Core\Schema\Factory
 
   private static function printBadRequest(string $property = ''): void
   {
-    http_response_code(404);
-
-    header('Content-Type: application/json; charset=utf-8');
-
-    echo json_encode([
+    Response::setStatusCode(404);
+    Response::setHeader('Content-Type', 'application/json; charset=utf-8');
+    Response::setContent(json_encode([
       'status' => 'error',
       'content' => ['message' => 'Bad request - ' . (empty($property) ? 'Empty' : $property)]
-    ], JSON_UNESCAPED_UNICODE);
+    ], JSON_UNESCAPED_UNICODE));
   }
 }

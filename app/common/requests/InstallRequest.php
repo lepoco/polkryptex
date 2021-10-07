@@ -5,6 +5,7 @@ namespace App\Common\Requests;
 use PDO;
 use PDOException;
 use App\Core\View\Request;
+use App\Core\Http\Status;
 use App\Core\Auth\{Account, User};
 use App\Core\Facades\{App, Logs, Config};
 use App\Core\Data\{Encryption, Schema};
@@ -58,12 +59,12 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
 
     if (!empty(Config::get('database.connections.default.database', ''))) {
       $this->addContent('message', 'Unauthorized access.');
-      $this->finish(self::ERROR_ENTRY_EXISTS, self::STATUS_UNAUTHORIZED);
+      $this->finish(self::ERROR_ENTRY_EXISTS, Status::UNAUTHORIZED);
     }
 
     if (App::isConnected()) {
       $this->addContent('message', 'Unauthorized access.');
-      $this->finish(self::ERROR_ENTRY_EXISTS, self::STATUS_UNAUTHORIZED);
+      $this->finish(self::ERROR_ENTRY_EXISTS, Status::UNAUTHORIZED);
     }
 
     $this->tryConnectDB();
@@ -71,7 +72,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     $this->createDatabases();
     $this->registerAdmin();
 
-    $this->finish(self::CODE_SUCCESS, self::STATUS_OK);
+    $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 
   private function tryConnectDB(): void
@@ -87,7 +88,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
 
       $this->addContent('fields', ['user', 'password', 'host', 'database']);
       $this->addContent('message', 'Failed to connect to the database.');
-      $this->finish(self::ERROR_MYSQL_UNKNOWN, self::STATUS_GONE);
+      $this->finish(self::ERROR_MYSQL_UNKNOWN, Status::GONE);
     }
   }
 
@@ -101,7 +102,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
 
     if (!$injector->isValid()) {
       $this->addContent('message', 'Incorrect application configuration. Configuration data injection failed.');
-      $this->finish(self::ERROR_INTERNAL_ERROR, self::STATUS_UNPROCESSABLE_ENTITY);
+      $this->finish(self::ERROR_INTERNAL_ERROR, Status::UNPROCESSABLE_ENTITY);
     }
 
     $injector->inject('ENCRYPTION_ALGO', $this->passwordAlgo, 'const');

@@ -24,6 +24,8 @@ use App\Core\Facades\Abstract\Facade;
  * @method static string|null userAgent() Get the client user agent.
  * @method static mixed get(string $key, mixed $default = null) This method belongs to Symfony HttpFoundation and is not usually needed when using Laravel. Instead, you may use the "input" method.
  * @method static array toArray() Get all of the input and files for the request.
+ * @method static bool hasFile(string $key)
+ * @method static \Illuminate\Http\UploadedFile file(string $key)
  */
 final class Request extends Facade
 {

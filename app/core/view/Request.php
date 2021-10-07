@@ -2,9 +2,9 @@
 
 namespace App\Core\View;
 
-use App\Core\Facades\App;
-use App\Core\Facades\Logs;
+use App\Core\Facades\{App, Logs, Response};
 use App\Core\Facades\Request as IlluminateRequest;
+use App\Core\Http\Status;
 use App\Core\View\Renderable;
 use App\Core\Data\Encryption;
 use Illuminate\Support\Str;
@@ -42,8 +42,13 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
   protected const ERROR_PASSWORD_TOO_SHORT       = 'E20';
   protected const ERROR_PASSWORD_TOO_SIMPLE      = 'E21';
   protected const ERROR_PASSWORD_CANNOT_BE_SAME  = 'E22';
+  protected const ERROR_FILE_INVALID             = 'E23';
+  protected const ERROR_FILE_INVALID_MIME_TYPE   = 'E24';
+  protected const ERROR_FILE_TOO_LARGE           = 'E25';
 
   protected const CODE_SUCCESS                   = 'S01';
+
+  protected bool $finished = false;
 
   protected string $method = '';
 
@@ -68,7 +73,11 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->{'process'}();
     } else {
       $this->addContent('error', 'Non-existent action');
-      $this->finish(self::ERROR_ACTION_INVALID, self::STATUS_BAD_REQUEST);
+      $this->finish(self::ERROR_ACTION_INVALID, Status::BAD_REQUEST);
+    }
+
+    if (!$this->isFinished()) {
+      $this->finish(self::ERROR_INTERNAL_ERROR, Status::IM_A_TEAPOT);
     }
   }
 
@@ -88,7 +97,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->addContent('fields', $notSetField);
 
       $this->addContent('message', 'Some fields are missing.');
-      $this->finish(self::ERROR_MISSING_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
+      $this->finish(self::ERROR_MISSING_ARGUMENTS, Status::UNPROCESSABLE_ENTITY);
     }
 
     return $this;
@@ -97,6 +106,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
   protected function isEmpty(array $fields): self
   {
     $emptyField = [];
+
     foreach ($fields as $field) {
       if (!isset($this->incomeData[$field]) || empty($this->incomeData[$field])) {
         $emptyField[] = $field;
@@ -108,7 +118,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->addContent('notice', 'empty');
       $this->addContent('fields', $emptyField);
       $this->addContent('message', 'Not all fields are correctly filled.');
-      $this->finish(self::ERROR_EMPTY_ARGUMENTS, self::STATUS_UNPROCESSABLE_ENTITY);
+      $this->finish(self::ERROR_EMPTY_ARGUMENTS, Status::UNPROCESSABLE_ENTITY);
     }
 
     return $this;
@@ -116,6 +126,8 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
   protected function validate(array $fields): self
   {
+    $incorrectFields = [];
+
     foreach ($fields as $field) {
       if (!isset($field[1])) {
         $field[1] = FILTER_UNSAFE_RAW;
@@ -123,7 +135,23 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
       $value = isset($this->incomeData[$field[0]]) ? $this->incomeData[$field[0]] : '';
 
-      $this->addData($field[0], filter_var($value, $field[1]));
+      $filteredValue = filter_var($value, $field[1]);
+
+      if (false === $filteredValue) {
+        $incorrectFields[] = $field;
+
+        continue;
+      }
+
+      $this->addData($field[0], $filteredValue);
+    }
+
+    if (count($incorrectFields) > 0) {
+      $this->addContent('error', 'Incorrect field');
+      $this->addContent('notice', 'non_filtered');
+      $this->addContent('fields', $incorrectFields);
+      $this->addContent('message', 'Some fields contain characters that are not allowed.');
+      $this->finish(self::ERROR_SPECIAL_CHARACTERS, Status::UNPROCESSABLE_ENTITY);
     }
 
     return $this;
@@ -135,12 +163,11 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->setStatus($status);
     }
 
-    http_response_code($responseCode);
-    header('Content-Type: application/json; charset=utf-8');
+    $this->setAsFinished();
 
-    echo json_encode($this->responseData, JSON_UNESCAPED_UNICODE);
-
-    App::close();
+    Response::setStatusCode($responseCode);
+    Response::setHeader('Content-Type', 'application/json; charset=utf-8');
+    Response::setContent(json_encode($this->responseData, JSON_UNESCAPED_UNICODE));
   }
 
   protected function initialize(): void
@@ -168,13 +195,13 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
     if (!IlluminateRequest::has('nonce')) {
       $this->addContent('error', 'Missing nonce');
-      $this->finish(self::ERROR_NONCE_MISSING, self::STATUS_BAD_REQUEST);
+      $this->finish(self::ERROR_NONCE_MISSING, Status::BAD_REQUEST);
     }
 
     if (!Encryption::compare('ajax_' . strtolower($this->getAction()) . '_nonce', IlluminateRequest::get('nonce'), 'nonce')) {
       $this->addContent('error', 'Invalid nonce');
       $this->addContent('message', 'The time verification key does not match, please try refreshing the page.');
-      $this->finish(self::ERROR_NONCE_INVALID, self::STATUS_BAD_REQUEST);
+      $this->finish(self::ERROR_NONCE_INVALID, Status::BAD_REQUEST);
     }
   }
 
@@ -198,8 +225,18 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
     $this->requestData[$name] = $value;
   }
 
-  protected function getData(string $name)
+  protected function getData(string $name): mixed
   {
     return $this->requestData[$name] ?? '';
+  }
+
+  protected function isFinished(): bool
+  {
+    return $this->finished;
+  }
+
+  protected function setAsFinished(): void
+  {
+    $this->finished = true;
   }
 }

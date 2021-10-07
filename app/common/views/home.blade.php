@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+])
 @section('content')
 <div class="container -pt-5">
     <div class="row">
-        
+
         <div class="col-12 col-lg-6 -pb-3 -mh-70 -flex-center">
             <div>
                 <h2 class="-font-secondary -fw-700">@translate('Create your cryptocurrency wallet today')</h2>
@@ -14,17 +15,20 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            @include('components.phone', ['notch' => true, 'image' => $base_url . 'img/home-phone-screen.png?v=' . $version])
+            @include('components.phone', ['notch' => true, 'image' => $base_url . 'img/home-phone-screen.png?v=' .
+            $version])
         </div>
-        
+
         <div class="col-12 col-lg-6">
-            @include('components.phone', ['notch' => true, 'image' => $base_url . 'img/home-phone-screen.png?v=' . $version])
+            @include('components.phone', ['notch' => true, 'image' => $base_url . 'img/home-phone-screen.png?v=' .
+            $version])
         </div>
         <div class="col-12 col-lg-6 -pb-3 -mh-70 -flex-center">
             <div>
                 <h3 class="-font-secondary -fw-700">@translate('All currencies\nin one place')</h3>
                 <p>
-                    @translate('With the help of Polkryptex you can exchange traditional currencies\nfor crypto and vice versa. It\'s fast, convenient and safe.')
+                    @translate('With the help of Polkryptex you can exchange traditional currencies\nfor crypto and vice
+                    versa. It\'s fast, convenient and safe.')
                     <br>
                     <a href="@url('wallets')">@translate('Find out more about our wallets')</a>
                 </p>
@@ -40,7 +44,7 @@
         <div class="col-12 -pb-6">
             <div class="row">
                 <div class="col-12 col-lg-3">
-                    <div class="card">
+                    <div class="card -rounded-2">
                         <div class="card-body">
                             <strong>Standard</strong>
                             <p>Free</p>
@@ -48,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-3">
-                    <div class="card">
+                    <div class="card -rounded-2">
                         <div class="card-body">
                             <strong>Plus</strong>
                             <p>10$/mo</p>
@@ -56,7 +60,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-3">
-                    <div class="card">
+                    <div class="card -rounded-2">
                         <div class="card-body">
                             <strong>Premium</strong>
                             <p>20$/mo</p>
@@ -64,7 +68,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-3">
-                    <div class="card">
+                    <div class="card -rounded-2">
                         <div class="card-body">
                             <strong>Trader</strong>
                             <p>99$/mo</p>
@@ -74,36 +78,31 @@
             </div>
         </div>
 
-        <div class="col-12 py-4">
+        <div class="col-12 -mt-3 -mb-3">
             @include('components.banner', [
-                'title' => 'Home Page',
-                'dark' => true,
-                'button' => 'Register now!',
-                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'title' => 'Home Page',
+            'dark' => true,
+            'button' => 'Register now!',
+            'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua.'
             ])
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 -mt-3 -mb-3">
             @include('components.banner', [
-                'title' => 'Free Account!',
-                'button' => 'Register now!',
-                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'title' => 'Free Account!',
+            'button' => 'Register now!',
+            'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua.'
             ])
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 -mt-3 -mb-3">
             @include('components.banner', [
-                'title' => 'Special offers!',
-                'dark' => true,
-                'button' => 'Register now!',
-                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'title' => 'Special offers!',
+            'dark' => true,
+            'button' => 'Register now!',
+            'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua.'
             ])
-        </div>
-    </div>
-</div>
-
-<div class="container py-4">
-    <div class="row">
-        <div class="col-12">
-            @placeholder('100x100')
         </div>
     </div>
 </div>

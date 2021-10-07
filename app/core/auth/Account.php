@@ -2,8 +2,9 @@
 
 namespace App\Core\Auth;
 
+use App\Core\Facades\{Session, DB};
 use App\Core\Auth\User;
-use App\Core\Facades\DB;
+use App\Core\Data\Encryption;
 use Illuminate\Support\Str;
 
 /**
@@ -17,17 +18,55 @@ final class Account
 {
   public static function current(): ?User
   {
-    return null;
+    // FIXME: Really verify user tokens
+
+    if (!Session::has('auth.id')) {
+      return null;
+    }
+
+    $userId = Session::get('auth.id');
+
+    if (empty($userId) || $userId < 1) {
+      return null;
+    }
+
+    return new User($userId);
   }
 
   public static function signIn(User $user): bool
   {
-    return false;
+    // FIXME: Really verify user tokens
+
+    $token = Encryption::salter(32);
+
+    Session::put('auth.id', $user->getId());
+    Session::put('auth.uuid', $user->getUUID());
+    Session::put('auth.role', $user->getRole());
+    Session::put('auth.logged', true);
+    Session::put('auth.token', $token);
+
+    Session::passwordConfirmed();
+
+    return true;
   }
 
-  public static function signOut(User $user): bool
+  public static function signOut(): bool
   {
-    return false;
+    Session::flush();
+    Session::save();
+
+    return true;
+  }
+
+  public static function hasPermission(string $permission = 'read', ?User $user = null): bool
+  {
+    $user = $user ?? self::current();
+
+    if (empty($user)) {
+      return false;
+    }
+
+    return true;
   }
 
   public static function isRegistered(string $data, string $type = 'email'): bool

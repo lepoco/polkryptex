@@ -18,6 +18,7 @@ use App\Core\Bootstrap;
  * @method static \App\Core\Bootstrap setup() Application specific constructor. Creates instances of base objects and assigns them to Facades.
  * @method static bool rebind(string $abstract = '') Reassign the objects to the controller.
  * @method static bool isConnected() Checks whether the database is connected.
+ * @method static bool beforePrint() Performs actions before printing the page.
  * @method static object getProperty(string $property) Gets an application object that is an instance of one of the logic elements.
  */
 final class App extends Facade

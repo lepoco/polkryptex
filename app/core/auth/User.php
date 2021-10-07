@@ -4,7 +4,7 @@ namespace App\Core\Auth;
 
 use App\Core\Auth\Billing;
 use App\Core\Utils\Cast;
-use App\Core\Facades\DB;
+use App\Core\Facades\{DB, Option, Request};
 use App\Core\Data\Encryption;
 
 /**
@@ -55,8 +55,14 @@ final class User
 
   public function update(): bool
   {
-    // TODO: Database update
-    return false;
+    return DB::table('users')->where('id', $this->getId())->update([
+      'display_name' => $this->getDisplayName(),
+      'email' => $this->getEmail(),
+      'role_id' => $this->getRole(),
+      'image' => $this->getImage(),
+      'timezone' => $this->getTimezone(),
+      'updated_at' => time()
+    ]);
   }
 
   /**
@@ -99,6 +105,10 @@ final class User
 
   private function fetch(int $id): bool
   {
+    if (0 === $id) {
+      return false;
+    }
+
     $data = DB::table('users')->where('id', $id)->first();
 
     if (empty($data)) {
@@ -223,8 +233,12 @@ final class User
     return $this;
   }
 
-  public function getImage(): string
+  public function getImage(bool $http = false): string
   {
+    if ($http) {
+      return rtrim(Option::get('base_url', Request::root()), '/') . '/' . $this->image;
+    }
+
     return $this->image;
   }
 

@@ -76,6 +76,14 @@ abstract class Factory extends Renderable
       });
     }
 
+    $this->directive('ifpermission', function (string $permission) {
+      return '<?php if(\App\Core\Auth\Account::hasPermission(' . $permission . ')): ?>';
+    });
+
+    $this->directive('iflogged', function () {
+      return '<?php if(null !== \App\Core\Auth\Account::current()): ?>';
+    });
+
     return $this;
   }
 

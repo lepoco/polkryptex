@@ -2,8 +2,10 @@
 
 namespace App\Core\Http;
 
-use App\Core\Facades\{Logs, Config, Request};
+use App\Core\Facades\{App, Option, Logs, Config, Request, Session};
 use App\Core\Factories\{ControllerFactory, RequestFactory, RestFactory};
+use App\Core\Auth\Account;
+use App\Core\Http\Redirect;
 use Bramus\Router\Router as BramusRouter;
 
 /**
@@ -59,6 +61,11 @@ abstract class Router implements \App\Core\Schema\Router
       return $this;
     }
 
+    $this->router->get(
+      '/signout',
+      fn () => $this->handleLogout()
+    );
+
     foreach ($this->routes as $route) {
       $this->router->get(
         $route['path'],
@@ -87,6 +94,8 @@ abstract class Router implements \App\Core\Schema\Router
 
   protected function handleView(string $namespace): void
   {
+    $this->validateAccess($namespace);
+
     $controller = ControllerFactory::make($namespace);
 
     if (is_object($controller)) {
@@ -105,5 +114,26 @@ abstract class Router implements \App\Core\Schema\Router
     } else {
       Logs::error('Desired REST endpoint not exist', ['request' => Request::all()]);
     }
+  }
+
+  protected function validateAccess(string $namespace): void
+  {
+    $routeData = array_filter($this->routes, fn ($route) => isset($route['namespace']) && $namespace == $route['namespace']) ?? [];
+    $routeData = array_shift($routeData);
+
+    if (isset($routeData['require_login']) && true === $routeData['require_login'] && !Session::has('auth.logged')) {
+      Redirect::to('signin');
+    }
+
+    if (isset($routeData['redirect_logged']) && true === $routeData['redirect_logged'] && Session::has('auth.logged')) {
+      Redirect::to('dashboard');
+    }
+  }
+
+  protected function handleLogout(): void
+  {
+    Account::signOut();
+
+    Redirect::to('signin');
   }
 }

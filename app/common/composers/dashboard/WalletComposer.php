@@ -5,23 +5,23 @@
  * @license https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace App\Common\Composers;
+namespace App\Common\Composers\Dashboard;
 
-use App\Core\Facades\Response;
+use App\Core\Auth\Account;
 use App\Core\View\Blade\Composer;
 use Illuminate\View\View;
 
 /**
- * Additional logic for the views/not-found.blade view.
+ * Additional logic for the views/dashboard/wallet.blade view.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.0.0
  */
-final class NotFoundComposer extends Composer implements \App\Core\Schema\Composer
+final class WalletComposer extends Composer implements \App\Core\Schema\Composer
 {
   public function compose(View $view): void
   {
-    Response::setStatusCode(\App\Core\Http\Status::NOT_FOUND);
+    $view->with('user', Account::current());
   }
 }

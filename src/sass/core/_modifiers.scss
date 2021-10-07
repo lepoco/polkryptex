@@ -29,13 +29,14 @@ form,
 
 .btn {
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2rem;
+  height: 4rem;
   padding: 0px 1.5rem;
   line-height: 1.5rem;
   font-size: 1.35rem;
-  height: 4rem;
+  align-items: center;
+  border-radius: 2rem;
+  font-size: $fs-body;
+  justify-content: center;
 
   &-mobile {
     @include media-breakpoint-down(md) {

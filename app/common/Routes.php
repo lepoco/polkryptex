@@ -23,11 +23,39 @@ final class Routes extends Router
     ],
     [
       'path' => '/register',
-      'namespace' => 'Register'
+      'namespace' => 'Register',
+      'redirect_logged' => true
     ],
     [
       'path' => '/signin',
-      'namespace' => 'SignIn'
+      'namespace' => 'SignIn',
+      'redirect_logged' => true
+    ],
+    [
+      'path' => '/dashboard',
+      'namespace' => 'Dashboard\\Main',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/password',
+      'namespace' => 'Dashboard\\Password',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/account',
+      'namespace' => 'Dashboard\\Account',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/wallet',
+      'namespace' => 'Dashboard\\Wallet',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/admin',
+      'namespace' => 'Dashboard\\Admin',
+      'require_login' => true,
+      'permissions' => ['all']
     ]
   ];
 }

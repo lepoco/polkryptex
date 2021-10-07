@@ -2,7 +2,7 @@
 
 namespace App\Core\Data;
 
-use App\Core\Facades\DB;
+use App\Core\Facades\{Config, Request, DB};
 use Illuminate\Database\Schema\Blueprint;
 
 /**
@@ -32,6 +32,26 @@ final class Schema
 
   private static function fill(): void
   {
+    DB::table('options')->insert([
+      'name' => 'app_version',
+      'value' => Config::get('app.version', '1.0.0')
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'app_name',
+      'value' => Config::get('app.name', '1.0.0')
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'base_url',
+      'value' => rtrim(Request::root(), '/') . '/'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'home_url',
+      'value' => rtrim(Request::root(), '/') . '/'
+    ]);
+
     DB::table('user_roles')->insert([
       'name' => 'default',
       'permissions' => '{p:[]}'

@@ -2,6 +2,10 @@
 
 namespace App\Core\Auth;
 
+use App\Core\Utils\Cast;
+use App\Core\Facades\DB;
+use App\Core\Data\Encryption;
+
 final class Billing
 {
   private int $id = 0;
@@ -28,11 +32,31 @@ final class Billing
 
   private string $updatedAt = '';
 
+  public function __construct(int $id = 0)
+  {
+    $this->fetch($id);
+  }
+
   /**
    * Create a billing instance from an associative array.
    */
   public static function build(array $properties): self
   {
     return (new self());
+  }
+
+  private function fetch(int $id): bool
+  {
+    if (0 === $id) {
+      return false;
+    }
+
+    $data = DB::table('user_billings')->where('id', $id)->first();
+
+    if (empty($data)) {
+      return false;
+    }
+
+    return true;
   }
 }

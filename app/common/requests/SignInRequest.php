@@ -3,10 +3,11 @@
 namespace App\Common\Requests;
 
 use App\Core\View\Request;
+use App\Core\Http\Status;
 use App\Core\Auth\Account;
 
 /**
- * Action triggered during app installation.
+ * Action triggered during signing in.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
@@ -51,16 +52,16 @@ final class SignInRequest extends Request implements \App\Core\Schema\Request
     }
 
     if (!Account::signIn($user)) {
-      $this->finish(self::ERROR_INTERNAL_ERROR, self::STATUS_IM_A_TEAPOT);
+      $this->finish(self::ERROR_INTERNAL_ERROR, Status::IM_A_TEAPOT);
     }
 
-    $this->finish(self::CODE_SUCCESS, self::STATUS_OK);
+    $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 
   private function unauthorizedRequest(): void
   {
     $this->addContent('fields', ['email', 'password']);
     $this->addContent('message', 'Incorrect login details.');
-    $this->finish(self::ERROR_USER_INVALID, self::STATUS_UNAUTHORIZED);
+    $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
   }
 }

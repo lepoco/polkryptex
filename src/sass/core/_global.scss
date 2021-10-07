@@ -26,6 +26,10 @@ body {
   .form-select {
     font-size: $fs-body;
   }
+
+  small, .small {
+    font-size: 1.1rem;
+  }
 }
 
 .-flex {
@@ -73,6 +77,18 @@ body {
 @for $i from 1 through 10 {
   .-mh-#{$i * 10} {
     min-height: #{$i * 10}vh;
+  }
+}
+
+@for $i from 1 through 9 {
+  .-rounded-0#{$i} {
+    border-radius: #{$i * 0.1}rem;
+  }
+}
+
+@for $i from 1 through 10 {
+  .-rounded-#{$i} {
+    border-radius: #{$i}rem;
   }
 }
 

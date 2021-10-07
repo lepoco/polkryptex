@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-use App\Core\Http\Router;
+use App\Core\Http\{Router, Response};
 use App\Core\Data\Options;
 use App\Core\Facades\App;
 use App\Core\Data\Container;
@@ -15,6 +15,7 @@ use Illuminate\Cookie\CookieJar;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Log\LogManager;
 use Illuminate\Session\SessionManager;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * Creates all connections and application objects.
@@ -37,6 +38,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
   protected Repository $configuration;
 
   protected Request $request;
+
+  protected Response $response;
 
   protected SessionManager $session;
 
@@ -62,6 +65,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
     $this
       ->setStatus(0)
       ->setRequest(Request::capture())
+      ->setResponse(new Response('', 200, $this->request->headers->all()))
       ->setFilesystem(new Filesystem())
       ->setContainer(new Container());
 
@@ -93,17 +97,23 @@ abstract class Bootstrap implements \App\Core\Schema\App
       ->setup()
       ->run();
 
+    $this->close();
+
     return $this;
   }
 
   /**
    * Closes session and triggers the Garbage Collector.
    */
-  public function close(): void
+  public function close(bool $exit = true): void
   {
     $this->session->save();
 
-    exit($this->status);
+    $this->response->send();
+
+    if ($exit) {
+      exit($this->status);
+    }
   }
 
   /**
@@ -229,15 +239,28 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
+  protected function setResponse(Response $response): self
+  {
+    $this->response = $response;
+
+    return $this;
+  }
+
   protected function setSession(SessionManager $session): self
   {
-    $session->setId('pkx');
+    $id = $this->request->cookies->get($session->getName());
+
+    if (!empty($id)) {
+      $session->setId($id);
+    }
+
     $session->setRequestOnHandler($this->request);
 
     $this->session = $session;
 
+    $this->session->regenerateToken();
+
     $this->session->start();
-    ray($this->session);
 
     return $this;
   }

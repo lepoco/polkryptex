@@ -24,30 +24,30 @@
 
         @if($debug)
         <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'debug' ? ' active' : '' }}" href="@url('debug')">@translate('Debug')</a>
+          <a class="nav-link{{ $pagenow === 'debug' ? ' active' : '' }}" href="@url('dashboard/debug')">@translate('Debug')</a>
         </li>
         @endif
-        @permission('all')
+        @ifpermission('all')
         <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'admin' ? ' active' : '' }}" href="@url('admin')">@translate('Admin')</a>
+          <a class="nav-link{{ $pagenow === 'admin' ? ' active' : '' }}" href="@url('dashboard/admin')">@translate('Admin')</a>
         </li>
-        @endpermission
+        @endif
       </ul>
       <div class="d-flex -mr-2">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          @if($auth['loggedIn'])
+          @iflogged
           <li class="nav-item">
             <a class="nav-link{{ $pagenow === 'dashboard-dashboard' ? ' active' : '' }}"
-              href="@dashurl">@translate('Dashboard')</a>
+              href="@url('dashboard')">@translate('Dashboard')</a>
           </li>
           <li class="nav-item">
             <a class="nav-link{{ $pagenow === 'dashboard-wallet' ? ' active' : '' }}"
-              href="@dashurl('wallet')">@translate('Wallet')</a>
+              href="@url('dashboard/wallet')">@translate('Wallet')</a>
           </li>
           <li class="nav-item">
             <a class="nav-link{{ $pagenow === 'dashboard-account' ? ' active' : '' }}"
-              href="@dashurl('account')">@translate('Account')</a>
+              href="@url('dashboard/account')">@translate('Account')</a>
           </li>
           @endif
 
@@ -55,7 +55,7 @@
       </div>
       <div class="d-flex">
 
-        @if($auth['loggedIn'])
+        @iflogged
         <a href="@url('signout')" class="btn btn-dark" type="submit">@translate('Sign Out')</a>
         @else
         <a href="@url('signin')" class="btn btn-secondary -mr-1" type="submit">@translate('Sign in')</a>
