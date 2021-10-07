@@ -97,90 +97,72 @@ h4,
   }
 }
 
-.-flex {
-  display: flex;
+a {
+  text-decoration: none;
+  color: $c-hyperlink;
+
+  &.faded {
+    color: $c-hyperlink-faded;
+
+    &:hover {
+      color: black;
+    }
+  }
 }
 
-.-flex-center {
-  display: flex;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  &.accent {
+    font-family: $f-primary;
+    font-weight: 700;
+  }
+}
+
+form,
+.form {
+  width: 100%;
+}
+
+.btn {
+  display: inline-flex;
+  height: 4.5rem;
+  padding: 0 2rem;
+  line-height: 1.5rem;
+  font-size: 1.35rem;
   align-items: center;
-}
-
-.-flex-justify-center {
+  border-radius: 1rem;
+  font-size: $fs-body;
   justify-content: center;
-}
+  font-weight: 500;
 
-.-font-primary {
-  font-family: $f-primary;
-}
-
-.-font-secondary {
-  font-family: $f-secondary;
-}
-
-.-text-center {
-  text-align: center;
-}
-
-.-text-justify {
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-@each $weight in $font-weights {
-  .-fw-#{$weight} {
-    font-weight: $weight;
+  &-mobile {
+    @include media-breakpoint-down(md) {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
   }
 }
 
-@for $i from 1 through 5 {
-  h#{$i} {
-    font-size: #{7 - $i}rem;
+.btn-dark {
+  &:hover {
+    color: $c-dark;
+    background: transparent;
   }
 }
 
-@for $i from 1 through 10 {
-  .-mh-#{$i * 10} {
-    min-height: #{$i * 10}vh;
+.btn-secondary {
+  &:hover {
+    color: $c-light;
+    background: $c-dark;
   }
 }
 
-@for $i from 1 through 9 {
-  .-rounded-0#{$i} {
-    border-radius: #{$i * 0.1}rem;
-  }
-}
-
-@for $i from 1 through 10 {
-  .-rounded-#{$i} {
-    border-radius: #{$i}rem;
-  }
-}
-
-@for $i from 1 through 10 {
-  .-mr-#{$i} {
-    margin-right: #{$i}rem;
-  }
-  .-ml-#{$i} {
-    margin-left: #{$i}rem;
-  }
-  .-mt-#{$i} {
-    margin-top: #{$i}rem;
-  }
-  .-mb-#{$i} {
-    margin-bottom: #{$i}rem;
-  }
-
-  .-pt-#{$i} {
-    padding-top: #{$i}rem;
-  }
-  .-pb-#{$i} {
-    padding-bottom: #{$i}rem;
-  }
-  .-pl-#{$i} {
-    padding-left: #{$i}rem;
-  }
-  .-pr-#{$i} {
-    padding-right: #{$i}rem;
+.modal {
+  .modal-title {
+    font-family: $f-secondary;
+    font-weight: 700;
   }
 }

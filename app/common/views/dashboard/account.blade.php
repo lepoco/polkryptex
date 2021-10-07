@@ -17,9 +17,9 @@
         <div>
           <h4>@translate('Hello,') <span class="editable__displayname">{{ $user->getDisplayName() }}</span></h4>
           <p>{{ $user->getEmail() }}</p>
-          <a href="@url('dashboard/transfer')" class="btn btn-outline-dark btn-mobile" type="button">@translate('Make a new
-            transfer')</a> <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile" type="button">@translate('Top
-            up')</a>
+
+          <a href="@url('dashboard/transfer')" class="btn btn-outline-dark btn-mobile -lg-mr-1" type="button">@translate('Make a new transfer')</a>
+          <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile" type="button">@translate('Top up')</a>
         </div>
       </div>
     </div>
@@ -46,8 +46,8 @@
           <label for="picture">@translate('Profile picture')</label>
         </div>
 
-        <button type="submit" class="btn btn-dark btn-mobile">@translate('Update')</button> <a
-          href="@url('dashboard/password')" class="btn btn-outline-dark btn-mobile">@translate('Change your password')</a>
+        <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Update')</button>
+        <a href="@url('dashboard/password')" class="btn btn-outline-dark btn-mobile">@translate('Change your password')</a>
         {{-- <a href="@dashurl('account/two-step')" class="btn btn-outline-dark btn-mobile" type="button">@translate('Two-step
           authentication')</a> --}}
       </form>

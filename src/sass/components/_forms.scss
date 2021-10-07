@@ -41,7 +41,7 @@
     height: auto;
     padding: 1rem 1.5rem;
     z-index: 1;
-    border: 2px solid #dadce0;
+    border: .2rem solid #dadce0;
     outline: none;
     border-radius: 0.5rem;
     color: #121212;
@@ -65,7 +65,7 @@
 
     // Label Floating when Focus
     &:focus {
-      border: 2px solid $c-dark;
+      border: .2rem solid $c-dark;
 
       & + label,
       & + .floating-input__label {
