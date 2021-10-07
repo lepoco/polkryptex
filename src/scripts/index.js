@@ -17,6 +17,7 @@
   });
 }
 
+require("./common/footer");
 require("./common/cookie");
 require("./common/signout");
 

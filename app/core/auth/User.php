@@ -53,6 +53,9 @@ final class User
     $this->fetch($id);
   }
 
+  /**
+   * Updates an entry in the database, does not change the password, tokens, or billing.
+   */
   public function update(): bool
   {
     return DB::table('users')->where('id', $this->getId())->update([
@@ -61,7 +64,7 @@ final class User
       'role_id' => $this->getRole(),
       'image' => $this->getImage(),
       'timezone' => $this->getTimezone(),
-      'updated_at' => time()
+      'updated_at' => date('Y-m-d H:i:s')
     ]);
   }
 

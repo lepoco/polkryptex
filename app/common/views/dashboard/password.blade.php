@@ -9,9 +9,9 @@
       <div class="account__banner h-100 p-5 bg-light rounded-3">
         <div class="account__banner__picture">
           @if(!empty($user->getImage(false)))
-          <img lazy class="profile_picture" src="{{ $user->getImage() }}" alt="@translate('User profile image')" />
+          <img lazy class="profile_picture editable__picture" src="{{ $user->getImage(true) }}" alt="@translate('User profile image')" />
           @else
-          <img lazy class="profile_picture" src="@asset('img/pexels-watch-pay.jpeg')" alt="@translate('User placeholder profile image')" />
+          <img lazy class="profile_picture editable__picture" src="@asset('img/pexels-watch-pay.jpeg')" alt="@translate('User placeholder profile image')" />
           @endif
         </div>
         <div>

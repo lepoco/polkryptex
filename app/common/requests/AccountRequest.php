@@ -45,19 +45,43 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
 
     if ($this->getData('id') < 1) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+
+      return;
     }
 
     if ($this->getData('id') !== Account::current()->getId()) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+
+      return;
     }
 
     $this->user = new User((int) $this->getData('id'));
+
+    // Skip empty
+    if (trim($this->getData('displayname')) == trim($this->user->getDisplayName()) && !\App\Core\Facades\Request::hasFile('picture')) {
+      $this->finish(self::CODE_SUCCESS, Status::OK);
+
+      return;
+    }
 
     $this->processImage();
 
     $this->user->setDisplayName($this->getData('displayname'));
 
     $this->user->update();
+
+    $this->addContent('update', [
+      [
+        'selector' => '.editable__displayname',
+        'type' => 'text',
+        'value' => $this->user->getDisplayName()
+      ],
+      [
+        'selector' => '.editable__picture',
+        'type' => 'src',
+        'value' => $this->user->getImage(true)
+      ]
+    ]);
 
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }

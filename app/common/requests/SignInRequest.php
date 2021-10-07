@@ -53,6 +53,8 @@ final class SignInRequest extends Request implements \App\Core\Schema\Request
 
     if (!Account::signIn($user)) {
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::IM_A_TEAPOT);
+
+      return;
     }
 
     $this->finish(self::CODE_SUCCESS, Status::OK);

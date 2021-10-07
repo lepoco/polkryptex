@@ -60,11 +60,15 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     if (!empty(Config::get('database.connections.default.database', ''))) {
       $this->addContent('message', 'Unauthorized access.');
       $this->finish(self::ERROR_ENTRY_EXISTS, Status::UNAUTHORIZED);
+
+      return;
     }
 
     if (App::isConnected()) {
       $this->addContent('message', 'Unauthorized access.');
       $this->finish(self::ERROR_ENTRY_EXISTS, Status::UNAUTHORIZED);
+
+      return;
     }
 
     $this->tryConnectDB();

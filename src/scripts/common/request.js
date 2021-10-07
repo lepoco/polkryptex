@@ -55,6 +55,10 @@ export default class Request {
           Request.alertFields(parsedResponse.content.fields);
         }
 
+        if (parsedResponse.content.hasOwnProperty("update")) {
+          Request.updateFields(parsedResponse.content.update);
+        }
+
         //User action
         callAction("OK", JSON.parse(this.responseText));
       } else {
@@ -106,6 +110,26 @@ export default class Request {
   static clearAlertFields(fields) {
     Array.prototype.forEach.call(fields, (child) => {
       child.classList.remove("-alert");
+    });
+  }
+
+  static updateFields(fields) {
+    Array.prototype.forEach.call(fields, (child) => {
+      const element = document.querySelector(child.selector);
+
+      switch (child.type) {
+        case "value":
+          element.value = child.value;
+          break;
+
+        case "text":
+          element.textContent = child.value;
+          break;
+
+        case "src":
+          element.src = child.value;
+          break;
+      }
     });
   }
 

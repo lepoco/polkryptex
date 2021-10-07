@@ -16,10 +16,30 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-}
 
-body {
-  a, p, span, strong, select, input, option, textarea, li {
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    & > .container {
+      flex: 1 0 auto;
+    }
+
+    & > .expanded-footer {
+      flex-shrink: 0;
+    }
+  }
+
+  a,
+  p,
+  span,
+  strong,
+  select,
+  input,
+  option,
+  textarea,
+  li {
     font-size: $fs-body;
   }
 
@@ -27,8 +47,53 @@ body {
     font-size: $fs-body;
   }
 
-  small, .small {
+  small,
+  .small {
     font-size: 1.1rem;
+  }
+}
+
+h1,
+.h1 {
+  font-size: 6rem;
+
+  .span,
+  span,
+  strong {
+    font-size: 6rem;
+  }
+}
+
+h2,
+.h2 {
+  font-size: 5rem;
+
+  .span,
+  span,
+  strong {
+    font-size: 5rem;
+  }
+}
+
+h3,
+.h3 {
+  font-size: 4rem;
+
+  .span,
+  span,
+  strong {
+    font-size: 4rem;
+  }
+}
+
+h4,
+.h4 {
+  font-size: 3rem;
+
+  .span,
+  span,
+  strong {
+    font-size: 3rem;
   }
 }
 
