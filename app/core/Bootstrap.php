@@ -11,10 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Session\Store;
+use Illuminate\Cookie\CookieJar;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Log\LogManager;
-use Illuminate\Session\FileSessionHandler;
+use Illuminate\Session\SessionManager;
 
 /**
  * Creates all connections and application objects.
@@ -38,7 +38,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   protected Request $request;
 
-  protected Store $session;
+  protected SessionManager $session;
 
   protected CacheManager $cache;
 
@@ -135,20 +135,20 @@ abstract class Bootstrap implements \App\Core\Schema\App
     }
 
     if (empty($abstract) || 'events' === $abstract) {
-      $this->container->bind('events', fn () => new Dispatcher, true);
+      $this->container->bind('events', fn () => new Dispatcher(), true);
+    }
+
+    if (empty($abstract) || 'cookie' === $abstract) {
+      $this->container->bind('cookie', fn () => (new CookieJar())->setDefaultPathAndDomain(
+        $this->configuration->get('session.path'),
+        $this->configuration->get('session.domain'),
+        $this->configuration->get('session.secure'),
+        $this->configuration->get('session.same_site')
+      ), true);
     }
 
     if (empty($abstract) || 'session' === $abstract) {
-      $this->setSession(
-        new Store(
-          'app',
-          new FileSessionHandler(
-            $this->container->make('files'),
-            $this->configuration->get('session.files'),
-            $this->configuration->get('session.lifetime')
-          )
-        )
-      );
+      $this->setSession(new SessionManager($this->container));
     }
 
     if (empty($abstract) || 'logs' === $abstract) {
@@ -180,7 +180,6 @@ abstract class Bootstrap implements \App\Core\Schema\App
         $this->connected = true;
       }
     } catch (\Throwable $th) {
-
       if (isset($this->logs)) {
         $this->logs->critical('Connection to the database failed.', ['error' => $th]);
       }
@@ -230,12 +229,15 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
-  protected function setSession(Store $session): self
+  protected function setSession(SessionManager $session): self
   {
+    $session->setId('pkx');
+    $session->setRequestOnHandler($this->request);
+
     $this->session = $session;
 
     $this->session->start();
-    $this->session->regenerate();
+    ray($this->session);
 
     return $this;
   }
@@ -280,10 +282,6 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   private function generateDirectories(): void
   {
-    if (!$this->filesystem->isDirectory($this->configuration->get('session.files', 'storage/session'))) {
-      $this->filesystem->makeDirectory($this->configuration->get('session.files', 'storage/session'));
-    }
-
     if (!$this->filesystem->isDirectory($this->configuration->get('view.compiled', 'storage/blade'))) {
       $this->filesystem->makeDirectory($this->configuration->get('view.compiled', 'storage/blade'));
     }

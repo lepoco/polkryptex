@@ -75,8 +75,15 @@ final class App extends Bootstrap implements \App\Core\Schema\App
             ]
           ],
           'session' => [
+            'driver' => 'cookie',
+            'path' => '/',
+            'domain' => 'polkryptex.lan',
+            'cookie' => 'pkx',
             'lifetime' => 60,
-            'files' => Path::getAppPath('storage/session')
+            'same_site' => 'Lax',
+            'encrypt' => false,
+            'expire_on_close' => false,
+            'secure' => false
           ],
           'view' => [
             'paths' => [Path::getAppPath('common/views')],

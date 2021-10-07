@@ -41,7 +41,7 @@ final class Account
 
   public static function getBy(string $type = 'email', int|string $data = ''): ?User
   {
-    $query = (object)[];
+    $query = null;
 
     if ('id' === $type) {
       return new User((int) $data);
@@ -101,10 +101,10 @@ final class Account
     return (bool) DB::table('users')->insert([
       'email' => $user->getEmail(),
       'name' => $user->getName(),
-      'uuid' => Str::uuid(),
       'display_name' => $user->getDisplayName(),
-      'password' => $encryptedPassword,
-      'role_id' => $user->getRole()
+      'role_id' => $user->getRole(),
+      'uuid' => Str::uuid(),
+      'password' => $encryptedPassword
     ]);
   }
 }

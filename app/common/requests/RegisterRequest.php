@@ -2,14 +2,10 @@
 
 namespace App\Common\Requests;
 
-use PDO;
-use PDOException;
 use Illuminate\Support\Str;
 use App\Core\View\Request;
 use App\Core\Auth\{Account, User};
-use App\Core\Facades\{App, Logs, Config};
-use App\Core\Data\{Encryption, Schema};
-use App\Core\Utils\{Path, ClassInjector};
+use App\Core\Data\Encryption;
 
 /**
  * Action triggered during app installation.
@@ -82,11 +78,11 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, self::STATUS_UNAUTHORIZED);
     }
 
-    if ($this->registerUser()) {
-      $this->finish(self::CODE_SUCCESS, self::STATUS_OK);
+    if (! $this->registerUser()) {
+      $this->finish(self::ERROR_INTERNAL_ERROR, self::STATUS_IM_A_TEAPOT);
     }
 
-    $this->finish(self::ERROR_INTERNAL_ERROR, self::STATUS_IM_A_TEAPOT);
+    $this->finish(self::CODE_SUCCESS, self::STATUS_OK);
   }
 
   private function registerUser(): bool

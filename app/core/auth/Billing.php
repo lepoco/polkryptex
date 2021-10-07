@@ -2,7 +2,7 @@
 
 namespace App\Core\Auth;
 
-class Billing
+final class Billing
 {
   private int $id = 0;
 
