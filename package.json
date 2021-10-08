@@ -12,6 +12,7 @@
     "workbox-webpack-plugin": "^6.3.0"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "info": "webpack info"
   }
 }

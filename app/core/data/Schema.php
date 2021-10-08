@@ -205,6 +205,8 @@ final class Schema
         $table->foreignId('role_id')->references('id')->on('user_roles');
         $table->string('timezone')->default('UTC');
         $table->timestamp('time_last_login')->nullable();
+        $table->boolean('is_active')->default(false);
+        $table->boolean('is_confirmed')->default(false);
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });

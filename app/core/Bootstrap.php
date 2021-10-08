@@ -109,6 +109,12 @@ abstract class Bootstrap implements \App\Core\Schema\App
   {
     $this->session->save();
 
+    $native = new \Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage([], $this->session->getHandler());
+    $native->start();
+    $native->save();
+    // ray($this->session->getHandler());
+    // ray($_SESSION);
+
     $this->response->send();
 
     if ($exit) {

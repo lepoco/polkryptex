@@ -1,5 +1,5 @@
 import Toast from "./toast";
-import Translator from "./translator"
+import Translator from "./translator";
 
 export const name = "Request";
 
@@ -33,15 +33,15 @@ export default class Request {
       Request.unlockForm(form);
 
       if (window.app.props.debug) {
-        console.log(this.responseText);
+        console.debug("raw_response", this.responseText);
       }
 
       if (Request.isJson(this.responseText)) {
-        if (window.app.props.debug) {
-          console.log(JSON.parse(this.responseText));
-        }
-
         let parsedResponse = JSON.parse(this.responseText);
+
+        if (window.app.props.debug) {
+          console.debug("json_response", parsedResponse);
+        }
 
         if (parsedResponse.content.hasOwnProperty("message")) {
           if ("S01" === parsedResponse.status) {

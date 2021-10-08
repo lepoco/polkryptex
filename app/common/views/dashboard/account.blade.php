@@ -42,7 +42,7 @@
         </div>
 
         <div class="floating-input">
-          <input class="floating-input__field" type="file" placeholder="" value="" name="picture">
+          <input class="floating-input__field" type="file" placeholder="@translate('Profile picture')" value="" name="picture">
           <label for="picture">@translate('Profile picture')</label>
         </div>
 

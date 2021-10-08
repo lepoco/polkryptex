@@ -4,4 +4,5 @@
 @yield('content')
 
 @include('components.expanded-footer')
+@include('components.notifications')
 @include('components.footer')

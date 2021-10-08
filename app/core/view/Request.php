@@ -157,7 +157,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
     return $this;
   }
 
-  protected function finish(?string $status = '', int $responseCode = 200): void
+  protected function finish(?string $status = '', int $responseCode = 200, bool $exit = true): void
   {
     if (!empty($status)) {
       $this->setStatus($status);
@@ -168,6 +168,10 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
     Response::setStatusCode($responseCode);
     Response::setHeader('Content-Type', 'application/json; charset=utf-8');
     Response::setContent(json_encode($this->responseData, JSON_UNESCAPED_UNICODE));
+
+    if ($exit) {
+      App::close();
+    }
   }
 
   protected function initialize(): void

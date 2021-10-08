@@ -1,25 +1,31 @@
 /**
  * Polkryptex
  * https://polkryptex.pl/
- * 
+ *
  * GPL-3.0 https://github.com/Polkryptex/Polkryptex/blob/main/LICENSE
  */
- if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("service-worker.js")
+      .register("https://polkryptex.lan/service-worker.js")
       .then((registration) => {
-        console.log("SW registered: ", registration);
+        if (window.app.props.debug) {
+          console.log("SW registered: ", registration);
+        }
+
+        //registration.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: "71562645621"});
       })
       .catch((registrationError) => {
-        console.log("SW registration failed: ", registrationError);
+        if (window.app.props.debug) {
+          console.log("SW registration failed: ", registrationError);
+        }
       });
   });
 }
 
-require("./common/footer");
 require("./common/cookie");
 require("./common/signout");
+require("./common/notifications");
 
 import("./../sass/style.scss");
 
@@ -30,9 +36,15 @@ try {
   window.app.routing = {
     success: false,
     message: "No module for page " + window.app.props.view,
-    error: error.message
+    error: error.message,
   };
 }
 
+if (!window.navigator.onLine) {
+  document.body.classList.add("--offline");
+}
 
-console.log(window.app);
+if (window.app.props.debug) {
+  console.debug("window.app", window.app);
+  console.debug("Connection online", window.navigator.onLine);
+}

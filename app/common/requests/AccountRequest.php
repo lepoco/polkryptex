@@ -101,18 +101,24 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
       $this->addContent('fields', ['picture']);
       $this->addContent('message', 'Uploaded image is invalid.');
       $this->finish(self::ERROR_FILE_INVALID, Status::UNAUTHORIZED);
+
+      return;
     }
 
     if (!in_array($picture->getMimeType(), ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/bmp'])) {
       $this->addContent('fields', ['picture']);
       $this->addContent('message', 'The uploaded image has the wrong format. Supported extensions for JPG, PNG, WEBp and BMP.');
       $this->finish(self::ERROR_FILE_INVALID_MIME_TYPE, Status::UNAUTHORIZED);
+
+      return;
     }
 
     if ($picture->getSize() > (1024 * 1024 * 3)) {
       $this->addContent('fields', ['picture']);
       $this->addContent('message', 'Uploaded image is too large.');
       $this->finish(self::ERROR_FILE_TOO_LARGE, Status::UNAUTHORIZED);
+
+      return;
     }
 
     $userPath = Path::getAbsolutePath('public/img/profiles/' . $this->user->getUUID());
