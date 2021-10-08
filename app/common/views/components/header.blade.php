@@ -15,7 +15,8 @@
   <link rel="apple-touch-icon" href="@asset('img/icons/192.png'){!! '?v=' . $version !!}">
   <link rel="icon" href="@asset('img/icons/192.png'){!! '?v=' . $version !!}">
   <link rel="manifest" href="@asset('m.webmanifest'){!! '?v=' . $version !!}">
-  <link type="text/css" rel="stylesheet" href="@asset('bundle.min.css'){!! '?v=' . $version !!}" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="@asset('bundle.min.css'){!! '?v=' . $version !!}"
+    crossorigin="anonymous">
   <meta name="description" content="{{ $description ?? 'Polkryptex cryptocurrency' }}">
 
   <script>
@@ -23,6 +24,14 @@
   </script>
 
   <script src="@asset('bundle.min.js'){!! '?v=' . $version !!}" crossorigin="anonymous" defer></script>
+
+  <noscript>
+    <style>
+      section.transition {
+        display: none !important;
+      }
+    </style>
+  </noscript>
 
 </head>
 

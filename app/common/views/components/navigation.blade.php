@@ -11,7 +11,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-        @if(!$auth['loggedIn'])
+        @iflogged
+
+        @ifpermission('all')
+        <li class="nav-item">
+          <a class="nav-link{{ $pagenow === 'panel.main' ? ' active' : '' }}" href="@url('panel')">@translate('Admin
+            panel')</a>
+        </li>
+        @endif
+
+        @else
         <li class="nav-item">
           <a class="nav-link{{ $pagenow === 'private' ? ' active' : '' }}"
             href="@url('private')">@translate('Private')</a>
@@ -22,31 +31,21 @@
         </li>
         @endif
 
-        @if($debug)
-        <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'debug' ? ' active' : '' }}" href="@url('dashboard/debug')">@translate('Debug')</a>
-        </li>
-        @endif
-        @ifpermission('all')
-        <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'admin' ? ' active' : '' }}" href="@url('dashboard/admin')">@translate('Admin')</a>
-        </li>
-        @endif
       </ul>
-      <div class="d-flex -mr-2">
+      <div class="d-flex -lg-mr-2">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           @iflogged
           <li class="nav-item">
-            <a class="nav-link{{ $pagenow === 'dashboard-dashboard' ? ' active' : '' }}"
+            <a class="nav-link{{ $pagenow === 'dashboard.main' ? ' active' : '' }}"
               href="@url('dashboard')">@translate('Dashboard')</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ $pagenow === 'dashboard-wallet' ? ' active' : '' }}"
+            <a class="nav-link{{ $pagenow === 'dashboard.wallet' ? ' active' : '' }}"
               href="@url('dashboard/wallet')">@translate('Wallet')</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ $pagenow === 'dashboard-account' ? ' active' : '' }}"
+            <a class="nav-link{{ $pagenow === 'dashboard.account' ? ' active' : '' }}"
               href="@url('dashboard/account')">@translate('Account')</a>
           </li>
           @endif
@@ -56,10 +55,10 @@
       <div class="d-flex">
 
         @iflogged
-        <a href="@url('signout')" class="btn btn-dark" type="submit">@translate('Sign Out')</a>
+        <a href="@url('signout')" class="btn btn-dark btn-mobile" type="submit">@translate('Sign Out')</a>
         @else
-        <a href="@url('signin')" class="btn btn-secondary -mr-1" type="submit">@translate('Sign in')</a>
-        <a href="@url('register')" class="btn btn-dark" type="submit">@translate('Register for free')</a>
+        <a href="@url('signin')" class="btn btn-secondary btn-mobile -lg-mr-1" type="submit">@translate('Sign in')</a>
+        <a href="@url('register')" class="btn btn-dark btn-mobile" type="submit">@translate('Register for free')</a>
         @endif
 
       </div>

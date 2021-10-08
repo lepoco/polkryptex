@@ -5,22 +5,7 @@
 
 <div class="account container pt-5 pb-5">
   <div class="row">
-    <div class="col-12 account__section">
-      <div class="account__banner h-100 p-5 bg-light rounded-3">
-        <div class="account__banner__picture">
-          @if(!empty($user->getImage(false)))
-          <img lazy class="profile_picture editable__picture" src="{{ $user->getImage(true) }}" alt="@translate('User profile image')" />
-          @else
-          <img lazy class="profile_picture editable__picture" src="@asset('img/pexels-watch-pay.jpeg')" alt="@translate('User placeholder profile image')" />
-          @endif
-        </div>
-        <div>
-          <h4>@translate('Hello,') {{ $user->getDisplayName() }}</h4>
-          <p>{{ $user->getEmail() }}</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 -mt-5">
+    <div class="col-12">
       <form id="changePassword" method="POST">
         <input type="hidden" name="action" value="ChangePassword" />
         <input type="hidden" name="nonce" value="@nonce('changepassword')" />
@@ -44,7 +29,8 @@
           <label for="new_password_confirm">@translate('Confirm new password')</label>
         </div>
 
-        <button type="submit" class="btn btn-dark btn-mobile">@translate('Change your password')</button>
+        <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Update')</button>
+        <a href="@url('dashboard/account')" class="btn btn-outline-dark btn-mobile">@translate('Back to account')</a>
       </form>
     </div>
 

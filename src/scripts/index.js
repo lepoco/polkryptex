@@ -4,6 +4,10 @@
  *
  * GPL-3.0 https://github.com/Polkryptex/Polkryptex/blob/main/LICENSE
  */
+
+import Cookie from "./common/cookie";
+import SignOut from "./common/signout";
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
@@ -23,8 +27,10 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-require("./common/cookie");
-require("./common/signout");
+new Cookie();
+new SignOut();
+
+
 require("./common/notifications");
 
 import("./../sass/style.scss");

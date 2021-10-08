@@ -52,8 +52,8 @@ final class Routes extends Router
       'require_login' => true
     ],
     [
-      'path' => '/dashboard/admin',
-      'namespace' => 'Dashboard\\Admin',
+      'path' => '/panel',
+      'namespace' => 'Panel\\Main',
       'require_login' => true,
       'permissions' => ['all']
     ]
