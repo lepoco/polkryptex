@@ -9,16 +9,19 @@
       <div class="account__banner h-100 p-5 bg-light -rounded-2">
         <div class="account__banner__picture">
           @if(!empty($user->getImage(false)))
-          <img lazy class="profile_picture editable__picture" src="{{ $user->getImage(true) }}" alt="@translate('User profile image')" />
+          <img lazy class="profile_picture editable__picture" src="{{ $user->getImage(true) }}"
+            alt="@translate('User profile image')" />
           @else
-          <img lazy class="profile_picture editable__picture" src="@asset('img/pexels-watch-pay.jpeg')" alt="@translate('User placeholder profile image')" />
+          <img lazy class="profile_picture editable__picture" src="@asset('img/pexels-watch-pay.jpeg')"
+            alt="@translate('User placeholder profile image')" />
           @endif
         </div>
         <div>
           <h4>@translate('Hello,') <span class="editable__displayname">{{ $user->getDisplayName() }}</span></h4>
           <p>{{ $user->getEmail() }}</p>
 
-          <a href="@url('dashboard/transfer')" class="btn btn-outline-dark btn-mobile -lg-mr-1" type="button">@translate('Make a new transfer')</a>
+          <a href="@url('dashboard/transfer')" class="btn btn-outline-dark btn-mobile -lg-mr-1"
+            type="button">@translate('Make a new transfer')</a>
           <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile" type="button">@translate('Top up')</a>
         </div>
       </div>
@@ -42,12 +45,14 @@
         </div>
 
         <div class="floating-input">
-          <input class="floating-input__field" type="file" placeholder="@translate('Profile picture')" value="" name="picture">
+          <input class="floating-input__field" type="file" placeholder="@translate('Profile picture')" value=""
+            name="picture">
           <label for="picture">@translate('Profile picture')</label>
         </div>
 
         <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Update')</button>
-        <a href="@url('dashboard/password')" class="btn btn-outline-dark btn-mobile">@translate('Change your password')</a>
+        <a href="@url('dashboard/password')" class="btn btn-outline-dark btn-mobile">@translate('Change your
+          password')</a>
         {{-- <a href="@dashurl('account/two-step')" class="btn btn-outline-dark btn-mobile" type="button">@translate('Two-step
           authentication')</a> --}}
       </form>
