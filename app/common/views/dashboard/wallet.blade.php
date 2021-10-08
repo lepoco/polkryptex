@@ -3,10 +3,25 @@
 ])
 @section('content')
 
-<div class="wallet container pt-5 pb-5">
+<div class="dashboard container pt-5 pb-5">
     <div class="row">
         <div class="col-12">
-            <div class="wallet__banner h-100 p-5 bg-light rounded-3">
+            <h3 class="-font-secondary -fw-700 -pb-3">@translate('Wallet')</h3>
+          </div>
+        <div class="col-12 dashboard__section">
+            <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
+              <div class="dashboard__banner__picture">
+                <img lazy class="profile_picture editable__picture" src="@asset('img/svg/dollar-in-circle.svg')"
+                  alt="@translate('User placeholder profile image')" />
+              </div>
+              <div>
+                <h4>$8 383,33</h4>
+                <p>balance</p>
+              </div>
+            </div>
+          </div>
+        <div class="col-12">
+            <div class="dashboard__banner h-100 p-5 bg-light rounded-3">
                 <div>
                     @placeholder('100x100')
                 </div>

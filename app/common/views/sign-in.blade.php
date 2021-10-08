@@ -20,7 +20,7 @@
       <label for="password">@translate('Password')</label>
     </div>
   </div>
-  <button type="submit" class="btn btn-dark btn-mobile -mb-1 -lg-mr-1">@translate('Sign in')</button>
-  <a href="@url" class="btn btn-secondary btn-mobile -mb-1">@translate('Back to home')</a>
+  <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Sign in')</button>
+  <a href="@url" class="btn btn-secondary btn-mobile">@translate('Back to home')</a>
 </form>
 @endsection

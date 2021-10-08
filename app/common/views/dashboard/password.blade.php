@@ -3,8 +3,11 @@
 ])
 @section('content')
 
-<div class="account container pt-5 pb-5">
+<div class="dashboard container pt-5 pb-5">
   <div class="row">
+    <div class="col-12">
+      <h3 class="-font-secondary -fw-700 -pb-3">@translate('Password change')</h3>
+    </div>
     <div class="col-12">
       <form id="changePassword" method="POST">
         <input type="hidden" name="action" value="ChangePassword" />

@@ -3,11 +3,14 @@
 ])
 @section('content')
 
-<div class="account container pt-5 pb-5">
+<div class="dashboard container pt-5 pb-5">
   <div class="row">
-    <div class="col-12 account__section">
-      <div class="account__banner h-100 p-5 bg-light -rounded-2">
-        <div class="account__banner__picture">
+    <div class="col-12">
+      <h3 class="-font-secondary -fw-700 -pb-3">@translate('Account')</h3>
+    </div>
+    <div class="col-12 dashboard__section">
+      <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
+        <div class="dashboard__banner__picture">
           @if(!empty($user->getImage(false)))
           <img lazy class="profile_picture editable__picture" src="{{ $user->getImage(true) }}"
             alt="@translate('User profile image')" />
@@ -19,10 +22,6 @@
         <div>
           <h4>@translate('Hello,') <span class="editable__displayname">{{ $user->getDisplayName() }}</span></h4>
           <p>{{ $user->getEmail() }}</p>
-
-          <a href="@url('dashboard/transfer')" class="btn btn-outline-dark btn-mobile -lg-mr-1"
-            type="button">@translate('Make a new transfer')</a>
-          <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile" type="button">@translate('Top up')</a>
         </div>
       </div>
     </div>

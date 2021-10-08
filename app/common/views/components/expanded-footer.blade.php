@@ -2,11 +2,11 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-12 col-lg-4">
-                <h4>Polkryptex</h4>
+                <h4 class="-mb-4">Polkryptex</h4>
             </div>
             <div class="col-12 col-lg-8">
                 <div class="row">
-                    <div class="col-12 col-lg-3">
+                    <div class="col-6 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
                                 @translate('Account')
@@ -25,7 +25,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12 col-lg-3">
+                    <div class="col-6 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
                                 @translate('Payments')
@@ -44,7 +44,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12 col-lg-3">
+                    <div class="col-6 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
                                 @translate('Company')
@@ -63,7 +63,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12 col-lg-3">
+                    <div class="col-6 col-lg-3">
                         <ul class="expanded-footer__menu list-unstyled">
                             <li class="expanded-footer__menu__header">
                                 @translate('Help')

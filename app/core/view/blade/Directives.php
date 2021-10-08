@@ -66,6 +66,16 @@ final class Directives
       return 'translator_string';
     }
 
+    $text = str_replace(
+      [
+        '\n'
+      ],
+      [
+        '<br>'
+      ],
+      $text
+    );
+
     return $text;
   }
 

@@ -27,7 +27,7 @@
       <label for="password_confirm">@translate('Confirm Password')</label>
     </div>
   </div>
-  <button type="submit" class="btn btn-dark btn-mobile">@translate('Register')</button> <a href="@url"
-    class="btn btn-secondary btn-mobile">@translate('Back to home')</a>
+  <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Register')</button>
+  <a href="@url" class="btn btn-secondary btn-mobile">@translate('Back to home')</a>
 </form>
 @endsection

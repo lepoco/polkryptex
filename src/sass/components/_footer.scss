@@ -58,4 +58,8 @@
       font-size: 1.2rem;
     }
   }
+
+  @include media-breakpoint-down(lg) {
+    padding: 2rem;
+  }
 }
