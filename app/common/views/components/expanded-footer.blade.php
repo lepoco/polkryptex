@@ -4,6 +4,9 @@
             <div class="col-12 col-lg-4">
                 <h4 class="-mb-4">Polkryptex</h4>
             </div>
+            @iflogged
+            <div class="col-12"></div>
+            @else
             <div class="col-12 col-lg-8">
                 <div class="row">
                     <div class="col-6 col-lg-3">
@@ -84,6 +87,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <div class="expanded-footer__list col-12">
                 <ul class="list-inline">
