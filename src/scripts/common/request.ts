@@ -105,8 +105,8 @@ export default class Request {
     }, 512);
   }
 
-  static alertFields(fields:any) {
-    Array.prototype.forEach.call(fields, (child: HTMLFormElement) => {
+  static alertFields(fields: any) {
+    Array.prototype.forEach.call(fields, (child: any) => {
       let field = document.querySelector('input[name="' + child + '"]');
 
       if (field) {
@@ -115,14 +115,14 @@ export default class Request {
     });
   }
 
-  static clearAlertFields(fields:any) {
-    Array.prototype.forEach.call(fields, (child: HTMLFormElement) => {
+  static clearAlertFields(fields: any) {
+    Array.prototype.forEach.call(fields, (child: any) => {
       child.classList.remove("-alert");
     });
   }
 
-  static updateFields(fields:any) {
-    Array.prototype.forEach.call(fields, (child:any) => {
+  static updateFields(fields: any) {
+    Array.prototype.forEach.call(fields, (child: any) => {
       const element = document.querySelector(child.selector);
 
       switch (child.type) {
@@ -143,7 +143,7 @@ export default class Request {
 
   static urlEncode(fd: any) {
     var s = "";
-    function encode(s:any) {
+    function encode(s: any) {
       return encodeURIComponent(s).replace(/%20/g, "+");
     }
     for (var pair of fd.entries()) {

@@ -60,7 +60,6 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: "./src/sw.js" },
         { from: "./src/index.php" },
         { from: "./src/no-connection.html" },
         { from: "./src/robots.txt" },

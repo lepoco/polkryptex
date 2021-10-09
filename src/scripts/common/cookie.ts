@@ -12,7 +12,7 @@ export default class Cookie {
   }
 
   actionAccept() {
-    //TODO
+    // TODO: Fix cookies
     this.setCookie();
 
     if (this.container != undefined && this.container.length > 0) {
@@ -21,7 +21,7 @@ export default class Cookie {
   }
 
   actionManage() {
-    //TODO
+    //TODO: Manage cookies
     console.log("Manage Cookies");
   }
 
@@ -61,7 +61,7 @@ export default class Cookie {
   }
 
   setCookie() {
-    //TODO
+    //TODO: Set acceptance cookie
     Cookies.set("cookies-policy", "{0,0,0,0}", {
       expires: 365,
       path: "/",
