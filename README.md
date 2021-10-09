@@ -46,13 +46,15 @@ To run all tests
 - [ ] (Optional) Forecasting further rate of a given cryptocurrency
 
 ## Technologies & Tools
-- PHP
-- GNU gettext
-- MySQL
-- SASS
-- PWA
-- Composer
-- PoEdit
+- **PHP** - *Scripting language responsible for the application logic.*
+- **MySQL** - *Relational database system.*
+- **Sass** - *Preprocessor for CSS.*
+- **TypeScript** - *Strongly typed superset of JavaScript.*
+- **webpack** - *JavaScript module bundler.*
+- **WorkBox** - *Library for managing and creating Service Workers.*
+- **Composer** - *Library manager for PHP.*
+- **NPM** - *Library manager for JavaScript.*
+- **PWA** - *Set of tools and technologies for building scalable web applications.*
 
 ## Timeline
 - 01.06.2021 - Creation of CMS and base functionalities
@@ -65,6 +67,7 @@ To run all tests
 
 ## External solutions
 - Node.js [nodejs.org](https://nodejs.org/en/)
+- TypeScript [typescriptlang.org](https://www.typescriptlang.org/)
 - Bramus Router [github.com/bramus](https://github.com/bramus/router)
 - The Laravel Components [github.com/illuminate](https://github.com/illuminate)
 - PHP Mailer [github.com/PHPMailer](https://github.com/PHPMailer/PHPMailer)
