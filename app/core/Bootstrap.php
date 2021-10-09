@@ -312,15 +312,15 @@ abstract class Bootstrap implements \App\Core\Schema\App
   private function generateDirectories(): void
   {
     if (!$this->filesystem->isDirectory($this->configuration->get('view.compiled', 'storage/blade'))) {
-      $this->filesystem->makeDirectory($this->configuration->get('view.compiled', 'storage/blade'));
+      $this->filesystem->makeDirectory($this->configuration->get('view.compiled', 'storage/blade'), 0755, true);
     }
 
     if (!$this->filesystem->isDirectory($this->configuration->get('storage.logs', 'storage/logs'))) {
-      $this->filesystem->makeDirectory($this->configuration->get('storage.logs', 'storage/logs'));
+      $this->filesystem->makeDirectory($this->configuration->get('storage.logs', 'storage/logs'), 0755, true);
     }
 
     if (!$this->filesystem->isDirectory($this->configuration->get('cache.stores.file.path', 'storage/cache'))) {
-      $this->filesystem->makeDirectory($this->configuration->get('cache.stores.file.path', 'storage/cache'));
+      $this->filesystem->makeDirectory($this->configuration->get('cache.stores.file.path', 'storage/cache'), 0755, true);
     }
   }
 }
