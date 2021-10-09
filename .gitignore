@@ -56,6 +56,10 @@ logs
 *.log
 npm-debug.log*
 
+# TypeScript JS artifacts
+src/scripts/common/*.js
+src/scripts/pages/*.js
+
 # Thumbnails
 ._*
 
