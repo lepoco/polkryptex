@@ -41,8 +41,8 @@
               href="@url('dashboard')">@translate('Dashboard')</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ $pagenow === 'dashboard.wallet' ? ' active' : '' }}"
-              href="@url('dashboard/wallet')">@translate('Wallet')</a>
+            <a class="nav-link{{ $pagenow === 'dashboard.payments' ? ' active' : '' }}"
+              href="@url('dashboard/payments')">@translate('Payments')</a>
           </li>
           <li class="nav-item">
             <a class="nav-link{{ $pagenow === 'dashboard.account' ? ' active' : '' }}"

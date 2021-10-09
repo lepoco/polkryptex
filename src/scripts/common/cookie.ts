@@ -1,9 +1,12 @@
-import Cookies from "./../components/js.cookie";
+import * as Cookies from "./../components/js.cookie";
 
 export const name = "Cookie";
 
 export default class Cookie {
-  constructor(ctx) {
+  container:any;
+  buttons:HTMLCollectionOf<HTMLButtonElement>;
+
+  constructor() {
     this.registerElements();
     this.checkCookie();
   }
@@ -34,7 +37,7 @@ export default class Cookie {
 
   registerElements() {
     this.container = document.getElementsByClassName("cookie");
-    this.buttons = document.getElementsByClassName("cookie__button");
+    this.buttons = document.getElementsByClassName("cookie__button") as HTMLCollectionOf<HTMLButtonElement>;
 
     if (this.buttons != undefined && this.buttons.length > 0) {
       this.loopButtons();
@@ -62,7 +65,7 @@ export default class Cookie {
     Cookies.set("cookies-policy", "{0,0,0,0}", {
       expires: 365,
       path: "/",
-      secure: window.app.props.secured,
+      secure: (window as any).app.props.secured,
       sameSite: "Lax",
     });
   }

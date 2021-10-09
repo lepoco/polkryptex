@@ -1,7 +1,7 @@
 import Request from "./../common/request";
 import Toast from "./../common/toast";
 
-Request.register("#install", function (status, response) {
+Request.register("#install", function (status: string, response: any) {
   console.log(response);
 
   switch (response.status) {
@@ -12,7 +12,7 @@ Request.register("#install", function (status, response) {
         "success"
       );
       window.setTimeout(function () {
-        window.location.href = window.app.props.baseUrl;
+        window.location.href = (window as any).app.props.baseUrl;
       }, 500);
       break;
   }

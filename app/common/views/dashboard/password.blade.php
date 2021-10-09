@@ -6,7 +6,7 @@
 <div class="dashboard container pt-5 pb-5">
   <div class="row">
     <div class="col-12">
-      <h3 class="-font-secondary -fw-700 -pb-3">@translate('Password change')</h3>
+      <h4 class="-font-secondary -fw-700 -pb-3">@translate('Password change')</h4>
     </div>
     <div class="col-12">
       <form id="changePassword" method="POST">
@@ -35,10 +35,6 @@
         <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Update')</button>
         <a href="@url('dashboard/account')" class="btn btn-outline-dark btn-mobile">@translate('Back to account')</a>
       </form>
-    </div>
-
-    <div class="col-12">
-      {{-- @dump($user) --}}
     </div>
   </div>
 </div>

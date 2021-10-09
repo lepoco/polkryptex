@@ -1,4 +1,4 @@
-import WebAuth from "./../common/webauth"
+//import WebAuth from "./../common/webauth"
 
 // import * as useRegistration from "./../webauth/useRegistration.js?v=0.0.13";
 
@@ -9,9 +9,9 @@ import WebAuth from "./../common/webauth"
 
 // console.log(res);
 
-let wa = new WebAuth();
+// let wa = new WebAuth();
 
-let reg = wa.useRegistration('/');
+// let reg = wa.useRegistration('/');
 
-console.log(wa);
-console.log(reg);
+// console.log(wa);
+// console.log(reg);

@@ -1,18 +1,24 @@
-import Request from "./../common/request"
-import Toast from "./../common/toast"
+import Request from "./../common/request";
+import Toast from "./../common/toast";
 
-Request.register("#account", function (status, response) {
+Request.register("#account", function (status: String, response: any) {
   if ("S01" === response.status) {
-    document.querySelector('input[name="picture"]').value = "";
+    const PICTURE_ELEMENT = document.querySelector('input[name="picture"]');
+
+    if (PICTURE_ELEMENT) {
+      (PICTURE_ELEMENT as HTMLInputElement).value = "";
+    }
 
     const pictureContainer = document.querySelector(
       ".account__banner__picture"
     );
-    const pictureImage = document.querySelector(".profile_picture");
+    const pictureImage = document.querySelector(
+      ".profile_picture"
+    ) as HTMLObjectElement;
     const picturePlaceholder = document.querySelector(".profile_placeholder");
 
     if (pictureImage && response.content.hasOwnProperty("picture")) {
-      pictureImage.src = response.content.picture;
+      pictureImage.data = response.content.picture;
     }
 
     if (picturePlaceholder && response.content.hasOwnProperty("picture")) {

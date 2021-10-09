@@ -3,8 +3,10 @@ import * as Bootstrap from "./../components/bootstrap-bundle";
 export const name = "SignOut";
 
 export default class SignOut {
-  constructor(ctx) {
-    if (!window.app.auth.loggedIn) {
+  timeout:number;
+
+  constructor() {
+    if (!(window as any).app.auth.loggedIn) {
       return;
     }
 
@@ -13,7 +15,7 @@ export default class SignOut {
   }
 
   setTimeout() {
-    let timeout = parseInt(window.app.props.loginTimeout);
+    let timeout = parseInt((window as any).app.props.loginTimeout);
 
     if (timeout < 1) {
       this.timeout = 10;
@@ -58,7 +60,7 @@ export default class SignOut {
         TIMER_ELEMENT.innerHTML = "00:" + count--;
         if (count == 0) {
           clearInterval(timer);
-          window.location.href = window.app.props.baseUrl + "signout";
+          window.location.href = (window as any).app.props.baseUrl + "signout";
         }
       }, 1000);
   }

@@ -19,7 +19,8 @@ final class Routes extends Router
   protected array $routes = [
     [
       'path' => '',
-      'namespace' => 'Home'
+      'namespace' => 'Home',
+      'redirect_logged' => true
     ],
     [
       'path' => '/register',
@@ -47,13 +48,42 @@ final class Routes extends Router
       'require_login' => true
     ],
     [
-      'path' => '/dashboard/wallet',
-      'namespace' => 'Dashboard\\Wallet',
+      'path' => '/dashboard/billing',
+      'namespace' => 'Dashboard\\Billing',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/payments',
+      'namespace' => 'Dashboard\\Payments',
       'require_login' => true
     ],
     [
       'path' => '/panel',
       'namespace' => 'Panel\\Main',
+      'require_login' => true,
+      'permissions' => ['all']
+    ],
+    [
+      'path' => '/panel/statistics',
+      'namespace' => 'Panel\\Statistics',
+      'require_login' => true,
+      'permissions' => ['all']
+    ],
+    [
+      'path' => '/panel/users',
+      'namespace' => 'Panel\\Users',
+      'require_login' => true,
+      'permissions' => ['all']
+    ],
+    [
+      'path' => '/panel/tools',
+      'namespace' => 'Panel\\Tools',
+      'require_login' => true,
+      'permissions' => ['all']
+    ],
+    [
+      'path' => '/panel/settings',
+      'namespace' => 'Panel\\Settings',
       'require_login' => true,
       'permissions' => ['all']
     ]

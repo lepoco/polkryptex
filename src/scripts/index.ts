@@ -8,19 +8,23 @@
 import Cookie from "./common/cookie";
 import SignOut from "./common/signout";
 
+let appData = (window as any).app;
+
+require("./../sass/style.scss");
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("https://polkryptex.lan/service-worker.js")
       .then((registration) => {
-        if (window.app.props.debug) {
+        if (appData.props.debug) {
           console.log("SW registered: ", registration);
         }
 
         //registration.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: "71562645621"});
       })
       .catch((registrationError) => {
-        if (window.app.props.debug) {
+        if (appData.props.debug) {
           console.log("SW registration failed: ", registrationError);
         }
       });
@@ -30,18 +34,13 @@ if ("serviceWorker" in navigator) {
 new Cookie();
 new SignOut();
 
-
-require("./common/notifications");
-
-import("./../sass/style.scss");
-
 try {
-  require("./pages/" + window.app.props.view);
-  window.app.routing = { success: true, message: "imported" };
+  require("./pages/" + appData.props.view);
+  appData.routing = { success: true, message: "imported" };
 } catch (error) {
-  window.app.routing = {
+  appData.routing = {
     success: false,
-    message: "No module for page " + window.app.props.view,
+    message: "No module for page " + appData.props.view,
     error: error.message,
   };
 }
@@ -50,7 +49,7 @@ if (!window.navigator.onLine) {
   document.body.classList.add("--offline");
 }
 
-if (window.app.props.debug) {
-  console.debug("window.app", window.app);
+if (appData.props.debug) {
+  console.debug("window.app", appData);
   console.debug("Connection online", window.navigator.onLine);
 }

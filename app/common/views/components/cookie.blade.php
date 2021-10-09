@@ -3,8 +3,8 @@
     <div class="container">
       <div class="cookie__body">
         <div>
-          <span>@translate('We use  🍪 to personalize the content you see on Polkryptex pages.') <a
-              href="@url('cookies-policy')">@translate('Find out more')</a></span>
+          <span>@translate('We use  🍪 cookies to personalize the content you see on Polkryptex.') <a
+              href="@url('cookies-policy')">@translate('Learn more')</a></span>
         </div>
         <div class="-flex-center">
           <a href="#" class="faded mr-1 cookie__button --manage -lg-mr-1">@translate('Manage cookies')</a>

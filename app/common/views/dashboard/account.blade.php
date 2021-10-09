@@ -6,18 +6,14 @@
 <div class="dashboard container pt-5 pb-5">
   <div class="row">
     <div class="col-12">
-      <h3 class="-font-secondary -fw-700 -pb-3">@translate('Account')</h3>
+      <h4 class="-font-secondary -fw-700 -pb-3">@translate('Account')</h4>
     </div>
     <div class="col-12 dashboard__section">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
         <div class="dashboard__banner__picture">
-          @if(!empty($user->getImage(false)))
-          <img lazy class="profile_picture editable__picture" src="{{ $user->getImage(true) }}"
-            alt="@translate('User profile image')" />
-          @else
-          <img lazy class="profile_picture editable__picture" src="@asset('img/pexels-watch-pay.jpeg')"
-            alt="@translate('User placeholder profile image')" />
-          @endif
+          <object data="{{ $user->getImage(true) }}" type="image/jpeg">
+            <img src="@asset('img/pexels-watch-pay.jpeg')" alt="Stack Overflow logo and icons and such">
+          </object>
         </div>
         <div>
           <h4>@translate('Hello,') <span class="editable__displayname">{{ $user->getDisplayName() }}</span></h4>
@@ -50,8 +46,8 @@
         </div>
 
         <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Update')</button>
-        <a href="@url('dashboard/password')" class="btn btn-outline-dark btn-mobile">@translate('Change your
-          password')</a>
+        <a href="@url('dashboard/billing')" class="btn btn-outline-dark btn-mobile -lg-mr-1">@translate('Edit your billing details')</a>
+        <a href="@url('dashboard/password')" class="btn btn-outline-dark btn-mobile">@translate('Change your password')</a>
         {{-- <a href="@dashurl('account/two-step')" class="btn btn-outline-dark btn-mobile" type="button">@translate('Two-step
           authentication')</a> --}}
       </form>

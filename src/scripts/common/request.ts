@@ -4,21 +4,29 @@ import Translator from "./translator";
 export const name = "Request";
 
 export default class Request {
-  static register(form, action) {
+  static register(form: string, action: CallableFunction) {
     document
       .querySelector(form)
       .addEventListener("submit", (event) =>
-        Request.ajax(event, document.querySelector(form), action)
+        Request.ajax(
+          event,
+          document.querySelector(form) as HTMLFormElement,
+          action
+        )
       );
   }
 
-  static ajax(event, form, callAction) {
+  static ajax(
+    event: Event,
+    form: HTMLFormElement,
+    callAction: CallableFunction
+  ) {
     event.preventDefault();
 
     const METHOD = form.method.toUpperCase();
     const XHR = new XMLHttpRequest();
 
-    let endpoint = window.app.props.ajax;
+    let endpoint = (window as any).app.props.ajax;
     let formData = new FormData(form);
 
     Request.lockForm(form);
@@ -32,14 +40,14 @@ export default class Request {
     XHR.onload = function () {
       Request.unlockForm(form);
 
-      if (window.app.props.debug) {
+      if ((window as any).app.props.debug) {
         console.debug("raw_response", this.responseText);
       }
 
       if (Request.isJson(this.responseText)) {
         let parsedResponse = JSON.parse(this.responseText);
 
-        if (window.app.props.debug) {
+        if ((window as any).app.props.debug) {
           console.debug("json_response", parsedResponse);
         }
 
@@ -79,15 +87,15 @@ export default class Request {
     }
   }
 
-  static lockForm(form) {
-    Array.prototype.forEach.call(form.elements, (child) => {
+  static lockForm(form: HTMLFormElement) {
+    Array.prototype.forEach.call(form.elements, (child: HTMLFormElement) => {
       child.disabled = true;
     });
   }
 
-  static unlockForm(form) {
+  static unlockForm(form: HTMLFormElement) {
     window.setTimeout(function () {
-      Array.prototype.forEach.call(form.elements, (child) => {
+      Array.prototype.forEach.call(form.elements, (child: HTMLFormElement) => {
         if (child.classList.contains("-keep-disabled")) {
           return;
         }
@@ -97,8 +105,8 @@ export default class Request {
     }, 512);
   }
 
-  static alertFields(fields) {
-    Array.prototype.forEach.call(fields, (child) => {
+  static alertFields(fields:any) {
+    Array.prototype.forEach.call(fields, (child: HTMLFormElement) => {
       let field = document.querySelector('input[name="' + child + '"]');
 
       if (field) {
@@ -107,14 +115,14 @@ export default class Request {
     });
   }
 
-  static clearAlertFields(fields) {
-    Array.prototype.forEach.call(fields, (child) => {
+  static clearAlertFields(fields:any) {
+    Array.prototype.forEach.call(fields, (child: HTMLFormElement) => {
       child.classList.remove("-alert");
     });
   }
 
-  static updateFields(fields) {
-    Array.prototype.forEach.call(fields, (child) => {
+  static updateFields(fields:any) {
+    Array.prototype.forEach.call(fields, (child:any) => {
       const element = document.querySelector(child.selector);
 
       switch (child.type) {
@@ -133,9 +141,9 @@ export default class Request {
     });
   }
 
-  static urlEncode(fd) {
+  static urlEncode(fd: any) {
     var s = "";
-    function encode(s) {
+    function encode(s:any) {
       return encodeURIComponent(s).replace(/%20/g, "+");
     }
     for (var pair of fd.entries()) {
@@ -146,7 +154,7 @@ export default class Request {
     return "?" + s;
   }
 
-  static isJson(string) {
+  static isJson(string: String) {
     if (string == "") {
       return false;
     }

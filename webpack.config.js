@@ -17,11 +17,17 @@ console.log(publicPath);
 module.exports = {
   mode: process.env.APP_ENV,
   watch: false,
-  entry: {
-    index: "./src/scripts/index.js",
-  },
+  // entry: {
+  //   index: "./src/scripts/index.js",
+  // },
+  entry: './src/scripts/index.ts',
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.scss$/,
         use: [
@@ -44,6 +50,9 @@ module.exports = {
         ],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new webpack.DefinePlugin({

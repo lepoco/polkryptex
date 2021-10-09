@@ -27,6 +27,14 @@
       <label for="password_confirm">@translate('Confirm Password')</label>
     </div>
   </div>
+  <div class="-flex-center -mb-2">
+    <img width="50" height="50" lazy class="-mr-1" src="@asset('img/svg/keepassxc-mono.svg')" alt="@translate('KeepassXC Monochrome logo')" />
+    <div>
+      <strong>Password too short?</strong>
+      <br>
+      <a target="_blank" rel="noopener nofollow" href="https://keepassxc.org/download/">Get a free and open source password manager for yourself</a>
+    </div>
+  </div>
   <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Register')</button>
   <a href="@url" class="btn btn-secondary btn-mobile">@translate('Back to home')</a>
 </form>

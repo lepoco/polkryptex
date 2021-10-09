@@ -3,9 +3,9 @@ import { Toast as BootstrapToast } from "./../components/bootstrap-bundle";
 export const name = "Toast";
 
 export default class Toast {
-  static send(header, message = null, type = "default", timeout = 5000) {
+  static send(header:string, message:string = null, type = "default", timeout = 5000) {
     const CONTAINER = document.querySelector(".toast__container");
-    const TOAST_ID = "toast-" + parseInt(Math.random() * 1000000000, 10);
+    const TOAST_ID = "toast-" + parseInt((Math.random() * 1000000000).toString(), 10);
     const TIME_NOW = new Date(
       Date.now() - new Date().getTimezoneOffset() * 60000
     ).toISOString().substr(11, 8);
