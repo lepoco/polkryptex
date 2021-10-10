@@ -7,6 +7,7 @@ use App\Core\View\Request;
 use App\Core\Http\Status;
 use App\Core\Auth\{Account, User};
 use App\Core\Data\Encryption;
+use App\Core\Utils\Cast;
 
 /**
  * Action triggered during registration.
@@ -18,7 +19,7 @@ use App\Core\Data\Encryption;
 final class RegisterRequest extends Request implements \App\Core\Schema\Request
 {
   /** @see https://regex101.com/ */
-  private const PASSWORD_PATTERN = "/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]+$/";
+  private const PASSWORD_PATTERN = "/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])/";
 
   private const PASSWORD_MIN_LENGTH = 20;
 
@@ -52,37 +53,38 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
     if (Account::isRegistered($this->getData('email'))) {
       $this->addContent('fields', ['email']);
       $this->addContent('message', 'You cannot use this email address.');
-      $this->finish(self::ERROR_ENTRY_EXISTS, Status::UNAUTHORIZED);
+      $this->finish(self::ERROR_ENTRY_EXISTS, Status::OK);
     }
 
     if (Str::length($this->getData('password')) < self::PASSWORD_MIN_LENGTH) {
       $this->addContent('fields', ['password']);
-      $this->addContent('message', 'Password provided is too short. Minimum length is ' . self::PASSWORD_MIN_LENGTH);
-      $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::UNAUTHORIZED);
+      $this->addContent('message', $this->passwordMessage());
+      $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::OK);
     }
 
     if (!preg_match(self::PASSWORD_PATTERN, $this->getData('password'))) {
       $this->addContent('fields', ['password']);
-      $this->addContent('message', 'Password provided is too simple. It should contain a lowercase letter, an uppercase letter, a number and a special character.');
-      $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::UNAUTHORIZED);
+      $this->addContent('message', $this->passwordMessage());
+      $this->finish(self::ERROR_PASSWORD_TOO_SIMPLE, Status::OK);
     }
 
     if (Str::length($this->getData('password')) > self::PASSWORD_MAX_LENGTH) {
       $this->addContent('fields', ['password']);
-      $this->addContent('message', 'Password provided is too long.');
-      $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::UNAUTHORIZED);
+      $this->addContent('message', $this->passwordMessage());
+      $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::OK);
     }
 
     if ($this->getData('password') != $this->getData('password_confirm')) {
       $this->addContent('fields', ['password_confirm']);
       $this->addContent('message', 'Passwords must be the same.');
-      $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, Status::UNAUTHORIZED);
+      $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, Status::OK);
     }
 
-    if (! $this->registerUser()) {
+    if (!$this->registerUser()) {
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::IM_A_TEAPOT);
     }
 
+    // This should never happen
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 
@@ -91,12 +93,33 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
     $encryptedPassword = Encryption::encrypt($this->getData('password'), 'password');
 
     $newUser = User::build([
-      'display_name' => Str::before($this->getData('email'), '@'),
+      'display_name' => Cast::emailToUsername($this->getData('email')),
       'email' => $this->getData('email'),
       'password' => $encryptedPassword,
       'role' => Account::getRoleId('default')
     ]);
 
-    return Account::register($newUser, $encryptedPassword);
+    $newUser->markAsActive();
+
+    $registered = Account::register($newUser, $encryptedPassword);
+
+    if ($registered) {
+      $registeredUser = Account::getBy('email', $this->getData('email'));
+
+      if (!empty($registeredUser)) {
+        Account::signIn($registeredUser);
+      }
+    }
+
+    return $registered;
+  }
+
+  private function passwordMessage(): string
+  {
+    return sprintf(
+      'The password provided is too simple. It should be %s to %s characters long and contain a lowercase letter, an uppercase letter, a number and a special character.',
+      self::PASSWORD_MIN_LENGTH,
+      self::PASSWORD_MAX_LENGTH
+    );
   }
 }

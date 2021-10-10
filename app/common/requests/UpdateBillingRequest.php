@@ -100,6 +100,7 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
       ->setEmail($this->getData('email'))
       ->update();
 
+    $this->addContent('message', 'Your billing details have been saved.');
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 }

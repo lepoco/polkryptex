@@ -65,6 +65,7 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
 
     // Skip empty
     if (trim($this->getData('displayname')) == trim($this->user->getDisplayName()) && !\App\Core\Facades\Request::hasFile('picture')) {
+      $this->addContent('message', 'But, You haven\'t made any changes...');
       $this->finish(self::CODE_SUCCESS, Status::OK);
 
       return;
@@ -89,6 +90,7 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
       ]
     ]);
 
+    $this->addContent('message', 'Your account has been updated.');
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 

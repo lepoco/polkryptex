@@ -71,5 +71,7 @@ final class ChangePasswordRequest extends Request implements \App\Core\Schema\Re
     }
 
     // TODO: Save new password
+    $this->addContent('message', 'Your new password has been saved.');
+    $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 }
