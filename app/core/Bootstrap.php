@@ -15,7 +15,6 @@ use Illuminate\Cookie\CookieJar;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Log\LogManager;
 use Illuminate\Session\SessionManager;
-use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * Creates all connections and application objects.
@@ -297,6 +296,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   protected function setCache(CacheManager $cache): self
   {
+    // FIXME:: Cache needs garbage collector.
     $this->cache = $cache;
 
     return $this;

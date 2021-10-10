@@ -22,6 +22,9 @@ final class BillingComposer extends Composer implements \App\Core\Schema\Compose
 {
   public function compose(View $view): void
   {
-    $view->with('user', Account::current());
+    $user = Account::current();
+
+    $view->with('user', $user);
+    $view->with('billing', $user->getBilling());
   }
 }

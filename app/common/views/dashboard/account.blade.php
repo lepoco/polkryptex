@@ -11,7 +11,7 @@
     <div class="col-12 dashboard__section">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
         <div class="dashboard__banner__picture">
-          <object data="{{ $user->getImage(true) }}" type="image/jpeg">
+          <object data="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}" type="image/jpeg">
             <img src="@asset('img/pexels-watch-pay.jpeg')" alt="Stack Overflow logo and icons and such">
           </object>
         </div>

@@ -36,7 +36,7 @@ To run all tests
 - [x] Accepting Ajax requests
 - [x] Automated installer
 - [x] Toast notifications
-- [ ] User accounts
+- [x] User accounts
 - [ ] User roles
 - [ ] Login and registration
 - [ ] Internal payment system combined with the account balance of user accounts

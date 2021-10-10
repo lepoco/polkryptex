@@ -227,8 +227,8 @@ final class Schema
       DB::schema()->create('user_billings', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->references('id')->on('users');
-        $table->string('firstname')->nullable();
-        $table->string('lastname')->nullable();
+        $table->string('first_name')->nullable();
+        $table->string('last_name')->nullable();
         $table->string('street')->nullable();
         $table->string('postal')->nullable();
         $table->string('city')->nullable();
@@ -236,7 +236,7 @@ final class Schema
         $table->string('province')->nullable();
         $table->text('phone')->nullable();
         $table->text('email')->nullable();
-        $table->text('timezone')->nullable();
+        $table->text('timezone')->nullable()->default('UTC');
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });

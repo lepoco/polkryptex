@@ -38,10 +38,10 @@ final class ChangePasswordRequest extends Request implements \App\Core\Schema\Re
     ]);
 
     $this->validate([
-      ['id'],
-      ['current_password'],
-      ['new_password'],
-      ['new_password_confirm']
+      ['id', FILTER_VALIDATE_INT],
+      ['current_password', FILTER_UNSAFE_RAW],
+      ['new_password', FILTER_UNSAFE_RAW],
+      ['new_password_confirm', FILTER_UNSAFE_RAW]
     ]);
 
     $user = new User((int) $this->getData('id'));

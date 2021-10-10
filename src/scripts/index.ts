@@ -5,6 +5,7 @@
  * GPL-3.0 https://github.com/Polkryptex/Polkryptex/blob/main/LICENSE
  */
 
+import Forms from "./common/forms";
 import Cookie from "./common/cookie";
 import SignOut from "./common/signout";
 
@@ -31,6 +32,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+new Forms();
 new Cookie();
 new SignOut();
 

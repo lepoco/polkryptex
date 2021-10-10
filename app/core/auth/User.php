@@ -58,7 +58,7 @@ final class User
    */
   public function update(): bool
   {
-    return DB::table('users')->where('id', $this->getId())->update([
+    $success = DB::table('users')->where('id', $this->getId())->update([
       'display_name' => $this->getDisplayName(),
       'email' => $this->getEmail(),
       'role_id' => $this->getRole(),
@@ -66,6 +66,10 @@ final class User
       'timezone' => $this->getTimezone(),
       'updated_at' => date('Y-m-d H:i:s')
     ]);
+
+    $this->billing->update();
+
+    return $success;
   }
 
   /**

@@ -49,12 +49,12 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     ]);
 
     $this->validate([
-      ['user'],
-      ['password'],
-      ['host'],
-      ['database'],
-      ['admin_email'],
-      ['admin_password']
+      ['user', FILTER_SANITIZE_STRING],
+      ['password', FILTER_UNSAFE_RAW],
+      ['host', FILTER_SANITIZE_STRING],
+      ['database', FILTER_SANITIZE_STRING],
+      ['admin_email', FILTER_VALIDATE_EMAIL],
+      ['admin_password', FILTER_UNSAFE_RAW]
     ]);
 
     if (!empty(Config::get('database.connections.default.database', ''))) {

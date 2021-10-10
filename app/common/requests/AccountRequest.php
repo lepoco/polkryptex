@@ -40,7 +40,7 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
 
     $this->validate([
       ['id', FILTER_VALIDATE_INT],
-      ['displayname']
+      ['displayname', FILTER_SANITIZE_STRING]
     ]);
 
     if ($this->getData('id') < 1) {

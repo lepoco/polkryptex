@@ -10,36 +10,14 @@
           </div>
         <div class="col-12 dashboard__section">
             <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
-              <div class="dashboard__banner__picture">
-                <img lazy class="profile_picture editable__picture" src="@asset('img/svg/dollar-in-circle.svg')"
-                  alt="@translate('User placeholder profile image')" />
-              </div>
               <div>
-                <h4>$8 383,33</h4>
-                <p>balance</p>
+                <h4 class="-mb-2">&commat;{{ $user->getName() ?? 'user' }}</h4>
+
+                <a href="@url('dashboard/send')" class="btn btn-outline-dark btn-mobile -lg-mr-1">@translate('Send') &xrarr;</a>
+                <a href="@url('dashboard/request')" class="btn btn-outline-dark btn-mobile">&xlarr; @translate('Request')</a>
               </div>
             </div>
           </div>
-        <div class="col-12">
-            <div class="dashboard__banner h-100 p-5 bg-light rounded-3">
-                <div>
-                    @placeholder('100x100')
-                </div>
-                <div>
-                    <h5>1000` EUR</h5>
-                    <div class="-flex">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Polish Zloty</option>
-                            <option value="1">Euro</option>
-                            <option value="2">US Dollar</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <a href="@dashurl('wallet/transfer')" class="btn btn-dark"
-                            type="button">@translate('Transfer')</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="col-12">
             <div class="timeline -mt-3 -mb-3">
                 <div class="timeline--wrapper">

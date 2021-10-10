@@ -33,8 +33,8 @@ final class SignInRequest extends Request implements \App\Core\Schema\Request
     ]);
 
     $this->validate([
-      ['email'],
-      ['password']
+      ['email', FILTER_VALIDATE_EMAIL],
+      ['password', FILTER_UNSAFE_RAW]
     ]);
 
     $user = Account::getBy('email', $this->getData('email'));

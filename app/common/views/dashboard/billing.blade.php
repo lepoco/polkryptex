@@ -17,63 +17,60 @@
         <div class="row">
           <div class="col-12 col-lg-6">
             <div class="floating-input">
-              <input class="floating-input__field" type="text" placeholder="@translate('First name')" name="first_name">
+              <input class="floating-input__field" type="text" placeholder="@translate('First name')" name="first_name" value="{{ $billing->getFirstName() ?? '' }}">
               <label for="first_name">@translate('First name')</label>
             </div>
           </div>
 
           <div class="col-12 col-lg-6">
             <div class="floating-input">
-              <input class="floating-input__field" type="text" placeholder="@translate('Last name')" name="last_name">
+              <input class="floating-input__field" type="text" placeholder="@translate('Last name')" name="last_name" value="{{ $billing->getLastName() ?? '' }}">
               <label for="last_name">@translate('Last name')</label>
             </div>
           </div>
 
           <div class="col-12 col-lg-4">
             <div class="floating-input">
-              <input class="floating-input__field" type="text" placeholder="@translate('Street')" name="street">
+              <input class="floating-input__field" type="text" placeholder="@translate('Street')" name="street" value="{{ $billing->getStreet() ?? '' }}">
               <label for="street">@translate('Street')</label>
             </div>
           </div>
           <div class="col-12 col-lg-4">
             <div class="floating-input">
               <input class="floating-input__field" type="text" placeholder="@translate('Postal code')"
-                name="postal_code">
+                name="postal_code" value="{{ $billing->getPostalCode() ?? '' }}">
               <label for="postal_code">@translate('Postal code')</label>
             </div>
           </div>
           <div class="col-12 col-lg-4">
             <div class="floating-input">
-              <input class="floating-input__field" type="text" placeholder="@translate('City')" name="city">
+              <input class="floating-input__field" type="text" placeholder="@translate('City')" name="city" value="{{ $billing->getCity() ?? '' }}">
               <label for="city">@translate('City')</label>
             </div>
           </div>
 
           <div class="col-12">
             <div class="floating-input">
-              <input class="floating-input__field" type="text" placeholder="@translate('Province')" name="province">
+              <input class="floating-input__field" type="text" placeholder="@translate('Province')" name="province" value="{{ $billing->getProvince() ?? '' }}">
               <label for="province">@translate('Province')</label>
             </div>
-            <div class="floating-input">
-              <input class="floating-input__field" type="text" placeholder="@translate('Country')" name="country">
-              <label for="country">@translate('Country')</label>
-            </div>
+            @include('components.forms.input-country', ['selected' => $billing->getCountry() ?? ''])
           </div>
 
-          <div class="col-12">
+          <div class="col-12 -mb-2">
             <hr>
           </div>
 
           <div class="col-12 col-lg-6">
             <div class="floating-input">
-              <input class="floating-input__field" type="text" placeholder="@translate('Phone')" name="phone">
+              <input class="floating-input__field" type="tel" placeholder="@translate('Phone')" name="phone" value="{{ $billing->getPhone() ?? '' }}">
               <label for="phone">@translate('Phone')</label>
             </div>
           </div>
 
           <div class="col-12 col-lg-6">
             <div class="floating-input">
-              <input class="floating-input__field" type="email" placeholder="@translate('Email')" name="email">
+              <input class="floating-input__field" type="email" placeholder="@translate('Email')" name="email" value="{{ $billing->getEmail() ?? '' }}">
               <label for="email">@translate('Email')</label>
             </div>
           </div>

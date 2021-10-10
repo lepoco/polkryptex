@@ -44,9 +44,9 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
     ]);
 
     $this->validate([
-      ['email'],
-      ['password'],
-      ['password_confirm']
+      ['email', FILTER_VALIDATE_EMAIL],
+      ['password', FILTER_UNSAFE_RAW],
+      ['password_confirm', FILTER_UNSAFE_RAW]
     ]);
 
     if (Account::isRegistered($this->getData('email'))) {
