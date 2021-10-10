@@ -36,7 +36,7 @@ abstract class Facade
   /**
    * Defines a global reference to an application instance.
    */
-  public static function setApp(Bootstrap &$app): void
+  final public static function setApp(Bootstrap &$app): void
   {
     static::$app = $app;
   }
@@ -44,7 +44,7 @@ abstract class Facade
   /**
    * Gets the application instance from the global reference.
    */
-  public static function app(): Bootstrap
+  final public static function app(): Bootstrap
   {
     if (!isset(static::$app)) {
       return null;
@@ -56,7 +56,7 @@ abstract class Facade
   /**
    * Gets an application object that is an instance of one of the logic elements.
    */
-  public static function getProperty(string $property): ?object
+  final public static function getProperty(string $property): ?object
   {
     if (!isset(static::$app)) {
       return null;

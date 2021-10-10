@@ -2,13 +2,9 @@
 
 namespace App\Common\Requests;
 
-use App\Core\Facades\File;
 use App\Core\View\Request;
 use App\Core\Http\Status;
-use App\Core\Utils\Path;
-use App\Core\Files\Image;
 use App\Core\Auth\{Account, User, Billing};
-use Illuminate\Support\Str;
 
 /**
  * Action triggered during update of account billing.
@@ -69,6 +65,12 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
       ['email', FILTER_VALIDATE_EMAIL]
     ]);
 
+    if (empty(Account::current())) {
+      $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+
+      return;
+    }
+
     if ($this->getData('id') < 1) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 
@@ -81,10 +83,13 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
       return;
     }
 
+    // TODO: Validate input data
+
     $this->user = new User((int) $this->getData('id'));
     $this->billing = $this->user->getBilling();
 
-    $this->billing->setFirstName($this->getData('first_name'))
+    $this->billing
+      ->setFirstName($this->getData('first_name'))
       ->setLastName($this->getData('last_name'))
       ->setStreet($this->getData('street'))
       ->setPostalCode($this->getData('postal_code'))
@@ -92,10 +97,8 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
       ->setCountry($this->getData('country'))
       ->setProvince($this->getData('province'))
       ->setPhone($this->getData('phone'))
-      ->setEmail($this->getData('email'));
-
-    $this->billing->update();
-
+      ->setEmail($this->getData('email'))
+      ->update();
 
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }

@@ -17,6 +17,8 @@ final class Routes extends Router
    * @var array $routes HTTP paths and Namespaces. The namespace should be in the Pascal Case (Studly Case).
    */
   protected array $routes = [
+
+    // Public
     [
       'path' => '',
       'namespace' => 'Home',
@@ -32,6 +34,8 @@ final class Routes extends Router
       'namespace' => 'SignIn',
       'redirect_logged' => true
     ],
+
+    // Dashboard | User
     [
       'path' => '/dashboard',
       'namespace' => 'Dashboard\\Main',
@@ -57,35 +61,42 @@ final class Routes extends Router
       'namespace' => 'Dashboard\\Payments',
       'require_login' => true
     ],
+
+    // Admin panel
     [
       'path' => '/panel',
       'namespace' => 'Panel\\Main',
       'require_login' => true,
-      'permissions' => ['all']
+      'permissions' => ['all'],
+      'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/statistics',
       'namespace' => 'Panel\\Statistics',
       'require_login' => true,
-      'permissions' => ['all']
+      'permissions' => ['all'],
+      'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/users',
       'namespace' => 'Panel\\Users',
       'require_login' => true,
-      'permissions' => ['all']
+      'permissions' => ['all'],
+      'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/tools',
       'namespace' => 'Panel\\Tools',
       'require_login' => true,
-      'permissions' => ['all']
+      'permissions' => ['all'],
+      'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/settings',
       'namespace' => 'Panel\\Settings',
       'require_login' => true,
-      'permissions' => ['all']
+      'permissions' => ['all'],
+      'redirect_no_permission' => 'dashboard'
     ]
   ];
 }

@@ -22,11 +22,38 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     return $this;
   }
 
+  public function removeHeader(string $key): self
+  {
+    $this->headers->remove($key);
+
+    return $this;
+  }
+
   public function setCookie(Cookie $cookie): self
   {
     $this->headers->setCookie($cookie);
 
     return $this;
+  }
+
+  public function removeCookie(string $key): self
+  {
+    $this->headers->removeCookie($key);
+
+    return $this;
+  }
+
+  public function getCookie(string $key): ?Cookie
+  {
+    $cookies = $this->headers->getCookies();
+
+    foreach ($cookies as $cookie) {
+      if ($key === $cookie->getName()) {
+        return $cookie;
+      }
+    }
+
+    return null;
   }
 
   /**

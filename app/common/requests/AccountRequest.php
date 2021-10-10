@@ -43,6 +43,12 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
       ['displayname', FILTER_SANITIZE_STRING]
     ]);
 
+    if (empty(Account::current())) {
+      $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+
+      return;
+    }
+
     if ($this->getData('id') < 1) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 

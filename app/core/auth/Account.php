@@ -2,7 +2,7 @@
 
 namespace App\Core\Auth;
 
-use App\Core\Facades\{Session, DB};
+use App\Core\Facades\{App, Session, DB};
 use App\Core\Auth\User;
 use App\Core\Data\Encryption;
 use Illuminate\Support\Str;
@@ -52,8 +52,7 @@ final class Account
 
   public static function signOut(): bool
   {
-    Session::flush();
-    Session::save();
+    App::destroy();
 
     return true;
   }

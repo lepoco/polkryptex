@@ -52,8 +52,8 @@ To run all tests
 - **TypeScript** - *Strongly typed superset of JavaScript.*
 - **webpack** - *JavaScript module bundler.*
 - **WorkBox** - *Library for managing and creating Service Workers.*
-- **Composer** - *Library manager for PHP.*
-- **NPM** - *Library manager for JavaScript.*
+- **Composer** - *PHP dependency management tool.*
+- **NPM** - *JavaScript dependency management tool.*
 - **PWA** - *Set of tools and technologies for building scalable web applications.*
 
 ## Timeline

@@ -3,8 +3,10 @@ import * as Cookies from "./../components/js.cookie";
 export const name = "Cookie";
 
 export default class Cookie {
-  container:any;
-  buttons:HTMLCollectionOf<HTMLButtonElement>;
+  cookieName: string = "pkx_cookie";
+
+  container: any;
+  buttons: HTMLCollectionOf<HTMLButtonElement>;
 
   constructor() {
     this.registerElements();
@@ -26,7 +28,7 @@ export default class Cookie {
   }
 
   checkCookie() {
-    let cookie = Cookies.get("cookies-policy");
+    let cookie = Cookies.get(this.cookieName);
 
     if (cookie == undefined) {
       if (this.container != undefined && this.container.length > 0) {
@@ -37,7 +39,9 @@ export default class Cookie {
 
   registerElements() {
     this.container = document.getElementsByClassName("cookie");
-    this.buttons = document.getElementsByClassName("cookie__button") as HTMLCollectionOf<HTMLButtonElement>;
+    this.buttons = document.getElementsByClassName(
+      "cookie__button"
+    ) as HTMLCollectionOf<HTMLButtonElement>;
 
     if (this.buttons != undefined && this.buttons.length > 0) {
       this.loopButtons();
@@ -62,7 +66,7 @@ export default class Cookie {
 
   setCookie() {
     //TODO: Set acceptance cookie
-    Cookies.set("cookies-policy", "{0,0,0,0}", {
+    Cookies.set(this.cookieName, "{0,0,0,0}", {
       expires: 365,
       path: "/",
       secure: (window as any).app.props.secured,

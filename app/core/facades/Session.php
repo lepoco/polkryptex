@@ -48,6 +48,27 @@ final class Session extends Facade
    */
   protected static function getFacadeAccessor(): string
   {
-    return 'session';
+    return 'request';
+  }
+
+  /**
+   * Responds to a static call to the Facade class and then tries to execute a method with the same name on the application object.
+   * @param mixed|array $arguments
+   * @return mixed
+   */
+  public static function __callStatic(string $name, $arguments)
+  {
+    /** @var \Illuminate\Http\Request $instance Request instance. */
+    $instance = self::getProperty(static::getFacadeAccessor());
+
+    if (false === $instance) {
+      return false;
+    }
+
+    if (!$instance->hasSession()) {
+      return false;
+    }
+
+    return $instance->session()->{$name}(...$arguments);
   }
 }

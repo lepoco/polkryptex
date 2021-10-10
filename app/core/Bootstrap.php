@@ -15,6 +15,7 @@ use Illuminate\Cookie\CookieJar;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Log\LogManager;
 use Illuminate\Session\SessionManager;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 /**
  * Creates all connections and application objects.
@@ -40,7 +41,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   protected Response $response;
 
-  protected SessionManager $session;
+  protected NativeSessionStorage $nativeSession;
 
   protected CacheManager $cache;
 
@@ -57,16 +58,15 @@ abstract class Bootstrap implements \App\Core\Schema\App
   /**
    * Application specific constructor. Creates instances of base objects and assigns them to Facades.
    */
-  public function setup(): self
+  final public function setup(): self
   {
-    $this->init();
-
     $this
       ->setStatus(0)
-      ->setRequest(Request::capture())
-      ->setResponse(new Response('', 200, $this->request->headers->all()))
-      ->setFilesystem(new Filesystem())
-      ->setContainer(new Container());
+      ->init();
+
+    $this
+      ->setupRequest()
+      ->setupContainer();
 
     App::set($this);
 
@@ -106,13 +106,9 @@ abstract class Bootstrap implements \App\Core\Schema\App
    */
   public function close(bool $exit = true): void
   {
-    $this->session->save();
+    $this->request->session()->put('_rendered', time());
 
-    $native = new \Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage([], $this->session->getHandler());
-    $native->start();
-    $native->save();
-    // ray($this->session->getHandler());
-    // ray($_SESSION);
+    $this->request->session()->save();
 
     $this->response->send();
 
@@ -122,10 +118,38 @@ abstract class Bootstrap implements \App\Core\Schema\App
   }
 
   /**
+   * Flush the session data and regenerate the ID.
+   */
+  public function destroy(): void
+  {
+    $sessionId = $this->request->session()->getId();
+    $sessionCookie = $this->response->getCookie($this->configuration->get('session.cookie', 'pkx_session'));
+
+    $this->nativeSession->clear();
+    $this->request->session()->invalidate();
+
+    $this->response->removeCookie($sessionId);
+
+    if (!empty($sessionCookie)) {
+      $this->response->removeCookie($sessionCookie->getName());
+    }
+  }
+
+  /**
+   * Generate a new session identifier and token.
+   */
+  public function regenerate(): void
+  {
+    $this->request->session()->regenerateToken();
+    $this->request->session()->regenerate();
+    $this->nativeSession->regenerate();
+  }
+
+  /**
    * Gets an application object that is an instance of one of the logic elements.
    * @return mixed
    */
-  public function getProperty(string $property): object
+  final public function getProperty(string $property): object
   {
     $objects = get_object_vars($this);
 
@@ -139,7 +163,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
   /**
    * Reassign the objects to the controller.
    */
-  public function rebind(string $abstract = ''): bool
+  final public function rebind(string $abstract = ''): bool
   {
     if (empty($abstract) || 'config' === $abstract) {
       $this->container->bind('config', fn () => $this->configuration, true);
@@ -203,26 +227,19 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this->connected;
   }
 
-  protected function setStatus(int $status): self
+  final protected function setStatus(int $status): self
   {
     $this->status = $status;
 
     return $this;
   }
 
-  protected function setFilesystem(Filesystem $filesystem): self
+  final protected function setupContainer(): self
   {
-    $this->filesystem = $filesystem;
+    $this->filesystem = new Filesystem();
+    $this->container = new Container();
 
     $this->generateDirectories();
-
-    return $this;
-  }
-
-  protected function setContainer(Container $container): self
-  {
-    $this->container = $container;
-
     $this->rebind();
 
     \Illuminate\Support\Facades\Facade::setFacadeApplication($this->container);
@@ -230,23 +247,17 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
+  final protected function setupRequest(): self
+  {
+    $this->request = Request::capture();
+    $this->response = new Response('', 200, $this->request->headers->all());
+
+    return $this;
+  }
+
   protected function setLogs(LogManager $logManager): self
   {
     $this->logs = $logManager;
-
-    return $this;
-  }
-
-  protected function setRequest(Request $request): self
-  {
-    $this->request = $request;
-
-    return $this;
-  }
-
-  protected function setResponse(Response $response): self
-  {
-    $this->response = $response;
 
     return $this;
   }
@@ -261,11 +272,27 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
     $session->setRequestOnHandler($this->request);
 
-    $this->session = $session;
+    $this->request->setLaravelSession($session);
 
-    $this->session->regenerateToken();
+    $this->nativeSession = new NativeSessionStorage([], $this->request->session()->getHandler());
 
-    $this->session->start();
+    $this->nativeSession->start();
+
+    $this->request->session()->start();
+
+    $attributes = $this->request->session()->all();
+
+    // Native session allows you to restore data from cookie sessions
+    // and use the application on browsers that do not support them.
+    if (!$this->request->session()->has('_rendered')) {
+      foreach ($_SESSION as $key => $value) {
+        $this->request->session()->put($key, $value);
+      }
+    }
+
+    foreach ($attributes as $key => $value) {
+      $_SESSION[$key] = $value;
+    }
 
     return $this;
   }

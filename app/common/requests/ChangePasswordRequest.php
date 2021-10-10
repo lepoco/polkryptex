@@ -44,6 +44,32 @@ final class ChangePasswordRequest extends Request implements \App\Core\Schema\Re
       ['new_password_confirm', FILTER_UNSAFE_RAW]
     ]);
 
-    $user = new User((int) $this->getData('id'));
+    if (empty(Account::current())) {
+      $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+    }
+
+    if ($this->getData('id') < 1) {
+      $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+    }
+
+    if ($this->getData('id') !== Account::current()->getId()) {
+      $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+    }
+
+    $this->user = new User((int) $this->getData('id'));
+
+    if (!$this->user->comparePassword($this->getData('current_password'))) {
+      $this->addContent('fields', ['current_password']);
+      $this->addContent('message', 'Incorrect password.');
+      $this->finish(self::ERROR_PASSWORD_INVALID, Status::UNAUTHORIZED);
+    }
+
+    if ($this->getData('new_password') != $this->getData('new_password_confirm')) {
+      $this->addContent('fields', ['new_password', 'new_password_confirm']);
+      $this->addContent('message', 'Passwords must be the same.');
+      $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, Status::UNAUTHORIZED);
+    }
+
+    // TODO: Save new password
   }
 }
