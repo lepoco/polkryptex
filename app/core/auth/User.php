@@ -91,6 +91,13 @@ final class User
    */
   public function updatePassword(string $password, bool $plain = true): bool
   {
+    if ($plain) {
+      $password = Encryption::encrypt(
+        $password,
+        'password'
+      );
+    }
+
     return DB::table('users')->where('id', $this->getId())->update([
       'password' => $password
     ]);

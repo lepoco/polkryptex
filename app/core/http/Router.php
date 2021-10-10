@@ -120,12 +120,13 @@ abstract class Router implements \App\Core\Schema\Router
   {
     $routeData = array_filter($this->routes, fn ($route) => isset($route['namespace']) && $namespace == $route['namespace']) ?? [];
     $routeData = array_shift($routeData);
+    $isSignedIn = !empty(Account::current());
 
-    if (isset($routeData['require_login']) && true === $routeData['require_login'] && !Session::has('auth.logged')) {
+    if (isset($routeData['require_login']) && true === $routeData['require_login'] && !$isSignedIn) {
       Redirect::to('signin');
     }
 
-    if (isset($routeData['redirect_logged']) && true === $routeData['redirect_logged'] && Session::has('auth.logged')) {
+    if (isset($routeData['redirect_logged']) && true === $routeData['redirect_logged'] && $isSignedIn) {
       Redirect::to('dashboard');
     }
   }

@@ -52,6 +52,11 @@ final class Schema
       'value' => rtrim(Request::root(), '/') . '/'
     ]);
 
+    DB::table('plans')->insert([
+      'name' => 'trader',
+      'capabilities' => '{c:[]}'
+    ]);
+
     DB::table('user_roles')->insert([
       'name' => 'default',
       'permissions' => '{p:[]}'
@@ -62,9 +67,20 @@ final class Schema
       'permissions' => '{p:[]}'
     ]);
 
-    DB::table('user_roles')->insert([
-      'name' => 'admin',
-      'permissions' => '{p:[\'all\']}'
+    DB::table('statistics_types')->insert([
+      'name' => 'page'
+    ]);
+
+    DB::table('statistics_types')->insert([
+      'name' => 'request'
+    ]);
+
+    DB::table('statistics_types')->insert([
+      'name' => 'transaction'
+    ]);
+
+    DB::table('statistics_types')->insert([
+      'name' => 'user'
     ]);
 
     DB::table('plans')->insert([
@@ -236,7 +252,7 @@ final class Schema
         $table->string('province')->nullable();
         $table->text('phone')->nullable();
         $table->text('email')->nullable();
-        $table->text('timezone')->nullable()->default('UTC');
+        $table->text('timezone')->nullable();
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });

@@ -158,7 +158,10 @@ final class Account
       'display_name' => $user->getDisplayName(),
       'role_id' => $user->getRole(),
       'uuid' => Str::uuid(),
-      'password' => $encryptedPassword
+      'is_confirmed' => $user->isConfirmed(),
+      'password' => $encryptedPassword,
+      'timezone' => 'UTC',
+      'is_active' => true
     ]);
   }
 }

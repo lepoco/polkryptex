@@ -2,12 +2,12 @@
 
 namespace App\Common\Requests;
 
-use Illuminate\Support\Str;
 use App\Core\View\Request;
 use App\Core\Http\Status;
 use App\Core\Auth\{Account, User};
 use App\Core\Data\Encryption;
 use App\Core\Utils\Cast;
+use Illuminate\Support\Str;
 
 /**
  * Action triggered during registration.
@@ -98,8 +98,6 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       'password' => $encryptedPassword,
       'role' => Account::getRoleId('default')
     ]);
-
-    $newUser->markAsActive();
 
     $registered = Account::register($newUser, $encryptedPassword);
 
