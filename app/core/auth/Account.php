@@ -18,25 +18,39 @@ final class Account
 {
   public static function current(): ?User
   {
-    // FIXME: Really verify user tokens
-
-    if (!Session::has('auth.id')) {
+    if (!Session::get('auth.logged', false)) {
       return null;
     }
 
-    $userId = Session::get('auth.id');
+    $userId = Session::get('auth.id', 0);
 
-    if (empty($userId) || $userId < 1) {
+    if ($userId < 1) {
       return null;
     }
 
-    return new User($userId);
+    $user = new User($userId);
+
+    if ($user->getRole() !== Session::get('auth.role', 0)) {
+      return null;
+    }
+
+    if ($user->getUUID() !== Session::get('auth.uuid', '')) {
+      return null;
+    }
+
+    if (!$user->compareCookieToken(Session::get('_token', ''))) {
+      return null;
+    }
+
+    if (!$user->compareSessionToken(Session::get('auth.token', ''))) {
+      return null;
+    }
+
+    return $user;
   }
 
   public static function signIn(User $user): bool
   {
-    // FIXME: Really verify user tokens
-
     $token = Encryption::salter(32);
 
     Session::put('auth.id', $user->getId());
@@ -46,6 +60,8 @@ final class Account
     Session::put('auth.token', $token);
 
     Session::passwordConfirmed();
+
+    $user->updateTokens($token, Session::get('_token', ''));
 
     return true;
   }

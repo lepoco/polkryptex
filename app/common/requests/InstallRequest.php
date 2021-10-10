@@ -194,6 +194,9 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
       'role' => Account::getRoleId('admin')
     ]);
 
+    $adminUser->markAsActive();
+    $adminUser->markAsConfirmed();
+
     Account::register($adminUser, $encryptedPassword);
   }
 }

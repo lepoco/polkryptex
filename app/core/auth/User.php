@@ -16,6 +16,10 @@ use App\Core\Data\Encryption;
  */
 final class User
 {
+  private bool $active = false;
+
+  private bool $confirmed = false;
+
   private int $id = 0;
 
   private int $role = 0;
@@ -64,6 +68,8 @@ final class User
       'role_id' => $this->getRole(),
       'image' => $this->getImage(),
       'timezone' => $this->getTimezone(),
+      'is_active' => $this->isActive(),
+      'is_confirmed' => $this->isConfirmed(),
       'updated_at' => date('Y-m-d H:i:s')
     ]);
 
@@ -81,11 +87,76 @@ final class User
   }
 
   /**
+   * Updates the user's password in a database.
+   */
+  public function updatePassword(string $password, bool $plain = true): bool
+  {
+    return DB::table('users')->where('id', $this->getId())->update([
+      'password' => $password
+    ]);
+  }
+
+  /**
    * Checks whether the entered session token matches the user's token.
    */
-  public function compareToken(string $token): bool
+  public function compareSessionToken(string $token): bool
   {
     return Encryption::compare($token, $this->sessionToken, 'session', true);
+  }
+
+  /**
+   * Updates the user's token in a database.
+   */
+  public function updateSessionToken(string $token, bool $keepPlain = false): bool
+  {
+    if (!$keepPlain) {
+      $token = Encryption::encrypt($token, 'session');
+    }
+
+    return DB::table('users')->where('id', $this->getId())->update([
+      'session_token' => $token
+    ]);
+  }
+
+  /**
+   * Checks whether the entered cookie token matches the user's token.
+   */
+  public function compareCookieToken(string $token): bool
+  {
+    return $token === $this->cookieToken;
+  }
+
+  /**
+   * Updates the user's token in a database.
+   */
+  public function updateCookieToken(string $token, bool $keepPlain = true): bool
+  {
+    return DB::table('users')->where('id', $this->getId())->update([
+      'cookie_token' => $token
+    ]);
+  }
+
+  /**
+   * Updates the user's last login date.
+   */
+  public function updateLastLogin(): bool
+  {
+    return DB::table('users')->where('id', $this->getId())->update([
+      'time_last_login' => date('Y-m-d H:i:s')
+    ]);
+  }
+
+  public function updateTokens(string $sessionToken, string $cookieToken, bool $keepSessionPlain = false, bool $keepCookiePlain = true): bool
+  {
+    if (!$keepSessionPlain) {
+      $sessionToken = Encryption::encrypt($sessionToken, 'session');
+    }
+
+    return DB::table('users')->where('id', $this->getId())->update([
+      'session_token' => $sessionToken,
+      'cookie_token' => $cookieToken,
+      'time_last_login' => date('Y-m-d H:i:s')
+    ]);
   }
 
   /**
@@ -144,6 +215,20 @@ final class User
   public function isValid(): bool
   {
     return true;
+  }
+
+  public function markAsActive(): self
+  {
+    $this->active = true;
+
+    return $this;
+  }
+
+  public function markAsConfirmed(): self
+  {
+    $this->confirmed = true;
+
+    return $this;
   }
 
   /**
@@ -293,5 +378,15 @@ final class User
     $this->password = $password;
 
     return $this;
+  }
+
+  public function isActive(): bool
+  {
+    return $this->active;
+  }
+
+  public function isConfirmed(): bool
+  {
+    return $this->confirmed;
   }
 }
