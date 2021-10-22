@@ -32,4 +32,11 @@
         opacity: 1;
       }
   }
+
+  @include media-breakpoint-down(lg) {
+    top: 0;
+    left: 0;
+    bottom: auto;
+    width: 100%;
+  }
 }

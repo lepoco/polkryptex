@@ -51,6 +51,12 @@ export default class Request {
           console.debug("json_response", parsedResponse);
         }
 
+        if (parsedResponse.content.hasOwnProperty("redirect")) {
+          window.location.href = parsedResponse.content.redirect;
+
+          return;
+        }
+
         if (parsedResponse.content.hasOwnProperty("message")) {
           if ("S01" === parsedResponse.status) {
             Toast.send("Cool!", parsedResponse.content.message, "success");

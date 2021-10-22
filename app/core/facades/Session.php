@@ -35,9 +35,6 @@ use App\Core\Facades\Abstract\Facade;
  * @method static void setId(string $name) Set the session ID.
  * @method static string token() Get the CSRF token value.
  * @method static void regenerateToken() Regenerate the CSRF token value.
- * @method static void passwordConfirmed() Specify that the user has confirmed their password.
- * @method static string|null previousUrl() Get the previous URL from the session.
- * @method static void setPreviousUrl(string $url) Set the "previous" URL in the session.
  */
 final class Session extends Facade
 {
@@ -48,27 +45,6 @@ final class Session extends Facade
    */
   protected static function getFacadeAccessor(): string
   {
-    return 'request';
-  }
-
-  /**
-   * Responds to a static call to the Facade class and then tries to execute a method with the same name on the application object.
-   * @param mixed|array $arguments
-   * @return mixed
-   */
-  public static function __callStatic(string $name, $arguments)
-  {
-    /** @var \Illuminate\Http\Request $instance Request instance. */
-    $instance = self::getProperty(static::getFacadeAccessor());
-
-    if (false === $instance) {
-      return false;
-    }
-
-    if (!$instance->hasSession()) {
-      return false;
-    }
-
-    return $instance->session()->{$name}(...$arguments);
+    return 'session';
   }
 }

@@ -6,7 +6,6 @@ use App\Core\Facades\{App, Logs, Response};
 use App\Core\Facades\Request as IlluminateRequest;
 use App\Core\Http\Status;
 use App\Core\View\Renderable;
-use App\Core\Data\Encryption;
 use Illuminate\Support\Str;
 
 /**
@@ -65,7 +64,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
     Logs::info('New request.', ['action' => $this->getAction(), 'ip' => IlluminateRequest::ip()]);
 
     $this->initialize();
-    $this->validateNonce();
+    $this->validateRequestNonce();
 
     $this->addContent('hash', Str::random(32));
 
@@ -191,7 +190,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
     ];
   }
 
-  private function validateNonce(): void
+  private function validateRequestNonce(): void
   {
     if ($this->getAction() == 'Install') {
       return;
@@ -202,7 +201,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->finish(self::ERROR_NONCE_MISSING, Status::BAD_REQUEST);
     }
 
-    if (!Encryption::compare('ajax_' . strtolower($this->getAction()) . '_nonce', IlluminateRequest::get('nonce'), 'nonce')) {
+    if (!$this->validateNonce('ajax_' . strtolower($this->getAction()) . '_nonce', IlluminateRequest::get('nonce'))) {
       $this->addContent('error', 'Invalid nonce');
       $this->addContent('message', 'The time verification key does not match, please try refreshing the page.');
       $this->finish(self::ERROR_NONCE_INVALID, Status::BAD_REQUEST);

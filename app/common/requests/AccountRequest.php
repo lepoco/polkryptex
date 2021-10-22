@@ -143,7 +143,8 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
       return;
     }
 
-    $file = Image::scale($userPath . '/' . $pictureName, 300, 300);
+    // TODO: Scaling images
+    //$file = Image::scale($userPath . '/' . $pictureName, 300, 300);
 
     // ray([
     //   'original' => $savedFile,

@@ -221,7 +221,7 @@ final class User
 
   public function isValid(): bool
   {
-    return true;
+    return $this->id > 0 && ! empty($this->uuid);
   }
 
   public function markAsActive(): self

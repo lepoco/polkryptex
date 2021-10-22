@@ -30,6 +30,10 @@ final class Account
 
     $user = new User($userId);
 
+    if (!$user->isValid()) {
+      return null;
+    }
+
     if ($user->getRole() !== Session::get('auth.role', 0)) {
       return null;
     }
@@ -38,11 +42,11 @@ final class Account
       return null;
     }
 
-    if (!$user->compareCookieToken(Session::get('_token', ''))) {
+    if (!$user->compareCookieToken(Session::get('auth.token', ''))) {
       return null;
     }
 
-    if (!$user->compareSessionToken(Session::get('auth.token', ''))) {
+    if (!$user->compareSessionToken(Session::token())) {
       return null;
     }
 
@@ -59,9 +63,9 @@ final class Account
     Session::put('auth.logged', true);
     Session::put('auth.token', $token);
 
-    Session::passwordConfirmed();
+    Session::put('auth.confirmed', true);
 
-    $user->updateTokens($token, Session::get('_token', ''));
+    $user->updateTokens(Session::token(), $token);
 
     return true;
   }

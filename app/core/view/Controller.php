@@ -31,7 +31,7 @@ final class Controller extends Factory implements \App\Core\Schema\Controller
 
     // If we want to redirect the user to the previous page, it's worth not including those responsible for logging in.
     if (!in_array($this->namespace, ['NotFound', 'SignIn', 'Register', 'Installer'])) {
-      Session::setPreviousUrl(Request::url());
+      Session::put('_previous_url', Request::url());
     }
 
     Response::setContent($this->render(Cast::namespaceToBlade($this->namespace)));

@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-use App\Core\Http\{Router, Response};
+use App\Core\Http\{Router, Response, Session};
 use App\Core\Data\Options;
 use App\Core\Facades\App;
 use App\Core\Data\Container;
@@ -11,11 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Cookie\CookieJar;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Log\LogManager;
-use Illuminate\Session\SessionManager;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 /**
  * Creates all connections and application objects.
@@ -41,7 +38,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   protected Response $response;
 
-  protected NativeSessionStorage $nativeSession;
+  protected Session $session;
 
   protected CacheManager $cache;
 
@@ -106,9 +103,9 @@ abstract class Bootstrap implements \App\Core\Schema\App
    */
   public function close(bool $exit = true): void
   {
-    $this->request->session()->put('_rendered', time());
+    $this->session->put('_rendered', time());
 
-    $this->request->session()->save();
+    $this->session->save();
 
     $this->response->send();
 
@@ -122,17 +119,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
    */
   public function destroy(): void
   {
-    $sessionId = $this->request->session()->getId();
-    $sessionCookie = $this->response->getCookie($this->configuration->get('session.cookie', 'pkx_session'));
-
-    $this->nativeSession->clear();
-    $this->request->session()->invalidate();
-
-    $this->response->removeCookie($sessionId);
-
-    if (!empty($sessionCookie)) {
-      $this->response->removeCookie($sessionCookie->getName());
-    }
+    $this->session->clear();
+    $this->session->invalidate();
   }
 
   /**
@@ -140,9 +128,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
    */
   public function regenerate(): void
   {
-    $this->request->session()->regenerateToken();
-    $this->request->session()->regenerate();
-    $this->nativeSession->regenerate();
+    $this->session->regenerate();
   }
 
   /**
@@ -177,17 +163,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
       $this->container->bind('events', fn () => new Dispatcher(), true);
     }
 
-    if (empty($abstract) || 'cookie' === $abstract) {
-      $this->container->bind('cookie', fn () => (new CookieJar())->setDefaultPathAndDomain(
-        $this->configuration->get('session.path'),
-        $this->configuration->get('session.domain'),
-        $this->configuration->get('session.secure'),
-        $this->configuration->get('session.same_site')
-      ), true);
-    }
-
     if (empty($abstract) || 'session' === $abstract) {
-      $this->setSession(new SessionManager($this->container));
+      $this->setSession(new Session());
     }
 
     if (empty($abstract) || 'logs' === $abstract) {
@@ -262,37 +239,11 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
-  protected function setSession(SessionManager $session): self
+  protected function setSession(Session $session): self
   {
-    $id = $this->request->cookies->get($session->getName());
+    $this->session = $session;
 
-    if (!empty($id)) {
-      $session->setId($id);
-    }
-
-    $session->setRequestOnHandler($this->request);
-
-    $this->request->setLaravelSession($session);
-
-    $this->nativeSession = new NativeSessionStorage([], $this->request->session()->getHandler());
-
-    $this->nativeSession->start();
-
-    $this->request->session()->start();
-
-    $attributes = $this->request->session()->all();
-
-    // Native session allows you to restore data from cookie sessions
-    // and use the application on browsers that do not support them.
-    if (!$this->request->session()->has('_rendered')) {
-      foreach ($_SESSION as $key => $value) {
-        $this->request->session()->put($key, $value);
-      }
-    }
-
-    foreach ($attributes as $key => $value) {
-      $_SESSION[$key] = $value;
-    }
+    $this->session->start();
 
     return $this;
   }

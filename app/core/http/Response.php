@@ -70,23 +70,24 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
 
   private function buildSessionCookie(): self
   {
-    $cookies = App::getProperty('container')->get('cookie')->getQueuedCookies();
+    // TODO: Fix cookies saving
+    // $cookies = App::getProperty('container')->get('cookie')->getQueuedCookies();
 
-    foreach ($cookies as $cookie) {
-      $this->setCookie($cookie);
+    // foreach ($cookies as $cookie) {
+    //   $this->setCookie($cookie);
 
-      if (Session::getId() === $cookie->getName()) {
-        $this->setCookie(Cookie::create(
-          Session::getName(),
-          $cookie->getName(),
-          $cookie->getExpiresTime(),
-          $cookie->getPath(),
-          $cookie->getDomain(),
-          $cookie->isSecure(),
-          $cookie->isHttpOnly()
-        ));
-      }
-    }
+    //   if (Session::getId() === $cookie->getName()) {
+    //     $this->setCookie(Cookie::create(
+    //       Session::getName(),
+    //       $cookie->getName(),
+    //       $cookie->getExpiresTime(),
+    //       $cookie->getPath(),
+    //       $cookie->getDomain(),
+    //       $cookie->isSecure(),
+    //       $cookie->isHttpOnly()
+    //     ));
+    //   }
+    // }
 
     return $this;
   }
