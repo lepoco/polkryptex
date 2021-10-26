@@ -8,8 +8,9 @@ use App\Core\View\Request;
 use App\Core\Http\Status;
 use App\Core\Auth\{Account, User};
 use App\Core\Facades\{App, Logs, Config};
-use App\Core\Data\{Encryption, Schema};
+use App\Core\Data\Encryption;
 use App\Core\Utils\{Path, ClassInjector};
+use App\Common\Database\{Schema, Prefill};
 
 /**
  * Action triggered during app installation.
@@ -176,6 +177,8 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     App::connect();
     /** After a successful connection, the tables in the database will be created. */
     Schema::build(true);
+    /** Fill database with default values. */
+    Prefill::fill();
   }
 
   private function registerAdmin(): void

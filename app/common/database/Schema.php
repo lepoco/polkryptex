@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Data;
+namespace App\Common\Database;
 
 use App\Core\Facades\{Config, Request, DB};
 use Illuminate\Database\Schema\Blueprint;
@@ -26,127 +26,8 @@ final class Schema
     self::tableUsers();
     self::tableWallets();
     self::tableStatistics();
-
-    self::fill();
   }
 
-  private static function fill(): void
-  {
-    DB::table('options')->insert([
-      'name' => 'app_version',
-      'value' => Config::get('app.version', '1.0.0')
-    ]);
-
-    DB::table('options')->insert([
-      'name' => 'app_name',
-      'value' => Config::get('app.name', '1.0.0')
-    ]);
-
-    DB::table('options')->insert([
-      'name' => 'base_url',
-      'value' => rtrim(Request::root(), '/') . '/'
-    ]);
-
-    DB::table('options')->insert([
-      'name' => 'home_url',
-      'value' => rtrim(Request::root(), '/') . '/'
-    ]);
-
-    DB::table('plans')->insert([
-      'name' => 'trader',
-      'capabilities' => '{c:[]}'
-    ]);
-
-    DB::table('user_roles')->insert([
-      'name' => 'default',
-      'permissions' => '{p:[]}'
-    ]);
-
-    DB::table('user_roles')->insert([
-      'name' => 'manager',
-      'permissions' => '{p:[]}'
-    ]);
-
-    DB::table('statistics_types')->insert([
-      'name' => 'page'
-    ]);
-
-    DB::table('statistics_types')->insert([
-      'name' => 'request'
-    ]);
-
-    DB::table('statistics_types')->insert([
-      'name' => 'transaction'
-    ]);
-
-    DB::table('statistics_types')->insert([
-      'name' => 'user'
-    ]);
-
-    DB::table('plans')->insert([
-      'name' => 'standard',
-      'capabilities' => '{c:[]}'
-    ]);
-
-    DB::table('plans')->insert([
-      'name' => 'plus',
-      'capabilities' => '{c:[]}'
-    ]);
-
-    DB::table('plans')->insert([
-      'name' => 'premium',
-      'capabilities' => '{c:[]}'
-    ]);
-
-    DB::table('plans')->insert([
-      'name' => 'trader',
-      'capabilities' => '{c:[]}'
-    ]);
-
-    DB::table('users')->insert([
-      'name' => 'dummy',
-      'display_name' => 'dummy',
-      'email' => 'dummy@polkryptex.pl',
-      'password' => '$cW4yTWs0djAwbTRjTi40VA$lQcuXoa/0y3FNdjrwOtxaJvxJ+GS2WHxAUC1qbk/EQg',
-      'role_id' => 1
-    ]);
-
-    DB::table('currencies')->insert([
-      'rate' => 1,
-      'iso_number' => 840,
-      'iso_code' => 'USD',
-      'name' => 'US Dollar',
-      'sign' => '$',
-      'decimal_sign' => '¢',
-      'decimal_name' => 'cent',
-      'is_crypto' => false,
-      'is_master' => true,
-    ]);
-
-    DB::table('currencies')->insert([
-      'rate' => 0.86572246,
-      'iso_number' => 978,
-      'iso_code' => 'EUR',
-      'name' => 'Euro',
-      'sign' => '€',
-      'decimal_sign' => 'c',
-      'decimal_name' => 'cent',
-      'is_crypto' => false,
-      'is_master' => false,
-    ]);
-
-    DB::table('currencies')->insert([
-      'rate' => 0.73666607,
-      'iso_number' => 826,
-      'iso_code' => 'GBP',
-      'name' => 'Pound sterling',
-      'sign' => '£',
-      'decimal_sign' => 'p',
-      'decimal_name' => 'pence',
-      'is_crypto' => false,
-      'is_master' => false,
-    ]);
-  }
   private static function drop(): void
   {
     /**
