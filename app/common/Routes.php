@@ -34,6 +34,22 @@ final class Routes extends Router
       'namespace' => 'SignIn',
       'redirect_logged' => true
     ],
+    [
+      'path' => '/licenses',
+      'namespace' => 'Licenses',
+    ],
+    [
+      'path' => '/terms',
+      'namespace' => 'Terms',
+    ],
+    [
+      'path' => '/privacy',
+      'namespace' => 'Privacy',
+    ],
+    [
+      'path' => '/legal',
+      'namespace' => 'Legal',
+    ],
 
     // Dashboard | User
     [
@@ -59,6 +75,11 @@ final class Routes extends Router
     [
       'path' => '/dashboard/payments',
       'namespace' => 'Dashboard\\Payments',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/topup',
+      'namespace' => 'Dashboard\\Topup',
       'require_login' => true
     ],
 

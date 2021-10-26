@@ -32,6 +32,15 @@
           <label for="new_password_confirm">@translate('Confirm new password')</label>
         </div>
 
+        <div class="-flex-center -mb-2">
+          <img width="50" height="50" lazy class="-mr-1" src="@asset('img/svg/keepassxc-mono.svg')" alt="@translate('KeepassXC Monochrome logo')" />
+          <div>
+            <strong>@translate('Password too short?')</strong>
+            <br>
+            <a target="_blank" rel="noopener nofollow" href="https://keepassxc.org/download/">@translate('Get a free and open source password manager for yourself.')</a>
+          </div>
+        </div>
+
         <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Update')</button>
         <a href="@url('dashboard/account')" class="btn btn-outline-dark btn-mobile">@translate('Back to account')</a>
       </form>

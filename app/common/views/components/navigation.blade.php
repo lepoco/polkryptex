@@ -12,23 +12,12 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
         @iflogged
-
-        @ifpermission('all')
-        <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'panel.main' ? ' active' : '' }}" href="@url('panel')">@translate('Admin
-            panel')</a>
-        </li>
-        @endif
-
-        @else
-        <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'private' ? ' active' : '' }}"
-            href="@url('private')">@translate('Private')</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'business' ? ' active' : '' }}"
-            href="@url('business')">@translate('Business')</a>
-        </li>
+          @ifpermission('all')
+          <li class="nav-item">
+            <a class="nav-link{{ $pagenow === 'panel.main' ? ' active' : '' }}" href="@url('panel')">@translate('Admin
+              panel')</a>
+          </li>
+          @endif
         @endif
 
       </ul>

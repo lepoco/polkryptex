@@ -2,7 +2,7 @@
 
 namespace App\Core\View\Blade;
 
-use App\Core\Facades\{Option, Request};
+use App\Core\Facades\{Config, Option, Request};
 use App\Core\Data\Encryption;
 
 /**
@@ -25,7 +25,7 @@ final class Directives
       return self::getAssetsUrl() . 'img/';
     }
 
-    return self::getAssetsUrl() . 'img/' . $path;
+    return self::getAssetsUrl() . 'img/' . $path . '?v=' . Config::get('app.version', '0.0.0');
   }
 
   /**
@@ -40,7 +40,7 @@ final class Directives
       return self::getAssetsUrl();
     }
 
-    return self::getAssetsUrl() . $path;
+    return self::getAssetsUrl() . $path . '?v=' . Config::get('app.version', '0.0.0');
   }
 
   /**

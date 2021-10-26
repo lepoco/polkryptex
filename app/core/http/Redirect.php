@@ -17,12 +17,17 @@ final class Redirect
   public static function to(string $path, bool $internal = true): void
   {
     if ($internal) {
-      $path = rtrim(Option::get('base_url', Request::root()), '/') . '/' . $path;
+      $path = self::url($path);
     }
 
     \App\Core\Facades\Response::setHeader('Location', $path);
     \App\Core\Facades\Response::setStatusCode(Status::TEMPORARY_REDIRECT);
 
     App::close();
+  }
+
+  public static function url(string $path): string
+  {
+    return rtrim(Option::get('base_url', Request::root()), '/') . '/' . $path;
   }
 }

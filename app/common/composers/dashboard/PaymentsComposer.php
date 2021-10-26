@@ -7,9 +7,11 @@
 
 namespace App\Common\Composers\Dashboard;
 
-use App\Core\Auth\Account;
+use App\Core\Auth\{User, Account};
+use App\Core\Http\Redirect;
 use App\Core\View\Blade\Composer;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 /**
  * Additional logic for the views/dashboard/payments.blade view.
@@ -22,6 +24,55 @@ final class PaymentsComposer extends Composer implements \App\Core\Schema\Compos
 {
   public function compose(View $view): void
   {
+    $user = Account::current();
+
     $view->with('user', Account::current());
+    $view->with('payments', $this->getPayments($user));
+  }
+
+  private function getPayments(User $user): array
+  {
+    return [
+      [
+        'date' => 'Today',
+        'transactions' => [
+          [
+            'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+            'amount' => 55.22,
+            'currency' => 'EUR',
+            'date' => date('Y-m-d H:i'),
+            'description' => 'Transfer',
+          ],
+          [
+            'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+            'amount' => 55.22,
+            'currency' => 'EUR',
+            'date' => date('Y-m-d H:i'),
+            'description' => 'Exchange',
+          ],
+          [
+            'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+            'amount' => 55.22,
+            'currency' => 'EUR',
+            'date' => date('Y-m-d H:i'),
+            'description' => 'Exchange',
+          ],
+          [
+            'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+            'amount' => 55.22,
+            'currency' => 'EUR',
+            'date' => date('Y-m-d H:i'),
+            'description' => 'Exchange',
+          ],
+          [
+            'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+            'amount' => 55.22,
+            'currency' => 'EUR',
+            'date' => date('Y-m-d H:i'),
+            'description' => 'Exchange',
+          ]
+        ]
+      ]
+    ];
   }
 }

@@ -284,4 +284,9 @@ final class Session implements \App\Core\Schema\Session
 
     return $this;
   }
+
+  public function isStarted(): bool
+  {
+    return $this->started;
+  }
 }

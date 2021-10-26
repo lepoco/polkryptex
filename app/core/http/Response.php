@@ -2,8 +2,6 @@
 
 namespace App\Core\Http;
 
-use App\Core\Facades\App;
-use App\Core\Facades\Session;
 use Symfony\Component\HttpFoundation\Cookie;
 
 /**

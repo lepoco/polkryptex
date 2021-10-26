@@ -7,9 +7,11 @@
 
 namespace App\Common\Composers\Dashboard;
 
-use App\Core\Auth\Account;
+use App\Core\Auth\{Account, User};
 use App\Core\View\Blade\Composer;
+use App\Core\Http\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 /**
  * Additional logic for the views/dashboard/main.blade view.
@@ -22,6 +24,50 @@ final class MainComposer extends Composer implements \App\Core\Schema\Composer
 {
   public function compose(View $view): void
   {
-    $view->with('user', Account::current());
+    $user = Account::current();
+
+    $view->with('user', $user);
+    $view->with('recentTransactions', $this->getRecentTransactions($user));
+  }
+
+  private function getRecentTransactions(User $user): array
+  {
+    return [
+      [
+        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+        'amount' => 55.22,
+        'currency' => 'EUR',
+        'date' => date('Y-m-d H:i'),
+        'description' => 'Transfer',
+      ],
+      [
+        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+        'amount' => 55.22,
+        'currency' => 'EUR',
+        'date' => date('Y-m-d H:i'),
+        'description' => 'Exchange',
+      ],
+      [
+        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+        'amount' => 55.22,
+        'currency' => 'EUR',
+        'date' => date('Y-m-d H:i'),
+        'description' => 'Exchange',
+      ],
+      [
+        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+        'amount' => 55.22,
+        'currency' => 'EUR',
+        'date' => date('Y-m-d H:i'),
+        'description' => 'Exchange',
+      ],
+      [
+        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
+        'amount' => 55.22,
+        'currency' => 'EUR',
+        'date' => date('Y-m-d H:i'),
+        'description' => 'Exchange',
+      ]
+    ];
   }
 }

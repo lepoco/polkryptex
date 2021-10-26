@@ -17,6 +17,8 @@ interface Session
 
   public function clear();
 
+  public function isStarted(): bool;
+
   public function regenerate(bool $destroy = false, int $lifetime = null);
 
   public function getId(): string;
