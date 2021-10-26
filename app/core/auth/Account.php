@@ -18,6 +18,10 @@ final class Account
 {
   public static function current(): ?User
   {
+    if (!App::isConnected()) {
+      return null;
+    }
+
     if (!Session::get('auth.logged', false)) {
       return null;
     }

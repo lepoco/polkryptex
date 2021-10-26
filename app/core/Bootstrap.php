@@ -80,6 +80,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
       ->setCache(new CacheManager($this->container))
       ->setOptions(new Options());
 
+    $this->isConnected(true);
+
     return $this;
   }
 
@@ -171,7 +173,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
       $this->setLogs(new LogManager($this->container));
     }
 
-    return $this->isConnected(true);
+    return true;
   }
 
   /**
