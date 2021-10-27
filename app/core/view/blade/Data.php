@@ -71,6 +71,8 @@ final class Data
 
     $this->set('base_url', $defaultUrl);
 
+    $this->set('is_logged', null !== $currentUser);
+
     $this->set('js_data', [
       'props' => [
         'baseUrl' => $defaultUrl,

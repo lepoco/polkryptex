@@ -12,14 +12,18 @@ import AppData from "./common/appdata";
 import FormHelpers from "./common/formhelpers";
 import Cookie from "./common/cookie";
 import SignOut from "./common/signout";
+import LoadReveal from "./common/loadreveal";
 
 require("./../sass/style.scss");
 
 new FormHelpers();
 new Cookie();
 new SignOut();
+new LoadReveal();
 
-if (AppData.isWorkerEnabled() && "serviceWorker" in navigator) {
+//AppData.isWorkerEnabled()
+
+if (false && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register(AppData.url("service-worker.js"))

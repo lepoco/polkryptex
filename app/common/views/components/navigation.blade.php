@@ -1,5 +1,5 @@
 <section class="navbar navbar-expand-lg navbar-light {{ $navbarClass ?? '' }}">
-  <div class="container">
+  <div class="container {{ !$is_logged ? '-reveal' : '' }}">
     <a class="navbar-brand" href="@url">
       {{-- <img loading="lazy" src="@media('favicon.svg')" alt="Polkryptex"/> --}}
       <p>Polkryptex</p>
