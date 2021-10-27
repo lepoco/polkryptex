@@ -33,9 +33,9 @@ final class Options
 
   private function getOption(string $name, $default = '')
   {
-    $query = DB::table('options')->get(['*'])->where('option_name', 'LIKE', $name);
+    $query = DB::table('options')->where('name', 'LIKE', $name)->first();
 
-    return isset($query['value']) ? $query['value'] : $default;
+    return isset($query->value) ? self::serializeType($query->value) : $default;
   }
 
   private function setOption(string $name, $value): bool
@@ -43,5 +43,10 @@ final class Options
     Cache::forget($name);
 
     return true;
+  }
+
+  private static function serializeType(mixed $value): mixed
+  {
+    return $value;
   }
 }
