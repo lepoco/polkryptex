@@ -1,14 +1,25 @@
+import AppData from "./appdata";
 import * as Cookies from "./../components/js.cookie";
 
 export const name = "Cookie";
 
+/**
+ * Displays information about cookies.
+ *
+ * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @module  Common/AppData
+ * @license GPL-3.0
+ * @since   1.1.0
+ */
 export default class Cookie {
-  cookieName: string = "pkx_cookie";
+  cookieName: string = "access_cookie";
 
   container: any;
   buttons: HTMLCollectionOf<HTMLButtonElement>;
 
   constructor() {
+    this.cookieName = AppData.cookieName();
+
     this.registerElements();
     this.checkCookie();
   }
@@ -69,7 +80,7 @@ export default class Cookie {
     Cookies.set(this.cookieName, "{0,0,0,0}", {
       expires: 365,
       path: "/",
-      secure: (window as any).app.props.secured,
+      secure: AppData.isSecured(),
       sameSite: "Lax",
     });
   }

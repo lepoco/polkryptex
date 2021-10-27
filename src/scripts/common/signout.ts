@@ -1,12 +1,21 @@
+import AppData from "./appdata";
 import * as Bootstrap from "./../components/bootstrap-bundle";
 
 export const name = "SignOut";
 
+/**
+ * Displays information about the ending time of the session.
+ *
+ * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @module  Common/AppData
+ * @license GPL-3.0
+ * @since   1.1.0
+ */
 export default class SignOut {
-  timeout:number;
+  timeout: number;
 
   constructor() {
-    if (!(window as any).app.auth.loggedIn) {
+    if (!AppData.isLogged()) {
       return;
     }
 
@@ -15,7 +24,7 @@ export default class SignOut {
   }
 
   setTimeout() {
-    let timeout = parseInt((window as any).app.props.loginTimeout);
+    let timeout = AppData.signoutTime();
 
     if (timeout < 1) {
       this.timeout = 10;
@@ -58,9 +67,10 @@ export default class SignOut {
     let count = 59,
       timer = setInterval(function () {
         TIMER_ELEMENT.innerHTML = "00:" + count--;
+
         if (count == 0) {
           clearInterval(timer);
-          window.location.href = (window as any).app.props.baseUrl + "signout";
+          window.location.href = AppData.url("signout");
         }
       }, 1000);
   }

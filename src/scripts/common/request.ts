@@ -1,8 +1,17 @@
+import AppData from "./appdata";
 import Toast from "./toast";
 import Translator from "./translator";
 
 export const name = "Request";
 
+/**
+ * Set of tools to facilitate sending Ajax requests for forms.
+ *
+ * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @module  Common/AppData
+ * @license GPL-3.0
+ * @since   1.1.0
+ */
 export default class Request {
   static register(form: string, action: CallableFunction) {
     document
@@ -26,7 +35,7 @@ export default class Request {
     const METHOD = form.method.toUpperCase();
     const XHR = new XMLHttpRequest();
 
-    let endpoint = (window as any).app.props.ajax;
+    let endpoint = AppData.gateway();
     let formData = new FormData(form);
 
     Request.lockForm(form);
@@ -40,14 +49,14 @@ export default class Request {
     XHR.onload = function () {
       Request.unlockForm(form);
 
-      if ((window as any).app.props.debug) {
+      if (AppData.isDebug()) {
         console.debug("raw_response", this.responseText);
       }
 
       if (Request.isJson(this.responseText)) {
         let parsedResponse = JSON.parse(this.responseText);
 
-        if ((window as any).app.props.debug) {
+        if (AppData.isDebug()) {
           console.debug("json_response", parsedResponse);
         }
 

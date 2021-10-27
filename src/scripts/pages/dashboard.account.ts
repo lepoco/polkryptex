@@ -1,6 +1,14 @@
 import Request from "./../common/request";
 import Toast from "./../common/toast";
 
+/**
+ * Page controller for dashboard.account.
+ *
+ * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @module  Common/AppData
+ * @license GPL-3.0
+ * @since   1.1.0
+ */
 Request.register("#account", function (status: String, response: any) {
   if ("S01" === response.status) {
     const PICTURE_ELEMENT = document.querySelector('input[name="picture"]');

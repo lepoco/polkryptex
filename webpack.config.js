@@ -61,7 +61,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: "./src/index.php" },
-        { from: "./src/no-connection.html" },
+        //{ from: "./src/no-connection.html" },
         { from: "./src/robots.txt" },
         { from: "./src/.htaccess" },
         { from: "./src/m.webmanifest" },
@@ -80,8 +80,8 @@ module.exports = {
       skipWaiting: true,
       cleanupOutdatedCaches: true,
       offlineGoogleAnalytics: true,
-      directoryIndex: process.env.APP_URL,
-      navigateFallback: "https://polkryptex.lan/no-connection.html",
+      //directoryIndex: process.env.APP_URL,
+      //navigateFallback: "https://polkryptex.lan/no-connection.html",
       sourcemap: "development" === process.env.APP_ENV,
       include: [],
       runtimeCaching: [

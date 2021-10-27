@@ -1,6 +1,15 @@
+import AppData from "./../common/appdata";
 import Request from "./../common/request";
 import Toast from "./../common/toast";
 
+/**
+ * Page controller for installer.
+ *
+ * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @module  Common/AppData
+ * @license GPL-3.0
+ * @since   1.1.0
+ */
 Request.register("#install", function (status: string, response: any) {
   console.log(response);
 
@@ -12,7 +21,7 @@ Request.register("#install", function (status: string, response: any) {
         "success"
       );
       window.setTimeout(function () {
-        window.location.href = (window as any).app.props.baseUrl;
+        window.location.href = AppData.url();
       }, 500);
       break;
   }
