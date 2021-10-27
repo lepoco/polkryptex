@@ -23,7 +23,7 @@
     window.app = @json( $js_data, JSON_PRETTY_PRINT );
   </script>
 
-  <script src="@asset('bundle.min.js')" crossorigin="anonymous" defer></script>
+  <script src="@asset('bundle.min.js')" defer></script>
 
   <noscript>
     <style>

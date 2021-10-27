@@ -37,6 +37,16 @@ final class Prefill
       'value' => rtrim(Request::root(), '/') . '/'
     ]);
 
+    DB::table('options')->insert([
+      'name' => 'signout_time',
+      'value' => 15
+    ]);
+
+    DB::table('cookie_name')->insert([
+      'name' => 'pkx_cookie',
+      'value' => 15
+    ]);
+
     DB::table('plans')->insert([
       'name' => 'trader',
       'capabilities' => '{c:[]}'

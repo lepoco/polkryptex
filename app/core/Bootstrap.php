@@ -55,15 +55,12 @@ abstract class Bootstrap implements \App\Core\Schema\App
   /**
    * Application specific constructor. Creates instances of base objects and assigns them to Facades.
    */
-  final public function setup(): self
+  public function setup(): self
   {
-    $this
-      ->setStatus(0)
-      ->init();
+    $this->status = 0;
 
-    $this
-      ->setupRequest()
-      ->setupContainer();
+    $this->init();
+    $this->setupContainer();
 
     App::set($this);
 
@@ -78,9 +75,23 @@ abstract class Bootstrap implements \App\Core\Schema\App
     $this
       ->setDatabase(new Manager($this->container))
       ->setCache(new CacheManager($this->container))
-      ->setOptions(new Options());
+      ->setOptions(new Options())
+      ->setSession(new Session());
 
     $this->isConnected(true);
+
+    $timeNow = time();
+
+    if ($this->isConnected() && $this->session->has('last_opened')) {
+      $maxDiff = (int) $this->options->get('signout_time', 15);
+      $maxDiff = $maxDiff < 1 ? 60 : $maxDiff * 60;
+
+      if (($timeNow - $this->session->get('last_opened')) > $maxDiff) {
+        $this->destroy();
+      }
+    }
+
+    $this->session->put('last_opened', $timeNow);
 
     return $this;
   }
@@ -149,37 +160,9 @@ abstract class Bootstrap implements \App\Core\Schema\App
   }
 
   /**
-   * Reassign the objects to the controller.
-   */
-  final public function rebind(string $abstract = ''): bool
-  {
-    if (empty($abstract) || 'config' === $abstract) {
-      $this->container->bind('config', fn () => $this->configuration, true);
-    }
-
-    if (empty($abstract) || 'files' === $abstract) {
-      $this->container->bind('files', fn () => $this->filesystem, true);
-    }
-
-    if (empty($abstract) || 'events' === $abstract) {
-      $this->container->bind('events', fn () => new Dispatcher(), true);
-    }
-
-    if (empty($abstract) || 'session' === $abstract) {
-      $this->setSession(new Session());
-    }
-
-    if (empty($abstract) || 'logs' === $abstract) {
-      $this->setLogs(new LogManager($this->container));
-    }
-
-    return true;
-  }
-
-  /**
    * Checks whether the database is connected.
    */
-  public function isConnected(bool $forceReCheck = false): bool
+  final public function isConnected(bool $forceReCheck = false): bool
   {
     if (!$forceReCheck && isset($this->connected)) {
       return $this->connected;
@@ -206,15 +189,35 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this->connected;
   }
 
-  final protected function setStatus(int $status): self
+  /**
+   * Reassign the objects to the controller.
+   */
+  final public function rebind(string $abstract = ''): bool
   {
-    $this->status = $status;
+    if (empty($abstract) || 'config' === $abstract) {
+      $this->container->bind('config', fn () => $this->configuration, true);
+    }
 
-    return $this;
+    if (empty($abstract) || 'files' === $abstract) {
+      $this->container->bind('files', fn () => $this->filesystem, true);
+    }
+
+    if (empty($abstract) || 'events' === $abstract) {
+      $this->container->bind('events', fn () => new Dispatcher(), true);
+    }
+
+    if (empty($abstract) || 'logs' === $abstract) {
+      $this->setLogs(new LogManager($this->container));
+    }
+
+    return true;
   }
 
   final protected function setupContainer(): self
   {
+    $this->request = Request::capture();
+    $this->response = new Response('', 200, $this->request->headers->all());
+
     $this->filesystem = new Filesystem();
     $this->container = new Container();
 
@@ -226,15 +229,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
-  final protected function setupRequest(): self
-  {
-    $this->request = Request::capture();
-    $this->response = new Response('', 200, $this->request->headers->all());
-
-    return $this;
-  }
-
-  protected function setLogs(LogManager $logManager): self
+  final protected function setLogs(LogManager $logManager): self
   {
     $this->logs = $logManager;
 
@@ -274,6 +269,13 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
+  protected function setOptions(Options $options): self
+  {
+    $this->options = $options;
+
+    return $this;
+  }
+
   protected function setCache(CacheManager $cache): self
   {
     // FIXME:: Cache needs garbage collector.
@@ -282,14 +284,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
-  protected function setOptions(Options $options): self
-  {
-    $this->options = $options;
-
-    return $this;
-  }
-
-  private function generateDirectories(): void
+  protected function generateDirectories(): void
   {
     if (!$this->filesystem->isDirectory($this->configuration->get('view.compiled', 'storage/blade'))) {
       $this->filesystem->makeDirectory($this->configuration->get('view.compiled', 'storage/blade'), 0755, true);

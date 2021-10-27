@@ -4,6 +4,7 @@ namespace App\Core\View\Blade;
 
 use App\Core\Utils\Cast;
 use App\Core\Facades\{Config, Option, Request};
+use App\Core\Auth\Account;
 
 /**
  * Container of information passed to blade views.
@@ -61,6 +62,7 @@ final class Data
 
   private function setDefault(): void
   {
+    $currentUser = Account::current();
     $defaultUrl = rtrim(Option::get('base_url', Request::root()), '/') . '/';
 
     $this->set('version', Config::get('app.version', '0.0.0'));
@@ -74,13 +76,15 @@ final class Data
         'baseUrl' => $defaultUrl,
         'ajax' => $defaultUrl . 'request/',
         'dashboard' => 'dashboard',
-        'secured' => true,
-        'debug' => true,
-        'loginTimeout' => 2000,
+        'secured' => Request::secure(),
+        'debug' => Config::get('app.debug', true),
+        'cookieName' => Option::get('cookie_name', 'access_cookie'),
+        'signoutTime' => ((int) Option::get('signout_time', 15) * 60),
         'version' => Config::get('app.version', '0.0.0')
       ],
       'auth' => [
-        'loggedIn' => false
+        'loggedIn' => null !== $currentUser,
+        'uuid' => null !== $currentUser ? $currentUser->getUUID() : ''
       ]
     ]);
   }
