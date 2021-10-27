@@ -9,6 +9,10 @@ export const name = "FormHelpers";
  * @since   1.1.0
  */
 export default class FormHelpers {
+  static init() {
+    return new FormHelpers();
+  }
+
   constructor() {
     this.fillSelected();
   }

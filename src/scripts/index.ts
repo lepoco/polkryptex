@@ -16,10 +16,10 @@ import LoadReveal from "./common/loadreveal";
 
 require("./../sass/style.scss");
 
-new FormHelpers();
-new Cookie();
-new SignOut();
-new LoadReveal();
+FormHelpers.init();
+Cookie.init();
+SignOut.init();
+LoadReveal.init();
 
 //AppData.isWorkerEnabled()
 
@@ -57,7 +57,7 @@ function navigatorOnline() {
   if (!window.navigator.onLine) {
     document.body.classList.add("--offline");
   } else if (document.body.classList.contains("--offline")) {
-    console.log('Connection established!');
+    console.log("Connection established!");
     window.location.href = window.location.href;
 
     return;

@@ -1,7 +1,7 @@
 <section class="cookie">
   <div class="cookie__container">
     <div class="container">
-      <div class="cookie__body">
+      <div class="cookie__body -reveal">
         <div>
           <span>@translate('We use  🍪 cookies to personalize the content you see on Polkryptex.') <a
               href="@url('cookies-policy')">@translate('Learn more')</a></span>

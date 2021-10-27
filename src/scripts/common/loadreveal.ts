@@ -12,13 +12,13 @@ export const name = "LoadReveal";
  * @since   1.1.0
  */
 export default class LoadReveal {
-  constructor() {
+  static init() {
     ScrollReveal().reveal(".-reveal", {
       //delay: 150,
-      duration: 500,
+      duration: 400,
       interval: 16,
       reset: false,
-      scale: .9,
+      scale: .95,
       cleanup: false,
       origin: 'bottom',
       easing: 'cubic-bezier(0.5, 0, 0, 1)'

@@ -14,6 +14,10 @@ export const name = "SignOut";
 export default class SignOut {
   timeout: number;
 
+  static init() {
+    return new SignOut();
+  }
+
   constructor() {
     if (!AppData.isLogged()) {
       return;

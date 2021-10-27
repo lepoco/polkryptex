@@ -17,6 +17,10 @@ export default class Cookie {
   container: any;
   buttons: HTMLCollectionOf<HTMLButtonElement>;
 
+  static init() {
+    return new Cookie();
+  }
+
   constructor() {
     this.cookieName = AppData.cookieName();
 
