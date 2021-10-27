@@ -2,15 +2,16 @@
 # Any changes here require direct editing
 app/common/Config.php
 
-composer.phar
 /vendor/
 /public/media/uploads/
+
+composer.phar
 
 # Public directory is build by webpack
 public
 
 # Node modules
-node_modules/
+node_modules
 
 # Node JS lock
 package-lock.json
