@@ -6,7 +6,7 @@ import Toast from "./../common/toast";
  * Page controller for installer.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/AppData
+ * @module  Pages/Installer
  * @license GPL-3.0
  * @since   1.1.0
  */

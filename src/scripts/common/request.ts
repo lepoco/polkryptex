@@ -8,7 +8,7 @@ export const name = "Request";
  * Set of tools to facilitate sending Ajax requests for forms.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/AppData
+ * @module  Common/Request
  * @license GPL-3.0
  * @since   1.1.0
  */

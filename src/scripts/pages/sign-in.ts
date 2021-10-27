@@ -5,7 +5,7 @@ import Request from "./../common/request";
  * Page controller for sign-in.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/AppData
+ * @module  Pages/SignIn
  * @license GPL-3.0
  * @since   1.1.0
  */

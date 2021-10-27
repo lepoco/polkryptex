@@ -6,7 +6,7 @@ import Toast from "./../common/toast";
  * Page controller for register.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/AppData
+ * @module  Pages/Register
  * @license GPL-3.0
  * @since   1.1.0
  */

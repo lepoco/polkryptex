@@ -3,7 +3,7 @@
  * https://polkryptex.pl/
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/AppData
+ * @module  Index
  * @license GPL-3.0
  * @since   1.1.0
  */

@@ -1,4 +1,3 @@
-import AppData from "./appdata";
 import * as ScrollReveal from "./../components/scrollreveal";
 
 export const name = "LoadReveal";
@@ -7,7 +6,7 @@ export const name = "LoadReveal";
  * Animates pages when opened.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/AppData
+ * @module  Common/LoadReveal
  * @license GPL-3.0
  * @since   1.1.0
  */

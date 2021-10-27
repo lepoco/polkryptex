@@ -7,7 +7,7 @@ export const name = "SignOut";
  * Displays information about the ending time of the session.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/AppData
+ * @module  Common/SignOut
  * @license GPL-3.0
  * @since   1.1.0
  */
