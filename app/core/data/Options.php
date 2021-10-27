@@ -2,8 +2,7 @@
 
 namespace App\Core\Data;
 
-use App\Core\Facades\Cache;
-use App\Core\Facades\DB;
+use App\Core\Facades\{App, DB, Cache};
 
 /**
  * Allows to retrieve and save options from the database, stored in memory using the Cache.
@@ -33,6 +32,10 @@ final class Options
 
   private function getOption(string $name, $default = '')
   {
+    if (!App::isConnected()) {
+      return $default;
+    }
+
     $query = DB::table('options')->where('name', 'LIKE', $name)->first();
 
     return isset($query->value) ? self::serializeType($query->value) : $default;
