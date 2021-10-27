@@ -42,9 +42,14 @@ final class Prefill
       'value' => 15
     ]);
 
-    DB::table('cookie_name')->insert([
-      'name' => 'pkx_cookie',
-      'value' => 15
+    DB::table('options')->insert([
+      'name' => 'cookie_name',
+      'value' => 'pkx_cookie'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'service_worker_enabled',
+      'value' => true
     ]);
 
     DB::table('plans')->insert([

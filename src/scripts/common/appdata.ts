@@ -51,6 +51,13 @@ export default class AppData {
   }
 
   /**
+   * @return Gets information whether the Service Worker is enabled.
+   */
+   static isWorkerEnabled(): boolean {
+    return true == AppData.container().props.serviceWorkerEnabled;
+  }
+
+  /**
    * @return Gets information whether the user is logged in.
    */
   static isLogged(): boolean {

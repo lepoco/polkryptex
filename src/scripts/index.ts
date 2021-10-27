@@ -15,7 +15,11 @@ import SignOut from "./common/signout";
 
 require("./../sass/style.scss");
 
-if ("serviceWorker" in navigator) {
+new FormHelpers();
+new Cookie();
+new SignOut();
+
+if (AppData.isWorkerEnabled() && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register(AppData.url("service-worker.js"))
@@ -34,10 +38,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-new FormHelpers();
-new Cookie();
-new SignOut();
-
 try {
   require("./pages/" + AppData.pageNow());
   AppData.setRouting({ success: true, message: "imported" });
@@ -49,9 +49,19 @@ try {
   });
 }
 
-if (!window.navigator.onLine) {
-  document.body.classList.add("--offline");
+function navigatorOnline() {
+  if (!window.navigator.onLine) {
+    document.body.classList.add("--offline");
+  } else if (document.body.classList.contains("--offline")) {
+    console.log('Connection established!');
+    window.location.href = window.location.href;
+
+    return;
+  }
+
+  setTimeout(navigatorOnline, 2500);
 }
+navigatorOnline();
 
 if (AppData.isDebug()) {
   AppData.dump();
