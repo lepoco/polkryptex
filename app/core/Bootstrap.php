@@ -70,13 +70,17 @@ abstract class Bootstrap implements \App\Core\Schema\App
   /**
    * Attempts to connect to the database and creates the Database, Options, and Cache objects.
    */
-  public function connect(): self
+  public function connect(bool $soft = false): self
   {
+    if (!$soft) {
+      $this
+        ->setCache(new CacheManager($this->container))
+        ->setSession(new Session());
+    }
+
     $this
       ->setDatabase(new Manager($this->container))
-      ->setCache(new CacheManager($this->container))
-      ->setOptions(new Options())
-      ->setSession(new Session());
+      ->setOptions(new Options());
 
     $this->isConnected(true);
 

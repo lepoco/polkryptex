@@ -174,7 +174,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
   private function createDatabases(): void
   {
     /** If the data has been entered correctly, a connection to the database will be established. */
-    App::connect();
+    App::connect(true);
     /** After a successful connection, the tables in the database will be created. */
     Schema::build(true);
     /** Fill database with default values. */

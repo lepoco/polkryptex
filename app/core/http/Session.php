@@ -210,8 +210,32 @@ final class Session implements \App\Core\Schema\Session
     return $this;
   }
 
+  public function close(): bool
+  {
+    if (!$this->started) {
+      return false;
+    }
+
+    ini_set('session.use_only_cookies', false);
+    ini_set('session.use_cookies', false);
+    ini_set('session.use_trans_sid', false);
+    ini_set('session.cache_limiter', '');
+
+    if (array_key_exists('PHPSESSID', $_COOKIE)) {
+      session_id($_COOKIE['PHPSESSID']);
+    } else {
+      setcookie('PHPSESSID', session_id());
+    }
+
+    return session_write_close();
+  }
+
   public function save(): self
   {
+    // if (!$this->started) {
+    //   throw new \RuntimeException('Failed to save closed session.');
+    // }
+
     $_SESSION = $this->sessionData;
 
     return $this;
