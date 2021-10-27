@@ -34,8 +34,6 @@ final class Directives
    */
   public function asset(string $path = ''): string
   {
-    $assetsUrl = rtrim(Option::get('base_url', Request::root()), '/') . '/';
-
     if (empty($path)) {
       return self::getAssetsUrl();
     }

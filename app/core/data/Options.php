@@ -33,9 +33,9 @@ final class Options
 
   private function getOption(string $name, $default = '')
   {
-    //DB::table('pkx_options')->get(['*'])->where('option_name', 'LIKE', $name);
+    $query = DB::table('options')->get(['*'])->where('option_name', 'LIKE', $name);
 
-    return $default;
+    return isset($query['value']) ? $query['value'] : $default;
   }
 
   private function setOption(string $name, $value): bool
