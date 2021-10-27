@@ -132,6 +132,11 @@ final class LicensesComposer extends Composer implements \App\Core\Schema\Compos
         'license' => 'The MIT License (MIT)',
         'url' => 'https://github.com/googlechrome/workbox'
       ],
+      [
+        'name' => 'ScrollReveal',
+        'license' => 'GNU General Public License 3.0',
+        'url' => 'https://scrollrevealjs.org/'
+      ],
     ]);
   }
 }
