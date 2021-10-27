@@ -35,6 +35,10 @@ final class Routes extends Router
       'redirect_logged' => true
     ],
     [
+      'path' => '/contact',
+      'namespace' => 'Contact',
+    ],
+    [
       'path' => '/licenses',
       'namespace' => 'Licenses',
     ],
