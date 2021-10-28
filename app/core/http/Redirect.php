@@ -26,8 +26,8 @@ final class Redirect
     App::close();
   }
 
-  public static function url(string $path): string
+  public static function url(string $path = ''): string
   {
-    return rtrim(Option::get('base_url', Request::root()), '/') . '/' . $path;
+    return rtrim(Option::remember('base_url', fn () => Request::root()), '/') . '/' . $path;
   }
 }

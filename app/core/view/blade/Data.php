@@ -5,6 +5,7 @@ namespace App\Core\View\Blade;
 use App\Core\Utils\Cast;
 use App\Core\Facades\{Config, Option, Request};
 use App\Core\Auth\Account;
+use App\Core\Http\Redirect;
 
 /**
  * Container of information passed to blade views.
@@ -63,7 +64,7 @@ final class Data
   private function setDefault(): void
   {
     $currentUser = Account::current();
-    $defaultUrl = rtrim(Option::get('base_url', Request::root()), '/') . '/';
+    $defaultUrl = Redirect::url();
 
     $this->set('version', Config::get('app.version', '0.0.0'));
 

@@ -4,6 +4,7 @@ namespace App\Core\View\Blade;
 
 use App\Core\Facades\{Config, Option, Request};
 use App\Core\Data\Encryption;
+use App\Core\Http\Redirect;
 
 /**
  * Dynamically creates directives for Blade.
@@ -15,6 +16,16 @@ use App\Core\Data\Encryption;
  */
 final class Directives
 {
+
+  /**
+   * Creates url.
+   * Triggered once.
+   */
+  public function url(string $path = ''): string
+  {
+    return Redirect::url($path);
+  }
+
   /**
    * Creates media url.
    * Triggered once.
@@ -22,10 +33,10 @@ final class Directives
   public function media(string $path = ''): string
   {
     if (empty($path)) {
-      return self::getAssetsUrl() . 'img/';
+      return Redirect::url('img/');
     }
 
-    return self::getAssetsUrl() . 'img/' . $path . '?v=' . Config::get('app.version', '0.0.0');
+    return Redirect::url('img/' . $path . '?v=' . Option::remember('app_version', fn () => Config::get('app.version', '0.0.0')));
   }
 
   /**
@@ -35,23 +46,10 @@ final class Directives
   public function asset(string $path = ''): string
   {
     if (empty($path)) {
-      return self::getAssetsUrl();
+      return Redirect::url();
     }
 
-    return self::getAssetsUrl() . $path . '?v=' . Config::get('app.version', '0.0.0');
-  }
-
-  /**
-   * Creates url.
-   * Triggered once.
-   */
-  public function url(string $path = ''): string
-  {
-    if (empty($path)) {
-      return rtrim(Option::get('base_url', Request::root()), '/') . '/';
-    }
-
-    return rtrim(Option::get('base_url', Request::root()), '/') . '/' . $path;
+    return Redirect::url($path . '?v=' . Option::remember('app_version', fn () => Config::get('app.version', '0.0.0')));
   }
 
   /**
@@ -116,9 +114,4 @@ final class Directives
   // {
   //   return 'endif';
   // }
-
-  private static function getAssetsUrl(): string
-  {
-    return $assetsUrl = rtrim(Option::get('base_url', Request::root()), '/') . '/';
-  }
 }

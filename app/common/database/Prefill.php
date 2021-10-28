@@ -24,7 +24,17 @@ final class Prefill
 
     DB::table('options')->insert([
       'name' => 'app_name',
-      'value' => Config::get('app.name', '1.0.0')
+      'value' => Config::get('app.name', 'Polkryptex')
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'site_name',
+      'value' => Config::get('app.name', 'Polkryptex')
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'language',
+      'value' => 'en_us'
     ]);
 
     DB::table('options')->insert([

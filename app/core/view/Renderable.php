@@ -4,6 +4,7 @@ namespace App\Core\View;
 
 use App\Core\Facades\{Request, Response, Option};
 use App\Core\Data\Encryption;
+use App\Core\Http\Redirect;
 
 /**
  * Abstraction for a view/request, contains the basic logic for all kinds of returned data in the browser.
@@ -26,7 +27,7 @@ abstract class Renderable
       ->setHeader('Content-Type', 'text/html; charset=UTF-8')
       ->setHeader('X-Content-Type-Options', 'nosniff');
 
-    $this->setBaseUrl(rtrim(Option::get('base_url', Request::root()), '/') . '/');
+    $this->setBaseUrl(Redirect::url());
 
     /**
      * Website contains items related to money transfers and is not suitable for children.

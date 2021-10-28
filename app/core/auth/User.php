@@ -6,6 +6,7 @@ use App\Core\Auth\Billing;
 use App\Core\Utils\Cast;
 use App\Core\Facades\{DB, Option, Request};
 use App\Core\Data\Encryption;
+use App\Core\Http\Redirect;
 
 /**
  * Represents the user
@@ -221,7 +222,7 @@ final class User
 
   public function isValid(): bool
   {
-    return $this->id > 0 && ! empty($this->uuid);
+    return $this->id > 0 && !empty($this->uuid);
   }
 
   public function markAsActive(): self
@@ -335,7 +336,7 @@ final class User
   public function getImage(bool $http = false): string
   {
     if ($http) {
-      return rtrim(Option::get('base_url', Request::root()), '/') . '/' . $this->image;
+      return Redirect::url($this->image);
     }
 
     return $this->image;

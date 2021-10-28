@@ -2,7 +2,7 @@
 
 namespace App\Core\Data;
 
-use App\Core\Facades\{App, DB, Cache};
+use App\Core\Facades\{App, DB};
 
 /**
  * Allows to retrieve and save options from the database, stored in memory using the Cache.
@@ -13,39 +13,59 @@ use App\Core\Facades\{App, DB, Cache};
  */
 final class Options
 {
-  private string $prefix = 'option_';
+  private array $store = [];
 
-  public function setPrefix($prefix): void
+  public function remember(string $name, \Closure $callback): mixed
   {
-    $this->prefix = $prefix;
+    if (isset($this->store[$name])) {
+      return $this->store[$name];
+    }
+
+    if (!App::isConnected()) {
+      $this->store[$name] = $callback();
+
+      return $this->store[$name];
+    }
+
+    $query = DB::table('options')->where('name', $name)->first();
+
+    $this->store[$name] = isset($query->value) ? self::serializeType($query->value) : $callback();
+
+    return $this->store[$name];
   }
 
-  public function get(string $name, $default = '')
+  public function get(string $name, mixed $default = null): mixed
   {
-    return Cache::remember($this->prefix . $name, 60, fn () => $this->getOption($name, $default));
-  }
+    if (isset($this->store[$name])) {
+      return $this->store[$name];
+    }
 
-  public function set(string $name, $value): bool
-  {
-    return $this->setOption($name, $value);
-  }
-
-  private function getOption(string $name, $default = '')
-  {
     if (!App::isConnected()) {
       return $default;
     }
 
-    $query = DB::table('options')->where('name', 'LIKE', $name)->first();
+    $query = DB::table('options')->where('name', $name)->first();
 
-    return isset($query->value) ? self::serializeType($query->value) : $default;
+    if (isset($query->value)) {
+      $this->store[$name] = self::serializeType($query->value);
+
+      return self::serializeType($query->value);
+    }
+
+    return $default;
   }
 
-  private function setOption(string $name, $value): bool
+  public function set(string $name, $value): bool
   {
-    Cache::forget($name);
+    $this->store[$name] = $value;
 
-    return true;
+    if (!App::isConnected()) {
+      return false;
+    }
+
+    return DB::table('options')->where('name', $name)->update([
+      'value' => $value
+    ]);
   }
 
   private static function serializeType(mixed $value): mixed
