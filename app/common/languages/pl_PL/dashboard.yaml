@@ -1,0 +1,33 @@
+# app\common\views\dashboard\main.blade.php
+Top up: Doładuj
+Exchange: Wymień
+Recent transations: Ostatnie transakcje
+See all: Zobacz wszystkie
+
+# app\common\views\dashboard\account.blade.php
+Account: Konto
+Display name: Nazwa wyświetlana
+Update: Zaktualizuj
+Profile picture: Obrazek profilu
+Edit your billing details: Edytuj swoje informacje rozliczeniowe
+Change your password: Zaktualizuj hasło
+
+# app\common\views\dashboard\billing.blade.php
+Billing: Dane rozliczeniowe
+First name: Imię
+Last name: Nazwisko
+Street: Ulica
+Postal code: Kod pocztowy
+City: Miasto
+Country: Kraj
+Province: Województwo
+Phone: Telefon
+Email: Email
+Back to account: Wróć do konta
+
+# app\common\views\dashboard\password.blade.php
+Change password: Zmień hasło
+Password change: Zmiana hasła
+Current password: Obecne hasło
+New password: Nowe hasło
+Confirm new password: Potwierdź nowe hasło

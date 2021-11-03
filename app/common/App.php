@@ -31,6 +31,10 @@ final class App extends Bootstrap implements \App\Core\Schema\App
             'log_level' => 'debug',
             'debug' => true
           ],
+          'i18n' => [
+            'default' => 'en_US',
+            'path' => Path::getAppPath('common/languages')
+          ],
           'database' => [
             'default' => 'default',
             'connections' => [

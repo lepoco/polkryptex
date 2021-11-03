@@ -6,6 +6,7 @@ use App\Core\Http\{Router, Response, Session};
 use App\Core\Data\Options;
 use App\Core\Facades\App;
 use App\Core\Data\Container;
+use App\Core\i18n\Translate;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Database\Capsule\Manager;
@@ -49,6 +50,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
   protected Options $options;
 
   protected FileSystem $filesystem;
+
+  protected Translate $translate;
 
   abstract public function init(): void;
 
@@ -94,6 +97,17 @@ abstract class Bootstrap implements \App\Core\Schema\App
         $this->destroy();
       }
     }
+
+    if (!$this->session->has('language')) {
+      $this->session->put('language', $this->configuration->get('i18n.default', 'en_US'));
+    }
+
+    $this->translate = new Translate();
+
+    $this->translate
+      ->setDomain($this->session->get('language', $this->configuration->get('i18n.default', 'en_US')))
+      ->setPath($this->configuration->get('i18n.path', ''))
+      ->initialize();
 
     $this->session->put('last_opened', $timeNow);
 

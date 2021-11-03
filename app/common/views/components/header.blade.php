@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="@option('language', 'en')">
+<html lang="@domain(true)">
 
 <head>
   <meta charset="utf-8">

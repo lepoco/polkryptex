@@ -1,0 +1,36 @@
+# app\common\views\components\navigation.blade.php
+Toggle navigation: Przełącz nawigację
+Admin panel: Panel administracyjny
+Dashboard: Kokpit
+Payments: Płatności
+Sign in: Zaloguj się
+Sign Out: Wyloguj się
+Register for free: Zarejestruj się za darmo
+
+# app\common\views\components\navigation-panel.blade.php
+Home: Strona główna
+Statistics: Statystyki
+Users: Użytkownicy
+Tools: Narzędzia
+Settings: Ustawienia
+
+# app\common\views\contact.blade.php
+Contact: Kontakt
+Email: Email
+Send: Wyślij
+Message: Wiadomość
+
+# app\common\views\installer.blade.php
+Database: Baza danych
+User: Użytkownik
+Password: Hasło
+Host: Host
+Begin installation: Rozpocznij instalację
+
+# app\common\views\sign-in.blade.php
+Password: Hasło
+Back to home: Powrót na stronę główną
+
+# app\common\views\register.blade.php
+Password too short?: Hasło za krótkie?
+Get a free and open source password manager for yourself.: Znajdź dla siebie darmowy i otwarty menedżer haseł.

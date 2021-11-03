@@ -2,7 +2,7 @@
 
 namespace App\Core\View\Blade;
 
-use App\Core\Facades\{Config, Option, Request};
+use App\Core\Facades\{Config, Option, Translate};
 use App\Core\Data\Encryption;
 use App\Core\Http\Redirect;
 
@@ -53,6 +53,18 @@ final class Directives
   }
 
   /**
+   * Returns the current language domain.
+   * Triggered every time.
+   */
+  public static function domain(bool $short = false): string
+  {
+    $domain = Translate::domain();
+    $domain = !empty($domain) ? $domain : 'en_US';
+
+    return $short ? substr($domain, 0, 2) : $domain;
+  }
+
+  /**
    * Translates text.
    * Triggered every time.
    */
@@ -61,6 +73,8 @@ final class Directives
     if (empty($text)) {
       return 'translator_string';
     }
+
+    $text = Translate::string($text);
 
     $text = str_replace(
       [
