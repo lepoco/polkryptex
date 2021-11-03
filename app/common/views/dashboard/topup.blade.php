@@ -15,6 +15,7 @@
     <p>card</p>
     <p>przelewy</p>
     <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Top up')</button>
+    <a href="@url('dashboard')" class="btn btn-outline-dark btn-mobile">@translate('Back to dashboard')</a>
   </form>
 </div>
 @endsection

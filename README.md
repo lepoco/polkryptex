@@ -36,14 +36,16 @@ To run all tests
 - [x] Accepting Ajax requests
 - [x] Automated installer
 - [x] Toast notifications
+- [x] Translations
 - [x] User accounts
 - [ ] User roles
-- [ ] Login and registration
+- [x] Login and registration
 - [ ] Internal payment system combined with the account balance of user accounts
 - [ ] Top-up module with service provider (PayPal /= PayU)
 - [ ] Cryptocurrency exchange system
 - [ ] Exchange of cryptocurrencies with their current rates and historical rates presented in the charts
 - [ ] (Optional) Forecasting further rate of a given cryptocurrency
+- [x] (Optional) PWA support
 
 ## Technologies & Tools
 - **PHP** - *Scripting language responsible for the application logic.*
