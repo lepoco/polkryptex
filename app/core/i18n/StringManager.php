@@ -93,8 +93,6 @@ final class StringManager
       throw new RuntimeException('Domain for translations must be defined');
     }
 
-    $this->domain = 'pl_PL';
-
     $this->getStrings();
 
     return $this;
