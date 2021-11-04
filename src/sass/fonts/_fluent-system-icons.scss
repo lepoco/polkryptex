@@ -10,13 +10,16 @@
     format("truetype");
 }
 
+@import "fluent-system-icons-regular";
+@import "fluent-system-icons-filled";
+
 i[class^="icon-"]:before,
 i[class*=" icon-"]:before {
+  font-size: 1.5rem; //base size
   font-family: FluentSystemIcons-Regular !important;
   font-style: normal;
   font-weight: normal !important;
   font-variant: normal;
-  font-size: 2.5rem;
   text-transform: none;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
@@ -38,6 +41,3 @@ i[class*=" icon-filled-"]:before {
     }
   }
 }
-
-@import "fluent-system-icons-regular";
-@import "fluent-system-icons-filled";

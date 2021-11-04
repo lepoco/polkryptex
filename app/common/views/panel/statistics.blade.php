@@ -1,5 +1,5 @@
 @extends('layouts.panel', [
-'title' => 'Statistics'
+'title' => \App\Core\Facades\Translate::string('Statistics')
 ])
 
 @section('content')

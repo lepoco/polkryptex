@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-'title' => 'Contact',
+'title' => \App\Core\Facades\Translate::string('Contact'),
 ])
 @section('content')
 <div class="container -pt-5">

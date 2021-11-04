@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-'title' => 'Change password'
+'title' => \App\Core\Facades\Translate::string('Change password')
 ])
 @section('content')
 

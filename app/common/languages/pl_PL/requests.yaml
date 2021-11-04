@@ -1,0 +1,16 @@
+# app\core\view\Request.php
+Not all fields are correctly filled.: Nie wszystkie pola zostały prawidłowo wypełnione.
+Some fields contain characters that are not allowed.: Niektóre pola zawierają niedozwolone znaki.
+The time verification key does not match, please try refreshing the page.: Klucz weryfikacyjny jest nieprawidłowy. Spróbuj odświeżyć witrynę.
+
+# app\common\requests\AccountRequest.php
+But, You haven't made any changes...: Ale nie dokonano żadnych zmian...
+Your account has been updated.: Twoje konto zostało zaktualizowane.
+Uploaded image is invalid.: Przesłany obrazek jest nieprawidłowy.
+The uploaded image has the wrong format. Supported extensions for JPG, PNG, WEBp and BMP.: Przesłany obrazek jest w nieprawidłowym formacie. Wspierane rozszerzenia to JPG, PNG, WEBp oraz BMP.
+
+# app\common\requests\ChangePasswordRequest.php
+Incorrect password.: Nieprawidłowe hasło.
+Passwords must be the same.: Hasła muszą być takie same.
+Your new password has been saved.: Twoje nowe hasło zostało zapisane.
+The password provided is too simple. It should be %s to %s characters long and contain a lowercase letter, an uppercase letter, a number and a special character.: Podane hasło jest za proste. Powinno zawierać od %s do %s znaków, małe i duże litery, cyfry oraz znaki specjalne.

@@ -2,7 +2,7 @@
 
 namespace App\Core\View;
 
-use App\Core\Facades\{App, Logs, Response};
+use App\Core\Facades\{App, Logs, Response, Translate};
 use App\Core\Facades\Request as IlluminateRequest;
 use App\Core\Http\Status;
 use App\Core\View\Renderable;
@@ -116,7 +116,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->addContent('error', 'Empty field');
       $this->addContent('notice', 'empty');
       $this->addContent('fields', $emptyField);
-      $this->addContent('message', 'Not all fields are correctly filled.');
+      $this->addContent('message', Translate::string('Not all fields are correctly filled.'));
       $this->finish(self::ERROR_EMPTY_ARGUMENTS, Status::UNPROCESSABLE_ENTITY);
     }
 
@@ -149,7 +149,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->addContent('error', 'Incorrect field');
       $this->addContent('notice', 'non_filtered');
       $this->addContent('fields', $incorrectFields);
-      $this->addContent('message', 'Some fields contain characters that are not allowed.');
+      $this->addContent('message', Translate::string('Some fields contain characters that are not allowed.'));
       $this->finish(self::ERROR_SPECIAL_CHARACTERS, Status::UNPROCESSABLE_ENTITY);
     }
 
@@ -203,7 +203,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
     if (!$this->validateNonce('ajax_' . strtolower($this->getAction()) . '_nonce', IlluminateRequest::get('nonce'))) {
       $this->addContent('error', 'Invalid nonce');
-      $this->addContent('message', 'The time verification key does not match, please try refreshing the page.');
+      $this->addContent('message', Translate::string('The time verification key does not match, please try refreshing the page.'));
       $this->finish(self::ERROR_NONCE_INVALID, Status::BAD_REQUEST);
     }
   }

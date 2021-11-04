@@ -41,6 +41,8 @@ final class User
 
   private string $sessionToken = '';
 
+  private string $language = '';
+
   private string $timezone = '';
 
   private string $createdAt = '';
@@ -68,6 +70,7 @@ final class User
       'email' => $this->getEmail(),
       'role_id' => $this->getRole(),
       'image' => $this->getImage(),
+      'language' => $this->getLanguage(),
       'timezone' => $this->getTimezone(),
       'is_active' => $this->isActive(),
       'is_confirmed' => $this->isConfirmed(),
@@ -185,6 +188,7 @@ final class User
       ->setDisplayName($properties['display_name'] ?? '')
       ->setImage($properties['image'] ?? '')
       ->setPassword($properties['password'] ?? '')
+      ->setLanguage($properties['language'] ?? 'en_US')
       ->setTimezone($properties['timezone'] ?? 'UTC')
       ->setBilling($billing);
   }
@@ -211,7 +215,8 @@ final class User
     $this->sessionToken = $data->session_token ?? '';
     $this->cookieToken = $data->cookie_token ?? '';
     $this->role = (int) $data->role_id ?? 1;
-    $this->timezone = $data->timezone ?? '';
+    $this->language = $data->language ?? 'en_US';
+    $this->timezone = $data->timezone ?? 'UTC';
     $this->lastLogin = $data->time_last_login ?? '';
     $this->createdAt = $data->created_at ?? '';
     $this->updatedAt = $data->updated_at ?? '';
@@ -340,6 +345,18 @@ final class User
     }
 
     return $this->image;
+  }
+
+  public function setLanguage(string $language): self
+  {
+    $this->language = $language;
+
+    return $this;
+  }
+
+  public function getLanguage(): string
+  {
+    return $this->language;
   }
 
   public function setTimezone(string $timezone): self

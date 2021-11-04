@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-'title' => 'Licenses',
+'title' => \App\Core\Facades\Translate::string('Licenses'),
 ])
 @section('content')
 <div class="container -pt-5">

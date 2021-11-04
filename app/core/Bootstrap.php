@@ -29,6 +29,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   protected bool $connected;
 
+  protected bool $installed;
+
   protected Container $container;
 
   protected Router $router;
@@ -89,7 +91,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
     $timeNow = time();
 
-    if ($this->isConnected() && $this->session->has('last_opened')) {
+    if ($this->isInstalled() && $this->session->has('last_opened')) {
       $maxDiff = (int) $this->options->get('signout_time', 15);
       $maxDiff = $maxDiff < 1 ? 60 : $maxDiff * 60;
 
@@ -102,13 +104,6 @@ abstract class Bootstrap implements \App\Core\Schema\App
       $this->session->put('language', $this->configuration->get('i18n.default', 'en_US'));
     }
 
-    $this->translate = new Translate();
-
-    $this->translate
-      ->setDomain($this->session->get('language', $this->configuration->get('i18n.default', 'en_US')))
-      ->setPath($this->configuration->get('i18n.path', ''))
-      ->initialize();
-
     $this->session->put('last_opened', $timeNow);
 
     return $this;
@@ -119,6 +114,23 @@ abstract class Bootstrap implements \App\Core\Schema\App
    */
   public function print(): self
   {
+    $this->translate = new Translate();
+
+    $langauge = $this->session->get('language', $this->configuration->get('i18n.default', 'en_US'));
+
+    if ($this->isInstalled()) {
+      $user = \App\Core\Auth\Account::current();
+
+      if (!empty($user)) {
+        $langauge = $user->getLanguage();
+      }
+    }
+
+    $this->translate
+      ->setDomain($langauge)
+      ->setPath($this->configuration->get('i18n.path', ''))
+      ->initialize();
+
     $this
       ->router
       ->setup()
@@ -205,6 +217,24 @@ abstract class Bootstrap implements \App\Core\Schema\App
     }
 
     return $this->connected;
+  }
+
+  /**
+   * Checks whether the database is connected and initialized.
+   */
+  final public function isInstalled(bool $forceReCheck = false): bool
+  {
+    if (!$forceReCheck && isset($this->installed)) {
+      return $this->installed;
+    }
+
+    if (!$this->isConnected()) {
+      return false;
+    }
+
+    $this->installed = $this->database->schema()->hasTable('options') && $this->database->schema()->hasTable('users');
+
+    return $this->installed;
   }
 
   /**

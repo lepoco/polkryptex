@@ -1,5 +1,5 @@
 @extends('layouts.panel', [
-'title' => 'Tools'
+'title' => \App\Core\Facades\Translate::string('Tools')
 ])
 
 @section('content')

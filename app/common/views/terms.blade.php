@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-'title' => 'Terms',
+'title' => \App\Core\Facades\Translate::string('Terms and Conditions'),
 ])
 @section('content')
 <div class="container -pt-5">

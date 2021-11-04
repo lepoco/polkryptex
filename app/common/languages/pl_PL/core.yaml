@@ -14,6 +14,14 @@ Users: Użytkownicy
 Tools: Narzędzia
 Settings: Ustawienia
 
+# app\common\views\components\expanded-footer.blade.php
+Website Terms: Regulamin
+Legal Agreements: Umowy Prawne
+Privacy Policy: Polityka Prywatności
+Source Code: Kod źródłowy
+Licenses: Licencje
+Budget & Analytics: Budżet i Analityka
+
 # app\common\views\contact.blade.php
 Contact: Kontakt
 Email: Email

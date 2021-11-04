@@ -1,5 +1,5 @@
 @extends('layouts.box', [
-'title' => 'Installer',
+'title' => \App\Core\Facades\Translate::string('Installer'),
 'background' => $base_url . 'img/pexels-watch-pay.jpeg'
 ])
 

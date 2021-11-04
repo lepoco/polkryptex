@@ -1,5 +1,5 @@
 @extends('layouts.panel', [
-'title' => 'Admin panel'
+'title' => \App\Core\Facades\Translate::string('Panel')
 ])
 
 @section('content')

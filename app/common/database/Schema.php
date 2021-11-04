@@ -100,6 +100,7 @@ final class Schema
         $table->text('session_token')->nullable();
         $table->text('cookie_token')->nullable();
         $table->foreignId('role_id')->references('id')->on('user_roles');
+        $table->string('language')->default('en_US');
         $table->string('timezone')->default('UTC');
         $table->timestamp('time_last_login')->nullable();
         $table->boolean('is_active')->default(false);

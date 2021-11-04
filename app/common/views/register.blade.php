@@ -1,5 +1,5 @@
 @extends('layouts.box', [
-'title' => 'Register',
+'title' => \App\Core\Facades\Translate::string('Register'),
 'background' => $base_url . 'img/pexels-person-holding-bitcoin.jpeg'
 ])
 

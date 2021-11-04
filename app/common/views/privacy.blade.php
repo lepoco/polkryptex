@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-  'title' => 'Privacy',
+  'title' => \App\Core\Facades\Translate::string('Privacy'),
 ])
 @section('content')
 <div class="container -pt-5">
