@@ -6,6 +6,7 @@ See all: Zobacz wszystkie
 
 # app\common\views\dashboard\account.blade.php
 Account: Konto
+Hello,: Cześć,
 Display name: Nazwa wyświetlana
 Language: Język
 Update: Zaktualizuj

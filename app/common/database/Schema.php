@@ -222,7 +222,6 @@ final class Schema
         $table->string('ip')->nullable();
         $table->text('ua')->nullable();
         $table->timestamp('created_at')->useCurrent();
-        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
   }

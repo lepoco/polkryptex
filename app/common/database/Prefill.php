@@ -77,22 +77,6 @@ final class Prefill
       'permissions' => '{p:[]}'
     ]);
 
-    DB::table('statistics_types')->insert([
-      'name' => 'page'
-    ]);
-
-    DB::table('statistics_types')->insert([
-      'name' => 'request'
-    ]);
-
-    DB::table('statistics_types')->insert([
-      'name' => 'transaction'
-    ]);
-
-    DB::table('statistics_types')->insert([
-      'name' => 'user'
-    ]);
-
     DB::table('plans')->insert([
       'name' => 'standard',
       'capabilities' => '{c:[]}'

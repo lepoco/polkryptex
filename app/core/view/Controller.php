@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 /**
  * Contains global logic for all views. If you want to add data for single view, use Composer.
- * 
+ *
  * @since 1.0.0
  * @author Pomianowski
  * @license https://www.gnu.org/licenses/gpl-3.0.txt
@@ -34,7 +34,7 @@ final class Controller extends Factory implements \App\Core\Schema\Controller
       Session::put('_previous_url', Request::url());
     }
 
-    Statistics::push(\App\Core\Data\Statistics::TYPE_PAGE, $this->namespace);
+    Statistics::push(\App\Core\Data\Statistics::TYPE_PAGE, 'PAGE:' . $this->namespace);
 
     Response::setContent($this->render(Cast::namespaceToBlade($this->namespace)));
 
