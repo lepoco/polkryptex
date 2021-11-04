@@ -4,6 +4,7 @@ namespace App\Core\Http;
 
 use App\Core\Facades\{App, Option, Logs, Config, Request, Session};
 use App\Core\Factories\{ControllerFactory, RequestFactory, RestFactory};
+use App\Core\Data\Encryption;
 use App\Core\Auth\Account;
 use App\Core\Http\Redirect;
 use Bramus\Router\Router as BramusRouter;
@@ -124,6 +125,12 @@ abstract class Router implements \App\Core\Schema\Router
 
     if (isset($routeData['require_login']) && true === $routeData['require_login'] && !$isSignedIn) {
       Redirect::to('signin');
+    }
+
+    if (isset($routeData['require_nonce']) && true === $routeData['require_nonce']) {
+      if (!Request::has('n') || !Encryption::compare($namespace, urldecode(Request::get('n', '')), 'nonce')) {
+        Redirect::to('dashboard');
+      }
     }
 
     if (isset($routeData['redirect_logged']) && true === $routeData['redirect_logged'] && $isSignedIn) {

@@ -6,11 +6,11 @@
   <div class="row">
 
     <div class="col-12">
-      <h4 class="-font-secondary -fw-700 -pb-3">@translate('Legal Agreements')</h4>
+      <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Legal Agreements')</h4>
     </div>
 
     <div class="col-12 -mb-5">
-      <p>
+      <p class="-reveal">
         Polkryptex is not a real website. It's just a college project. Don't exchange money here.
       </p>
     </div>

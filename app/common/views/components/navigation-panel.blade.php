@@ -25,12 +25,12 @@
             href="@url('panel/statistics')">@translate('Statistics')</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'panel.users' ? ' active' : '' }}"
-            href="@url('panel/users')">@translate('Users')</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link{{ $pagenow === 'panel.tools' ? ' active' : '' }}"
             href="@url('panel/tools')">@translate('Tools')</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link{{ $pagenow === 'panel.users' ? ' active' : '' }}"
+            href="@url('panel/users')">@translate('Users')</a>
         </li>
         <li class="nav-item">
           <a class="nav-link{{ $pagenow === 'panel.settings' ? ' active' : '' }}"

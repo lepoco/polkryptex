@@ -7,6 +7,7 @@ use App\Core\Data\Options;
 use App\Core\Facades\App;
 use App\Core\Data\Container;
 use App\Core\Data\Statistics;
+use App\Core\Email\Mailer;
 use App\Core\i18n\Translate;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
@@ -57,6 +58,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
   protected Translate $translate;
 
   protected Statistics $statistics;
+
+  protected Mailer $mailer;
 
   abstract public function init(): void;
 
@@ -135,6 +138,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
       ->initialize();
 
     $this->statistics = new Statistics($this->isInstalled());
+    $this->mailer = new Mailer();
 
     $this
       ->router

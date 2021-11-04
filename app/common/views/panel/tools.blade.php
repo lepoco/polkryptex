@@ -41,7 +41,7 @@
       <form id="panelFlushBlade" method="POST">
         <input type="hidden" name="action" value="PanelFlushBlade" />
         <input type="hidden" name="nonce" value="@nonce('panelflushblade')" />
-        <button type="submit" class="btn btn-dark btn-mobile -w-100">@translate('Flush blade views')</button>
+        <button type="submit" class="btn btn-dark btn-mobile -w-100 -reveal">@translate('Flush blade views')</button>
       </form>
     </div>
 
@@ -49,7 +49,7 @@
       <form id="panelFlushCache" method="POST">
         <input type="hidden" name="action" value="PanelFlushCache" />
         <input type="hidden" name="nonce" value="@nonce('panelflushcache')" />
-        <button type="submit" class="btn btn-dark btn-mobile -w-100">@translate('Flush cache')</button>
+        <button type="submit" class="btn btn-dark btn-mobile -w-100 -reveal">@translate('Flush cache')</button>
       </form>
     </div>
 
@@ -57,11 +57,11 @@
       <form id="panelFlushLogs" method="POST">
         <input type="hidden" name="action" value="PanelFlushLogs" />
         <input type="hidden" name="nonce" value="@nonce('panelflushlogs')" />
-        <button type="submit" class="btn btn-dark btn-mobile -w-100">@translate('Flush logs')</button>
+        <button type="submit" class="btn btn-dark btn-mobile -w-100 -reveal">@translate('Flush logs')</button>
       </form>
     </div>
 
-    <div class="col-12 -mt-2 -mb-2">
+    <div class="col-12 -mt-2 -mb-2 -reveal">
       <hr>
     </div>
   </div>

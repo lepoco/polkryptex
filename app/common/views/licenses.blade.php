@@ -6,13 +6,13 @@
   <div class="row">
 
     <div class="col-12">
-      <h4 class="-font-secondary -fw-700 -pb-3">@translate('Licenses')</h4>
+      <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Licenses')</h4>
     </div>
 
     <div class="col-12 -mb-5">
       <div>
 
-        <p>
+        <p class="-reveal">
           Polkryptex Inc - Cryptocurrency platform as a college team IT project.
           <br>
           <small>GNU General Public License v3.0 -</small> <a target="_blank" rel="noopener nofollow"
@@ -22,7 +22,7 @@
         <hr>
 
         @foreach($softwareList as $software)
-        <p>
+        <p class="-reveal">
           {{ $software['name'] ?? '' }}
           <br>
           <small>{{ $software['license'] ?? '' }} -</small> <a target="_blank" rel="noopener nofollow"

@@ -6,11 +6,11 @@
   <div class="row">
 
     <div class="col-12">
-      <h4 class="-font-secondary -fw-700 -pb-3">@translate('Terms and Conditions')</h4>
+      <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Terms and Conditions')</h4>
     </div>
 
     <div class="col-12 -mb-5">
-      <div>
+      <div class="-reveal">
         <p>Last updated: October 22, 2021</p>
         <p>Please read these terms and conditions carefully before using Our Service.</p>
         <h4 class="-mt-3">Interpretation and Definitions</h4>
