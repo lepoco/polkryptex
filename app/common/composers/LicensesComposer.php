@@ -48,6 +48,11 @@ final class LicensesComposer extends Composer implements \App\Core\Schema\Compos
         'url' => 'https://github.com/pestphp/pest'
       ],
       [
+        'name' => 'Fluent System Icons',
+        'license' => 'The MIT License (MIT)',
+        'url' => 'https://github.com/microsoft/fluentui-system-icons'
+      ],
+      [
         'name' => 'Illuminate Support',
         'license' => 'The MIT License (MIT)',
         'url' => 'https://github.com/illuminate/support'
