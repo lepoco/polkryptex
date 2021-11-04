@@ -7,13 +7,13 @@
 <div class="dashboard container pt-5 pb-5">
   <div class="row">
     <div class="col-12">
-      <h4 class="-font-secondary -fw-700 -pb-3">@translate('Users')</h4>
+      <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Users')</h4>
     </div>
 
     <div class="col-12">
       <table class="table table-striped">
         <thead>
-          <tr>
+          <tr class="-reveal">
             <th scope="col">#</th>
             <th scope="col">@translate('Email')</th>
             <th scope="col">@translate('Display name')</th>
@@ -26,7 +26,7 @@
 
           @isset($users)
           @foreach ($users as $singleUser)
-          <tr>
+          <tr class="-reveal">
             <th scope="row">{{ $singleUser->getId() }}</th>
             <td>{{ $singleUser->getEmail() }}</td>
             <td>{{ $singleUser->getDisplayName() }}</td>

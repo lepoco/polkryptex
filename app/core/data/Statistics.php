@@ -38,11 +38,6 @@ final class Statistics
 
     $this->fetchTags(DB::table('statistics_tags')->get()->all() ?? []);
     $this->fetchTypes(DB::table('statistics_types')->get()->all() ?? []);
-
-    ray([
-      'tags' => $this->tags,
-      'types' => $this->types
-    ]);
   }
 
   /**
@@ -61,8 +56,35 @@ final class Statistics
       'statistic_type' => $this->getTypeId($type),
       'ua' => $ua,
       'user_id' => !empty($user) ? $user->getId() : null,
-      'ip' => Request::ip()
+      'ip' => Request::ip(),
+      'created_at' => date('Y-m-d H:i:s')
     ]);
+  }
+
+  /**
+   * Gets selected type of statistics type from the database and limits them in time.
+   */
+  public function get(string $type, string $when): array
+  {
+    $typeId = $this->getTypeId($type, true);
+
+    if (0 === $typeId) {
+      return [];
+    }
+
+    $dbResults = DB::table('statistics')->where(['statistic_type' => $typeId]);
+
+    switch ($when) {
+      case 'today':
+        $dbResults->whereDate('created_at', '>=', date('Y-m-d'));
+        break;
+
+      case 'lastHour':
+        $dbResults->whereDate('created_at', '>=', date('Y-m-d'))->whereTime('created_at', '>=', date('H:i:s', time() - (60 * 60)));
+        break;
+    }
+
+    return $dbResults->get()->all();
   }
 
   /**
@@ -73,12 +95,16 @@ final class Statistics
     return $this->opened;
   }
 
-  private function getTypeId(string $type): int
+  public function getTypeId(string $type, bool $nullCheck = false): int
   {
     foreach ($this->types as $singleType) {
       if ($singleType['name'] === $type) {
         return $singleType['id'];
       }
+    }
+
+    if ($nullCheck) {
+      return 0;
     }
 
     $insertedId = DB::table('statistics_types')->insertGetId([
@@ -93,12 +119,16 @@ final class Statistics
     return $insertedId;
   }
 
-  private function getTagId(string $tag): int
+  public function getTagId(string $tag, bool $nullCheck = false): int
   {
     foreach ($this->tags as $singleTag) {
       if ($singleTag['name'] === $tag) {
         return $singleTag['id'];
       }
+    }
+
+    if ($nullCheck) {
+      return 0;
     }
 
     $insertedId = DB::table('statistics_tags')->insertGetId([

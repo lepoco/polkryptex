@@ -64,7 +64,8 @@ final class Options
     }
 
     return DB::table('options')->where('name', $name)->update([
-      'value' => $value
+      'value' => $value,
+      'updated_at' => date('Y-m-d H:i:s')
     ]);
   }
 

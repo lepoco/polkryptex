@@ -12,6 +12,7 @@ use App\Core\Facades\Abstract\Facade;
  * @since   1.1.0
  *
  * @method static bool push(string $type, string $tag, string $ua = null) Writes a new record to the database.
+ * @method static array get(string $type, string $when) Gets selected type of statistics type from the database and limits them in time.
  * @method static bool isOpened() Gets information about whether statistics are currently being saved.
  */
 final class Statistics extends Facade
