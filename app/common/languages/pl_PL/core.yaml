@@ -22,6 +22,12 @@ Source Code: Kod źródłowy
 Licenses: Licencje
 Budget & Analytics: Budżet i Analityka
 
+# app\common\views\not-found.blade.php
+Not found: Nie znaleziono
+Ups!: Ups!
+The page you are looking for has not been found.: Strona której szukasz nie istnieje.
+Back to the home page: Wróć na stronę główną
+
 # app\common\views\contact.blade.php
 Contact: Kontakt
 Email: Email

@@ -2,7 +2,7 @@
 
 namespace App\Core\View;
 
-use App\Core\Facades\{App, Logs, Response, Translate};
+use App\Core\Facades\{App, Logs, Response, Translate, Statistics};
 use App\Core\Facades\Request as IlluminateRequest;
 use App\Core\Http\Status;
 use App\Core\View\Renderable;
@@ -67,6 +67,8 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
     $this->validateRequestNonce();
 
     $this->addContent('hash', Str::random(32));
+
+    Statistics::push(\App\Core\Data\Statistics::TYPE_REQUEST, $this->getAction());
 
     if (method_exists($this, 'process')) {
       $this->{'process'}();

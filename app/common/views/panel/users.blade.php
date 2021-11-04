@@ -9,6 +9,37 @@
     <div class="col-12">
       <h4 class="-font-secondary -fw-700 -pb-3">@translate('Users')</h4>
     </div>
+
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">@translate('Email')</th>
+            <th scope="col">@translate('Display name')</th>
+            <th scope="col">@translate('UUID')</th>
+            <th scope="col">@translate('Registration date')</th>
+            <th scope="col">@translate('Last login')</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @isset($users)
+          @foreach ($users as $singleUser)
+          <tr>
+            <th scope="row">{{ $singleUser->getId() }}</th>
+            <td>{{ $singleUser->getEmail() }}</td>
+            <td>{{ $singleUser->getDisplayName() }}</td>
+            <td>{{ $singleUser->getUUID() }}</td>
+            <td>{{ $singleUser->getCreatedAt() }}</td>
+            <td>{{ $singleUser->getLastLogin() }}</td>
+          </tr>
+          @endforeach
+          @endisset
+
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

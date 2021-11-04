@@ -2,7 +2,7 @@
 
 namespace App\Core\View;
 
-use App\Core\Facades\{App, Config, Response, Session, Request};
+use App\Core\Facades\{App, Config, Response, Session, Request, Statistics};
 use App\Core\View\Blade\{Factory, Directives};
 use App\Core\Utils\Cast;
 use Illuminate\Support\Str;
@@ -33,6 +33,8 @@ final class Controller extends Factory implements \App\Core\Schema\Controller
     if (!in_array($this->namespace, ['NotFound', 'SignIn', 'Register', 'Installer'])) {
       Session::put('_previous_url', Request::url());
     }
+
+    Statistics::push(\App\Core\Data\Statistics::TYPE_PAGE, $this->namespace);
 
     Response::setContent($this->render(Cast::namespaceToBlade($this->namespace)));
 

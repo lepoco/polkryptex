@@ -6,6 +6,7 @@ use App\Core\Http\{Router, Response, Session};
 use App\Core\Data\Options;
 use App\Core\Facades\App;
 use App\Core\Data\Container;
+use App\Core\Data\Statistics;
 use App\Core\i18n\Translate;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
@@ -54,6 +55,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
   protected FileSystem $filesystem;
 
   protected Translate $translate;
+
+  protected Statistics $statistics;
 
   abstract public function init(): void;
 
@@ -130,6 +133,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
       ->setDomain($langauge)
       ->setPath($this->configuration->get('i18n.path', ''))
       ->initialize();
+
+    $this->statistics = new Statistics($this->isInstalled());
 
     $this
       ->router
