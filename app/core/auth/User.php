@@ -15,13 +15,11 @@ use App\Core\Http\Redirect;
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */
-final class User
+final class User extends \App\Core\Data\DatabaseObject
 {
   private bool $active = false;
 
   private bool $confirmed = false;
-
-  private int $id = 0;
 
   private int $role = 0;
 
@@ -246,26 +244,6 @@ final class User
     $this->confirmed = true;
 
     return $this;
-  }
-
-  /**
-   * Just a shorter wrapper for \App\Core\Auth\User::getId()
-   */
-  public function id(): int
-  {
-    return $this->getId();
-  }
-
-  public function setId(int $id): self
-  {
-    $this->id = $id;
-
-    return $this;
-  }
-
-  public function getId(): int
-  {
-    return $this->id;
   }
 
   public function setRole(int $role): self

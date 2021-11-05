@@ -6,10 +6,8 @@ use App\Core\Utils\Cast;
 use App\Core\Facades\DB;
 use App\Core\Data\Encryption;
 
-final class Billing
+final class Billing extends \App\Core\Data\DatabaseObject
 {
-  private int $id = 0;
-
   private int $userId = 0;
 
   private string $firstName = '';
@@ -136,31 +134,6 @@ final class Billing
     $this->updatedAt = $data->updated_at ?? '';
 
     return true;
-  }
-
-  public function isValid(): bool
-  {
-    return true;
-  }
-
-  /**
-   * Just a shorter wrapper for \App\Core\Auth\Billing::getId()
-   */
-  public function id(): int
-  {
-    return $this->getId();
-  }
-
-  public function setId(int $id): self
-  {
-    $this->id = $id;
-
-    return $this;
-  }
-
-  public function getId(): int
-  {
-    return $this->id;
   }
 
   public function setUserId(int $id): self

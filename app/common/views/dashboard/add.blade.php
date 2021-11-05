@@ -14,7 +14,7 @@
     <div class="floating-input -reveal">
       <select class="floating-input__field" placeholder="@translate('Currency')" name="currency">
         @foreach ($currencies as $singleCurrency)
-        <option value="{{ $singleCurrency->getIsoCode() }}">{{ '(' . $singleCurrency->getIsoCode() . ') ' .
+        <option value="{{ $singleCurrency->getIsoCode() }}">{{ $singleCurrency->getIsoCode() . ' - ' .
           \App\Core\Facades\Translate::string($singleCurrency->getName()) }}</option>
         @endforeach
       </select>

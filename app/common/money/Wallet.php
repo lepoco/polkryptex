@@ -12,10 +12,8 @@ use App\Core\Auth\User;
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */
-final class Wallet
+final class Wallet extends \App\Core\Data\DatabaseObject
 {
-  private int $id = 0;
-
   private int $currencyId = 0;
 
   private int $userId = 0;
@@ -55,31 +53,7 @@ final class Wallet
 
   private function fetch(int $id): self
   {
-    return $this;
-  }
-
-  public function isValid(): bool
-  {
-    return 0 !== $this->id;
-  }
-
-  /**
-   * Just a shorter wrapper for \App\Common\Money\Currency::getId()
-   */
-  public function id(): int
-  {
-    return $this->getId();
-  }
-
-  public function getId(): int
-  {
-    return $this->id;
-  }
-
-  private function setId(int $id): self
-  {
-    $this->id = $id;
-
+    // TODO: Implement fetch
     return $this;
   }
 
