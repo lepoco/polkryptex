@@ -111,3 +111,10 @@
     }
   }
 }
+
+input[type="checkbox"] {
+  &.-alert {
+    border: .2rem solid #ff6666;
+    box-shadow: .4rem .4rem 1rem .2rem #ff66663d;
+  }
+}

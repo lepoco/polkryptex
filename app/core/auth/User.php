@@ -57,6 +57,10 @@ final class User
   {
     $this->billing = new Billing($id);
 
+    if (0 === $id) {
+      return;
+    }
+
     $this->fetch($id);
   }
 

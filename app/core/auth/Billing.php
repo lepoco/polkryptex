@@ -40,6 +40,10 @@ final class Billing
   {
     $this->userId = $id;
 
+    if (0 === $id) {
+      return;
+    }
+
     $this->fetch($id);
   }
 

@@ -41,6 +41,7 @@ final class Schema
 
     DB::schema()->dropIfExists('transactions');
     DB::schema()->dropIfExists('wallets');
+    DB::schema()->dropIfExists('currencies_stock');
     DB::schema()->dropIfExists('currencies');
 
     DB::schema()->dropIfExists('user_billings');
@@ -101,7 +102,7 @@ final class Schema
         $table->text('cookie_token')->nullable();
         $table->foreignId('role_id')->references('id')->on('user_roles');
         $table->string('language')->default('en_US');
-        $table->string('timezone')->default('UTC');
+        $table->string('timezone')->nullable()->default('UTC');
         $table->timestamp('time_last_login')->nullable();
         $table->boolean('is_active')->default(false);
         $table->boolean('is_confirmed')->default(false);
@@ -163,12 +164,22 @@ final class Schema
         $table->string('iso_code')->nullable();
         $table->string('sign')->nullable();
         $table->string('name')->nullable();
-        $table->string('decimal_sign')->nullable();
-        $table->string('decimal_name')->nullable();
+        $table->string('subunit_sign')->nullable();
+        $table->string('subunit_name')->nullable();
+        $table->integer('subunit_multiplier')->nullable()->default(100);
         $table->boolean('is_crypto')->default(false);
         $table->boolean('is_master')->default(false);
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
+      });
+    }
+
+    if (!DB::schema()->hasTable('currencies_stock')) {
+      DB::schema()->create('currencies_stock', function (Blueprint $table) {
+        $table->id();
+        $table->float('rate', 12, 8, false)->default(1);
+        $table->foreignId('currency_id')->references('id')->on('currencies')->default(1);
+        $table->timestamp('created_at')->useCurrent();
       });
     }
 
@@ -190,6 +201,7 @@ final class Schema
         $table->foreignId('wallet_from')->references('id')->on('wallets');
         $table->foreignId('wallet_to')->references('id')->on('wallets');
         $table->float('amount')->default(0);
+        $table->boolean('is_topup')->default(false);
         $table->string('uuid')->nullable();
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
