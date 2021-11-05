@@ -130,6 +130,15 @@
     border-color: #121212;
   }
 
+  input[type="radio"]:disabled + &__label {
+    border-color: #dadce0;
+    color: #dadce0;
+    & > img,
+    & > svg {
+      opacity: .5;
+    }
+  }
+
   &__label {
     width: 100%;
     margin-bottom: 1rem;

@@ -33,29 +33,29 @@
     <div class="floating-radio -split">
       <label>
         <input type="radio" name="payment_method" checked="checked" />
-          <div class="floating-radio__label">
+          <div class="floating-radio__label -reveal">
             @media('apple-pay.svg')
           </div>
       </label>
 
       <label>
         <input type="radio" name="payment_method" />
-          <div class="floating-radio__label">
+          <div class="floating-radio__label -reveal">
             @media('google-pay.svg')
           </div>
       </label>
 
       <label>
         <input type="radio" name="payment_method" />
-          <div class="floating-radio__label">
+          <div class="floating-radio__label -reveal">
             @media('paypal.svg')
           </div>
       </label>
 
       <label>
         <input type="radio" name="payment_method" />
-          <div class="floating-radio__label">
-            @media('visa.svg')
+          <div class="floating-radio__label -reveal">
+            @media('mastercard-horizontal.svg')
           </div>
       </label>
     </div>
