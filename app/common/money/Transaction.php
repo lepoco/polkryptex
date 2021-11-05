@@ -20,11 +20,19 @@ final class Transaction extends \App\Core\Data\DatabaseObject
 
   private int $walletToId = 0;
 
+  private int $methodId = 1;
+
+  private int $typeId = 1;
+
   private float $amount = 0;
+
+  private float $rate = 1;
 
   private bool $topup = false;
 
   private string $uuid = '';
+
+  private string $methodReference = '';
 
   private string $createdAt = '';
 
@@ -54,9 +62,13 @@ final class Transaction extends \App\Core\Data\DatabaseObject
       ->setWalletFromId($properties['wallet_from'] ?? 0)
       ->setWalletToId($properties['wallet_to'] ?? '')
       ->setAmount($properties['amount'] ?? 0)
+      ->setMethodReference($properties['method_reference'] ?? '')
+      ->setMethodId($properties['method_id'] ?? 1)
+      ->setTypeId($properties['type_id'] ?? 1)
+      ->setRate($properties['rate'] ?? 1)
       ->setUUID($properties['uuid'] ?? '')
       ->defineTopup($properties['is_topup'] ?? false)
-      ->setCreatedAt($properties['updated_at'] ?? date('Y-m-d H:i:s'))
+      ->setCreatedAt($properties['created_at'] ?? date('Y-m-d H:i:s'))
       ->setId($properties['id'] ?? 0);
   }
 
@@ -136,6 +148,18 @@ final class Transaction extends \App\Core\Data\DatabaseObject
   private function setAmount(float $amount): self
   {
     $this->amount = $amount;
+
+    return $this;
+  }
+
+  public function getRate(): float
+  {
+    return $this->rate;
+  }
+
+  private function setRate(float $rate): self
+  {
+    $this->rate = $rate;
 
     return $this;
   }

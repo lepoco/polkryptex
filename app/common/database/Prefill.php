@@ -44,21 +44,29 @@ final class Prefill
     // PLANS
     DB::table('plans')->insert([
       'name' => 'standard',
+      'tier' => 1,
+      'default' => true,
       'capabilities' => '{c:[]}'
     ]);
 
     DB::table('plans')->insert([
       'name' => 'plus',
+      'tier' => 2,
+      'default' => false,
       'capabilities' => '{c:[]}'
     ]);
 
     DB::table('plans')->insert([
       'name' => 'premium',
+      'tier' => 3,
+      'default' => false,
       'capabilities' => '{c:[]}'
     ]);
 
     DB::table('plans')->insert([
       'name' => 'trader',
+      'tier' => 4,
+      'default' => false,
       'capabilities' => '{c:[]}'
     ]);
 

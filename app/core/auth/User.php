@@ -9,7 +9,7 @@ use App\Core\Data\Encryption;
 use App\Core\Http\Redirect;
 
 /**
- * Represents the user
+ * Represents the user.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
@@ -159,6 +159,9 @@ final class User extends \App\Core\Data\DatabaseObject
     ]);
   }
 
+  /**
+   * Updates all tokens and login information.
+   */
   public function updateTokens(string $sessionToken, string $cookieToken, bool $keepSessionPlain = false, bool $keepCookiePlain = true): bool
   {
     if (!$keepSessionPlain) {
@@ -226,7 +229,9 @@ final class User extends \App\Core\Data\DatabaseObject
     return true;
   }
 
-
+  /**
+   * Checks whether the object is a real user.
+   */
   public function isValid(): bool
   {
     return $this->id > 0 && !empty($this->uuid);

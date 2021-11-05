@@ -16,6 +16,9 @@ use Illuminate\Support\Str;
  */
 final class Account
 {
+  /**
+   * If exists, returns an instance of the currently logged on user.
+   */
   public static function current(): ?User
   {
     if (!App::isConnected()) {
@@ -57,6 +60,9 @@ final class Account
     return $user;
   }
 
+  /**
+   * Logs the user in.
+   */
   public static function signIn(User $user): bool
   {
     $token = Encryption::salter(32);
@@ -74,13 +80,20 @@ final class Account
     return true;
   }
 
+  /**
+   * Logs out the user by destroying the session and replacing the data.
+   */
   public static function signOut(): bool
   {
+    // TODO: Keys in the database should be changed.
     App::destroy();
 
     return true;
   }
 
+  /**
+   * Checks whether the selected user has the indicated rights. If the user is not provided, checks the currently logged in user.
+   */
   public static function hasPermission(string $permission = 'read', ?User $user = null): bool
   {
     $user = $user ?? self::current();
@@ -89,9 +102,13 @@ final class Account
       return false;
     }
 
+    // TODO: Verify permissions.
     return true;
   }
 
+  /**
+   * Checks whether the user with the given e-mail address exists.
+   */
   public static function isRegistered(string $data, string $type = 'email'): bool
   {
     if ('email' === $type && DB::table('users')->get(['*'])->where('email', $data)->count() > 0) {
@@ -101,6 +118,9 @@ final class Account
     return false;
   }
 
+  /**
+   * Retrieves the user by the specified key.
+   */
   public static function getBy(string $type = 'email', int|string $data = ''): ?User
   {
     $query = null;
@@ -130,6 +150,9 @@ final class Account
     return new User($query->id);
   }
 
+  /**
+   * Gets the ID of a role based on its name.
+   */
   public static function getRoleId(string $roleName): int
   {
     $role = DB::table('user_roles')->where('name', $roleName)->first();
@@ -141,6 +164,9 @@ final class Account
     return (int) $role->id;
   }
 
+  /**
+   * Gets the ID of a plan based on its name.
+   */
   public static function getPlanId(string $planName): int
   {
     $plan = DB::table('plans')->where('name', $planName)->first();
@@ -152,6 +178,9 @@ final class Account
     return (int) $plan->id;
   }
 
+  /**
+   * Registers the specified user object.
+   */
   public static function register(User $user, string $encryptedPassword): bool
   {
     $users = DB::table('users')->get(['*'])->where('email', $user->getEmail());

@@ -6,6 +6,13 @@ use App\Core\Utils\Cast;
 use App\Core\Facades\DB;
 use App\Core\Data\Encryption;
 
+/**
+ * Represents an object with user billing information.
+ *
+ * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
+ * @since   1.1.0
+ */
 final class Billing extends \App\Core\Data\DatabaseObject
 {
   private int $userId = 0;

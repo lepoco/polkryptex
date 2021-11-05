@@ -87,6 +87,8 @@ final class Schema
         $table->id();
         $table->string('name');
         $table->text('capabilities');
+        $table->integer('tier')->nullable();
+        $table->boolean('default')->default(false);
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });
@@ -218,6 +220,7 @@ final class Schema
         $table->foreignId('wallet_from')->nullable()->references('id')->on('wallets');
         $table->foreignId('wallet_to')->references('id')->on('wallets');
         $table->float('amount')->default(0);
+        $table->float('rate')->default(1);
         $table->boolean('is_topup')->default(false);
         $table->string('uuid')->nullable();
         $table->string('method_reference')->nullable();

@@ -11,26 +11,6 @@ The application uses several solutions to improve work and design. They are nece
 - Node JS - [nodejs.org](https://nodejs.org/en/download/)
 - PHP 8.0.11 - [php.net](https://windows.php.net/download#php-8.0)
 
-To install all PHP modules, enter comand in the application directory
-```powershell
-composer install
-```
-
-To download all node modules, enter the command
-```powershell
-npm install
-```
-
-To build all the resources and the startup directory
-```powershell
-npm run build
-```
-
-To run all tests
-```powershell
-./vendor/bin/pest.bat
-```
-
 ## Modules
 - [x] URL Routing
 - [x] Accepting Ajax requests
@@ -66,6 +46,68 @@ To run all tests
 - 01.10.2021 - Connection to the cryptocurrency API
 - 01.11.2021 - Implementing the PayPal API
 - 01.12.2021 - Optional, PWA support
+
+## How to run and install the application?
+Several steps must be taken to properly run the application.  
+
+ - First, copy the repository to the directory  
+   *The **~polkryptex** directory is an example, it could be e.g. **C:\xampp\htdocs\polkryptex\***
+   ```powershell
+   git clone origin main https://github.com/Polkryptex/Polkryptex.git ~polkryptex
+   ```
+
+ - Go to the directory with the site
+   ```powershell
+   cd ~polkryptex
+   ```
+
+ - Install all PHP modules, enter comand in the application directory
+   ```powershell
+   composer install
+   ```
+
+ - Download all node modules, enter the command
+   ```powershell
+   npm install
+   ```
+
+ - Build all the resources and the startup directory
+   ```powershell
+   npm run build
+   ```
+
+ - If you are using **Apache HTTPD**, configure the virtual host to point to the **public** directory inside **~polkryptex**.
+   ```xml
+   <VirtualHost polkryptex.lan:80>
+     DocumentRoot "~polkryptex\public"
+     ServerName polkryptex.lan
+   </VirtualHost>
+   ```
+
+ - If you are using **Apache HTTPD**, configure SSL for the domain.
+   ```xml
+   <VirtualHost polkryptex.lan:443>
+     DocumentRoot "~polkryptex\public"
+     ServerName polkryptex.lan
+     SSLEngine on
+     SSLCertificateFile "DIRECTORY_WITH_CERT\polkryptex.lan.crt"
+     SSLCertificateKeyFile "DIRECTORY_WITH_CERT\polkryptex.lan.key"
+   </VirtualHost>
+   ```
+
+ - If you are using *Windows*, add an entry to the **C:\Windows\System32\drivers\etc\hosts** file
+   ```c
+   127.0.0.1 polkryptex.lan
+   ```
+
+ - Now, go to **https://polkryptex.lan/** page in your browser and enter the database credentials. After installation, the application should work properly.
+
+
+## Tests
+To run all tests, in the root of the project, run the command:
+```powershell
+./vendor/bin/pest
+```
 
 ## External solutions
 - Node.js [nodejs.org](https://nodejs.org/en/)
