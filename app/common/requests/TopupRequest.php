@@ -2,7 +2,7 @@
 
 namespace App\Common\Requests;
 
-use App\Common\Money\{WalletsRepository, CurrenciesRepository, Wallet};
+use App\Common\Money\{WalletsRepository, TransactionsRepository, PaymentMethods};
 use App\Core\Facades\Translate;
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
@@ -33,17 +33,29 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
 
     $this->isEmpty([
       'id',
-      'currency',
-      'accept_terms',
-      'accept_currencies'
+      'wallet',
+      'amount',
+      'payment_method'
     ]);
 
     $this->validate([
       ['id', FILTER_VALIDATE_INT],
-      ['currency', FILTER_SANITIZE_STRING],
-      ['accept_terms', FILTER_SANITIZE_STRING],
-      ['accept_currencies', FILTER_SANITIZE_STRING]
+      ['wallet', FILTER_VALIDATE_INT],
+      ['amount', FILTER_SANITIZE_NUMBER_FLOAT],
+      ['payment_method', FILTER_SANITIZE_STRING]
     ]);
+
+    if (1 > $this->getData('amount')) {
+      $this->addContent('message', Translate::string('Amount entered is too small.'));
+      $this->addContent('fields', ['amount']);
+      $this->finish(self::ERROR_VALUE_TOO_LOW, Status::OK);
+    }
+
+    if (20000 < $this->getData('amount')) {
+      $this->addContent('message', Translate::string('Amount entered is too big.'));
+      $this->addContent('fields', ['amount']);
+      $this->finish(self::ERROR_VALUE_TOO_BIG, Status::OK);
+    }
 
     $user = Account::current();
 
@@ -53,33 +65,62 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
       return;
     }
 
-    $currency = CurrenciesRepository::getBy('iso_code', $this->getData('currency'));
+    $paymentMethod = PaymentMethods::UNKNOWN;
 
-    if (!$currency->isValid()) {
-      $this->finish(self::ERROR_ENTRY_DONT_EXISTS, Status::UNAUTHORIZED);
+    switch ($this->getData('payment_method')) {
+      case 'apple_pay':
+        $paymentMethod = PaymentMethods::APPLE_PAY;
+        break;
 
-      return;
-    }
+      case 'google_pay':
+        $paymentMethod = PaymentMethods::GOOGLE_PAY;
+        break;
 
-    $userWallets = WalletsRepository::getUserWallets($user->getId());
+      case 'paypal':
+        $paymentMethod = PaymentMethods::PAYPAL;
+        break;
 
-    foreach ($userWallets as $singleWallet) {
-      if ($singleWallet->getCurrencyId() === $currency->getId()) {
-        $this->addContent('message', Translate::string('You already have a wallet with this currency.'));
-        $this->finish(self::ERROR_ENTRY_EXISTS, Status::UNAUTHORIZED);
+      case 'card':
+        $paymentMethod = PaymentMethods::CARD;
+        break;
+
+      default:
+        $this->addContent('message', Translate::string('Incorrect payment method selected.'));
+        $this->addContent('fields', ['payment_method']);
+        $this->finish(self::ERROR_ENTRY_DONT_EXISTS, Status::OK);
 
         break;
+    }
+
+    $walletBelongs = false;
+    /** @var \App\Common\Money\Wallet[] $wallets */
+    $wallets = WalletsRepository::getUserWallets($user->getId());
+    /** @var \App\Common\Money\Wallet $selectedWallet */
+    $selectedWallet = null;
+
+    foreach ($wallets as $wallet) {
+      if ($this->getData('wallet') == $wallet->getId()) {
+        $walletBelongs = true;
+        $selectedWallet = $wallet;
       }
     }
 
-    $newWallet = Wallet::build([
-      'balance' => 0,
-      'user_id' => $user->getId(),
-      'currency_id' => $currency->getId()
-    ]);
+    if (!$walletBelongs) {
+      $this->addContent('message', Translate::string('Wrong wallet selected.'));
+      $this->addContent('fields', ['wallet']);
+      $this->finish(self::ERROR_ENTRY_DONT_EXISTS, Status::OK);
+    }
 
-    if (!WalletsRepository::addUserWallet($user->getId(), $newWallet)) {
-      $this->addContent('message', Translate::string('There was an error adding a new wallet. Please try again later.'));
+    if ($selectedWallet->getCurrency()->isCrypto()) {
+      $this->addContent('message', Translate::string('Selected wallet does not support top-ups.'));
+      $this->addContent('fields', ['wallet']);
+      $this->finish(self::ERROR_ENTRY_DONT_EXISTS, Status::OK);
+    }
+
+    // TODO: At this point, we've already verified the correctness of the data and can connect to the payment gateway provider.
+
+    if (!TransactionsRepository::topup($user, $selectedWallet, $this->getData('amount'), $paymentMethod)) {
+      $this->addContent('message', Translate::string('An error occurred while processing your payment.'));
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::UNAUTHORIZED);
     }
 

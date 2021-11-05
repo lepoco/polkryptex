@@ -70,6 +70,24 @@ final class Prefill
       'password' => '$cW4yTWs0djAwbTRjTi40VA$lQcuXoa/0y3FNdjrwOtxaJvxJ+GS2WHxAUC1qbk/EQg',
       'role_id' => 1
     ]);
+
+    // Transaction methods
+    DB::table('transaction_method')->insert([
+      'name' => 'internal'
+    ]);
+
+    // Transaction types
+    DB::table('transaction_type')->insert([
+      'name' => 'exchange'
+    ]);
+
+    DB::table('transaction_type')->insert([
+      'name' => 'transfer'
+    ]);
+
+    DB::table('transaction_type')->insert([
+      'name' => 'topup'
+    ]);
   }
 
   private static function fillOptions(): void

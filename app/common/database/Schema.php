@@ -40,6 +40,9 @@ final class Schema
     DB::schema()->dropIfExists('statistics_types');
 
     DB::schema()->dropIfExists('transactions');
+    DB::schema()->dropIfExists('transaction_type');
+    DB::schema()->dropIfExists('transaction_method');
+
     DB::schema()->dropIfExists('wallets');
     DB::schema()->dropIfExists('currencies_stock');
     DB::schema()->dropIfExists('currencies');
@@ -194,15 +197,32 @@ final class Schema
       });
     }
 
+    if (!DB::schema()->hasTable('transaction_type')) {
+      DB::schema()->create('transaction_type', function (Blueprint $table) {
+        $table->id();
+        $table->string('name')->nullable();
+      });
+    }
+
+    if (!DB::schema()->hasTable('transaction_method')) {
+      DB::schema()->create('transaction_method', function (Blueprint $table) {
+        $table->id();
+        $table->string('name')->nullable();
+      });
+    }
+
     if (!DB::schema()->hasTable('transactions')) {
       DB::schema()->create('transactions', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->references('id')->on('users');
-        $table->foreignId('wallet_from')->references('id')->on('wallets');
+        $table->foreignId('wallet_from')->nullable()->references('id')->on('wallets');
         $table->foreignId('wallet_to')->references('id')->on('wallets');
         $table->float('amount')->default(0);
         $table->boolean('is_topup')->default(false);
         $table->string('uuid')->nullable();
+        $table->string('method_reference')->nullable();
+        $table->foreignId('method_id')->references('id')->on('transaction_method')->default(1);
+        $table->foreignId('type_id')->references('id')->on('transaction_type')->default(1);
         $table->timestamp('created_at')->useCurrent();
       });
     }

@@ -22,7 +22,7 @@
     </div>
 
     <div class="floating-input -reveal">
-      <input class="floating-input__field" type="number" placeholder="@translate('Amount')" name="amount">
+      <input class="floating-input__field" type="number" placeholder="@translate('Amount')" min="1" max="20000" name="amount" pattern="([0-9]+.{0,1}[0-9]*,{0,1})*[0-9]">
       <label for="amount">@translate('Amount')</label>
     </div>
 
@@ -32,28 +32,28 @@
 
     <div class="floating-radio -split">
       <label>
-        <input type="radio" name="payment_method" checked="checked" />
+        <input type="radio" name="payment_method" value="apple_pay" checked="checked" />
           <div class="floating-radio__label -reveal">
             @media('apple-pay.svg')
           </div>
       </label>
 
       <label>
-        <input type="radio" name="payment_method" />
+        <input type="radio" name="payment_method" value="google_pay" />
           <div class="floating-radio__label -reveal">
             @media('google-pay.svg')
           </div>
       </label>
 
       <label>
-        <input type="radio" name="payment_method" />
+        <input type="radio" name="payment_method" value="paypal" />
           <div class="floating-radio__label -reveal">
             @media('paypal.svg')
           </div>
       </label>
 
       <label>
-        <input type="radio" name="payment_method" />
+        <input type="radio" name="payment_method" value="card" />
           <div class="floating-radio__label -reveal">
             @media('mastercard-horizontal.svg')
           </div>

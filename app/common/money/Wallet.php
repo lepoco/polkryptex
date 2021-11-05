@@ -52,6 +52,13 @@ final class Wallet extends \App\Core\Data\DatabaseObject
       ->setId($properties['id'] ?? 0);
   }
 
+  public function updateBalance(float $balance): bool
+  {
+    return DB::table('wallets')->where('id', $this->getId())->update([
+      'virtual_balance' => $balance
+    ]);
+  }
+
   private function fetch(int $id): void
   {
     $dbWallet = DB::table('wallets')->where(['id' => $id])->get()->first();

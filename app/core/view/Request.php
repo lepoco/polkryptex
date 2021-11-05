@@ -44,6 +44,8 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
   protected const ERROR_FILE_INVALID             = 'E23';
   protected const ERROR_FILE_INVALID_MIME_TYPE   = 'E24';
   protected const ERROR_FILE_TOO_LARGE           = 'E25';
+  protected const ERROR_VALUE_TOO_BIG            = 'E26';
+  protected const ERROR_VALUE_TOO_LOW            = 'E27';
 
   protected const CODE_SUCCESS                   = 'S01';
 
