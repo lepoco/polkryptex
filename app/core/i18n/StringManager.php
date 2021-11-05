@@ -27,6 +27,8 @@ final class StringManager
 
   public function has(string $text): bool
   {
+    // TODO: Refactor
+
     $this->recentSearch = $text;
 
     foreach ($this->translatable as $pair) {

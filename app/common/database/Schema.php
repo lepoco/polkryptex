@@ -119,7 +119,7 @@ final class Schema
         $table->id();
         $table->foreignId('user_id')->references('id')->on('users');
         $table->foreignId('plan_id')->references('id')->on('plans');
-        $table->timestamp('expiers_at')->nullable();
+        $table->timestamp('expires_at')->nullable();
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });

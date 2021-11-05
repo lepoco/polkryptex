@@ -47,14 +47,16 @@ final class ErrorHandler
       return true;
     }
 
-    VarDumper::dump([
-      'ERROR' => [
-        'errno' => $errno,
-        'errstr' => $errstr,
-        'errfile' => $errfile,
-        'errline' => $errline
-      ]
-    ]);
+    if (class_exists('VarDumper')) {
+      VarDumper::dump([
+        'ERROR' => [
+          'errno' => $errno,
+          'errstr' => $errstr,
+          'errfile' => $errfile,
+          'errline' => $errline
+        ]
+      ]);
+    }
 
     return true;
   }
@@ -73,7 +75,9 @@ final class ErrorHandler
       return true;
     }
 
-    VarDumper::dump($exception);
+    if (class_exists('VarDumper')) {
+      VarDumper::dump($exception);
+    }
 
     return true;
   }

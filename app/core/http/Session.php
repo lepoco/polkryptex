@@ -60,11 +60,6 @@ final class Session implements \App\Core\Schema\Session
     return $default;
   }
 
-  public function all(): array
-  {
-    return $this->sessionData ?? [];
-  }
-
   /**
    * Put a key / value pair or array of key / value pairs in the session.
    */
@@ -154,6 +149,14 @@ final class Session implements \App\Core\Schema\Session
   }
 
   /**
+   * Retrieves all session data.
+   */
+  public function all(): array
+  {
+    return $this->sessionData ?? [];
+  }
+
+  /**
    * Clear ALL session data.
    */
   public function clear(): self
@@ -210,6 +213,9 @@ final class Session implements \App\Core\Schema\Session
     return $this;
   }
 
+  /**
+   * @deprecated It's a bad practice to close a session while the application is running.
+   */
   public function close(): bool
   {
     if (!$this->started) {
@@ -230,8 +236,17 @@ final class Session implements \App\Core\Schema\Session
     return session_write_close();
   }
 
+  /**
+   * Save used values in the session.
+   */
   public function save(): self
   {
+    if (!$this->started) {
+      // TODO: Should we throw an error?
+      return $this;
+    }
+
+    // TODO: Should we allow multiple saves?
     // if (!$this->started) {
     //   throw new \RuntimeException('Failed to save closed session.');
     // }
@@ -309,6 +324,9 @@ final class Session implements \App\Core\Schema\Session
     return $this;
   }
 
+  /**
+   * Get information about whether a session is currently opened.
+   */
   public function isStarted(): bool
   {
     return $this->started;

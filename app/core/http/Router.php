@@ -119,6 +119,8 @@ abstract class Router implements \App\Core\Schema\Router
 
   protected function validateAccess(string $namespace): void
   {
+    // TODO: Does this class have too much responsibility, maybe we should move this logic?
+
     $routeData = array_filter($this->routes, fn ($route) => isset($route['namespace']) && $namespace == $route['namespace']) ?? [];
     $routeData = array_shift($routeData);
     $isSignedIn = !empty(Account::current());

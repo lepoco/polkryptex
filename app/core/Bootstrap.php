@@ -124,6 +124,9 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
     $langauge = $this->session->get('language', $this->configuration->get('i18n.default', 'en_US'));
 
+    // TODO: Detect browser specific language
+    // TODO: Or, set language on front via dropdown
+
     if ($this->isInstalled()) {
       $user = \App\Core\Auth\Account::current();
 

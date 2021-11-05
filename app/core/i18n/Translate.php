@@ -25,6 +25,8 @@ final class Translate
    */
   public function string(string $text, ...$arguments): string
   {
+    // TODO: Implement plural and sprintf
+
     if (!$this->manager->has($text)) {
       return $text;
     }

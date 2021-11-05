@@ -55,7 +55,8 @@ final class Wallet extends \App\Core\Data\DatabaseObject
   public function updateBalance(float $balance): bool
   {
     return DB::table('wallets')->where('id', $this->getId())->update([
-      'virtual_balance' => $balance
+      'virtual_balance' => $balance,
+      'updated_at' => date('Y-m-d H:i:s')
     ]);
   }
 

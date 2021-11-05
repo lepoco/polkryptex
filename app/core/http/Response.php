@@ -5,7 +5,7 @@ namespace App\Core\Http;
 use Symfony\Component\HttpFoundation\Cookie;
 
 /**
- * Redirects traffic to views or requests.
+ * Object that stores the HTTP response.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Cookie;
  */
 final class Response extends \Symfony\Component\HttpFoundation\Response implements \App\Core\Schema\Response
 {
+  /**
+   * Sets a new HTTP header.
+   */
   public function setHeader(string $key, $values, bool $replace = true): self
   {
     $this->headers->set($key, $values, $replace);
@@ -20,6 +23,9 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     return $this;
   }
 
+  /**
+   * Removes a HTTP header.
+   */
   public function removeHeader(string $key): self
   {
     $this->headers->remove($key);
@@ -27,6 +33,9 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     return $this;
   }
 
+  /**
+   * Sets a new HTTP cookie header.
+   */
   public function setCookie(Cookie $cookie): self
   {
     $this->headers->setCookie($cookie);
@@ -34,6 +43,9 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     return $this;
   }
 
+  /**
+   * Removes a HTTP cookie header.
+   */
   public function removeCookie(string $key): self
   {
     $this->headers->removeCookie($key);
@@ -41,6 +53,9 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     return $this;
   }
 
+  /**
+   * Gets a HTTP cookie header by given name.
+   */
   public function getCookie(string $key): ?Cookie
   {
     $cookies = $this->headers->getCookies();
@@ -69,6 +84,7 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
   private function buildSessionCookie(): self
   {
     // TODO: Fix cookies saving
+
     // $cookies = App::getProperty('container')->get('cookie')->getQueuedCookies();
 
     // foreach ($cookies as $cookie) {
