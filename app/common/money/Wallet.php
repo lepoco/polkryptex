@@ -43,12 +43,12 @@ final class Wallet extends \App\Core\Data\DatabaseObject
   public static function build(array $properties): self
   {
     return (new self())
-      ->setId($properties['id'] ?? 0)
       ->setBalance($properties['balance'] ?? 0)
       ->setUserId($properties['user_id'] ?? 0)
       ->setCurrencyId($properties['currency_id'] ?? 0)
-      ->setCreatedAt($properties['created_at'] ?? '')
-      ->setUpdatedAt($properties['updated_at'] ?? '');
+      ->setCreatedAt($properties['created_at'] ?? date('Y-m-d H:i:s'))
+      ->setUpdatedAt($properties['updated_at'] ?? date('Y-m-d H:i:s'))
+      ->setId($properties['id'] ?? 0);
   }
 
   private function fetch(int $id): self

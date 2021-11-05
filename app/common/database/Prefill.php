@@ -120,6 +120,11 @@ final class Prefill
     ]);
 
     DB::table('options')->insert([
+      'name' => 'stastistics_keep_ip',
+      'value' => 'true'
+    ]);
+
+    DB::table('options')->insert([
       'name' => 'mail_sendfrom',
       'value' => 'no-reply@example.com'
     ]);

@@ -47,7 +47,6 @@ final class Currency extends \App\Core\Data\DatabaseObject
   public static function build(array $properties): self
   {
     return (new self())
-      ->setId($properties['id'] ?? 0)
       ->setRate($properties['rate'] ?? 0)
       ->setIsoNumber($properties['iso_number'] ?? 0)
       ->setIsoCode($properties['iso_code'] ?? '')
@@ -56,10 +55,11 @@ final class Currency extends \App\Core\Data\DatabaseObject
       ->setSubunitSign($properties['subunit_sign'] ?? '')
       ->setSubunitName($properties['subunit_name'] ?? '')
       ->setSubunitMultiplier($properties['subunit_multiplier'] ?? 100)
-      ->setCreatedAt($properties['created_at'] ?? '')
-      ->setUpdatedAt($properties['updated_at'] ?? '')
+      ->setCreatedAt($properties['created_at'] ?? date('Y-m-d H:i:s'))
+      ->setUpdatedAt($properties['updated_at'] ?? date('Y-m-d H:i:s'))
       ->defineCrypto($properties['is_crypto'] ?? false)
-      ->defineMaster($properties['is_master'] ?? false);
+      ->defineMaster($properties['is_master'] ?? false)
+      ->setId($properties['id'] ?? 0);
   }
 
   private function fetch(int $id): void

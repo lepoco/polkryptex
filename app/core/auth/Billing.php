@@ -76,7 +76,6 @@ final class Billing extends \App\Core\Data\DatabaseObject
   public static function build(array $properties): self
   {
     return (new self())
-      ->setId($properties['id'] ?? 0)
       ->setUserId($properties['user_id'] ?? 1)
       ->setFirstName($properties['first_name'] ?? '')
       ->setLastName($properties['last_name'] ?? '')
@@ -87,7 +86,8 @@ final class Billing extends \App\Core\Data\DatabaseObject
       ->setProvince($properties['province'] ?? '')
       ->setPhone($properties['phone'] ?? '')
       ->setEmail($properties['email'] ?? '')
-      ->setTimezone($properties['timezone'] ?? 'UTC');
+      ->setTimezone($properties['timezone'] ?? 'UTC')
+      ->setId($properties['id'] ?? 0);
   }
 
   private function insertNew(): bool

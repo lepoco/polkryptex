@@ -56,7 +56,7 @@ final class Transaction extends \App\Core\Data\DatabaseObject
       ->setAmount($properties['amount'] ?? 0)
       ->setUUID($properties['uuid'] ?? '')
       ->defineTopup($properties['is_topup'] ?? false)
-      ->setCreatedAt($properties['updated_at'] ?? '')
+      ->setCreatedAt($properties['updated_at'] ?? date('Y-m-d H:i:s'))
       ->setId($properties['id'] ?? 0);
   }
 

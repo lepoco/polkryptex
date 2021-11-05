@@ -4,7 +4,7 @@ namespace App\Core\Auth;
 
 use App\Core\Auth\Billing;
 use App\Core\Utils\Cast;
-use App\Core\Facades\{DB, Option, Request};
+use App\Core\Facades\DB;
 use App\Core\Data\Encryption;
 use App\Core\Http\Redirect;
 
@@ -182,7 +182,6 @@ final class User extends \App\Core\Data\DatabaseObject
     ]);
 
     return (new self())
-      ->setId($properties['id'] ?? 0)
       ->setRole($properties['role'] ?? 1)
       ->setType($properties['type'] ?? 1)
       ->setUuid($properties['uuid'] ?? '')
@@ -192,7 +191,8 @@ final class User extends \App\Core\Data\DatabaseObject
       ->setPassword($properties['password'] ?? '')
       ->setLanguage($properties['language'] ?? 'en_US')
       ->setTimezone($properties['timezone'] ?? 'UTC')
-      ->setBilling($billing);
+      ->setBilling($billing)
+      ->setId($properties['id'] ?? 0);
   }
 
   private function fetch(int $id): bool
