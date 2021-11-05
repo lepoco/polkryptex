@@ -5,6 +5,7 @@ namespace App\Core\View\Blade;
 use App\Core\Facades\{Config, Option, Translate};
 use App\Core\Data\Encryption;
 use App\Core\Http\Redirect;
+use Illuminate\Support\Str;
 
 /**
  * Dynamically creates directives for Blade.
@@ -30,13 +31,15 @@ final class Directives
    * Creates media url.
    * Triggered once.
    */
-  public function media(string $path = ''): string
+  public function media(string $asset = ''): string
   {
-    if (empty($path)) {
-      return Redirect::url('img/');
+    $url = '#';
+
+    if (!empty($asset)) {
+      $url = Redirect::url('img/' . $asset . '?v=' . Option::remember('app_version', fn () => Config::get('app.version', '0.0.0')));
     }
 
-    return Redirect::url('img/' . $path . '?v=' . Option::remember('app_version', fn () => Config::get('app.version', '0.0.0')));
+    return '<img lazy src="' . $url . '" alt="' . Str::before($asset, '.') . ' icon" />';
   }
 
   /**

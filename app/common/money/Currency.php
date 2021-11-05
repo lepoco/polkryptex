@@ -2,6 +2,8 @@
 
 namespace App\Common\Money;
 
+use App\Core\Facades\DB;
+
 /**
  * Represents a currency instance.
  *
@@ -64,7 +66,25 @@ final class Currency extends \App\Core\Data\DatabaseObject
 
   private function fetch(int $id): void
   {
-    // TODO: Implement fetch
+    $dbCurrency = DB::table('currencies')->where(['id' => $id])->get()->first();
+
+    if (!isset($dbCurrency->id) || !isset($dbCurrency->rate)) {
+      return;
+    }
+
+    $this->id = $dbCurrency->id;
+    $this->rate = $dbCurrency->rate;
+    $this->isoNumber = $dbCurrency->iso_number;
+    $this->isoCode = $dbCurrency->iso_code;
+    $this->sign = $dbCurrency->sign;
+    $this->name = $dbCurrency->name;
+    $this->subunitSign = $dbCurrency->subunit_sign;
+    $this->subunitName = $dbCurrency->subunit_name;
+    $this->subunitMultiplier = $dbCurrency->subunit_multiplier;
+    $this->createdAt = $dbCurrency->created_at;
+    $this->updatedAt = $dbCurrency->updated_at;
+    $this->master = $dbCurrency->is_master;
+    $this->crypto = $dbCurrency->is_crypto;
   }
 
   public function getRate(): float

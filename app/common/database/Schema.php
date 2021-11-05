@@ -2,7 +2,7 @@
 
 namespace App\Common\Database;
 
-use App\Core\Facades\{Config, Request, DB};
+use App\Core\Facades\DB;
 use Illuminate\Database\Schema\Blueprint;
 
 /**

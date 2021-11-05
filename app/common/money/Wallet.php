@@ -4,6 +4,7 @@ namespace App\Common\Money;
 
 use App\Common\Money\Currency;
 use App\Core\Auth\User;
+use App\Core\Facades\DB;
 
 /**
  * Represents a wallet instance.
@@ -51,10 +52,21 @@ final class Wallet extends \App\Core\Data\DatabaseObject
       ->setId($properties['id'] ?? 0);
   }
 
-  private function fetch(int $id): self
+  private function fetch(int $id): void
   {
-    // TODO: Implement fetch
-    return $this;
+    $dbWallet = DB::table('wallets')->where(['id' => $id])->get()->first();
+
+    if (!isset($dbWallet->id) || !isset($dbWallet->balance)) {
+      return;
+    }
+
+    $this->id = $dbWallet->id;
+    $this->balance = $dbWallet->virtual_balance;
+    $this->createdAt = $dbWallet->created_at;
+    $this->updatedAt = $dbWallet->updated_at;
+    $this->isoCode = $dbWallet->iso_code;
+
+    $this->setCurrencyId($dbWallet->currency_id);
   }
 
   public function getBalance(): float
@@ -88,6 +100,11 @@ final class Wallet extends \App\Core\Data\DatabaseObject
     $this->userId = $userId;
 
     return $this;
+  }
+
+  public function getCurrency(): Currency
+  {
+    return $this->currency;
   }
 
   public function getCurrencyId(): int
