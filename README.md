@@ -1,3 +1,5 @@
+![logo](https://raw.githubusercontent.com/Polkryptex/Polkryptex/main/src/img/logo.svg)
+
 # Polkryptex - Cryptocurrency exchange platform
 A web application developed as part of a team IT project.  
 Kazimierz Wielki University, Bydgoszcz, Poland
