@@ -84,7 +84,8 @@ Several steps must be taken to properly run the application.
    </VirtualHost>
    ```
 
- - If you are using **Apache HTTPD**, configure SSL for the domain.
+ - If you are using **Apache HTTPD**, configure SSL for the domain.  
+   Sample certifice [can be found here](https://github.com/Polkryptex/Polkryptex/tree/main/.sample_cert). Install it on your computer in **Trusted Root Certification Authorities** and select it in **VritualHost**.
    ```xml
    <VirtualHost polkryptex.lan:443>
      DocumentRoot "~polkryptex\public"
