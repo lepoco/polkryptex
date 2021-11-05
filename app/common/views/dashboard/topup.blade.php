@@ -1,6 +1,6 @@
 @extends('layouts.box', [
 'title' => \App\Core\Facades\Translate::string('Top up'),
-'background' => $base_url . 'img/pexels-person-holding-bitcoin.jpeg'
+'background' => $base_url . 'img/pexels-photo-6347707.jpeg'
 ])
 
 @section('content')
@@ -12,13 +12,13 @@
     <input type="hidden" name="id" value="{{ $user->getId() }}" />
 
     <div class="floating-input -reveal">
-      <select class="floating-input__field" placeholder="@translate('Currency')" name="currency">
+      <select class="floating-input__field" placeholder="@translate('Currency')" name="wallet">
         @foreach ($user_wallets as $singleWallet)
-        <option value="{{ $singleWallet->getCurrency()->getIsoCode() }}">{{ $singleWallet->getCurrency()->getIsoCode() . ' - ' .
+        <option value="{{ $singleWallet->getId() }}">{{ $singleWallet->getCurrency()->getIsoCode() . ' - ' .
           \App\Core\Facades\Translate::string($singleWallet->getCurrency()->getName()) }}</option>
         @endforeach
       </select>
-      <label for="currency">@translate('Currency')</label>
+      <label for="wallet">@translate('Currency')</label>
     </div>
 
     <div class="floating-input -reveal">

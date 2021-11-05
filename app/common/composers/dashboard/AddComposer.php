@@ -2,7 +2,7 @@
 
 namespace App\Common\Composers\Dashboard;
 
-use App\Common\Money\CurrenciesRepository;
+use App\Common\Money\{CurrenciesRepository, WalletsRepository};
 use App\Core\Auth\Account;
 use App\Core\View\Blade\Composer;
 use Illuminate\View\View;
@@ -19,8 +19,22 @@ final class AddComposer extends Composer implements \App\Core\Schema\Composer
   public function compose(View $view): void
   {
     $user = Account::current();
+    $currencies = CurrenciesRepository::getAll();
+    $wallets = WalletsRepository::getUserWallets($user->getId());
+
+    // Don't show currencies that the user already owns.
+    $currencies = array_filter($currencies, function ($currency) use ($wallets) {
+      foreach ($wallets as $wallet) {
+        if ($wallet->getCurrency()->getId() == $currency->getId()) {
+          return false;
+        }
+      }
+
+      return true;
+    });
 
     $view->with('user', $user);
-    $view->with('currencies', CurrenciesRepository::getAll());
+    $view->with('currencies', $currencies);
+    $view->with('has_currencies', !empty($currencies));
   }
 }
