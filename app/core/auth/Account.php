@@ -2,7 +2,7 @@
 
 namespace App\Core\Auth;
 
-use App\Core\Facades\{App, Session, DB};
+use App\Core\Facades\{App, Session, DB, Response};
 use App\Core\Auth\User;
 use App\Core\Data\Encryption;
 use Illuminate\Support\Str;
@@ -82,9 +82,12 @@ final class Account
 
   /**
    * Logs out the user by destroying the session and replacing the data.
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Clear-Site-Data
    */
   public static function signOut(): bool
   {
+    // Optionally we can also clear 'cookies' - , "cookies"
+    Response::setHeader('Clear-Site-Data', '"cache", "storage", "executionContexts"', true);
     // TODO: Keys in the database should be changed.
     App::destroy();
 

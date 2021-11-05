@@ -2,7 +2,7 @@
 
 namespace App\Core\View\Blade;
 
-use App\Core\Facades\{Config, Option, Translate};
+use App\Core\Facades\{Config, Option, Translate, Response};
 use App\Core\Data\Encryption;
 use App\Core\Http\Redirect;
 use Illuminate\Support\Str;
@@ -53,6 +53,15 @@ final class Directives
     }
 
     return Redirect::url($path . '?v=' . Option::remember('app_version', fn () => Config::get('app.version', '0.0.0')));
+  }
+
+  /**
+   * Creates url.
+   * Triggered once.
+   */
+  public static function csp(): string
+  {
+    return Response::getNonce();
   }
 
   /**

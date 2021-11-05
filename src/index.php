@@ -16,8 +16,12 @@ define('ABSPATH', __DIR__ . '/../');
 define('APPDIR', 'app/');
 
 header_remove('X-Powered-By');
+header_remove('Server');
+header_remove('server');
 header_remove('Expires');
+header_remove('expires');
 header_remove('Pragma');
+header_remove('pragma');
 header_remove('Cache-Control');
 
 date_default_timezone_set('UTC');

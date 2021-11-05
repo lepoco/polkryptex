@@ -16,14 +16,14 @@
   <link rel="icon" href="@asset('img/icons/192.png')">
   <link rel="manifest" href="@asset('m.webmanifest')">
   <link type="text/css" rel="stylesheet" href="@asset('bundle.min.css')"
-    crossorigin="anonymous">
+    crossorigin="anonymous" nonce="@csp">
   <meta name="description" content="{{ $description ?? 'Polkryptex cryptocurrency' }}">
 
-  <script>
+  <script nonce="@csp">
     window.app = @json( $js_data, JSON_PRETTY_PRINT );
   </script>
 
-  <script src="@asset('bundle.min.js')" defer></script>
+  <script nonce="@csp" src="@asset('bundle.min.js')" defer></script>
 
   <noscript>
     <style>

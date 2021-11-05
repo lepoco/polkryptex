@@ -13,7 +13,7 @@
         <div class="dashboard__banner__picture">
           <img class="editable__picture" src="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}"
             alt="Stack Overflow logo and icons and such"
-            onerror="if (this.src != 'error.jpg') this.src = '@asset('img/pexels-watch-pay.jpeg')';">
+            onerror="if (this.src != 'error.jpg') this.src = '@asset('img/pexels-watch-pay.jpeg')';" nonce="@csp">
         </div>
         <div>
           <h4>@translate('Hello,') <span class="editable__displayname">{{ $user->getDisplayName() }}</span></h4>

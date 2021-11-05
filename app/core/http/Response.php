@@ -2,6 +2,8 @@
 
 namespace App\Core\Http;
 
+use App\Core\Facades\Request;
+use App\Core\Data\Encryption;
 use Symfony\Component\HttpFoundation\Cookie;
 
 /**
@@ -13,6 +15,8 @@ use Symfony\Component\HttpFoundation\Cookie;
  */
 final class Response extends \Symfony\Component\HttpFoundation\Response implements \App\Core\Schema\Response
 {
+  private string $inlineNonce = '';
+
   /**
    * Sets a new HTTP header.
    */
@@ -75,13 +79,76 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
   public function send(): self
   {
     $this->buildSessionCookie();
+    $this->buildSecurityPolicy();
+    $this->buildPermanentHeaders();
 
     parent::send();
 
     return $this;
   }
 
-  private function buildSessionCookie(): self
+  public function getNonce(): string
+  {
+    if (empty($this->inlineNonce)) {
+      $this->inlineNonce = base64_encode(hash('sha512', Encryption::salter(16) . time()));
+    }
+
+    return $this->inlineNonce;
+  }
+
+  /**
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+   */
+  private function buildSecurityPolicy(): void
+  {
+    $csp = 'default-src ' . Request::root() . ' *.googleapis.com *.gstatic.com;';
+    $csp .= ' style-src ' . Request::root() . ' *.googleapis.com *.gstatic.com \'unsafe-inline\';';
+    $csp .= ' script-src ' . Request::root() . ' \'nonce-' . $this->getNonce() . '\';';
+    $csp .= ' img-src https://*;';
+    $csp .= ' child-src \'none\';';
+
+    $this->headers->set('Content-Security-Policy', $csp, true);
+  }
+
+  private function buildPermanentHeaders(): void
+  {
+    $this->headers->remove('cache-control');
+    $this->headers->remove('pragma');
+    $this->headers->remove('host');
+    $this->headers->remove('server');
+    $this->headers->remove('expires');
+    $this->headers->remove('authorization');
+    $this->headers->remove('x-powered-by');
+
+    // Do Not Track
+    $this->headers->set('Dnt', 1, true);
+    $this->headers->set('Connection', 'keep-alive, close', true);
+    $this->headers->set('Upgrade-Insecure-Requests', 1, true);
+    $this->headers->set('X-Frame-Options', 'DENY', true);
+    $this->headers->set('X-XSS-Protection', '1; mode=block', true);
+
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+    $this->headers->set('Access-Control-Allow-Origin', Request::root() . ', https://fonts.googleapis.com, https://fonts.gstatic.com', true);
+    $this->headers->set('Vary', 'Origin, Digest', true);
+
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
+    // RFC 2822 server time
+    $this->headers->set('Date', date('r'), true);
+
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Digest
+    // https://tools.ietf.org/id/draft-ietf-httpbis-digest-headers-01.html
+    $this->headers->set('Want-Digest', 'SHA-512', true);
+    $this->headers->set('Digest', 'sha-512=' . base64_encode(hash('sha512', $this->content)), true);
+
+    // The RTT network client hint request header field provides the approximate round trip time on the application layer, in milliseconds
+    if (defined('APPSTART')) {
+      $this->headers->set('RTT', ((int) (microtime(true) - APPSTART) * 1000), true);
+    }
+
+    ray($this->headers);
+  }
+
+  private function buildSessionCookie(): void
   {
     // TODO: Fix cookies saving
 
@@ -102,7 +169,5 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     //     ));
     //   }
     // }
-
-    return $this;
   }
 }

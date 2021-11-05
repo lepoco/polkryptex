@@ -2,7 +2,7 @@
 
 namespace App\Core\View;
 
-use App\Core\Facades\{App, Config, Response, Session, Request, Statistics};
+use App\Core\Facades\{Config, Response, Session, Request, Statistics};
 use App\Core\View\Blade\{Factory, Directives};
 use App\Core\Utils\Cast;
 use Illuminate\Support\Str;
