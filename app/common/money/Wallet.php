@@ -69,6 +69,11 @@ final class Wallet extends \App\Core\Data\DatabaseObject
     return $this;
   }
 
+  public function getUser(): User
+  {
+    return $this->user;
+  }
+
   public function getUserId(): int
   {
     return $this->userId;

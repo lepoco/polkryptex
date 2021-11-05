@@ -204,7 +204,6 @@ final class Schema
         $table->boolean('is_topup')->default(false);
         $table->string('uuid')->nullable();
         $table->timestamp('created_at')->useCurrent();
-        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
   }
