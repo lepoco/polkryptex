@@ -3,13 +3,13 @@
 namespace App\Common\Requests;
 
 use App\Common\Money\{WalletsRepository, TransactionsRepository, PaymentMethods};
-use App\Core\Facades\Translate;
+use App\Core\Facades\{Translate, Statistics};
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
 use App\Core\Auth\Account;
 
 /**
- * Action triggered during adding a wallet.
+ * Action triggered when adding funds.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
@@ -123,6 +123,8 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
       $this->addContent('message', Translate::string('An error occurred while processing your payment.'));
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::UNAUTHORIZED);
     }
+
+    Statistics::push(\App\Core\Data\Statistics::TYPE_TRANSACTION, 'TRANSACTION:Topup');
 
     $this->addContent('redirect', Redirect::url('dashboard'));
     $this->finish(self::CODE_SUCCESS, Status::OK);

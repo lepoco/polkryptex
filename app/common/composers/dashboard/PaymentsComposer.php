@@ -21,7 +21,7 @@ final class PaymentsComposer extends Composer implements \App\Core\Schema\Compos
   {
     $user = Account::current();
 
-    $view->with('user', Account::current());
+    $view->with('user', $user);
     $view->with('payments', $this->getPayments($user));
   }
 

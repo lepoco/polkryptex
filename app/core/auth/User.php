@@ -224,6 +224,8 @@ final class User extends \App\Core\Data\DatabaseObject
     $this->timezone = $data->timezone ?? 'UTC';
     $this->lastLogin = $data->time_last_login ?? '';
     $this->createdAt = $data->created_at ?? '';
+    $this->active = $data->is_active ?? true;
+    $this->confirmed = $data->is_confirmed ?? false;
     $this->updatedAt = $data->updated_at ?? '';
 
     return true;

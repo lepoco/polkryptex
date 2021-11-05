@@ -132,4 +132,4 @@ To run all tests, in the root of the project, run the command:
 - @Szymon - Databases & AJAX
 - @Kacper - UI elements and APIs
 - @Filip - Designing graphical interfaces, images and vectors
-- @Paweł - Frontend
+- @Paweł - Tests

@@ -190,15 +190,14 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
       $this->passwordAlgo
     );
 
-    $adminUser = User::build([
+    $adminUser = (User::build([
       'display_name' => 'Admin',
       'email' => $this->getData('admin_email'),
       'password' => $encryptedPassword,
       'role' => Account::getRoleId('admin')
-    ]);
-
-    $adminUser->markAsActive();
-    $adminUser->markAsConfirmed();
+    ]))
+    ->markAsActive()
+    ->markAsConfirmed();
 
     Account::register($adminUser, $encryptedPassword);
   }

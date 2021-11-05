@@ -195,10 +195,10 @@ final class Account
       'display_name' => $user->getDisplayName(),
       'role_id' => $user->getRole(),
       'uuid' => Str::uuid(),
-      'is_confirmed' => $user->isConfirmed(),
       'password' => $encryptedPassword,
       'timezone' => 'UTC',
-      'is_active' => true,
+      'is_active' => true, // $user->isActive()
+      'is_confirmed' => $user->isConfirmed(),
       'created_at' => date('Y-m-d H:i:s'),
       'updated_at' => date('Y-m-d H:i:s')
     ]);

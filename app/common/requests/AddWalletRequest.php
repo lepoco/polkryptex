@@ -3,7 +3,7 @@
 namespace App\Common\Requests;
 
 use App\Common\Money\{WalletsRepository, CurrenciesRepository, Wallet};
-use App\Core\Facades\Translate;
+use App\Core\Facades\{Translate, Statistics};
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
 use App\Core\Auth\Account;
@@ -82,6 +82,8 @@ final class AddWalletRequest extends Request implements \App\Core\Schema\Request
       $this->addContent('message', Translate::string('There was an error adding a new wallet. Please try again later.'));
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::UNAUTHORIZED);
     }
+
+    Statistics::push(\App\Core\Data\Statistics::TYPE_USER, 'WALLET:Registered');
 
     $this->addContent('redirect', Redirect::url('dashboard'));
     $this->finish(self::CODE_SUCCESS, Status::OK);

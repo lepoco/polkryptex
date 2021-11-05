@@ -7,7 +7,7 @@ use App\Core\Facades\File;
 use Illuminate\Support\Str;
 
 /**
- * todo: Description
+ * Manages text strings pairs written in YAML.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
