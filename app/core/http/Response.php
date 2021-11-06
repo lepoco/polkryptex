@@ -140,6 +140,9 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     $this->headers->remove('authorization');
     $this->headers->remove('x-powered-by');
 
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control */
+    $this->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0', true);
+
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security */
     $this->headers->set('Strict-Transport-Security', 'max-age=31536000; preload', true);
 
@@ -187,8 +190,6 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/RTT */
       $this->headers->set('RTT', ((int) (microtime(true) - APPSTART) * 1000), true);
     }
-
-    ray($this->headers);
   }
 
   private function sessionCookie(): void

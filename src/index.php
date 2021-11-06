@@ -23,6 +23,7 @@ header_remove('expires');
 header_remove('Pragma');
 header_remove('pragma');
 header_remove('Cache-Control');
+header_remove('cache-control');
 
 date_default_timezone_set('UTC');
 
