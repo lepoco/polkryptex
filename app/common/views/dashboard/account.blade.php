@@ -11,9 +11,8 @@
     <div class="col-12 dashboard__section">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2 -reveal">
         <div class="dashboard__banner__picture">
-          <img class="editable__picture" src="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}"
-            alt="Stack Overflow logo and icons and such"
-            onerror="if (this.src != 'error.jpg') this.src = '@asset('img/pexels-watch-pay.jpeg')';" nonce="@csp">
+          <img class="editable__picture" data-errorscr="@asset('img/pexels-watch-pay.jpeg')" src="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}"
+            alt="Stack Overflow logo and icons and such">
         </div>
         <div>
           <h4>@translate('Hello,') <span class="editable__displayname">{{ $user->getDisplayName() }}</span></h4>

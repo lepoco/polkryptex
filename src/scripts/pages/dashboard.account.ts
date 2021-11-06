@@ -38,3 +38,11 @@ Request.register("#account", function (status: String, response: any) {
     }
   }
 });
+
+const PROFILE_PICTURE = document.querySelector('.editable__picture') as HTMLImageElement;
+
+if (PROFILE_PICTURE) {
+  PROFILE_PICTURE.onerror = function () {
+    PROFILE_PICTURE.src = PROFILE_PICTURE.dataset.errorscr;
+  };
+}

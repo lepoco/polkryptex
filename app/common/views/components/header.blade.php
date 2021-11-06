@@ -4,6 +4,8 @@
 <head>
   <meta charset="utf-8">
   <link rel="preload" href="@asset('bundle.min.css')" as="style">
+  <link rel="preload" href="@asset('bundle.min.js')" as="script">
+
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
   <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="mobile-web-app-capable" content="yes">
@@ -14,8 +16,7 @@
   <link rel="apple-touch-icon" href="@asset('img/icons/192.png')">
   <link rel="icon" href="@asset('img/icons/192.png')">
   <link rel="manifest" href="@asset('m.webmanifest')">
-  <link type="text/css" rel="stylesheet" href="@asset('bundle.min.css')"
-    crossorigin="anonymous" nonce="@csp">
+  <link async defer type="text/css" rel="stylesheet" href="@asset('bundle.min.css')" nonce="@csp" as="style">
   <meta name="description" content="{{ $description ?? 'Polkryptex cryptocurrency' }}">
 
   <script nonce="@csp">
