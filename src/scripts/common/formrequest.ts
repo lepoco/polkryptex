@@ -2,22 +2,22 @@ import AppData from "./appdata";
 import Toast from "./toast";
 import Translator from "./translator";
 
-export const name = "Request";
+export const name = "FormRequest";
 
 /**
  * Set of tools to facilitate sending Ajax requests for forms.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
- * @module  Common/Request
+ * @module  Common/FormRequest
  * @license GPL-3.0
  * @since   1.1.0
  */
-export default class Request {
+export default class FormRequest {
   static register(form: string, action: CallableFunction) {
     document
       .querySelector(form)
       .addEventListener("submit", (event) =>
-        Request.ajax(
+      FormRequest.ajax(
           event,
           document.querySelector(form) as HTMLFormElement,
           action
@@ -32,32 +32,44 @@ export default class Request {
   ) {
     event.preventDefault();
 
+    if (AppData.isDebug()) {
+      console.debug("App\\Common\\FormRequest NEW REQUEST", {
+        event: event,
+        form: form,
+        action: callAction
+      });
+    }
+
     const METHOD = form.method.toUpperCase();
     const XHR = new XMLHttpRequest();
 
     let endpoint = AppData.gateway();
     let formData = new FormData(form);
 
-    Request.lockForm(form);
-    Request.clearAlertFields(form.elements);
+    FormRequest.lockForm(form);
+    FormRequest.clearAlertFields(form.elements);
 
     if (METHOD == "GET") {
-      endpoint += Request.urlEncode(formData);
+      endpoint += FormRequest.urlEncode(formData);
     }
 
     XHR.open(METHOD, endpoint, true);
     XHR.onload = function () {
-      Request.unlockForm(form);
+      FormRequest.unlockForm(form);
 
       if (AppData.isDebug()) {
-        console.debug("raw_response", this.responseText);
+        console.debug("App\\Common\\FormRequest RESPONSE", {
+          responseText: this.responseText,
+          responseURL: this.responseURL,
+          responseType: this.responseType
+        });
       }
 
-      if (Request.isJson(this.responseText)) {
+      if (FormRequest.isJson(this.responseText)) {
         let parsedResponse = JSON.parse(this.responseText);
 
         if (AppData.isDebug()) {
-          console.debug("json_response", parsedResponse);
+          console.debug("App\\Common\\FormRequest JSON", parsedResponse);
         }
 
         if (parsedResponse.content.hasOwnProperty("redirect")) {
@@ -75,11 +87,11 @@ export default class Request {
         }
 
         if (parsedResponse.content.hasOwnProperty("fields")) {
-          Request.alertFields(parsedResponse.content.fields);
+          FormRequest.alertFields(parsedResponse.content.fields);
         }
 
         if (parsedResponse.content.hasOwnProperty("update")) {
-          Request.updateFields(parsedResponse.content.update);
+          FormRequest.updateFields(parsedResponse.content.update);
         }
 
         //User action

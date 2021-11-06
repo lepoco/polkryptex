@@ -1,5 +1,4 @@
 import AppData from "./appdata";
-import * as Bootstrap from "./../components/bootstrap-bundle";
 
 export const name = "SignOut";
 
@@ -12,13 +11,17 @@ export const name = "SignOut";
  * @since   1.1.0
  */
 export default class SignOut {
-  timeout: number;
+  timeout: number = 0;
 
   static init() {
     return new SignOut();
   }
 
   constructor() {
+    if (AppData.isDebug()) {
+      console.debug("App\\Common\\SignOut REGISTERED", AppData.isLogged());
+    }
+
     if (!AppData.isLogged()) {
       return;
     }
@@ -29,6 +32,10 @@ export default class SignOut {
 
   setTimeout() {
     let timeout = AppData.signoutTime();
+
+    if (AppData.isDebug()) {
+      console.debug("App\\Common\\SignOut TIMEOUT STARTED", timeout);
+    }
 
     if (timeout < 1) {
       this.timeout = 10;
@@ -44,29 +51,21 @@ export default class SignOut {
   }
 
   static showWidget() {
-    const modalElement = document.getElementById("signout__modal-modal");
-    console.log("The session expires. You will be logged out in a minute.");
+    const modalElement = document.querySelector(".signout");
+
+    if (AppData.isDebug()) {
+      console.debug("App\\Common\\SignOut TIME PASSED; MINUTE LEFT");
+    }
 
     if (modalElement) {
-      let modal = new Bootstrap.Modal(modalElement, {
-        backdrop: "static",
-        keyboard: false,
-        focus: true,
-      });
+      modalElement.classList.add("--show");
 
-      modal.show();
       SignOut.startCountdown();
-
-      document
-        .querySelector(".signout__modal-button")
-        .addEventListener("click", function () {
-          location.reload();
-        });
     }
   }
 
   static startCountdown() {
-    const TIMER_ELEMENT = document.querySelector(".signout__modal-timer");
+    const TIMER_ELEMENT = document.querySelector(".signout__modal--timer");
 
     let count = 59,
       timer = setInterval(function () {

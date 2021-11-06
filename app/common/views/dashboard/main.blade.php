@@ -19,18 +19,22 @@
           <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile -lg-mr-1" type="button">@translate('Top up')</a>
           <a href="@url('dashboard/add')" class="btn btn-dark btn-mobile" type="button">+</a>
 
+          @if($has_transactions ?? false)
+
           <div class="-w-100 -flex -flex-beetween -mt-4 -mb-3">
             <strong class="-color-secondary">@translate('Recent transations')</strong>
             <a href="@url('dashboard/transactions')">@translate('See all')</a>
           </div>
 
-          @isset($recentTransactions)
+          @isset($recent_transactions)
           <div class="transactions">
-            @foreach ($recentTransactions as $transaction)
+            @foreach ($recent_transactions as $transaction)
             @include('components.transaction', $transaction)
             @endforeach
           </div>
           @endisset
+
+          @endif
 
         </div>
       </div>

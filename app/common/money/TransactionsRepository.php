@@ -2,7 +2,8 @@
 
 namespace App\Common\Money;
 
-use App\Core\Facades\DB;
+use App\Core\Auth\Account;
+use App\Core\Facades\{DB, Cache};
 use App\Core\Auth\User;
 use Illuminate\Support\Str;
 
@@ -35,6 +36,37 @@ final class TransactionsRepository
     return false;
   }
 
+  /**
+   * @return \App\Coore\Money\Transaction[]
+   */
+  public static function getUserTransactions(string $type, int $limit, ?User $user = null): array
+  {
+    $user = empty($user) ? Account::current() : $user;
+    $transactions = [];
+
+    if (empty($user)) {
+      return [];
+    }
+
+    $arguments = [
+      'user_id' => $user->getId()
+    ];
+
+    if ('all' !== $type) {
+      $arguments['type_id'] = self::getTypeId($type);
+    }
+
+    $results = DB::table('transactions')->orderBy('id', 'desc')->where($arguments)->get(['id'])->take($limit);
+
+    foreach ($results as $result) {
+      if (isset($result->id)) {
+        $transactions[] = new Transaction($result->id);
+      }
+    }
+
+    return $transactions;
+  }
+
   private static function makeTransaction(User $user, Wallet $fromWallet, Wallet $toWallet, float $amount): bool
   {
     return DB::table('transactions')->insert([
@@ -52,32 +84,62 @@ final class TransactionsRepository
 
   public static function getMethodId(string $key): int
   {
-    $dbKey = DB::table('transaction_method')->where(['name' => $key])->get(['id'])->first();
+    return Cache::remember('transaction.method_id.' . $key, function () use ($key) {
+      $dbKey = DB::table('transaction_method')->where(['name' => $key])->get(['id'])->first();
 
-    if (isset($dbKey->id)) {
-      return $dbKey->id;
-    }
+      if (isset($dbKey->id)) {
+        return $dbKey->id;
+      }
 
-    $insertedId = DB::table('transaction_method')->insertGetId([
-      'name' => $key
-    ]);
+      $insertedId = DB::table('transaction_method')->insertGetId([
+        'name' => $key
+      ]);
 
-    return $insertedId;
+      return $insertedId;
+    });
+  }
+
+  public static function getMethodName(int $id): string
+  {
+    return Cache::remember('transaction.method_name.' . $id, function () use ($id) {
+      $dbKey = DB::table('transaction_method')->where(['id' => $id])->get(['name'])->first();
+
+      if (isset($dbKey->name)) {
+        return $dbKey->name;
+      }
+
+      return '';
+    });
   }
 
   public static function getTypeId(string $key): int
   {
-    $dbKey = DB::table('transaction_type')->where(['name' => $key])->get(['id'])->first();
+    return Cache::remember('transaction.type_id.' . $key, function () use ($key) {
+      $dbKey = DB::table('transaction_type')->where(['name' => $key])->get(['id'])->first();
 
-    if (isset($dbKey->id)) {
-      return $dbKey->id;
-    }
+      if (isset($dbKey->id)) {
+        return $dbKey->id;
+      }
 
-    $insertedId = DB::table('transaction_type')->insertGetId([
-      'name' => $key
-    ]);
+      $insertedId = DB::table('transaction_type')->insertGetId([
+        'name' => $key
+      ]);
 
-    return $insertedId;
+      return $insertedId;
+    });
+  }
+
+  public static function getTypeName(int $id): string
+  {
+    return Cache::remember('transaction.type_name.' . $id, function () use ($id) {
+      $dbKey = DB::table('transaction_type')->where(['id' => $id])->get(['name'])->first();
+
+      if (isset($dbKey->name)) {
+        return $dbKey->name;
+      }
+
+      return '';
+    });
   }
 
   private static function makeTopup(User $user, Wallet $toWallet, float $amount, string $method): bool

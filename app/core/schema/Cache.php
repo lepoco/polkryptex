@@ -11,11 +11,32 @@ namespace App\Core\Schema;
  */
 interface Cache
 {
+  /**
+   * Get an item from the cache, or execute the given Closure and store the result.
+   */
   public function remember(string $key, \Closure $callback): mixed;
 
+  /**
+   * Store an item in the cache for a given number of seconds.
+   */
   public function put(string $key, mixed $value): bool;
 
-  public function get(string $key): mixed;
+  /**
+   * Retrieve an item from the cache by key.
+   */
+  public function get(string $key, mixed $default): mixed;
 
+  /**
+   * Check if the item exists in the cache.
+   */
   public function has(string $key): bool;
+
+  /**
+   *  Remove an item from the cache.
+   */
+  public function forget(string $key): bool;
+  /**
+   * Remove all items from the cache.
+   */
+  public function flush(): bool;
 }

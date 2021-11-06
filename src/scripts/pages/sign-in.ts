@@ -1,5 +1,5 @@
 import AppData from "./../common/appdata";
-import Request from "./../common/request";
+import FormRequest from "../common/formrequest";
 
 /**
  * Page controller for sign-in.
@@ -9,7 +9,7 @@ import Request from "./../common/request";
  * @license GPL-3.0
  * @since   1.1.0
  */
-Request.register("#signin", function (status: string, response: any) {
+FormRequest.register("#signin", function (status: string, response: any) {
   if (response.status === "S01") {
     window.location.href = AppData.url();
   }

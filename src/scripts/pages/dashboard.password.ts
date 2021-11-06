@@ -1,4 +1,4 @@
-import Request from "./../common/request";
+import FormRequest from "../common/formrequest";
 
 /**
  * Page controller for dashboard.password.
@@ -8,7 +8,7 @@ import Request from "./../common/request";
  * @license GPL-3.0
  * @since   1.1.0
  */
-Request.register("#changePassword", function (status: string, response: any) {
+FormRequest.register("#changePassword", function (status: string, response: any) {
   if ("S01" === response.status) {
     let fields = document.querySelectorAll('input[type="password"]');
     fields.forEach(function (field: HTMLFormElement) {

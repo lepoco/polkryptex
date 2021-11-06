@@ -169,6 +169,7 @@ final class Schema
         $table->string('iso_code')->nullable();
         $table->string('sign')->nullable();
         $table->string('name')->nullable();
+        $table->boolean('sign_left')->default(true);
         $table->string('subunit_sign')->nullable();
         $table->string('subunit_name')->nullable();
         $table->integer('subunit_multiplier')->nullable()->default(100);

@@ -1,4 +1,4 @@
-import Request from "./../common/request";
+import FormRequest from "../common/formrequest";
 
 /**
  * Page controller for panel.settings.
@@ -8,5 +8,5 @@ import Request from "./../common/request";
  * @license GPL-3.0
  * @since   1.1.0
  */
-Request.register("#panelSettings", function (status: string, response: any) {
+FormRequest.register("#panelSettings", function (status: string, response: any) {
 });

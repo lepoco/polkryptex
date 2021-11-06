@@ -46,6 +46,9 @@ Add new wallet: Dodaj nowy portfel
 # app\common\views\dashboard\topup.blade.php
 Amount: Kwota
 
+# app\common\views\dashboard\payments.blade.php
+Request: Zażądaj
+
 # app\common\views\dashboard\exchange.blade.php
 From wallet: Z portfela
 To wallet: Do portfela

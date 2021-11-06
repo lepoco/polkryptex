@@ -17,6 +17,8 @@ final class Currency extends \App\Core\Data\DatabaseObject
 
   private bool $crypto = false;
 
+  private bool $signLeft = true;
+
   private float $rate = 0;
 
   private int $isoNumber = 0;
@@ -43,6 +45,8 @@ final class Currency extends \App\Core\Data\DatabaseObject
       return;
     }
 
+    $this->id = $id;
+
     $this->fetch($id);
   }
 
@@ -61,6 +65,7 @@ final class Currency extends \App\Core\Data\DatabaseObject
       ->setUpdatedAt($properties['updated_at'] ?? date('Y-m-d H:i:s'))
       ->defineCrypto($properties['is_crypto'] ?? false)
       ->defineMaster($properties['is_master'] ?? false)
+      ->defineSignLeft($properties['sign_left'] ?? true)
       ->setId($properties['id'] ?? 0);
   }
 
@@ -78,6 +83,7 @@ final class Currency extends \App\Core\Data\DatabaseObject
     $this->isoCode = $dbCurrency->iso_code;
     $this->sign = $dbCurrency->sign;
     $this->name = $dbCurrency->name;
+    $this->signLeft = $dbCurrency->sign_left;
     $this->subunitSign = $dbCurrency->subunit_sign;
     $this->subunitName = $dbCurrency->subunit_name;
     $this->subunitMultiplier = $dbCurrency->subunit_multiplier;
@@ -212,9 +218,21 @@ final class Currency extends \App\Core\Data\DatabaseObject
     return $this->master;
   }
 
+  public function isSignLeft(): bool
+  {
+    return $this->signLeft;
+  }
+
   public function isCrypto(): bool
   {
     return $this->crypto;
+  }
+
+  public function defineSignLeft(bool $signLeft): self
+  {
+    $this->signLeft = $signLeft;
+
+    return $this;
   }
 
   private function defineCrypto(bool $crypto): self

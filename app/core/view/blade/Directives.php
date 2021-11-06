@@ -2,7 +2,7 @@
 
 namespace App\Core\View\Blade;
 
-use App\Core\Facades\{Config, Option, Translate, Response};
+use App\Core\Facades\{Config, Option, Translate, Response, Request};
 use App\Core\Data\Encryption;
 use App\Core\Http\Redirect;
 use Illuminate\Support\Str;
@@ -112,6 +112,15 @@ final class Directives
     }
 
     return Encryption::encrypt('ajax_' . $action . '_nonce', 'nonce');
+  }
+
+  /**
+   * Print current URL without query.
+   * Triggered every time.
+   */
+  public static function currenturl()
+  {
+    return Request::url();
   }
 
   /**

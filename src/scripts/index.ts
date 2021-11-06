@@ -21,9 +21,7 @@ Cookie.init();
 SignOut.init();
 LoadReveal.init();
 
-//AppData.isWorkerEnabled()
-
-if (false && "serviceWorker" in navigator) {
+if (AppData.isWorkerEnabled() && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register(AppData.url("service-worker.js"))

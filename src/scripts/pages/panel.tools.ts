@@ -1,4 +1,4 @@
-import Request from "./../common/request";
+import FormRequest from "../common/formrequest";
 
 /**
  * Page controller for panel.tools.
@@ -8,9 +8,9 @@ import Request from "./../common/request";
  * @license GPL-3.0
  * @since   1.1.0
  */
-Request.register("#panelFlushBlade", function (status: string, response: any) {
+FormRequest.register("#panelFlushBlade", function (status: string, response: any) {
 });
-Request.register("#panelFlushCache", function (status: string, response: any) {
+FormRequest.register("#panelFlushCache", function (status: string, response: any) {
 });
-Request.register("#panelFlushLogs", function (status: string, response: any) {
+FormRequest.register("#panelFlushLogs", function (status: string, response: any) {
 });

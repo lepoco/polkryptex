@@ -4,6 +4,7 @@ namespace App\Common\Money;
 
 use App\Common\Money\Wallet;
 use App\Core\Auth\User;
+use App\Core\Facades\DB;
 
 /**
  * Represents a single transaction.
@@ -74,7 +75,25 @@ final class Transaction extends \App\Core\Data\DatabaseObject
 
   private function fetch(int $id): void
   {
-    // TODO: Implement fetch
+    $dbTransaction = DB::table('transactions')->where(['id' => $id])->get()->first();
+
+    if (!isset($dbTransaction->id) || !isset($dbTransaction->user_id)) {
+      return;
+    }
+
+    $this->id = $dbTransaction->id;
+    $this->amount = $dbTransaction->amount ?? 0;
+    $this->rate = $dbTransaction->rate ?? 1;
+    $this->topup = $dbTransaction->is_topup ?? false;
+    $this->uuid = $dbTransaction->uuid ?? '';
+    $this->methodReference = $dbTransaction->method_reference ?? '';
+    $this->methodId = $dbTransaction->method_id ?? 1;
+    $this->typeId = $dbTransaction->type_id ?? 1;
+    $this->createdAt = $dbTransaction->created_at ?? date('Y-m-d H:i:s');
+
+    $this->setUserId($dbTransaction->user_id ?? 0);
+    $this->setWalletFromId($dbTransaction->wallet_from ?? 0);
+    $this->setWalletToId($dbTransaction->wallet_to ?? 0);
   }
 
   public function getUser(): User
@@ -110,7 +129,7 @@ final class Transaction extends \App\Core\Data\DatabaseObject
 
   public function setWalletFromId(int $walletFromId): self
   {
-    if (0 < $walletFromId) {
+    if (0 !== $walletFromId) {
       $this->walletFrom = new Wallet($walletFromId);
     }
 
@@ -131,7 +150,7 @@ final class Transaction extends \App\Core\Data\DatabaseObject
 
   public function setWalletToId(int $walletToId): self
   {
-    if (0 < $walletToId) {
+    if (0 !== $walletToId) {
       $this->walletTo = new Wallet($walletToId);
     }
 
@@ -160,6 +179,42 @@ final class Transaction extends \App\Core\Data\DatabaseObject
   private function setRate(float $rate): self
   {
     $this->rate = $rate;
+
+    return $this;
+  }
+
+  public function getMethodReference(): string
+  {
+    return $this->methodReference;
+  }
+
+  private function setMethodReference(string $methodReference): self
+  {
+    $this->methodReference = $methodReference;
+
+    return $this;
+  }
+
+  public function getMethodId(): int
+  {
+    return $this->methodId;
+  }
+
+  private function setMethodId(string $methodId): self
+  {
+    $this->methodId = $methodId;
+
+    return $this;
+  }
+
+  public function getTypeId(): int
+  {
+    return $this->typeId;
+  }
+
+  private function setTypeId(string $typeId): self
+  {
+    $this->typeId = $typeId;
 
     return $this;
   }

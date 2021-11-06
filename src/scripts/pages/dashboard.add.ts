@@ -1,4 +1,4 @@
-import Request from "./../common/request";
+import FormRequest from "../common/formrequest";
 
 /**
  * Page controller for dashboard.add.
@@ -8,7 +8,7 @@ import Request from "./../common/request";
  * @license GPL-3.0
  * @since   1.1.0
  */
-Request.register("#addWallet", function (status: string, response: any) {
+FormRequest.register("#addWallet", function (status: string, response: any) {
   if ("S01" === response.status) {
   }
 });

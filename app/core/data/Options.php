@@ -29,7 +29,7 @@ final class Options
 
     $query = DB::table('options')->where('name', $name)->first();
 
-    $this->store[$name] = isset($query->value) ? self::serializeType($query->value) : $callback();
+    $this->store[$name] = isset($query->value) ? self::decodeType($query->value) : $callback();
 
     return $this->store[$name];
   }
@@ -47,9 +47,9 @@ final class Options
     $query = DB::table('options')->where('name', $name)->first();
 
     if (isset($query->value)) {
-      $this->store[$name] = self::serializeType($query->value);
+      $this->store[$name] = self::decodeType($query->value);
 
-      return self::serializeType($query->value);
+      return self::decodeType($query->value);
     }
 
     return $default;
@@ -64,13 +64,46 @@ final class Options
     }
 
     return DB::table('options')->where('name', $name)->update([
-      'value' => $value,
+      'value' => self::encodeType($value),
       'updated_at' => date('Y-m-d H:i:s')
     ]);
   }
 
-  private static function serializeType(mixed $value): mixed
+  private static function decodeType(mixed $value): mixed
   {
+    if ('true' === $value || true === $value) {
+      return true;
+    }
+
+    if ('false' === $value || false === $value) {
+      return false;
+    }
+
+    if (is_int($value)) {
+      return (int) $value;
+    }
+
+    if (is_float($value)) {
+      return (float) $value;
+    }
+
+    if (ctype_digit($value)) {
+      return (int) $value;
+    }
+
+    return $value;
+  }
+
+  private static function encodeType(mixed $value): mixed
+  {
+    if ('true' === $value || true === $value) {
+      return 'true';
+    }
+
+    if ('false' === $value || false === $value) {
+      return 'false';
+    }
+
     return $value;
   }
 }

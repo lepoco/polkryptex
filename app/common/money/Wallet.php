@@ -64,7 +64,7 @@ final class Wallet extends \App\Core\Data\DatabaseObject
   {
     $dbWallet = DB::table('wallets')->where(['id' => $id])->get()->first();
 
-    if (!isset($dbWallet->id) || !isset($dbWallet->balance)) {
+    if (!isset($dbWallet->id) || !isset($dbWallet->virtual_balance)) {
       return;
     }
 
@@ -122,7 +122,7 @@ final class Wallet extends \App\Core\Data\DatabaseObject
 
   public function setCurrencyId(int $currencyId): self
   {
-    if (0 < $currencyId) {
+    if (0 !== $currencyId) {
       $this->currency = new Currency($currencyId);
     }
 

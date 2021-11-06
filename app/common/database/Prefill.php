@@ -275,6 +275,7 @@ final class Prefill
       'iso_code' => 'PLN',
       'name' => 'Polish złoty',
       'sign' => 'zł',
+      'sign_left' => false,
       'subunit_sign' => 'gr',
       'subunit_name' => 'groszy',
       'subunit_multiplier' => 100,

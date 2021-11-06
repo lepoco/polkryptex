@@ -1,0 +1,9 @@
+# app\common\views\components\offline.blade.php
+We got lost!: Zgubiliśmy się!
+It looks like you are not connected to the internet at the moment. Let's wait a moment and we will refresh the page for you when the connection comes back.: Wygląda na to, że w tej chwili nie masz połączenia z internetem. Poczekaj chwilę, a my odświeżymy stronę dla Ciebie, gdy połączenie wróci.
+
+# app\common\views\components\signout.blade.php
+Session time passes: Czas sesji minął
+You have been inactive for some time, you will be logged out in a moment.: Byłeś nieaktywny przez jakiś czas, za chwilę zostaniesz wylogowany.
+Stay on the page: Zostań na stronie
+Log out: Wyloguj

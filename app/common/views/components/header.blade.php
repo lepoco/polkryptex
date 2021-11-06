@@ -16,14 +16,14 @@
   <link rel="apple-touch-icon" href="@asset('img/icons/192.png')">
   <link rel="icon" href="@asset('img/icons/192.png')">
   <link rel="manifest" href="@asset('m.webmanifest')">
-  <link async defer type="text/css" rel="stylesheet" href="@asset('bundle.min.css')" nonce="@csp" as="style">
+  <link defer type="text/css" rel="stylesheet" href="@asset('bundle.min.css')" nonce="@csp" as="style">
   <meta name="description" content="{{ $description ?? 'Polkryptex cryptocurrency' }}">
 
   <script nonce="@csp">
     window.app = @json( $js_data, JSON_PRETTY_PRINT );
   </script>
 
-  <script nonce="@csp" src="@asset('bundle.min.js')" defer></script>
+  <script defer nonce="@csp" src="@asset('bundle.min.js')"></script>
 
   <noscript>
     <style>

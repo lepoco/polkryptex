@@ -2,6 +2,7 @@
 
 namespace App\Common\Composers\Dashboard;
 
+use App\Common\Money\TransactionsRepository;
 use App\Core\Auth\{Account, User};
 use App\Core\View\Blade\Composer;
 use App\Core\Http\Redirect;
@@ -20,49 +21,44 @@ final class MainComposer extends Composer implements \App\Core\Schema\Composer
   public function compose(View $view): void
   {
     $user = Account::current();
+    $recentTransactions = $this->getRecentTransactions($user);
 
     $view->with('user', $user);
-    $view->with('recentTransactions', $this->getRecentTransactions($user));
+    $view->with('recent_transactions', $recentTransactions);
+    $view->with('has_transactions', !empty($recentTransactions));
   }
 
   private function getRecentTransactions(User $user): array
   {
-    return [
-      [
-        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
-        'amount' => 55.22,
-        'currency' => 'EUR',
-        'date' => date('Y-m-d H:i'),
-        'description' => 'Transfer',
-      ],
-      [
-        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
-        'amount' => 55.22,
-        'currency' => 'EUR',
-        'date' => date('Y-m-d H:i'),
-        'description' => 'Exchange',
-      ],
-      [
-        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
-        'amount' => 55.22,
-        'currency' => 'EUR',
-        'date' => date('Y-m-d H:i'),
-        'description' => 'Exchange',
-      ],
-      [
-        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
-        'amount' => 55.22,
-        'currency' => 'EUR',
-        'date' => date('Y-m-d H:i'),
-        'description' => 'Exchange',
-      ],
-      [
-        'url' => Redirect::url('dashboard/transactions/' . Str::uuid()),
-        'amount' => 55.22,
-        'currency' => 'EUR',
-        'date' => date('Y-m-d H:i'),
-        'description' => 'Exchange',
-      ]
-    ];
+    $transactions = TransactionsRepository::getUserTransactions('all', 5);
+    $parsedTransactions = [];
+    $types = [];
+    $methods = [];
+    $wallets = [];
+    $currencies = [];
+
+    foreach ($transactions as $singleTransaction) {
+      $typeId = $singleTransaction->getTypeId();
+      $methodId = $singleTransaction->getMethodId();
+
+      if (!in_array($typeId, $types)) {
+        $types[$typeId] = TransactionsRepository::getTypeName($typeId);
+      }
+
+      if (!in_array($methodId, $methods)) {
+        $methods[$methodId] = TransactionsRepository::getMethodName($methodId);
+      }
+
+      $parsedTransactions[] = [
+        'url' => Redirect::url('dashboard/transaction/' . $singleTransaction->getUUID()),
+        'amount' => $singleTransaction->getAmount(),
+        'date' => $singleTransaction->getCreatedAt(),
+        'type' => $types[$typeId],
+        'method' => $methods[$methodId],
+        'currency' => $singleTransaction->getWalletTo()->getCurrency()
+      ];
+    }
+
+    return $parsedTransactions;
   }
 }

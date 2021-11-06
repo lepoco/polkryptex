@@ -9,12 +9,12 @@ use App\Core\Data\Container;
 use App\Core\Data\Statistics;
 use App\Core\Email\Mailer;
 use App\Core\i18n\Translate;
+use App\Core\Cache\Redis;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Cache\CacheManager;
 use Illuminate\Log\LogManager;
 
 /**
@@ -45,7 +45,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   protected Session $session;
 
-  protected CacheManager $cache;
+  protected Redis $cache;
 
   protected LogManager $logs;
 
@@ -85,7 +85,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
   {
     if (!$soft) {
       $this
-        ->setCache(new CacheManager($this->container))
+        ->setCache(new Redis())
         ->setSession(new Session());
     }
 
@@ -169,6 +169,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
     $this->session->save();
 
     $this->response->send();
+
+    ray($this->cache);
 
     if ($exit) {
       exit($this->status);
@@ -342,9 +344,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
     return $this;
   }
 
-  protected function setCache(CacheManager $cache): self
+  protected function setCache(\App\Core\Schema\Cache $cache): self
   {
-    // FIXME:: Cache needs garbage collector.
     $this->cache = $cache;
 
     return $this;

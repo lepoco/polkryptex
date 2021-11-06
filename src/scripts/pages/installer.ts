@@ -1,5 +1,5 @@
 import AppData from "./../common/appdata";
-import Request from "./../common/request";
+import FormRequest from "../common/formrequest";
 import Toast from "./../common/toast";
 
 /**
@@ -10,7 +10,7 @@ import Toast from "./../common/toast";
  * @license GPL-3.0
  * @since   1.1.0
  */
-Request.register("#install", function (status: string, response: any) {
+FormRequest.register("#install", function (status: string, response: any) {
   console.log(response);
 
   switch (response.status) {

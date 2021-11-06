@@ -103,8 +103,8 @@ export default class AppData {
    * @return Prints current app data.
    */
   static dump(): void {
-    console.log("AppData", AppData.container());
-    console.log("Connection online", AppData.isOnline());
+    console.debug("App\\Common\\AppData IS_ONLINE", AppData.isOnline());
+    console.debug("App\\Common\\AppData", AppData.container());
   }
 
   private static container(): any {
