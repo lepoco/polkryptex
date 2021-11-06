@@ -2,8 +2,10 @@
 
 namespace App\Core\Http;
 
-use App\Core\Facades\Request;
-use App\Core\Data\Encryption;
+use RuntimeException;
+use App\Core\Facades\{Request, Config};
+use App\Core\Http\ContentSecurityPolicy;
+use App\Core\Utils\Path;
 use Symfony\Component\HttpFoundation\Cookie;
 
 /**
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Cookie;
  */
 final class Response extends \Symfony\Component\HttpFoundation\Response implements \App\Core\Schema\Response
 {
-  private string $inlineNonce = '';
+  private ContentSecurityPolicy $csp;
 
   /**
    * Sets a new HTTP header.
@@ -78,40 +80,58 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
    */
   public function send(): self
   {
-    $this->buildSessionCookie();
-    $this->buildSecurityPolicy();
-    $this->buildPermanentHeaders();
+    if (!isset($this->csp)) {
+      throw new RuntimeException('CSP was not prepared.');
+    }
+
+    $this->sessionCookie();
+    $this->permanentHeaders();
 
     parent::send();
 
     return $this;
   }
 
-  public function getNonce(): string
+  /**
+   * Prepares Content Security Policy.
+   */
+  public function prepareCSP(array $scripts = [], array $styles = [], array $fonts = []): void
   {
-    if (empty($this->inlineNonce)) {
-      $this->inlineNonce = base64_encode(hash('sha512', Encryption::salter(16) . time()));
+    $this->csp = new ContentSecurityPolicy();
+
+    foreach ($scripts as $script) {
+      $this->csp->addScriptSource($script);
     }
 
-    return $this->inlineNonce;
+    foreach ($styles as $style) {
+      $this->csp->addStyleSource($style);
+    }
+
+    foreach ($fonts as $font) {
+      $this->csp->addFontSource($font);
+    }
   }
 
-  /**
-   * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-   */
-  private function buildSecurityPolicy(): void
+  public function getNonce(): string
   {
-    $csp = 'default-src ' . Request::root() . ' *.googleapis.com *.gstatic.com;';
-    $csp .= ' style-src ' . Request::root() . ' *.googleapis.com *.gstatic.com \'unsafe-inline\';';
-    $csp .= ' script-src ' . Request::root() . ' \'nonce-' . $this->getNonce() . '\';';
-    $csp .= ' img-src https://*;';
-    $csp .= ' child-src \'none\';';
+    if (!isset($this->csp)) {
+      throw new RuntimeException('CSP was not prepared.');
+    }
 
-    $this->headers->set('Content-Security-Policy', $csp, true);
+    return $this->csp->nonce();
   }
 
-  private function buildPermanentHeaders(): void
+  private function permanentHeaders(): void
   {
+    /**
+     * We get the modification date of the last used file to generate the sum. Most often this will be the blade view file.
+     */
+    $generatorFiles = get_included_files();
+    $lastModified = filemtime($generatorFiles[array_key_last($generatorFiles)]);
+
+    /*
+     * Here we are trying to remove the default server-defined headers.
+     */
     $this->headers->remove('cache-control');
     $this->headers->remove('pragma');
     $this->headers->remove('host');
@@ -120,54 +140,59 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     $this->headers->remove('authorization');
     $this->headers->remove('x-powered-by');
 
-    // Do Not Track
-    $this->headers->set('Dnt', 1, true);
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security */
+    $this->headers->set('Strict-Transport-Security', 'max-age=31536000; preload', true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Ranges */
+    $this->headers->set('Accept-Ranges', 'bytes', true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Connection */
     $this->headers->set('Connection', 'keep-alive, close', true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade-Insecure-Requests */
     $this->headers->set('Upgrade-Insecure-Requests', 1, true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options */
     $this->headers->set('X-Frame-Options', 'DENY', true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection */
     $this->headers->set('X-XSS-Protection', '1; mode=block', true);
 
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
     $this->headers->set('Access-Control-Allow-Origin', Request::root() . ', https://fonts.googleapis.com, https://fonts.gstatic.com', true);
-    $this->headers->set('Vary', 'Origin, Digest', true);
 
-    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
-    // RFC 2822 server time
-    $this->headers->set('Date', date('r'), true);
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary */
+    $this->headers->set('Vary', 'Origin, Digest, Accept-Encoding', true);
 
-    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Digest
-    // https://tools.ietf.org/id/draft-ietf-httpbis-digest-headers-01.html
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date */
+    $this->headers->set('Date', date('r'), true); // RFC 2822 server time
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Want-Digest */
     $this->headers->set('Want-Digest', 'SHA-512', true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified */
+    $this->headers->set('Last-Modified', gmdate("D, d M Y H:i:s", $lastModified) . " GMT", true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag */
+    $this->headers->set('ETag', sprintf('W/"%s-%s"', $lastModified, hash('crc32', $this->content)), true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Digest */
     $this->headers->set('Digest', 'sha-512=' . base64_encode(hash('sha512', $this->content)), true);
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy */
+    $this->headers->set('Content-Security-Policy', $this->csp->build(), true);
 
     // The RTT network client hint request header field provides the approximate round trip time on the application layer, in milliseconds
     if (defined('APPSTART')) {
+      /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/RTT */
       $this->headers->set('RTT', ((int) (microtime(true) - APPSTART) * 1000), true);
     }
 
     ray($this->headers);
   }
 
-  private function buildSessionCookie(): void
+  private function sessionCookie(): void
   {
     // TODO: Fix cookies saving
-
-    // $cookies = App::getProperty('container')->get('cookie')->getQueuedCookies();
-
-    // foreach ($cookies as $cookie) {
-    //   $this->setCookie($cookie);
-
-    //   if (Session::getId() === $cookie->getName()) {
-    //     $this->setCookie(Cookie::create(
-    //       Session::getName(),
-    //       $cookie->getName(),
-    //       $cookie->getExpiresTime(),
-    //       $cookie->getPath(),
-    //       $cookie->getDomain(),
-    //       $cookie->isSecure(),
-    //       $cookie->isHttpOnly()
-    //     ));
-    //   }
-    // }
   }
 }

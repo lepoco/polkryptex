@@ -143,6 +143,12 @@ abstract class Bootstrap implements \App\Core\Schema\App
     $this->statistics = new Statistics($this->isInstalled());
     $this->mailer = new Mailer();
 
+    $this->response->prepareCSP(
+      [],
+      ['*.googleapis.com', '*.gstatic.com'],
+      ['*.googleapis.com', '*.gstatic.com']
+    );
+
     $this
       ->router
       ->setup()
