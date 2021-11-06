@@ -3,9 +3,9 @@
 namespace App\Core\Http;
 
 use RuntimeException;
-use App\Core\Facades\{Request, Config};
+use DateTime;
+use App\Core\Facades\Request;
 use App\Core\Http\ContentSecurityPolicy;
-use App\Core\Utils\Path;
 use Symfony\Component\HttpFoundation\Cookie;
 
 /**
@@ -132,7 +132,7 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     /*
      * Here we are trying to remove the default server-defined headers.
      */
-    $this->headers->remove('cache-control');
+
     $this->headers->remove('pragma');
     $this->headers->remove('host');
     $this->headers->remove('server');
@@ -141,7 +141,14 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
     $this->headers->remove('x-powered-by');
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control */
-    $this->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0', true);
+    $this->setCache([
+      'last_modified' => ((new DateTime())->setTimestamp($lastModified)),
+      'must_revalidate' => true,
+      'no_store' => true,
+      'no_cache' => true
+    ]);
+
+    $this->setEtag(sprintf('%s-%s', $lastModified, hash('crc32', $this->content)), true);
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security */
     $this->headers->set('Strict-Transport-Security', 'max-age=31536000; preload', true);
@@ -172,12 +179,6 @@ final class Response extends \Symfony\Component\HttpFoundation\Response implemen
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Want-Digest */
     $this->headers->set('Want-Digest', 'SHA-512', true);
-
-    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified */
-    $this->headers->set('Last-Modified', gmdate("D, d M Y H:i:s", $lastModified) . " GMT", true);
-
-    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag */
-    $this->headers->set('ETag', sprintf('W/"%s-%s"', $lastModified, hash('crc32', $this->content)), true);
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Digest */
     $this->headers->set('Digest', 'sha-512=' . base64_encode(hash('sha512', $this->content)), true);

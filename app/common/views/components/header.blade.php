@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Cache-control" content="private">
   <link rel="preload" href="@asset('bundle.min.css')" as="style">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
   <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">

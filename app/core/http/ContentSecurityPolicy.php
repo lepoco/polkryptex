@@ -80,15 +80,19 @@ final class ContentSecurityPolicy
     $csp .= $this->generateStyleSrc();
     $csp .= $this->generateScriptSrc();
     $csp .= $this->generateFontSrc();
+    $csp .= $this->generatePrefetchSrc();
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src */
     $csp .= ' connect-src ' . $this->root . ';';
 
-    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src */
-    $csp .= ' img-src ' . ($this->allowExternalImages ? 'https://*' : $this->root) . ';';
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/manifest-src */
+    $csp .= ' manifest-src ' . $this->root . ';';
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/worker-src */
     $csp .= ' worker-src ' . $this->root . ';';
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src */
+    $csp .= ' img-src ' . ($this->allowExternalImages ? 'https://*' : $this->root) . ' data:;';
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src */
     $csp .= ' frame-src ' . ($this->allowFrames ? $this->root : '\'none\'') . ';';
@@ -98,6 +102,18 @@ final class ContentSecurityPolicy
 
     /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/child-src */
     $csp .= ' child-src \'none\';';
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/trusted-types */
+    $csp .= ' trusted-types \'none\';';
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests */
+    $csp .= ' upgrade-insecure-requests;';
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/require-sri-for */
+    //$csp .= ' require-sri-for script style;';
+
+    /** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/require-trusted-types-for */
+    //$csp .= ' require-trusted-types-for \'script\';';
 
     return $csp;
   }
@@ -195,5 +211,34 @@ final class ContentSecurityPolicy
     }
 
     return ' font-src ' . $source . ';';
+  }
+
+  private function generatePrefetchSrc(): string
+  {
+    $source = $this->root;
+
+    $prefetchSources = [];
+
+    foreach ($this->scriptSources as $script) {
+      $prefetchSources[] = $script;
+    }
+
+    foreach ($this->styleSources as $style) {
+      if (!in_array($style, $prefetchSources)) {
+        $prefetchSources[] = $style;
+      }
+    }
+
+    foreach ($this->fontSources as $font) {
+      if (!in_array($font, $prefetchSources)) {
+        $prefetchSources[] = $font;
+      }
+    }
+
+    foreach ($prefetchSources as $singleSource) {
+      $source .= ' ' . $singleSource;
+    }
+
+    return ' prefetch-src ' . $source . ';';
   }
 }
