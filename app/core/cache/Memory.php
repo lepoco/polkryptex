@@ -11,8 +11,19 @@ namespace App\Core\Cache;
  */
 class Memory implements \App\Core\Schema\Cache
 {
+  /**
+   * Stores all entries.
+   */
   protected array $records = [];
 
+  /**
+   * Stores information about how long an element is to be kept in memory.
+   */
+  protected array $timeout = [];
+
+  /**
+   * @inheritdoc
+   */
   public function remember(string $key, \DateTimeInterface|\DateInterval|int $ttl, \Closure $callback): mixed
   {
     // TODO: REMEMBER SHOULD HAVE TIMEOUT
@@ -24,11 +35,14 @@ class Memory implements \App\Core\Schema\Cache
 
     $return = $callback();
 
-    $this->put($key, $return);
+    $this->put($key, $return, $ttl);
 
     return $return;
   }
 
+  /**
+   * @inheritdoc
+   */
   public function forever(string $key, \Closure $callback): mixed
   {
     if ($this->has($key)) {
@@ -42,31 +56,49 @@ class Memory implements \App\Core\Schema\Cache
     return $return;
   }
 
+  /**
+   * @inheritdoc
+   */
   public function put(string $key, mixed $value): bool
   {
     return $this->memoryPut($key, $value);
   }
 
+  /**
+   * @inheritdoc
+   */
   public function get(string $key, mixed $default): mixed
   {
     return $this->memoryGet($key, $default);
   }
 
+  /**
+   * @inheritdoc
+   */
   public function has(string $key): bool
   {
     return $this->memoryHas($key);
   }
 
+  /**
+   * @inheritdoc
+   */
   public function flush(): bool
   {
     return $this->flushMemory();
   }
 
+  /**
+   * @inheritdoc
+   */
   public function forget(string $key): bool
   {
     return $this->forgetFromMemory($key);
   }
 
+  /**
+   * Clears all stored records in memory.
+   */
   final protected function flushMemory(): bool
   {
     $this->records = [];
@@ -74,6 +106,11 @@ class Memory implements \App\Core\Schema\Cache
     return true;
   }
 
+   /**
+   * Deletes the selected item from memory.
+   *
+   * @param string $key Key in abc.def.ghi format, separated by dot.
+   */
   final protected function forgetFromMemory(string $key): bool
   {
     $keyArray = explode('.', $key);
@@ -106,6 +143,11 @@ class Memory implements \App\Core\Schema\Cache
     return false;
   }
 
+  /**
+   * Checks that the record array contains a key.
+   *
+   * @param string $key Key in abc.def.ghi format, separated by dot.
+   */
   final protected function memoryHas(string $key): bool
   {
     $keyArray = explode('.', $key);
@@ -130,6 +172,12 @@ class Memory implements \App\Core\Schema\Cache
     return false;
   }
 
+  /**
+   * Checks whether the record array contains a key. If so, it returns the saved value.
+   *
+   * @param string $key Key in abc.def.ghi format, separated by dot.
+   * @param mixed $default Any default value returned if the key does not exist.
+   */
   final protected function memoryGet(string $key, mixed $default): mixed
   {
     if (!$this->memoryHas($key)) {
@@ -158,10 +206,24 @@ class Memory implements \App\Core\Schema\Cache
     return $default;
   }
 
-  final protected function memoryPut(string $key, mixed $value): bool
+  /**
+   * Writes the value under the saved key to the records array.
+   *
+   * @param string $key Key in abc.def.ghi format, separated by dot.
+   * @param mixed $value Value to be written under the given key.
+   * @param \DateTimeInterface|\DateInterval|int $ttl Time after which the value is to be cleared.
+   */
+  final protected function memoryPut(string $key, mixed $value, \DateTimeInterface|\DateInterval|int $ttl = -1): bool
   {
     $keyArray = explode('.', $key);
     $keyCount = count($keyArray);
+
+    if ($ttl > -1) {
+      $this->timeout[] = [
+        'key' => $key,
+        'ttl' => $ttl
+      ];
+    }
 
     if (1 === $keyCount) {
       $this->records[$keyArray[0]] = $value;

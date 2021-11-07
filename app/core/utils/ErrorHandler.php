@@ -81,7 +81,7 @@ final class ErrorHandler
     return true;
   }
 
-  private static function log(string $type = 'ERROR', string $message, array $context = []): void
+  private static function log(string $type = 'ERROR', string $message = '', array $context = []): void
   {
     $rawMessage = '';
 
