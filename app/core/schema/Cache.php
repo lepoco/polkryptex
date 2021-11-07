@@ -12,9 +12,14 @@ namespace App\Core\Schema;
 interface Cache
 {
   /**
-   * Get an item from the cache, or execute the given Closure and store the result.
+   * Get an item from the cache, or execute the given Closure and store the result for a given time.
    */
-  public function remember(string $key, \Closure $callback): mixed;
+  public function remember(string $key, \DateTimeInterface|\DateInterval|int $ttl, \Closure $callback): mixed;
+
+  /**
+   * Get an item from the cache, or execute the given Closure and store the result forever.
+   */
+  public function forever(string $key, \Closure $callback): mixed;
 
   /**
    * Store an item in the cache for a given number of seconds.

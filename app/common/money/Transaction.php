@@ -46,13 +46,10 @@ final class Transaction extends \App\Core\Data\DatabaseObject
 
   public function __construct(int $id = 0)
   {
+    $this->id = $id;
     $this->user = new User(0);
     $this->walletFrom = new Wallet(0);
     $this->walletTo = new Wallet(0);
-
-    if (0 === $id) {
-      return;
-    }
 
     $this->fetch($id);
   }
@@ -76,6 +73,10 @@ final class Transaction extends \App\Core\Data\DatabaseObject
 
   private function fetch(int $id): void
   {
+    if (0 === $id) {
+      return;
+    }
+
     $dbTransaction = DB::table('transactions')->where(['id' => $id])->get()->first();
 
     if (!isset($dbTransaction->id) || !isset($dbTransaction->user_id)) {

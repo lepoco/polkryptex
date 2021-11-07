@@ -84,7 +84,7 @@ final class TransactionsRepository
 
   public static function getMethodId(string $key): int
   {
-    return Cache::remember('transaction.method_id.' . $key, function () use ($key) {
+    return Cache::forever('transaction.method_id.' . $key, function () use ($key) {
       $dbKey = DB::table('transaction_method')->where(['name' => $key])->get(['id'])->first();
 
       if (isset($dbKey->id)) {
@@ -101,7 +101,7 @@ final class TransactionsRepository
 
   public static function getMethodName(int $id): string
   {
-    return Cache::remember('transaction.method_name.' . $id, function () use ($id) {
+    return Cache::remember('transaction.method_name.' . $id, 120, function () use ($id) {
       $dbKey = DB::table('transaction_method')->where(['id' => $id])->get(['name'])->first();
 
       if (isset($dbKey->name)) {
@@ -114,7 +114,7 @@ final class TransactionsRepository
 
   public static function getTypeId(string $key): int
   {
-    return Cache::remember('transaction.type_id.' . $key, function () use ($key) {
+    return Cache::forever('transaction.type_id.' . $key, function () use ($key) {
       $dbKey = DB::table('transaction_type')->where(['name' => $key])->get(['id'])->first();
 
       if (isset($dbKey->id)) {
@@ -131,7 +131,7 @@ final class TransactionsRepository
 
   public static function getTypeName(int $id): string
   {
-    return Cache::remember('transaction.type_name.' . $id, function () use ($id) {
+    return Cache::remember('transaction.type_name.' . $id, 120, function () use ($id) {
       $dbKey = DB::table('transaction_type')->where(['id' => $id])->get(['name'])->first();
 
       if (isset($dbKey->name)) {

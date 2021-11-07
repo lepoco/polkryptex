@@ -53,11 +53,8 @@ final class User extends \App\Core\Data\DatabaseObject
 
   public function __construct(int $id = 0)
   {
+    $this->id = $id;
     $this->billing = new Billing($id);
-
-    if (0 === $id) {
-      return;
-    }
 
     $this->fetch($id);
   }

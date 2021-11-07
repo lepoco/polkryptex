@@ -31,12 +31,9 @@ final class Wallet extends \App\Core\Data\DatabaseObject
 
   public function __construct(int $id = 0)
   {
+    $this->id = $id;
     $this->currency = new Currency(0);
     $this->user = new User(0);
-
-    if (0 === $id) {
-      return;
-    }
 
     $this->fetch($id);
   }
@@ -62,6 +59,10 @@ final class Wallet extends \App\Core\Data\DatabaseObject
 
   private function fetch(int $id): void
   {
+    if (0 === $id) {
+      return;
+    }
+
     $dbWallet = DB::table('wallets')->where(['id' => $id])->get()->first();
 
     if (!isset($dbWallet->id) || !isset($dbWallet->virtual_balance)) {

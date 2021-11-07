@@ -41,10 +41,6 @@ final class Currency extends \App\Core\Data\DatabaseObject
 
   public function __construct(int $id = 0)
   {
-    if (0 === $id) {
-      return;
-    }
-
     $this->id = $id;
 
     $this->fetch($id);
@@ -71,6 +67,10 @@ final class Currency extends \App\Core\Data\DatabaseObject
 
   private function fetch(int $id): void
   {
+    if (0 === $id) {
+      return;
+    }
+
     $dbCurrency = DB::table('currencies')->where(['id' => $id])->get()->first();
 
     if (!isset($dbCurrency->id) || !isset($dbCurrency->rate)) {

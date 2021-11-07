@@ -108,7 +108,7 @@ final class Statistics
       return 0;
     }
 
-    $insertedId = Cache::remember('statistics.type_id.' . $type, function () use ($type) {
+    $insertedId = Cache::forever('statistics.type_id.' . $type, function () use ($type) {
       return DB::table('statistics_types')->insertGetId([
         'name' => $type
       ]);
@@ -134,7 +134,7 @@ final class Statistics
       return 0;
     }
 
-    $insertedId = Cache::remember('statistics.tag_id.' . $tag, function () use ($tag) {
+    $insertedId = Cache::forever('statistics.tag_id.' . $tag, function () use ($tag) {
       return DB::table('statistics_tags')->insertGetId([
         'name' => $tag
       ]);

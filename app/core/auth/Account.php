@@ -2,7 +2,7 @@
 
 namespace App\Core\Auth;
 
-use App\Core\Facades\{App, Session, DB, Response};
+use App\Core\Facades\{App, Session, DB, Response, Cache};
 use App\Core\Auth\User;
 use App\Core\Data\Encryption;
 use Illuminate\Support\Str;
@@ -126,33 +126,40 @@ final class Account
    */
   public static function getBy(string $type = 'email', int|string $data = ''): ?User
   {
-    $query = null;
-
-    if ('id' === $type) {
-      return new User((int) $data);
-    }
-
     // TODO: User cache with flush if new
+    $userId = Cache::remember('user.getby.' . $type . '_' . $data, 120, function () use ($type, $data) {
+      if ('id' === $type) {
+        return (int) $data;
+      }
 
-    switch ($type) {
-      case 'name':
-        $query = DB::table('users')->where('name', $data)->first();
-        break;
+      $query = null;
 
-      case 'display_name':
-        $query = DB::table('users')->where('display_name', $data)->first();
-        break;
+      switch ($type) {
+        case 'name':
+          $query = DB::table('users')->where('name', $data)->first();
+          break;
 
-      default:
-        $query = DB::table('users')->where('email', $data)->first();
-        break;
-    }
+        case 'display_name':
+          $query = DB::table('users')->where('display_name', $data)->first();
+          break;
 
-    if (empty($query)) {
+        default:
+          $query = DB::table('users')->where('email', $data)->first();
+          break;
+      }
+
+      if (!isset($query->id)) {
+        return 0;
+      }
+
+      return $query->id;
+    });
+
+    if (0 === $userId) {
       return null;
     }
 
-    return new User($query->id);
+    return new User($userId);
   }
 
   /**
@@ -160,13 +167,15 @@ final class Account
    */
   public static function getRoleId(string $roleName): int
   {
-    $role = DB::table('user_roles')->where('name', $roleName)->first();
+    return Cache::remember('user.role_id' . $roleName, 120, function () use ($roleName) {
+      $role = DB::table('user_roles')->where('name', $roleName)->first();
 
-    if (empty($role)) {
-      return 1;
-    }
+      if (empty($role)) {
+        return 1;
+      }
 
-    return (int) $role->id;
+      return (int) $role->id;
+    });
   }
 
   /**
@@ -174,13 +183,15 @@ final class Account
    */
   public static function getPlanId(string $planName): int
   {
-    $plan = DB::table('plans')->where('name', $planName)->first();
+    return Cache::remember('user.plan_id' . $planName, 120, function () use ($planName) {
+      $plan = DB::table('plans')->where('name', $planName)->first();
 
-    if (empty($plan)) {
-      return 1;
-    }
+      if (empty($plan)) {
+        return 1;
+      }
 
-    return (int) $plan->id;
+      return (int) $plan->id;
+    });
   }
 
   /**

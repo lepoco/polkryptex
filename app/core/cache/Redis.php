@@ -13,7 +13,23 @@ use App\Core\Cache\Memory;
  */
 final class Redis extends Memory implements \App\Core\Schema\Cache
 {
-  public function remember(string $key, \Closure $callback): mixed
+  public function remember(string $key, \DateTimeInterface|\DateInterval|int $ttl, \Closure $callback): mixed
+  {
+    // TODO: REMEMBER SHOULD HAVE TIMEOUT
+    // $ttl
+
+    if ($this->has($key)) {
+      return $this->get($key, null);
+    }
+
+    $return = $callback();
+
+    $this->put($key, $return);
+
+    return $return;
+  }
+
+  public function forever(string $key, \Closure $callback): mixed
   {
     if ($this->has($key)) {
       return $this->get($key, null);

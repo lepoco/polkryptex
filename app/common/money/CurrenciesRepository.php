@@ -34,7 +34,7 @@ final class CurrenciesRepository
 
   public static function getBy(string $key, string $value): Currency
   {
-    $currencyId = Cache::remember('currency.getby.' . $key . '_' . $value, function () use ($key, $value) {
+    $currencyId = Cache::remember('currency.getby.' . $key . '_' . $value, 120, function () use ($key, $value) {
       $query = DB::table('currencies')->where($key, 'LIKE', $value)->get(['id'])->first();
 
       if (!isset($query->id)) {
