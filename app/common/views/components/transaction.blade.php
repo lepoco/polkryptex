@@ -2,18 +2,6 @@
   $method = \App\Common\Money\TransactionsRepository::getMethodName($transaction->getTypeId());
   $type = \App\Common\Money\TransactionsRepository::getTypeName($transaction->getTypeId());
   $currency = $transaction->getWalletTo()->getCurrency();
-  
-  if(!isset($method)) {
-    $method = 'internal';
-  }
-
-  if(!isset($type)) {
-    $type = 'transfer';
-  }
-
-  if(!isset($currency)) {
-    $currency = new \App\Common\Money\Currency(0);
-  }
 
   switch ($method) {
     case 'apple_pay':
@@ -37,7 +25,7 @@
       break;
   }
 
-  if('topup' === $type) {
+  if ('topup' === $type) {
     $header = 'Top-up via ' . $methodName;
   }
 @endphp
