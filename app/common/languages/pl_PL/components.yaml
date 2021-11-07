@@ -7,3 +7,9 @@ Session time passes: Czas sesji minął
 You have been inactive for some time, you will be logged out in a moment.: Byłeś nieaktywny przez jakiś czas, za chwilę zostaniesz wylogowany.
 Stay on the page: Zostań na stronie
 Log out: Wyloguj
+
+# app\common\views\components\transaction.blade.php
+Top-up via: Doładowanie przez
+From: Z
+To: Do
+you: ty

@@ -30,6 +30,6 @@ final class TransactionsComposer extends Composer implements \App\Core\Schema\Co
 
   private function getRecentTransactions(User $user): array
   {
-    return TransactionsRepository::getUserTransactions('all', 25);
+    return TransactionsRepository::getUserTransactions('all', 20);
   }
 }

@@ -6,7 +6,7 @@
   $methodName = \App\Common\Money\PaymentMethods::getName($method);
 
   if ('topup' === $type) {
-    $header = 'Top-up via ' . $methodName;
+    $header = \App\Core\Facades\Translate::string('Top-up via') . ' ' . $methodName;
   }
 @endphp
 

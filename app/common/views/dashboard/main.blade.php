@@ -14,10 +14,9 @@
           <h4>$3213,33</h4>
           <p>US Dollar</p>
 
-          <a href="@url('dashboard/exchange')" class="btn btn-outline-dark btn-mobile -lg-mr-1"
-            type="button">@translate('Exchange')</a>
-          <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile -lg-mr-1" type="button">@translate('Top up')</a>
-          <a href="@url('dashboard/add')" class="btn btn-dark btn-mobile" type="button">+</a>
+          <a href="@url('dashboard/exchange')" class="btn btn-outline-dark btn-mobile -lg-mr-1">@translate('Exchange')</a>
+          <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Top up')</a>
+          <a href="@url('dashboard/add')" class="btn btn-dark btn-mobile">+</a>
 
           @if($has_transactions ?? false)
 

@@ -53,3 +53,12 @@ Request: Zażądaj
 From wallet: Z portfela
 To wallet: Do portfela
 Exchange currencies: Wymień waluty
+
+# app\common\views\dashboard\transactions.blade.php
+Transactions: Transakcje
+
+# app\common\views\dashboard\transaction.blade.php
+Transaction: Transakcja
+Exchange: Wymiana
+Transfer: Przelew
+Top-up: Doładowanie
