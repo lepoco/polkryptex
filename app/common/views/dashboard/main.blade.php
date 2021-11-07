@@ -29,7 +29,7 @@
           @isset($recent_transactions)
           <div class="transactions">
             @foreach ($recent_transactions as $transaction)
-            @include('components.transaction', $transaction)
+            @include('components.transaction', ['transaction' => $transaction])
             @endforeach
           </div>
           @endisset

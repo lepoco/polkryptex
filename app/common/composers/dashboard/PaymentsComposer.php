@@ -30,35 +30,6 @@ final class PaymentsComposer extends Composer implements \App\Core\Schema\Compos
 
   private function getPayments(User $user): array
   {
-    $transactions = TransactionsRepository::getUserTransactions('transfer', 5);
-    $parsedTransactions = [];
-    $types = [];
-    $methods = [];
-    $wallets = [];
-    $currencies = [];
-
-    foreach ($transactions as $singleTransaction) {
-      $typeId = $singleTransaction->getTypeId();
-      $methodId = $singleTransaction->getMethodId();
-
-      if (!in_array($typeId, $types)) {
-        $types[$typeId] = TransactionsRepository::getTypeName($typeId);
-      }
-
-      if (!in_array($methodId, $methods)) {
-        $methods[$methodId] = TransactionsRepository::getMethodName($methodId);
-      }
-
-      $parsedTransactions[] = [
-        'url' => Redirect::url('dashboard/transaction/' . $singleTransaction->getUUID()),
-        'amount' => $singleTransaction->getAmount(),
-        'date' => $singleTransaction->getCreatedAt(),
-        'type' => $types[$typeId],
-        'method' => $methods[$methodId],
-        'currency' => $singleTransaction->getWalletTo()->getCurrency()
-      ];
-    }
-
-    return $parsedTransactions;
+    return TransactionsRepository::getUserTransactions('transfer', 5);
   }
 }

@@ -4,7 +4,6 @@ namespace App\Core\Utils;
 
 use App\Core\Utils\Path;
 use Illuminate\Http\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * Provides static error/exception triggers for Symfony VarDumper.
@@ -47,8 +46,8 @@ final class ErrorHandler
       return true;
     }
 
-    if (class_exists('VarDumper')) {
-      VarDumper::dump([
+    if (class_exists('\Symfony\Component\VarDumper\VarDumper')) {
+      \Symfony\Component\VarDumper\VarDumper::dump([
         'ERROR' => [
           'errno' => $errno,
           'errstr' => $errstr,
@@ -75,8 +74,8 @@ final class ErrorHandler
       return true;
     }
 
-    if (class_exists('VarDumper')) {
-      VarDumper::dump($exception);
+    if (class_exists('\Symfony\Component\VarDumper\VarDumper')) {
+      \Symfony\Component\VarDumper\VarDumper::dump($exception);
     }
 
     return true;

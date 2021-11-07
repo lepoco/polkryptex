@@ -5,6 +5,7 @@ namespace App\Common\Money;
 use App\Common\Money\Wallet;
 use App\Core\Auth\User;
 use App\Core\Facades\DB;
+use App\Core\HTtp\Redirect;
 
 /**
  * Represents a single transaction.
@@ -94,6 +95,11 @@ final class Transaction extends \App\Core\Data\DatabaseObject
     $this->setUserId($dbTransaction->user_id ?? 0);
     $this->setWalletFromId($dbTransaction->wallet_from ?? 0);
     $this->setWalletToId($dbTransaction->wallet_to ?? 0);
+  }
+
+  public function getUrl(): string
+  {
+    return Redirect::url('dashboard/transaction/' . $this->getUUID());
   }
 
   public function getUser(): User

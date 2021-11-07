@@ -3,10 +3,8 @@
 namespace App\Core;
 
 use App\Core\Http\{Router, Response, Session};
-use App\Core\Data\Options;
+use App\Core\Data\{Container, Statistics, Options};
 use App\Core\Facades\App;
-use App\Core\Data\Container;
-use App\Core\Data\Statistics;
 use App\Core\Email\Mailer;
 use App\Core\i18n\Translate;
 use App\Core\Cache\Redis;

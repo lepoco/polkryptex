@@ -36,7 +36,7 @@
         @isset($paymentGroup['transactions'])
         <div class="transactions">
           @foreach ($paymentGroup['transactions'] as $transaction)
-          @include('components.transaction', $transaction)
+          @include('components.transaction', ['transaction' => $transaction])
           @endforeach
         </div>
         @endisset

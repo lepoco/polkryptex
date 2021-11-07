@@ -30,35 +30,6 @@ final class MainComposer extends Composer implements \App\Core\Schema\Composer
 
   private function getRecentTransactions(User $user): array
   {
-    $transactions = TransactionsRepository::getUserTransactions('all', 5);
-    $parsedTransactions = [];
-    $types = [];
-    $methods = [];
-    $wallets = [];
-    $currencies = [];
-
-    foreach ($transactions as $singleTransaction) {
-      $typeId = $singleTransaction->getTypeId();
-      $methodId = $singleTransaction->getMethodId();
-
-      if (!in_array($typeId, $types)) {
-        $types[$typeId] = TransactionsRepository::getTypeName($typeId);
-      }
-
-      if (!in_array($methodId, $methods)) {
-        $methods[$methodId] = TransactionsRepository::getMethodName($methodId);
-      }
-
-      $parsedTransactions[] = [
-        'url' => Redirect::url('dashboard/transaction/' . $singleTransaction->getUUID()),
-        'amount' => $singleTransaction->getAmount(),
-        'date' => $singleTransaction->getCreatedAt(),
-        'type' => $types[$typeId],
-        'method' => $methods[$methodId],
-        'currency' => $singleTransaction->getWalletTo()->getCurrency()
-      ];
-    }
-
-    return $parsedTransactions;
+    return TransactionsRepository::getUserTransactions('all', 5);
   }
 }
