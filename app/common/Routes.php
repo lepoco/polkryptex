@@ -10,6 +10,7 @@ use App\Core\Http\Router;
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
+ * @see https://github.com/bramus/router
  */
 final class Routes extends Router
 {
@@ -85,6 +86,16 @@ final class Routes extends Router
     [
       'path' => '/dashboard/payments',
       'namespace' => 'Dashboard\\Payments',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/transactions',
+      'namespace' => 'Dashboard\\Transactions',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/transaction/{uuid}',
+      'namespace' => 'Dashboard\\Transaction',
       'require_login' => true
     ],
     [

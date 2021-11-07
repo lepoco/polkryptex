@@ -2,7 +2,7 @@
 
 namespace App\Common\Money;
 
-use App\Core\Facades\DB;
+use App\Core\Facades\Translate;
 
 /**
  * Represents the available payment methods.
@@ -32,4 +32,36 @@ final class PaymentMethods
   public const PRZELEWY_24 = 'przelewy_24';
 
   public const IMOJE = 'imoje';
+
+  public static function getName(string $name): string
+  {
+    switch ($name) {
+      case self::INTERNAL:
+        return Translate::string('Transfer');
+
+      case self::APPLE_PAY:
+        return Translate::string('Apple Pay');
+
+      case self::GOOGLE_PAY:
+        return Translate::string('Google Pay');
+
+      case self::PAYPAL:
+        return Translate::string('PayPal');
+
+      case self::CARD:
+        return Translate::string('Credit Card');
+
+      case self::TRANSFER:
+        return Translate::string('Bank Transfer');
+
+      case self::PRZELEWY_24:
+        return Translate::string('Przelewy 24');
+
+      case self::IMOJE:
+        return Translate::string('iMoje');
+
+      default:
+        return Translate::string('Other method');
+    }
+  }
 }

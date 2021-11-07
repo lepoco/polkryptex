@@ -1,29 +1,9 @@
 @php
-  $method = \App\Common\Money\TransactionsRepository::getMethodName($transaction->getTypeId());
+  $method = \App\Common\Money\TransactionsRepository::getMethodName($transaction->getMethodId());
   $type = \App\Common\Money\TransactionsRepository::getTypeName($transaction->getTypeId());
   $currency = $transaction->getWalletTo()->getCurrency();
 
-  switch ($method) {
-    case 'apple_pay':
-      $methodName = 'Apple Pay';
-      break;
-
-      case 'google_pay':
-      $methodName = 'Google Pay';
-      break;
-
-    case 'paypal':
-      $methodName = 'Paypal';
-      break;
-
-    case 'card':
-      $methodName = 'Card';
-      break;
-    
-    default:
-      $methodName = $method;
-      break;
-  }
+  $methodName = \App\Common\Money\PaymentMethods::getName($method);
 
   if ('topup' === $type) {
     $header = 'Top-up via ' . $methodName;

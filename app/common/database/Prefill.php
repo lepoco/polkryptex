@@ -96,6 +96,11 @@ final class Prefill
     DB::table('transaction_type')->insert([
       'name' => 'topup'
     ]);
+
+    // Statistics
+    DB::table('statistics_ips')->insert([
+      'ip' => ''
+    ]);
   }
 
   private static function fillOptions(): void

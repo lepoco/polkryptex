@@ -2,7 +2,7 @@
 
 namespace App\Core\Data;
 
-use App\Core\Facades\{DB, Request, Cache};
+use App\Core\Facades\{DB, Request, Cache, Option};
 use App\Core\Auth\Account;
 
 /**
@@ -57,7 +57,7 @@ final class Statistics
       'statistic_type' => $this->getTypeId($type),
       'ua' => $ua,
       'user_id' => !empty($user) ? $user->getId() : null,
-      'ip' => Request::ip(),
+      'ip_id' => Option::get('stastistics_keep_ip', true) ? $this->getIpId(Request::ip()) : 1,
       'created_at' => date('Y-m-d H:i:s')
     ]);
   }
@@ -94,6 +94,23 @@ final class Statistics
   public function isOpened(): bool
   {
     return $this->opened;
+  }
+
+  public function getIpId(string $ip): int
+  {
+    return Cache::forever('statistics.ip.' . $ip, function () use ($ip) {
+      $dbKey = DB::table('statistics_ips')->where(['ip' => $ip])->get(['id'])->first();
+
+      if (isset($dbKey->id)) {
+        return $dbKey->id;
+      }
+
+      $insertedId = DB::table('statistics_ips')->insertGetId([
+        'ip' => $ip
+      ]);
+
+      return $insertedId;
+    });
   }
 
   public function getTypeId(string $type, bool $nullCheck = false): int

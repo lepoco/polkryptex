@@ -38,6 +38,7 @@ final class Schema
     DB::schema()->dropIfExists('statistics');
     DB::schema()->dropIfExists('statistics_tags');
     DB::schema()->dropIfExists('statistics_types');
+    DB::schema()->dropIfExists('statistics_ips');
 
     DB::schema()->dropIfExists('transactions');
     DB::schema()->dropIfExists('transaction_type');
@@ -234,6 +235,13 @@ final class Schema
 
   private static function tableStatistics(): void
   {
+    if (!DB::schema()->hasTable('statistics_ips')) {
+      DB::schema()->create('statistics_ips', function (Blueprint $table) {
+        $table->id();
+        $table->string('ip')->nullable();
+      });
+    }
+
     if (!DB::schema()->hasTable('statistics_tags')) {
       DB::schema()->create('statistics_tags', function (Blueprint $table) {
         $table->id();
@@ -254,7 +262,7 @@ final class Schema
         $table->foreignId('statistic_tag')->references('id')->on('statistics_tags');
         $table->foreignId('statistic_type')->references('id')->on('statistics_types');
         $table->foreignId('user_id')->nullable()->references('id')->on('users');
-        $table->string('ip')->nullable();
+        $table->foreignId('ip_id')->nullable()->references('id')->on('statistics_ips');
         $table->text('ua')->nullable();
         $table->timestamp('created_at')->useCurrent();
       });

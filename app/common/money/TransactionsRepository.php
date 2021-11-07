@@ -36,6 +36,31 @@ final class TransactionsRepository
     return false;
   }
 
+  public static function getBy(string $key, mixed $value): ?Transaction
+  {
+    $transactionId = Cache::remember('transaction.getBy.' . $key . '.' . crc32($value), 120, function () use ($key, $value) {
+      $query = DB::table('transactions')->where($key, 'LIKE', $value)->get(['id'])->first();
+
+      if (!isset($query->id)) {
+        return 0;
+      }
+
+      return $query->id;
+    });
+
+    ray([
+      'key' => $key,
+      'value' => $value,
+      'id' => $transactionId
+    ]);
+
+    if (0 === $transactionId) {
+      return null;
+    }
+
+    return new Transaction($transactionId);
+  }
+
   /**
    * @return \App\Coore\Money\Transaction[]
    */

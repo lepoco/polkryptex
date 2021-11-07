@@ -56,6 +56,8 @@ First, as this is a college project, we omitted full database encryption for tim
    When installing the application, a random set of salts is created based on the Mersenne Twister Random Number Generator using the time code encoded in CRC32. Based on this algorithm, random characters are selected from the array that are the salt component with a length of 64 characters.
  - **Logging in**  
    In successful scenarios, the password is encrypted one-way using the Argon2 algorithm and then stored in the database. In addition to the password, we store the session ID encoded with the same algorithm and an additional session Token generated on the basis of salt. All three of these values are required to validate a user. During each activity.
+ - **Timeout**  
+   The time in minutes during which the user can remain inactive is determined by a defined option in the database. The timestamp information of the last action is stored in the session. Before performing the activity, it is verified if the difference is greater than the defined time and if so, the session is invalidated.
  - **Requests**  
    The website works solely on the basis of AJAX requests. Therefore, it cannot run without JavaScript. To make sure the queries are valid, a salt and timecode generated nonce is added to each query. This nonce is verified before the actual request logic, and its absence causes the action to be rejected.
  - **Content Security Policy**  
