@@ -15,6 +15,8 @@ class Memory implements \App\Core\Schema\Cache
 
   public function remember(string $key, \Closure $callback): mixed
   {
+    // TODO: REMEMBER SHOULD HAVE TIMEOUT
+
     if ($this->has($key)) {
       return $this->get($key, null);
     }
@@ -81,8 +83,8 @@ class Memory implements \App\Core\Schema\Cache
       return true;
     }
 
-    if (4 === $keyCount && isset($this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]])) {
-      unset($this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]]);
+    if (4 === $keyCount && isset($this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]])) {
+      unset($this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]]);
 
       return true;
     }
@@ -108,13 +110,13 @@ class Memory implements \App\Core\Schema\Cache
     }
 
     if (4 === $keyCount) {
-      return isset($this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]]);
+      return isset($this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]]);
     }
 
     return false;
   }
 
-  final protected function memoryGet(string $key, mixed $default): bool
+  final protected function memoryGet(string $key, mixed $default): mixed
   {
     if (!$this->memoryHas($key)) {
       return $default;
@@ -124,19 +126,19 @@ class Memory implements \App\Core\Schema\Cache
     $keyCount = count($keyArray);
 
     if (1 === $keyCount) {
-      return $this->records[$keyArray[0]] ?? $default;
+      return $this->records[$keyArray[0]];
     }
 
     if (2 === $keyCount) {
-      return $this->records[$keyArray[0]][$keyArray[1]] ?? $default;
+      return $this->records[$keyArray[0]][$keyArray[1]];
     }
 
     if (3 === $keyCount) {
-      return $this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]] ?? $default;
+      return $this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]];
     }
 
     if (4 === $keyCount) {
-      return $this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]] ?? $default;
+      return $this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]];
     }
 
     return $default;
@@ -166,7 +168,7 @@ class Memory implements \App\Core\Schema\Cache
     }
 
     if (4 === $keyCount) {
-      $this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]] = $value;
+      $this->records[$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]] = $value;
 
       return true;
     }

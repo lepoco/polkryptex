@@ -132,6 +132,8 @@ final class Account
       return new User((int) $data);
     }
 
+    // TODO: User cache with flush if new
+
     switch ($type) {
       case 'name':
         $query = DB::table('users')->where('name', $data)->first();

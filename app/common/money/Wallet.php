@@ -72,8 +72,8 @@ final class Wallet extends \App\Core\Data\DatabaseObject
     $this->balance = $dbWallet->virtual_balance;
     $this->createdAt = $dbWallet->created_at;
     $this->updatedAt = $dbWallet->updated_at;
-    $this->isoCode = $dbWallet->iso_code;
 
+    $this->setUserId($dbWallet->user_id);
     $this->setCurrencyId($dbWallet->currency_id);
   }
 

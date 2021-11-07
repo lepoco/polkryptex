@@ -11,7 +11,7 @@ use App\Core\Facades\Abstract\Facade;
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  *
- * @method static mixed get(string|array $key) Retrieve an item from the cache by key.
+ * @method static mixed get(string $key, mixed $default) Retrieve an item from the cache by key.
  * @method static bool put(string $key, mixed $value, int $seconds) Store an item in the cache for a given number of seconds.
  * @method static bool forget(string $key) Remove an item from the cache.
  * @method static mixed remember(string $key, \DateTimeInterface|\DateInterval|int|null $ttl, \Closure $callback) Get an item from the cache, or execute the given Closure and store the result.

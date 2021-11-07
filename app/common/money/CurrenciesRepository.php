@@ -2,7 +2,7 @@
 
 namespace App\Common\Money;
 
-use App\Core\Facades\DB;
+use App\Core\Facades\{DB, Cache};
 
 /**
  * Contains the logic responsible for managing the currencies.
@@ -34,13 +34,17 @@ final class CurrenciesRepository
 
   public static function getBy(string $key, string $value): Currency
   {
-    $dbCurrency = DB::table('currencies')->where($key, 'LIKE', $value)->get()->first();
+    $currencyId = Cache::remember('currency.getby.' . $key . '_' . $value, function () use ($key, $value) {
+      $query = DB::table('currencies')->where($key, 'LIKE', $value)->get(['id'])->first();
 
-    if (!isset($dbCurrency->id)) {
-      return new Currency(0);
-    }
+      if (!isset($query->id)) {
+        return 0;
+      }
 
-    return self::fetchFromObject($dbCurrency);
+      return $query->id;
+    });
+
+    return new Currency($currencyId);
   }
 
   private static function fetchFromObject(object $db): Currency

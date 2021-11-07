@@ -54,7 +54,7 @@ final class Session implements \App\Core\Schema\Session
     }
 
     if (4 === $keyCount) {
-      return $this->sessionData[self::VALUES_KEY][$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]] ?? $default;
+      return $this->sessionData[self::VALUES_KEY][$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]] ?? $default;
     }
 
     return $default;
@@ -87,7 +87,7 @@ final class Session implements \App\Core\Schema\Session
     }
 
     if (4 === $keyCount) {
-      $this->sessionData[self::VALUES_KEY][$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]] = $value;
+      $this->sessionData[self::VALUES_KEY][$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]] = $value;
 
       return $this;
     }
@@ -116,7 +116,7 @@ final class Session implements \App\Core\Schema\Session
     }
 
     if (4 === $keyCount) {
-      return isset($this->sessionData[self::VALUES_KEY][$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[4]]);
+      return isset($this->sessionData[self::VALUES_KEY][$keyArray[0]][$keyArray[1]][$keyArray[2]][$keyArray[3]]);
     }
 
     return false;

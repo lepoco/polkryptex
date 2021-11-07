@@ -2,7 +2,7 @@
 
 namespace App\Core\Data;
 
-use App\Core\Facades\{App, DB};
+use App\Core\Facades\{App, DB, Cache};
 
 /**
  * Allows to retrieve and save options from the database, stored in memory using the Cache.
@@ -13,57 +13,72 @@ use App\Core\Facades\{App, DB};
  */
 final class Options
 {
-  private array $store = [];
-
   public function remember(string $name, \Closure $callback): mixed
   {
-    if (isset($this->store[$name])) {
-      return $this->store[$name];
+    if (Cache::has('options.' . $name)) {
+      return Cache::get('options.' . $name, 'CACHE_ERROR');
     }
 
-    if (!App::isConnected()) {
-      $this->store[$name] = $callback();
+    $db = $this->getFromDatabase($name, $callback());
 
-      return $this->store[$name];
-    }
+    Cache::put('options.' . $name, $db);
 
-    $query = DB::table('options')->where('name', $name)->first();
-
-    $this->store[$name] = isset($query->value) ? self::decodeType($query->value) : $callback();
-
-    return $this->store[$name];
+    return $db;
   }
 
   public function get(string $name, mixed $default = null): mixed
   {
-    if (isset($this->store[$name])) {
-      return $this->store[$name];
+    if (Cache::has('options.' . $name)) {
+      return Cache::get('options.' . $name, 'CACHE_ERROR');
     }
 
+    $db = $this->getFromDatabase($name, $default);
+
+    // TODO: This is where we may have problems, we can do FORCE REFRESH or something
+    Cache::put('options.' . $name, $db);
+
+    return $db;
+  }
+
+  public function set(string $name, $value): bool
+  {
+    Cache::put('options.' . $name, $value);
+
+    return $this->setInDatabase($name, $value);
+  }
+
+  private function getFromDatabase(string $key, mixed $default): mixed
+  {
     if (!App::isConnected()) {
       return $default;
     }
 
-    $query = DB::table('options')->where('name', $name)->first();
+    $query = DB::table('options')->where('name', $key)->first();
 
     if (isset($query->value)) {
-      $this->store[$name] = self::decodeType($query->value);
-
       return self::decodeType($query->value);
     }
 
     return $default;
   }
 
-  public function set(string $name, $value): bool
+  private function setInDatabase(string $key, mixed $value): bool
   {
-    $this->store[$name] = $value;
-
     if (!App::isConnected()) {
       return false;
     }
 
-    return DB::table('options')->where('name', $name)->update([
+    $query = DB::table('options')->where('name', $key)->first();
+
+    if (isset($query->value)) {
+      return DB::table('options')->where('name', $key)->update([
+        'value' => self::encodeType($value),
+        'updated_at' => date('Y-m-d H:i:s')
+      ]);
+    }
+
+    return DB::table('options')->insert([
+      'name' => $key,
       'value' => self::encodeType($value),
       'updated_at' => date('Y-m-d H:i:s')
     ]);

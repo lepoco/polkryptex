@@ -170,8 +170,6 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
     $this->response->send();
 
-    ray($this->cache);
-
     if ($exit) {
       exit($this->status);
     }

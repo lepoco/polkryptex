@@ -41,7 +41,9 @@ final class WalletsRepository
     return DB::table('wallets')->insert([
       'user_id' => $userId,
       'currency_id' => $wallet->getCurrencyId(),
-      'virtual_balance' => $wallet->getBalance()
+      'virtual_balance' => $wallet->getBalance(),
+      'created_at' => date('Y-m-d H:i:s'),
+      'updated_at' => date('Y-m-d H:i:s')
     ]);
   }
 

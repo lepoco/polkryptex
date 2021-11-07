@@ -2,7 +2,7 @@
 
 namespace App\Core\Data;
 
-use App\Core\Facades\{DB, Request};
+use App\Core\Facades\{DB, Request, Cache};
 use App\Core\Auth\Account;
 
 /**
@@ -36,6 +36,7 @@ final class Statistics
       return;
     }
 
+    // TODO: FIX CACHE
     $this->fetchTags(DB::table('statistics_tags')->get()->all() ?? []);
     $this->fetchTypes(DB::table('statistics_types')->get()->all() ?? []);
   }
@@ -107,9 +108,11 @@ final class Statistics
       return 0;
     }
 
-    $insertedId = DB::table('statistics_types')->insertGetId([
-      'name' => $type
-    ]);
+    $insertedId = Cache::remember('statistics.type_id.' . $type, function () use ($type) {
+      return DB::table('statistics_types')->insertGetId([
+        'name' => $type
+      ]);
+    });
 
     $this->types[] = [
       'id' => $insertedId,
@@ -131,9 +134,11 @@ final class Statistics
       return 0;
     }
 
-    $insertedId = DB::table('statistics_tags')->insertGetId([
-      'name' => $tag
-    ]);
+    $insertedId = Cache::remember('statistics.tag_id.' . $tag, function () use ($tag) {
+      return DB::table('statistics_tags')->insertGetId([
+        'name' => $tag
+      ]);
+    });
 
     $this->tags[] = [
       'id' => $insertedId,
