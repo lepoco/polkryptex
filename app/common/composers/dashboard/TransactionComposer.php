@@ -27,6 +27,12 @@ final class TransactionComposer extends Composer implements \App\Core\Schema\Com
       $transaction = $this->getTransaction($segments[2]);
     }
 
+    // If the transaction was not sent by the user
+    // TODO: If a user is a receiver
+    if (!empty($transaction) && $transaction->getUser()->getId() !== $user->getId()) {
+      $transaction = null;
+    }
+
     $view->with('user', $user);
     $view->with('transaction', $transaction);
     $view->with('currency', $transaction->getWalletTo()->getCurrency());

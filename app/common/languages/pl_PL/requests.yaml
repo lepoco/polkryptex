@@ -1,4 +1,5 @@
 # app\core\view\Request.php
+Some fields are missing.: Brakuje niektórych pól.
 Not all fields are correctly filled.: Nie wszystkie pola zostały prawidłowo wypełnione.
 Some fields contain characters that are not allowed.: Niektóre pola zawierają niedozwolone znaki.
 The time verification key does not match, please try refreshing the page.: Klucz weryfikacyjny jest nieprawidłowy. Spróbuj odświeżyć witrynę.

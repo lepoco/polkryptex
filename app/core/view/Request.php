@@ -99,7 +99,7 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
       $this->addContent('notice', 'not-exists');
       $this->addContent('fields', $notSetField);
 
-      $this->addContent('message', 'Some fields are missing.');
+      $this->addContent('message', Translate::string('Some fields are missing.'));
       $this->finish(self::ERROR_MISSING_ARGUMENTS, Status::UNPROCESSABLE_ENTITY);
     }
 
