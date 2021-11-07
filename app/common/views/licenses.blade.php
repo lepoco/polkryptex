@@ -13,7 +13,7 @@
       <div>
 
         <p class="-reveal">
-          Polkryptex Inc - Cryptocurrency platform as a college team IT project.
+          Polkryptex - Cryptocurrency platform as a college team IT project.
           <br>
           <small>GNU General Public License v3.0 -</small> <a target="_blank" rel="noopener nofollow"
             href="https://github.com/polkryptex/polkryptex"><small>https://github.com/polkryptex/polkryptex</small></a>

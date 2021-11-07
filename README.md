@@ -48,6 +48,25 @@ The application uses several solutions to improve work and design. They are nece
 - 01.11.2021 - Implementing the PayPal API
 - 01.12.2021 - Optional, PWA support
 
+## Security
+The platform is intended to provide the possibility of processing money, hence we must ensure the appropriate safety of users.  
+First, as this is a college project, we omitted full database encryption for time and computational power reasons.
+
+ - **Salts**  
+   When installing the application, a random set of salts is created based on the Mersenne Twister Random Number Generator using the time code encoded in CRC32. Based on this algorithm, random characters are selected from the array that are the salt component with a length of 64 characters.
+ - **Logging in**  
+   In successful scenarios, the password is encrypted one-way using the Argon2 algorithm and then stored in the database. In addition to the password, we store the session ID encoded with the same algorithm and an additional session Token generated on the basis of salt. All three of these values are required to validate a user. During each activity.
+ - **Requests**  
+   The website works solely on the basis of AJAX requests. Therefore, it cannot run without JavaScript. To make sure the queries are valid, a salt and timecode generated nonce is added to each query. This nonce is verified before the actual request logic, and its absence causes the action to be rejected.
+ - **Content Security Policy**  
+   The CSP header is added to the HTTP response. It tells the browser what URLs are allowed to download styles, fonts and scripts. Besides, in the header there is CSP NONCE which is required for inline scripts on the page to run.
+ - **Digiset**  
+   In addition to CSP, the headers also contain a digiset, which is a BASE64-encoded SHA512 checksum of the entire content of the site. The salt is calculated just before sending and guarantees the correct checksum of the content.
+ - **Session Hijacking**  
+   In addition to the basic protection against hijacking in the form of SSL, the session ID is reset during each action, which ensures that the ID matches the user.
+ - **SQL Injection**  
+   Application uses strong typing, which in the method arguments try to prevent sending false data under e.g. integer arguments. One of the protection vectors is building parameterized SQL queries with a predetermined structure. Thanks to which the queries cannot be modified. Besides, where possible, query does not use the argument received in request, but checks with e.g. switch whether the given argument is allowed at all.
+
 ## How to run and install the application?
 Several steps must be taken to properly run the application.  
 
