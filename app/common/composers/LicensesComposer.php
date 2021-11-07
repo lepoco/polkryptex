@@ -68,19 +68,9 @@ final class LicensesComposer extends Composer implements \App\Core\Schema\Compos
         'url' => 'https://github.com/illuminate/database'
       ],
       [
-        'name' => 'Illuminate Cache',
-        'license' => 'The MIT License (MIT)',
-        'url' => 'https://github.com/illuminate/cache'
-      ],
-      [
         'name' => 'Illuminate Http',
         'license' => 'The MIT License (MIT)',
         'url' => 'https://github.com/illuminate/http'
-      ],
-      [
-        'name' => 'Illuminate Translation',
-        'license' => 'The MIT License (MIT)',
-        'url' => 'https://github.com/illuminate/translation'
       ],
       [
         'name' => 'Illuminate Log',
@@ -133,9 +123,24 @@ final class LicensesComposer extends Composer implements \App\Core\Schema\Compos
         'url' => 'https://github.com/googlechrome/workbox'
       ],
       [
+        'name' => 'Bootstrap',
+        'license' => 'The MIT License (MIT)',
+        'url' => 'https://getbootstrap.com/'
+      ],
+      [
+        'name' => 'JS.Cookie',
+        'license' => 'The MIT License (MIT)',
+        'url' => 'https://github.com/js-cookie/js-cookie'
+      ],
+      [
         'name' => 'ScrollReveal',
         'license' => 'GNU General Public License 3.0',
         'url' => 'https://scrollrevealjs.org/'
+      ],
+      [
+        'name' => 'Images from Pexels',
+        'license' => 'Royalty-free license - All photos and videos on Pexels can be downloaded and used for free.',
+        'url' => 'https://www.pexels.com/'
       ],
     ]);
   }
