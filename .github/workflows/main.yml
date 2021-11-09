@@ -50,11 +50,10 @@ jobs:
         composer install
         npm install
         npx webpack
+        ./vendor/bin/pest
 
     # - name: Publish build
     #     uses: actions/upload-artifact@v2
     #     with:
     #       name: POLKRYPTEX
     #       path: /
-
-    - uses: NWBY/pest-action@v1.2.0

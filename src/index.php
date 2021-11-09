@@ -21,9 +21,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 ErrorHandler::register();
 
-$app = new App();
-
-$app
+(new App())
   ->setup()
   ->connect()
   ->print()
