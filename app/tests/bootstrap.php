@@ -9,11 +9,9 @@
  */
 
 define('APPSTART', microtime(true));
-define('ABSPATH', __DIR__ . '/../../');
+define('ABSPATH', realpath(__DIR__ . '/../../') . '/');
 define('APPDIR', 'app/');
 
 date_default_timezone_set('UTC');
 
-require __DIR__ . '/../../vendor/autoload.php';
-
-$app = new \App\Common\App();
+require ABSPATH . 'vendor/autoload.php';

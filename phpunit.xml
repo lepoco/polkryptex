@@ -10,11 +10,5 @@
       <directory suffix="Test.php">./app/tests</directory>
     </testsuite>
   </testsuites>
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./app/core/</directory>
-      <directory suffix=".php">./app/common/</directory>
-    </include>
-  </coverage>
 
 </phpunit>
