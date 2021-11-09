@@ -52,8 +52,11 @@ jobs:
     - name: Test
       run: ./vendor/bin/pest
 
+    - name: 'Create artifact archive'
+      run: zip polkryptex-build.zip ./* -r
+
     - name: 'Archive results'
       uses: actions/upload-artifact@v2
       with:
         name: polkryptex-build
-        path: ./
+        path: polkryptex-build.zip
