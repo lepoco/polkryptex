@@ -51,8 +51,8 @@ jobs:
         npm install
         npx webpack
 
-    - name: Publish build
-        uses: actions/upload-artifact@v2
-        with:
-          name: POLKRYPTEX
-          path: /
+    # - name: Publish build
+    #     uses: actions/upload-artifact@v2
+    #     with:
+    #       name: POLKRYPTEX
+    #       path: /
