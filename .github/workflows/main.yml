@@ -52,8 +52,8 @@ jobs:
     - name: Test
       run: ./vendor/bin/pest
 
-    # - name: Publish build
-    #     uses: actions/upload-artifact@v2
-    #     with:
-    #       name: POLKRYPTEX
-    #       path: /
+    - name: 'Archive results'
+      uses: actions/upload-artifact@v2
+      with:
+        name: polkryptex-build
+        path: /
