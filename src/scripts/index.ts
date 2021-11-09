@@ -27,14 +27,14 @@ if (AppData.isWorkerEnabled() && "serviceWorker" in navigator) {
       .register(AppData.url("service-worker.js"))
       .then((registration) => {
         if (AppData.isDebug()) {
-          console.log("SW registered: ", registration);
+          console.debug("App\\Index SW REGISTERED", registration);
         }
 
         //registration.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: "71562645621"});
       })
       .catch((registrationError) => {
         if (AppData.isDebug()) {
-          console.log("SW registration failed: ", registrationError);
+          console.debug("App\\Index SW REGISTRATION FAILED", registrationError);
         }
       });
   });
