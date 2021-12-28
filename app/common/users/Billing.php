@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Auth;
+namespace App\Common\Users;
 
 use App\Core\Utils\Cast;
 use App\Core\Facades\DB;

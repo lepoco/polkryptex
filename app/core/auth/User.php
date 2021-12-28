@@ -2,7 +2,6 @@
 
 namespace App\Core\Auth;
 
-use App\Core\Auth\Billing;
 use App\Core\Utils\Cast;
 use App\Core\Facades\DB;
 use App\Core\Data\Encryption;
@@ -49,18 +48,15 @@ final class User extends \App\Core\Data\DatabaseObject
 
   private string $lastUpdate = '';
 
-  private Billing $billing;
-
   public function __construct(int $id = 0)
   {
     $this->id = $id;
-    $this->billing = new Billing($id);
 
     $this->fetch($id);
   }
 
   /**
-   * Updates an entry in the database, does not change the password, tokens, or billing.
+   * Updates an entry in the database, does not change the password or tokens.
    */
   public function update(): bool
   {
@@ -177,10 +173,6 @@ final class User extends \App\Core\Data\DatabaseObject
    */
   public static function build(array $properties): self
   {
-    $billing = Billing::build([
-      'email' => $properties['email'] ?? ''
-    ]);
-
     return (new self())
       ->setRole($properties['role'] ?? 1)
       ->setType($properties['type'] ?? 1)
@@ -191,7 +183,6 @@ final class User extends \App\Core\Data\DatabaseObject
       ->setPassword($properties['password'] ?? '')
       ->setLanguage($properties['language'] ?? 'en_US')
       ->setTimezone($properties['timezone'] ?? 'UTC')
-      ->setBilling($billing)
       ->setId($properties['id'] ?? 0);
   }
 
@@ -370,18 +361,6 @@ final class User extends \App\Core\Data\DatabaseObject
   public function getLastUpdate(): string
   {
     return $this->lastUpdate;
-  }
-
-  public function setBilling(Billing $billing): self
-  {
-    $this->billing = $billing;
-
-    return $this;
-  }
-
-  public function getBilling(): Billing
-  {
-    return $this->billing;
   }
 
   private function setPassword(string $password): self

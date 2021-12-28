@@ -4,6 +4,7 @@ namespace App\Common\Composers\Dashboard;
 
 use App\Core\Auth\Account;
 use App\Core\View\Blade\Composer;
+use App\Common\Users\Billing;
 use Illuminate\View\View;
 
 /**
@@ -20,6 +21,6 @@ final class BillingComposer extends Composer implements \App\Core\Schema\Compose
     $user = Account::current();
 
     $view->with('user', $user);
-    $view->with('billing', $user->getBilling());
+    $view->with('billing', new Billing($user->id()));
   }
 }

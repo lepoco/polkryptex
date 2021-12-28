@@ -8,9 +8,9 @@ Carried out as part of a team IT project.
 
 ## Depencies
 The application uses several solutions to improve work and design. They are necessary to work on it.
-- Composer - [getcomposer.org](https://getcomposer.org/download/)
+- Composer 2.2.1 - [getcomposer.org](https://getcomposer.org/download/)
+- PHP 8.1.1 - [php.net](https://windows.php.net/download#php-8.1)
 - Node JS - [nodejs.org](https://nodejs.org/en/download/)
-- PHP 8.0.11 - [php.net](https://windows.php.net/download#php-8.0)
 
 ## Modules
 - [x] URL Routing

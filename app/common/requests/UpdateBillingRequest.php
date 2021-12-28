@@ -4,7 +4,8 @@ namespace App\Common\Requests;
 
 use App\Core\View\Request;
 use App\Core\Http\Status;
-use App\Core\Auth\{Account, User, Billing};
+use App\Core\Auth\{Account, User};
+use App\Common\Users\Billing;
 
 /**
  * Action triggered during update of account billing.
@@ -86,7 +87,7 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
     // TODO: Validate input data
 
     $this->user = new User((int) $this->getData('id'));
-    $this->billing = $this->user->getBilling();
+    $this->billing = new Billing($this->user->id());
 
     $this->billing
       ->setFirstName($this->getData('first_name'))
