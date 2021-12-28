@@ -4,6 +4,7 @@ namespace App\Common\Composers\Dashboard;
 
 use App\Common\Money\WalletsRepository;
 use App\Core\Auth\Account;
+use App\Core\Http\Redirect;
 use App\Core\View\Blade\Composer;
 use Illuminate\View\View;
 
@@ -20,6 +21,11 @@ final class ExchangeComposer extends Composer implements \App\Core\Schema\Compos
   {
     $user = Account::current();
     $wallets = WalletsRepository::getUserWallets($user->getId());
+
+    // Redirect if user has no wallets
+    if (empty($wallets)) {
+      Redirect::to('dashboard/add/');
+    }
 
     $view->with('user', $user);
     $view->with('user_wallets', $wallets);

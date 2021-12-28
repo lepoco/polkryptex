@@ -5,6 +5,7 @@ namespace App\Common\Composers\Dashboard;
 use App\Common\Money\WalletsRepository;
 use App\Core\Auth\Account;
 use App\Core\View\Blade\Composer;
+use App\Core\Http\Redirect;
 use Illuminate\View\View;
 
 /**
@@ -20,6 +21,11 @@ final class TopupComposer extends Composer implements \App\Core\Schema\Composer
   {
     $user = Account::current();
     $wallets = WalletsRepository::getUserWallets($user->getId());
+
+    // Redirect if user has no wallets
+    if (empty($wallets)) {
+      Redirect::to('dashboard/add/');
+    }
 
     $wallets = array_filter($wallets, fn ($wallet) => !$wallet->getCurrency()->isValid() || !$wallet->getCurrency()->isCrypto());
 
