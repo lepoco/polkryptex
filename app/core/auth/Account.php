@@ -6,6 +6,7 @@ use App\Core\Facades\{App, Session, DB, Response, Cache};
 use App\Core\Auth\User;
 use App\Core\Data\Encryption;
 use Illuminate\Support\Str;
+use App\Core\Utils\Cast;
 
 /**
  * Used to manage user accounts
@@ -194,6 +195,15 @@ final class Account
     if ($users->count() > 0) {
       return false;
     }
+
+    $userName = Cast::emailToUsername($user->getEmail());
+
+    // TODO: Verify if salted name does not exist
+    if (!empty(self::getBy('name', $userName))) {
+      $userName .= '#' . Encryption::salter(4, 'N');
+    }
+
+    $user->setName($userName);
 
     return (bool) DB::table('users')->insert([
       'email' => $user->getEmail(),

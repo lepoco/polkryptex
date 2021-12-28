@@ -57,7 +57,7 @@
       <div class="col-12 col-lg-4 -mt-2 -reveal">
         <strong>@translate('Last login')</strong>
         <br>
-        {{ $user->getLastLogin() }}
+        {{ !empty($user->getLastLogin()) ? $user->getLastLogin() : '---' }}
       </div>
 
       <div class="col-12 col-lg-4 -mt-2 -reveal">

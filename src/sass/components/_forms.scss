@@ -1,5 +1,6 @@
 .floating-input {
   position: relative;
+  z-index: 5;
   width: 100%;
   height: 5rem;
   margin-bottom: 2rem;
@@ -38,7 +39,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     padding: 1rem 1.5rem;
     z-index: 1;
     border: 0.2rem solid #dadce0;
@@ -114,6 +115,7 @@
 
 .floating-radio {
   position: relative;
+  z-index: 5;
   width: 100%;
   margin-bottom: 1rem;
 
@@ -135,7 +137,7 @@
     color: #dadce0;
     & > img,
     & > svg {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 
@@ -183,5 +185,135 @@ input[type="checkbox"] {
   &.-alert {
     border: 0.2rem solid #ff6666;
     box-shadow: 0.4rem 0.4rem 1rem 0.2rem #ff66663d;
+  }
+}
+
+.floating-search {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 5rem;
+  margin-bottom: 2rem;
+
+  *,
+  *::before,
+  *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+    list-style: none;
+    list-style-type: none;
+    text-decoration: none;
+  }
+
+  &__label,
+  label {
+    position: absolute;
+    font-family: inherit;
+    font-weight: 400;
+    line-height: inherit;
+    left: 1rem;
+    top: 1rem;
+    padding: 0 0.5rem;
+    color: #80868b;
+    background: #ffffff;
+    transition: all 0.2s ease;
+  }
+
+  select {
+    display: none;
+  }
+
+  &__content {
+    position: absolute;
+    font-family: inherit;
+    font-weight: 400;
+    line-height: inherit;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 1.5rem;
+    z-index: 1;
+    border: 0.2rem solid #dadce0;
+    outline: none;
+    border-radius: 0.5rem;
+    color: #121212;
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+
+  &__selectors {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    overflow: auto;
+    transition: 0.3s cubic-bezier(0.79, 0.18, 0.24, 0.99);
+    border: 0.2rem solid #dadce0;
+    outline: none;
+    border-radius: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+    opacity: 0;
+
+    li {
+      padding: 1rem;
+      text-align: left;
+      margin: 0;
+      transition: 0.3s ease;
+      cursor: pointer;
+      background-color: #ffffff;
+
+      &:hover {
+        background-color: #dadce0;
+      }
+
+      &.--input {
+        background: #dadce0;
+
+        input {
+          width: 100%;
+          background: transparent;
+          border: none;
+          padding: 0;
+          margin: 0;
+          box-shadow: none;
+          outline: none;
+
+          &:focus,
+          &:hover {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            box-shadow: none;
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+
+  &.--opened > & {
+    &__selectors {
+      opacity: 1;
+      max-height: 216px;
+    }
+  }
+
+  &.--selected {
+    label,
+    .floating-input__label {
+      font-size: 1.3rem;
+      font-weight: 500;
+      top: -1rem;
+      left: 1rem;
+      z-index: 5;
+      color: $c-dark;
+    }
   }
 }

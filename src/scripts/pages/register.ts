@@ -12,6 +12,6 @@ import Toast from "./../common/toast";
  */
 FormRequest.register("#register", function (status: string, response: any) {
   if ("S01" === response.status) {
-    window.location.href = AppData.url("signin");
+    window.location.href = AppData.url("register/confirmation");
   }
 });

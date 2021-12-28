@@ -139,7 +139,7 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
   private function passwordMessage(): string
   {
     return sprintf(
-      'The password provided is too simple. It should be %s to %s characters long and contain a lowercase letter, an uppercase letter, a number and a special character.',
+      'The password provided is incorrect. It should be %s to %s characters long and contain a lowercase letter, an uppercase letter, a number and a special character.',
       self::PASSWORD_MIN_LENGTH,
       self::PASSWORD_MAX_LENGTH
     );

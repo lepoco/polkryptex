@@ -80,7 +80,7 @@
 
         <div class="floating-input -reveal">
           <input class="floating-input__field" type="number" name="mail_smtp_port"
-            placeholder="@translate('SMTP Password')" value="@option('mail_smtp_port', '')">
+            placeholder="@translate('SMTP Port')" value="@option('mail_smtp_port', '')">
           <label for="mail_smtp_port">@translate('SMTP Port')</label>
         </div>
 

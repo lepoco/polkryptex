@@ -48,6 +48,11 @@ Amount: Kwota
 
 # app\common\views\dashboard\payments.blade.php
 Request: Zażądaj
+Back to payments: Powrót do płatności
+Request money: Zażądaj pieniędzy
+Send money: Wyślij pieniądze
+Payee: Odbiorca
+Request transfer: Poproś o przelew
 
 # app\common\views\dashboard\exchange.blade.php
 From wallet: Z portfela

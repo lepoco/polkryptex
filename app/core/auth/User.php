@@ -291,6 +291,20 @@ final class User extends \App\Core\Data\DatabaseObject
     return $this->email;
   }
 
+  /**
+   * Allows you to change the name if the user has not been registered yet.
+   */
+  public function setName(string $name): bool
+  {
+    if ($this->id > 1) {
+      return false;
+    }
+
+    $this->name = trim($name);
+
+    return false;
+  }
+
   public function getName(): string
   {
     return $this->name;

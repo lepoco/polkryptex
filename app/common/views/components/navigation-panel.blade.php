@@ -16,6 +16,7 @@
     </div>
     <div class="d-flex -lg-mr-2">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
           <a class="nav-link{{ $pagenow === 'panel.main' ? ' active' : '' }}"
             href="@url('panel')">@translate('Dashboard')</a>
@@ -39,6 +40,7 @@
       </ul>
     </div>
     <div class="d-flex">
+
       @iflogged
       <a href="@url('signout')" class="btn btn-dark" type="submit">@translate('Sign Out')</a>
       @else

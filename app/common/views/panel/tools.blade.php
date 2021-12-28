@@ -22,7 +22,7 @@
     <div class="col-12 col-lg-4 -pb-3 -reveal">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
         <div>
-          <h3 class="-flex"> <i class="icon-ic_fluent_payment_24 -s-24 -mr-1"></i> {{ $cached_records ?? 0 }}</h3>
+          <h3 class="-flex"> <i class="icon-ic_fluent_payment_24 -s-24 -mr-1"></i> {{ \App\Core\Facades\Cache::count() ?? 0 }}</h3>
           <p>@translate('Cache records')</p>
         </div>
       </div>
