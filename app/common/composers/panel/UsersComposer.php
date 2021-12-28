@@ -18,8 +18,17 @@ final class UsersComposer extends Composer implements \App\Core\Schema\Composer
 {
   public function compose(View $view): void
   {
+    /** @var User[] $users */
+    $users = $this->getUsers();
+
+    if (isset($users[0]) && $users[0]->id() === 1) {
+      array_shift($users);
+    }
+
+    usort($users, fn($a, $b) => $a->id() - $b->id());
+
     $view->with('user', Account::current());
-    $view->with('users', $this->getUsers());
+    $view->with('users', $users);
   }
 
   private function getUsers(): array

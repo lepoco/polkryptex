@@ -33,15 +33,15 @@ export default class SignOut {
   setTimeout() {
     let timeout = AppData.signoutTime();
 
-    if (timeout < 2) {
-      this.timeout = 2;
+    if (timeout < 3) {
+      this.timeout = 3;
     }
 
     this.timeout = timeout;
   }
 
   startTimer() {
-    let absoluteTimeout = (this.timeout - 1) * 60 * 1000;
+    let absoluteTimeout = (this.timeout - 2) * 60 * 1000;
 
     if (AppData.isDebug()) {
       console.debug("App\\Common\\SignOut TIMEOUT STARTED", absoluteTimeout);

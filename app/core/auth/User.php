@@ -46,7 +46,7 @@ final class User extends \App\Core\Data\DatabaseObject
 
   private string $lastLogin = '';
 
-  private string $lastUpdate = '';
+  private string $updatedAt = '';
 
   public function __construct(int $id = 0)
   {
@@ -146,7 +146,8 @@ final class User extends \App\Core\Data\DatabaseObject
   public function updateLastLogin(): bool
   {
     return DB::table('users')->where('id', $this->getId())->update([
-      'time_last_login' => date('Y-m-d H:i:s')
+      'time_last_login' => date('Y-m-d H:i:s'),
+      'updated_at' => date('Y-m-d H:i:s')
     ]);
   }
 
@@ -162,7 +163,8 @@ final class User extends \App\Core\Data\DatabaseObject
     return DB::table('users')->where('id', $this->getId())->update([
       'session_token' => $sessionToken,
       'cookie_token' => $cookieToken,
-      'time_last_login' => date('Y-m-d H:i:s')
+      'time_last_login' => date('Y-m-d H:i:s'),
+      'updated_at' => date('Y-m-d H:i:s')
     ]);
   }
 
@@ -358,7 +360,7 @@ final class User extends \App\Core\Data\DatabaseObject
 
   public function getLastUpdate(): string
   {
-    return $this->lastUpdate;
+    return $this->updatedAt;
   }
 
   private function setPassword(string $password): self

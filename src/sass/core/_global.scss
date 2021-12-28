@@ -166,6 +166,17 @@ form,
   }
 }
 
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+
+  &:hover {
+    color: $c-light;
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+}
+
 .modal {
   .modal-title {
     font-family: $f-secondary;

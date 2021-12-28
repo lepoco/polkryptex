@@ -157,6 +157,10 @@ final class Account
           $query = DB::table('users')->where('name', $data)->first();
           break;
 
+        case 'uuid':
+          $query = DB::table('users')->where('uuid', $data)->first();
+          break;
+
         case 'display_name':
           $query = DB::table('users')->where('display_name', $data)->first();
           break;

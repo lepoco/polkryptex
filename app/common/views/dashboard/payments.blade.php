@@ -13,11 +13,11 @@
         <div>
           <h4 class="-mb-2">&commat;{{ $user->getName() ?? 'user' }}</h4>
 
-          <a href="@url('dashboard/send')" class="btn btn-outline-dark btn-mobile -lg-mr-1">
+          <a href="@url('dashboard/payments/send')" class="btn btn-outline-dark btn-mobile -lg-mr-1">
             @translate('Send')
             <i class="icon-ic_fluent_chevron_double_right_20 -s-16 -ml-1"></i>
           </a>
-          <a href="@url('dashboard/request')" class="btn btn-outline-dark btn-mobile">
+          <a href="@url('dashboard/payments/request')" class="btn btn-outline-dark btn-mobile">
             <i class="icon-ic_fluent_chevron_double_left_20 -s-16 -mr-1"></i>
             @translate('Request')
           </a>

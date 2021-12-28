@@ -12,7 +12,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
         @iflogged
-          @ifpermission('all')
+          @ifpermission('admin_panel')
           <li class="nav-item">
             <a class="nav-link{{ $pagenow === 'panel.main' ? ' active' : '' }}" href="@url('panel')">@translate('Admin panel')</a>
           </li>
@@ -29,11 +29,11 @@
               href="@url('dashboard')">@translate('Dashboard')</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ $pagenow === 'dashboard.payments' ? ' active' : '' }}"
+            <a class="nav-link{{ $pagenow === 'dashboard.payments' || $pagenow === 'dashboard.payments-send' || $pagenow === 'dashboard.payments-request' ? ' active' : '' }}"
               href="@url('dashboard/payments')">@translate('Payments')</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ $pagenow === 'dashboard.account' ? ' active' : '' }}"
+            <a class="nav-link{{ $pagenow === 'dashboard.account' || $pagenow === 'dashboard.billing' || $pagenow === 'dashboard.password' ? ' active' : '' }}"
               href="@url('dashboard/account')">@translate('Account')</a>
           </li>
           @endif

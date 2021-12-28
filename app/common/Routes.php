@@ -91,6 +91,16 @@ final class Routes extends Router
       'require_login' => true
     ],
     [
+      'path' => '/dashboard/payments/send',
+      'namespace' => 'Dashboard\\PaymentsSend',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/payments/request',
+      'namespace' => 'Dashboard\\PaymentsRequest',
+      'require_login' => true
+    ],
+    [
       'path' => '/dashboard/transactions',
       'namespace' => 'Dashboard\\Transactions',
       'require_login' => true
@@ -135,21 +145,28 @@ final class Routes extends Router
       'path' => '/panel/users',
       'namespace' => 'Panel\\Users',
       'require_login' => true,
-      'permission' => 'all',
+      'permission' => 'admin_users',
+      'redirect_no_permission' => 'dashboard'
+    ],
+    [
+      'path' => '/panel/user/{uuid}',
+      'namespace' => 'Panel\\User',
+      'require_login' => true,
+      'permission' => 'admin_single_user',
       'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/tools',
       'namespace' => 'Panel\\Tools',
       'require_login' => true,
-      'permission' => 'all',
+      'permission' => 'admin_tools',
       'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/settings',
       'namespace' => 'Panel\\Settings',
       'require_login' => true,
-      'permission' => 'all',
+      'permission' => 'admin_settings',
       'redirect_no_permission' => 'dashboard'
     ]
   ];

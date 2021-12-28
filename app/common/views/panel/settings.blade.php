@@ -10,7 +10,7 @@
       <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Settings')</h4>
     </div>
 
-    <div class="col-12 -mt-5">
+    <div class="col-12 -mt-1">
       <form id="panelSettings" method="POST">
         <input type="hidden" name="action" value="PanelSettings" />
         <input type="hidden" name="nonce" value="@nonce('panelsettings')" />
