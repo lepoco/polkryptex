@@ -6,7 +6,7 @@ use PDO;
 use PDOException;
 use App\Core\View\Request;
 use App\Core\Http\Status;
-use App\Core\Auth\{Account, User};
+use App\Core\Auth\{Account, User, Permission};
 use App\Core\Facades\{App, Logs, Config};
 use App\Core\Data\Encryption;
 use App\Core\Utils\{Path, ClassInjector};
@@ -194,7 +194,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
       'display_name' => 'Admin',
       'email' => $this->getData('admin_email'),
       'password' => $encryptedPassword,
-      'role' => Account::getRoleId('admin')
+      'role' => Permission::getRoleId('admin')
     ]))
     ->markAsActive()
     ->markAsConfirmed();

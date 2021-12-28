@@ -46,7 +46,7 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
       ['language', FILTER_SANITIZE_STRING]
     ]);
 
-    if (empty(Account::current())) {
+    if (!Account::isLoggedIn()) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 
       return;

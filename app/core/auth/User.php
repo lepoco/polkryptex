@@ -72,8 +72,6 @@ final class User extends \App\Core\Data\DatabaseObject
       'updated_at' => date('Y-m-d H:i:s')
     ]);
 
-    $this->billing->update();
-
     return $success;
   }
 

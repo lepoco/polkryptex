@@ -5,7 +5,7 @@ namespace App\Common\Requests;
 use App\Core\Facades\{Email, Translate};
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
-use App\Core\Auth\{Account, User};
+use App\Core\Auth\{Account, User, Permission};
 use App\Core\Data\Encryption;
 use App\Core\Utils\Cast;
 use Illuminate\Support\Str;
@@ -105,7 +105,7 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       'display_name' => Cast::emailToUsername($this->getData('email')),
       'email' => $this->getData('email'),
       'password' => $encryptedPassword,
-      'role' => Account::getRoleId('default')
+      'role' => Permission::getRoleId('default')
     ]);
 
     $registered = Account::register($newUser, $encryptedPassword);

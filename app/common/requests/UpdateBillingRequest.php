@@ -66,7 +66,7 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
       ['email', FILTER_VALIDATE_EMAIL]
     ]);
 
-    if (empty(Account::current())) {
+    if (!Account::isLoggedIn()) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 
       return;

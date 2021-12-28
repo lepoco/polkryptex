@@ -23,22 +23,22 @@ final class Prefill
     // ROLES
     DB::table('user_roles')->insert([
       'name' => 'default',
-      'permissions' => '{p:[]}'
+      'permissions' => '{"p":["read","billing"]}'
     ]);
 
     DB::table('user_roles')->insert([
       'name' => 'manager',
-      'permissions' => '{p:[]}'
+      'permissions' => '{"p":["read","billing","admin_panel","admin_statistics"]}'
     ]);
 
     DB::table('user_roles')->insert([
       'name' => 'analyst',
-      'permissions' => '{p:[]}'
+      'permissions' => '{"p":["read","billing","admin_panel","admin_statistics"]}'
     ]);
 
     DB::table('user_roles')->insert([
       'name' => 'admin',
-      'permissions' => '{p:[\'all\']}'
+      'permissions' => '{"p":["all"]}'
     ]);
 
     // PLANS

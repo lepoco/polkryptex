@@ -21,6 +21,9 @@ final class Account
    */
   public static function current(): ?User
   {
+    // We could keep the user in a static instance, but for security reasons
+    // it seems to me that at the cost of performance it is better to check its consistency each time.
+
     if (!App::isConnected()) {
       return null;
     }
@@ -49,6 +52,8 @@ final class Account
       return null;
     }
 
+    // Here we have two queries to the database,
+    // it can be considered whether it is worth implementing a secure cache
     if (!$user->compareCookieToken(Session::get('auth.token', ''))) {
       return null;
     }
@@ -99,14 +104,23 @@ final class Account
    */
   public static function hasPermission(string $permission = 'read', ?User $user = null): bool
   {
-    $user = $user ?? self::current();
+    if (empty($user)) {
+      $user = self::current();
+    }
 
     if (empty($user)) {
       return false;
     }
 
-    // TODO: Verify permissions.
-    return true;
+    return Permission::isRoleHasPermission($user->getRole(), $permission);
+  }
+
+  /**
+   * Checks whether the current user is logged in.
+   */
+  public static function isLoggedIn(): bool
+  {
+    return !empty(self::current());
   }
 
   /**
@@ -160,38 +174,6 @@ final class Account
     }
 
     return new User($userId);
-  }
-
-  /**
-   * Gets the ID of a role based on its name.
-   */
-  public static function getRoleId(string $roleName): int
-  {
-    return Cache::remember('user.role_id' . $roleName, 120, function () use ($roleName) {
-      $role = DB::table('user_roles')->where('name', $roleName)->first();
-
-      if (empty($role)) {
-        return 1;
-      }
-
-      return (int) $role->id;
-    });
-  }
-
-  /**
-   * Gets the ID of a plan based on its name.
-   */
-  public static function getPlanId(string $planName): int
-  {
-    return Cache::remember('user.plan_id' . $planName, 120, function () use ($planName) {
-      $plan = DB::table('plans')->where('name', $planName)->first();
-
-      if (empty($plan)) {
-        return 1;
-      }
-
-      return (int) $plan->id;
-    });
   }
 
   /**
