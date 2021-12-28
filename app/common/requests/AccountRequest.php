@@ -52,24 +52,24 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
       return;
     }
 
-    if ($this->getData('id') < 1) {
+    if ($this->get('id') < 1) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 
       return;
     }
 
-    if ($this->getData('id') !== Account::current()->getId()) {
+    if ($this->get('id') !== Account::current()->getId()) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 
       return;
     }
 
-    $this->user = new User((int) $this->getData('id'));
+    $this->user = new User((int) $this->get('id'));
 
     // Skip empty
     if (
-        trim($this->getData('displayname')) == trim($this->user->getDisplayName())
-        && trim($this->getData('language')) == trim($this->user->getLanguage())
+        trim($this->get('displayname')) == trim($this->user->getDisplayName())
+        && trim($this->get('language')) == trim($this->user->getLanguage())
         && !\App\Core\Facades\Request::hasFile('picture')
     ) {
       $this->addContent('message', Translate::string('But, You haven\'t made any changes...'));
@@ -80,9 +80,9 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
 
     $this->processImage();
 
-    $this->user->setDisplayName($this->getData('displayname'));
+    $this->user->setDisplayName($this->get('displayname'));
 
-    switch ($this->getData('language')) {
+    switch ($this->get('language')) {
       case 'pl_PL':
         $this->user->setLanguage('pl_PL');
         break;

@@ -51,31 +51,31 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       ['password_confirm', FILTER_UNSAFE_RAW]
     ]);
 
-    if (Account::isRegistered($this->getData('email'))) {
+    if (Account::isRegistered($this->get('email'))) {
       $this->addContent('fields', ['email']);
       $this->addContent('message', 'You cannot use this email address.');
       $this->finish(self::ERROR_ENTRY_EXISTS, Status::OK);
     }
 
-    if (Str::length($this->getData('password')) < self::PASSWORD_MIN_LENGTH) {
+    if (Str::length($this->get('password')) < self::PASSWORD_MIN_LENGTH) {
       $this->addContent('fields', ['password']);
       $this->addContent('message', $this->passwordMessage());
       $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::OK);
     }
 
-    if (!preg_match(self::PASSWORD_PATTERN, $this->getData('password'))) {
+    if (!preg_match(self::PASSWORD_PATTERN, $this->get('password'))) {
       $this->addContent('fields', ['password']);
       $this->addContent('message', $this->passwordMessage());
       $this->finish(self::ERROR_PASSWORD_TOO_SIMPLE, Status::OK);
     }
 
-    if (Str::length($this->getData('password')) > self::PASSWORD_MAX_LENGTH) {
+    if (Str::length($this->get('password')) > self::PASSWORD_MAX_LENGTH) {
       $this->addContent('fields', ['password']);
       $this->addContent('message', $this->passwordMessage());
       $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::OK);
     }
 
-    if ($this->getData('password') != $this->getData('password_confirm')) {
+    if ($this->get('password') != $this->get('password_confirm')) {
       $this->addContent('fields', ['password_confirm']);
       $this->addContent('message', 'Passwords must be the same.');
       $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, Status::OK);
@@ -89,7 +89,7 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       'redirect',
       Redirect::url('register/confirmation', [
         'n' => $this->nonce('RegisterConfirmation'),
-        'e' => $this->getData('email')
+        'e' => $this->get('email')
       ])
     );
 
@@ -99,11 +99,11 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
 
   private function registerUser(): bool
   {
-    $encryptedPassword = Encryption::encrypt($this->getData('password'), 'password');
+    $encryptedPassword = Encryption::encrypt($this->get('password'), 'password');
 
     $newUser = User::build([
-      'display_name' => Cast::emailToUsername($this->getData('email')),
-      'email' => $this->getData('email'),
+      'display_name' => Cast::emailToUsername($this->get('email')),
+      'email' => $this->get('email'),
       'password' => $encryptedPassword,
       'role' => Permission::getRoleId('default')
     ]);
@@ -114,7 +114,7 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       return false;
     }
 
-    $registeredUser = Account::getBy('email', $this->getData('email'));
+    $registeredUser = Account::getBy('email', $this->get('email'));
 
     if (empty($registeredUser)) {
       return false;
@@ -122,14 +122,14 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
 
     //$registeredUser
 
-    Email::send($this->getData('email'), [
+    Email::send($this->get('email'), [
       'subject' => Translate::string('Thank you for your registration!'),
       'header' => Translate::string('Account confirmation'),
       'message' => Translate::string('Thank you for creating an account on our website. Click on the link below to activate your account.'),
       'action_title' => Translate::string('Confirm email'),
       'action_url' => \App\Core\Http\Redirect::url('registration', [
         'confirmation' => '123',
-        'email' => $this->getData('email')
+        'email' => $this->get('email')
       ])
     ]);
 

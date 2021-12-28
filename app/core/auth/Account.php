@@ -91,9 +91,13 @@ final class Account
    */
   public static function signOut(): bool
   {
-    // Optionally we can also clear 'cookies' - , "cookies"
-    Response::setHeader('Clear-Site-Data', '"cache", "storage", "executionContexts"', true);
-    // TODO: Keys in the database should be changed.
+    $user = self::current();
+
+    if (!empty($user)) {
+      // Overwrite the tokens
+      $user->updateTokens(Encryption::salter(32), Encryption::salter(32));
+    }
+
     App::destroy();
 
     return true;

@@ -48,12 +48,6 @@ final class TransactionsRepository
       return $query->id;
     });
 
-    ray([
-      'key' => $key,
-      'value' => $value,
-      'id' => $transactionId
-    ]);
-
     if (0 === $transactionId) {
       return null;
     }

@@ -19,10 +19,16 @@ The application uses several solutions to improve work and design. They are nece
 - [x] Toast notifications
 - [x] Translations
 - [x] User accounts
-- [ ] User roles
+- [x] User roles
+- [x] User permissions
 - [x] Login and registration
+- [x] Statistics module
+- [ ] E-mails
+- [x] User wallets
+- [x] Transactions module
 - [ ] Internal payment system combined with the account balance of user accounts
-- [ ] Top-up module with service provider (PayPal /= PayU)
+- [x] Top-up module
+- [ ] Service provider for Top-up module (PayPal /= PayU)
 - [ ] Cryptocurrency exchange system
 - [ ] Exchange of cryptocurrencies with their current rates and historical rates presented in the charts
 - [ ] (Optional) Forecasting further rate of a given cryptocurrency
@@ -40,13 +46,15 @@ The application uses several solutions to improve work and design. They are nece
 - **PWA** - *Set of tools and technologies for building scalable web applications.*
 
 ## Timeline
-- 01.06.2021 - Creation of CMS and base functionalities
-- 01.07.2021 - User accounts and registration
-- 01.08.2021 - User's wallet mechanism
-- 01.09.2021 - Currency exchange capability
-- 01.10.2021 - Connection to the cryptocurrency API
-- 01.11.2021 - Implementing the PayPal API
-- 01.12.2021 - Optional, PWA support
+- ~~01.06.2021 - Creation of CMS and base functionalities~~
+- ~~01.07.2021 - User accounts and registration~~
+- ~~01.08.2021 - User's wallet mechanism~~
+- ~~01.09.2021 - Currency exchange capability~~
+- ~~01.10.2021 - Connection to the cryptocurrency API~~
+- ~~01.11.2021 - Implementing the PayPal API~~
+- ~~01.12.2021 - Optional, PWA support~~
+- 01.01.2021 - Finishing
+- 01.02.2021 - Publishing
 
 ## Security
 The platform is intended to provide the possibility of processing money, hence we must ensure the appropriate safety of users.  

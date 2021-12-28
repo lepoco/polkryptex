@@ -45,13 +45,13 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
       ['payment_method', FILTER_SANITIZE_STRING]
     ]);
 
-    if (1 > $this->getData('amount')) {
+    if (1 > $this->get('amount')) {
       $this->addContent('message', Translate::string('Amount entered is too small.'));
       $this->addContent('fields', ['amount']);
       $this->finish(self::ERROR_VALUE_TOO_LOW, Status::OK);
     }
 
-    if (20000 < $this->getData('amount')) {
+    if (20000 < $this->get('amount')) {
       $this->addContent('message', Translate::string('Amount entered is too big.'));
       $this->addContent('fields', ['amount']);
       $this->finish(self::ERROR_VALUE_TOO_BIG, Status::OK);
@@ -67,7 +67,7 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
 
     $paymentMethod = PaymentMethods::UNKNOWN;
 
-    switch ($this->getData('payment_method')) {
+    switch ($this->get('payment_method')) {
       case 'apple_pay':
         $paymentMethod = PaymentMethods::APPLE_PAY;
         break;
@@ -99,7 +99,7 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
     $selectedWallet = null;
 
     foreach ($wallets as $wallet) {
-      if ($this->getData('wallet') == $wallet->getId()) {
+      if ($this->get('wallet') == $wallet->getId()) {
         $walletBelongs = true;
         $selectedWallet = $wallet;
       }
@@ -119,7 +119,7 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
 
     // TODO: At this point, we've already verified the correctness of the data and can connect to the payment gateway provider.
 
-    if (!TransactionsRepository::topup($user, $selectedWallet, $this->getData('amount'), $paymentMethod)) {
+    if (!TransactionsRepository::topup($user, $selectedWallet, $this->get('amount'), $paymentMethod)) {
       $this->addContent('message', Translate::string('An error occurred while processing your payment.'));
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::UNAUTHORIZED);
     }

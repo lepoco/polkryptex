@@ -82,10 +82,10 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
 
   private function tryConnectDB(): void
   {
-    $pdoDSN = 'mysql:host=' . $this->getData('host') . ';dbname=' . $this->getData('database');
+    $pdoDSN = 'mysql:host=' . $this->get('host') . ';dbname=' . $this->get('database');
 
     try {
-      $connection = new PDO($pdoDSN, $this->getData('user'), $this->getData('password'));
+      $connection = new PDO($pdoDSN, $this->get('user'), $this->get('password'));
       // set the PDO error mode to exception
       $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
@@ -119,17 +119,17 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     $injector->inject('SALT_TOKEN', $this->salts['token'], 'const');
     $injector->inject('SALT_WEBAUTH', $this->salts['webauth'], 'const');
 
-    $injector->inject('DATABASE_NAME', $this->getData('database'), 'const');
-    $injector->inject('DATABASE_USER', $this->getData('user'), 'const');
-    $injector->inject('DATABASE_PASS', $this->getData('password'), 'const');
-    $injector->inject('DATABASE_HOST', $this->getData('host'), 'const');
+    $injector->inject('DATABASE_NAME', $this->get('database'), 'const');
+    $injector->inject('DATABASE_USER', $this->get('user'), 'const');
+    $injector->inject('DATABASE_PASS', $this->get('password'), 'const');
+    $injector->inject('DATABASE_HOST', $this->get('host'), 'const');
 
     $injector->save();
 
-    Config::set('database.connections.default.host', $this->getData('host'));
-    Config::set('database.connections.default.database', $this->getData('database'));
-    Config::set('database.connections.default.username', $this->getData('user'));
-    Config::set('database.connections.default.password', $this->getData('password'));
+    Config::set('database.connections.default.host', $this->get('host'));
+    Config::set('database.connections.default.database', $this->get('database'));
+    Config::set('database.connections.default.username', $this->get('user'));
+    Config::set('database.connections.default.password', $this->get('password'));
 
     Config::set('salts.session', $this->salts['session']);
     Config::set('salts.cookie', $this->salts['cookie']);
@@ -184,7 +184,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
   private function registerAdmin(): void
   {
     $encryptedPassword = Encryption::encrypt(
-      $this->getData('admin_password'),
+      $this->get('admin_password'),
       'password',
       $this->salts['password'],
       $this->passwordAlgo
@@ -192,7 +192,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
 
     $adminUser = (User::build([
       'display_name' => 'Admin',
-      'email' => $this->getData('admin_email'),
+      'email' => $this->get('admin_email'),
       'password' => $encryptedPassword,
       'role' => Permission::getRoleId('admin')
     ]))

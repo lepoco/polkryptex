@@ -147,7 +147,7 @@ final class Prefill
 
     DB::table('options')->insert([
       'name' => 'service_worker_enabled',
-      'value' => 'true'
+      'value' => 'false'
     ]);
 
     DB::table('options')->insert([
@@ -203,6 +203,11 @@ final class Prefill
     DB::table('options')->insert([
       'name' => 'mail_smtp_port',
       'value' => 465
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'mail_smtp_encryption',
+      'value' => 'smtps'
     ]);
   }
 

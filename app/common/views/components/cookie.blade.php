@@ -4,7 +4,7 @@
       <div class="cookie__body -reveal">
         <div>
           <span>@translate('We use  🍪 cookies to personalize the content you see on Polkryptex.') <a
-              href="@url('cookies-policy')">@translate('Learn more')</a></span>
+              href="@url('privacy')">@translate('Learn more')</a></span>
         </div>
         <div class="-flex-center">
           <a href="#" class="faded mr-1 cookie__button --manage -lg-mr-2">@translate('Manage cookies')</a>

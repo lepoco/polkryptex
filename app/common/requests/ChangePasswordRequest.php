@@ -59,47 +59,47 @@ final class ChangePasswordRequest extends Request implements \App\Core\Schema\Re
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
     }
 
-    if ($this->getData('id') < 1) {
+    if ($this->get('id') < 1) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
     }
 
-    if ($this->getData('id') !== Account::current()->getId()) {
+    if ($this->get('id') !== Account::current()->getId()) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
     }
 
-    $this->user = new User((int) $this->getData('id'));
+    $this->user = new User((int) $this->get('id'));
 
-    if (!$this->user->comparePassword($this->getData('current_password'))) {
+    if (!$this->user->comparePassword($this->get('current_password'))) {
       $this->addContent('fields', ['current_password']);
       $this->addContent('message', Translate::string('Incorrect password.'));
       $this->finish(self::ERROR_PASSWORD_INVALID, Status::UNAUTHORIZED);
     }
 
-    if ($this->getData('new_password') != $this->getData('new_password_confirm')) {
+    if ($this->get('new_password') != $this->get('new_password_confirm')) {
       $this->addContent('fields', ['new_password', 'new_password_confirm']);
       $this->addContent('message', Translate::string('Passwords must be the same.'));
       $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, Status::UNAUTHORIZED);
     }
 
-    if (Str::length($this->getData('new_password')) < self::PASSWORD_MIN_LENGTH) {
+    if (Str::length($this->get('new_password')) < self::PASSWORD_MIN_LENGTH) {
       $this->addContent('fields', ['new_password']);
       $this->addContent('message', $this->passwordMessage());
       $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::OK);
     }
 
-    if (!preg_match(self::PASSWORD_PATTERN, $this->getData('new_password'))) {
+    if (!preg_match(self::PASSWORD_PATTERN, $this->get('new_password'))) {
       $this->addContent('fields', ['new_password']);
       $this->addContent('message', $this->passwordMessage());
       $this->finish(self::ERROR_PASSWORD_TOO_SIMPLE, Status::OK);
     }
 
-    if (Str::length($this->getData('new_password')) > self::PASSWORD_MAX_LENGTH) {
+    if (Str::length($this->get('new_password')) > self::PASSWORD_MAX_LENGTH) {
       $this->addContent('fields', ['new_password']);
       $this->addContent('message', $this->passwordMessage());
       $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::OK);
     }
 
-    $this->user->updatePassword($this->getData('new_password'));
+    $this->user->updatePassword($this->get('new_password'));
 
     // TODO: Save new password
     $this->addContent('message', Translate::string('Your new password has been saved.'));

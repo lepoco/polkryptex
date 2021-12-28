@@ -33,21 +33,23 @@ export default class SignOut {
   setTimeout() {
     let timeout = AppData.signoutTime();
 
-    if (AppData.isDebug()) {
-      console.debug("App\\Common\\SignOut TIMEOUT STARTED", timeout);
-    }
-
-    if (timeout < 1) {
-      this.timeout = 10;
+    if (timeout < 2) {
+      this.timeout = 2;
     }
 
     this.timeout = timeout;
   }
 
   startTimer() {
+    let absoluteTimeout = (this.timeout - 1) * 60 * 1000;
+
+    if (AppData.isDebug()) {
+      console.debug("App\\Common\\SignOut TIMEOUT STARTED", absoluteTimeout);
+    }
+
     window.setTimeout(function () {
       SignOut.showWidget();
-    }, (this.timeout - 1) * 60 * 1000);
+    }, absoluteTimeout);
   }
 
   static showWidget() {
@@ -69,7 +71,10 @@ export default class SignOut {
 
     let count = 59,
       timer = setInterval(function () {
-        TIMER_ELEMENT.innerHTML = "00:" + count--;
+      
+        TIMER_ELEMENT.innerHTML = "00:" + (count < 10 ? '0' + count : count);
+
+        count--;
 
         if (count == 0) {
           clearInterval(timer);

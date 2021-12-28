@@ -5,6 +5,7 @@ namespace App\Common\Requests;
 use App\Core\View\Request;
 use App\Core\Http\Status;
 use App\Core\Auth\{Account, User};
+use App\Core\Facades\{Translate, Statistics};
 use App\Common\Users\Billing;
 
 /**
@@ -16,10 +17,6 @@ use App\Common\Users\Billing;
  */
 final class UpdateBillingRequest extends Request implements \App\Core\Schema\Request
 {
-  private User $user;
-
-  private Billing $billing;
-
   public function getAction(): string
   {
     return 'UpdateBilling';
@@ -72,13 +69,13 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
       return;
     }
 
-    if ($this->getData('id') < 1) {
+    if ($this->get('id') < 1) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 
       return;
     }
 
-    if ($this->getData('id') !== Account::current()->getId()) {
+    if ($this->get('id') !== Account::current()->getId()) {
       $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
 
       return;
@@ -86,22 +83,30 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
 
     // TODO: Validate input data
 
-    $this->user = new User((int) $this->getData('id'));
-    $this->billing = new Billing($this->user->id());
+    $user = new User((int) $this->get('id'));
 
-    $this->billing
-      ->setFirstName($this->getData('first_name'))
-      ->setLastName($this->getData('last_name'))
-      ->setStreet($this->getData('street'))
-      ->setPostalCode($this->getData('postal_code'))
-      ->setCity($this->getData('city'))
-      ->setCountry($this->getData('country'))
-      ->setProvince($this->getData('province'))
-      ->setPhone($this->getData('phone'))
-      ->setEmail($this->getData('email'))
+    if (!Account::hasPermission('billing', $user)) {
+      $this->addContent('message', Translate::string('You are not authorized to perform this action.'));
+      $this->finish(self::ERROR_USER_INVALID, Status::UNAUTHORIZED);
+
+      return;
+    }
+
+    $billing = new Billing($user->id());
+
+    $billing
+      ->setFirstName($this->get('first_name'))
+      ->setLastName($this->get('last_name'))
+      ->setStreet($this->get('street'))
+      ->setPostalCode($this->get('postal_code'))
+      ->setCity($this->get('city'))
+      ->setCountry($this->get('country'))
+      ->setProvince($this->get('province'))
+      ->setPhone($this->get('phone'))
+      ->setEmail($this->get('email'))
       ->update();
 
-    $this->addContent('message', 'Your billing details have been saved.');
+    $this->addContent('message', Translate::string('Your billing details have been saved.'));
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 }

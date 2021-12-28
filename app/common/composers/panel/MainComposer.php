@@ -22,7 +22,7 @@ final class MainComposer extends Composer implements \App\Core\Schema\Composer
 
     $view->with('user', Account::current());
     $view->with('users', $users);
-    $view->with('users_count', count($users));
+    $view->with('users_count', count($users) - 1); // Do not include dummy user
     $view->with('reqests_today', $this->getRequestsCount());
     $view->with('views_today', $this->getViewsCount());
     $view->with('transactions_today', $this->getTransactionsCount());

@@ -53,7 +53,7 @@ final class AddWalletRequest extends Request implements \App\Core\Schema\Request
       return;
     }
 
-    $currency = CurrenciesRepository::getBy('iso_code', $this->getData('currency'));
+    $currency = CurrenciesRepository::getBy('iso_code', $this->get('currency'));
 
     if (!$currency->isValid()) {
       $this->finish(self::ERROR_ENTRY_DONT_EXISTS, Status::UNAUTHORIZED);

@@ -123,10 +123,14 @@ abstract class Router implements \App\Core\Schema\Router
 
     $routeData = array_filter($this->routes, fn ($route) => isset($route['namespace']) && $namespace == $route['namespace']) ?? [];
     $routeData = array_shift($routeData);
-    $isSignedIn = Account::isLoggedIn();
+    $user = Account::current();
 
-    if (isset($routeData['require_login']) && true === $routeData['require_login'] && !$isSignedIn) {
+    if (isset($routeData['require_login']) && true === $routeData['require_login'] && empty($user)) {
       Redirect::to('signin');
+    }
+
+    if (isset($routeData['permission']) && !empty($user) && !Account::hasPermission($routeData['permission'], $user)) {
+      Redirect::to($routeData['redirect_no_permission'] ?? 'dashboard');
     }
 
     if (isset($routeData['require_nonce']) && true === $routeData['require_nonce']) {
@@ -135,7 +139,7 @@ abstract class Router implements \App\Core\Schema\Router
       }
     }
 
-    if (isset($routeData['redirect_logged']) && true === $routeData['redirect_logged'] && $isSignedIn) {
+    if (isset($routeData['redirect_logged']) && true === $routeData['redirect_logged'] && !empty($user)) {
       Redirect::to('dashboard');
     }
   }
@@ -143,6 +147,12 @@ abstract class Router implements \App\Core\Schema\Router
   protected function handleLogout(): void
   {
     Account::signOut();
+
+    // Optionally we can also clear 'cookies' - , "cookies" //"cache", "storage",
+    \App\Core\Facades\Response::setHeader('Clear-Site-Data', '"executionContexts"', true);
+    //\App\Core\Facades\Response::setCookie('')
+
+    usleep(100);
 
     Redirect::to('signin');
   }

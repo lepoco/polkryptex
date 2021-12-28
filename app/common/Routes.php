@@ -81,7 +81,9 @@ final class Routes extends Router
     [
       'path' => '/dashboard/billing',
       'namespace' => 'Dashboard\\Billing',
-      'require_login' => true
+      'require_login' => true,
+      'permission' => 'billing',
+      'redirect_no_permission' => 'dashboard/account'
     ],
     [
       'path' => '/dashboard/payments',
@@ -119,35 +121,35 @@ final class Routes extends Router
       'path' => '/panel',
       'namespace' => 'Panel\\Main',
       'require_login' => true,
-      'permissions' => ['all'],
+      'permission' => 'admin_panel',
       'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/statistics',
       'namespace' => 'Panel\\Statistics',
       'require_login' => true,
-      'permissions' => ['all'],
+      'permission' => 'admin_statistics',
       'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/users',
       'namespace' => 'Panel\\Users',
       'require_login' => true,
-      'permissions' => ['all'],
+      'permission' => 'all',
       'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/tools',
       'namespace' => 'Panel\\Tools',
       'require_login' => true,
-      'permissions' => ['all'],
+      'permission' => 'all',
       'redirect_no_permission' => 'dashboard'
     ],
     [
       'path' => '/panel/settings',
       'namespace' => 'Panel\\Settings',
       'require_login' => true,
-      'permissions' => ['all'],
+      'permission' => 'all',
       'redirect_no_permission' => 'dashboard'
     ]
   ];
