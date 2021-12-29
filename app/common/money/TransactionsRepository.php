@@ -58,7 +58,7 @@ final class TransactionsRepository
   /**
    * @return \App\Coore\Money\Transaction[]
    */
-  public static function getUserTransactions(string $type, int $limit, ?User $user = null): array
+  public static function getUserTransactions(string $type, int $limit = 20, int $offset = 0, ?User $user = null): array
   {
     $user = empty($user) ? Account::current() : $user;
     $transactions = [];
@@ -75,7 +75,7 @@ final class TransactionsRepository
       $arguments['type_id'] = self::getTypeId($type);
     }
 
-    $results = DB::table('transactions')->orderBy('id', 'desc')->where($arguments)->get(['id'])->take($limit);
+    $results = DB::table('transactions')->orderBy('id', 'desc')->where($arguments)->skip($offset)->take($limit)->get(['id']);
 
     foreach ($results as $result) {
       if (isset($result->id)) {

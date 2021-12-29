@@ -10,7 +10,7 @@
     </div>
     <div class="col-12 dashboard__section -reveal">
 
-      @if($is_valid ?? false)
+      @if($isValid ?? false)
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
         <div class="-w-100">
           <h4>
@@ -22,6 +22,28 @@
           <p>@translate($currency->getName())</p>
 
         </div>
+
+        @if($isTopup)
+        <div class="transaction_image">
+
+          @switch($methodId)
+              @case(2)
+                  @media('mastercard-horizontal.svg')
+                  @break
+              @case(3)
+                  @media('google-pay.svg')
+                  @break
+              @case(4)
+                  @media('paypal.svg')
+                  @break
+              @case(5)
+                  @media('apple-pay.svg')
+                  @break
+              @default
+                  
+          @endswitch
+        </div>
+        @endif
       </div>
       @else
       <p>@translate('Specified transaction could not be found.')</p>

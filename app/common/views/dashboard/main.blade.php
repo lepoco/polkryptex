@@ -11,8 +11,8 @@
     <div class="col-12 dashboard__section">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
         <div class="-w-100">
-          <h4>$3213,33</h4>
-          <p>US Dollar</p>
+          <h4>$ {{ number_format($wallets_total, 2) }}</h4>
+          <p>@translate('total balance')</p>
 
           <a href="@url('dashboard/exchange')" class="btn btn-outline-dark btn-mobile -lg-mr-1">@translate('Exchange')</a>
           <a href="@url('dashboard/topup')" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Top up')</a>

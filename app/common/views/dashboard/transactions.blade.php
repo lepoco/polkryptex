@@ -19,6 +19,18 @@
       @endisset
 
     </div>
+
+    @if($hasNavigation ?? false)
+    <div class="col-12 -reveal -mt-4">
+      @if($page > 0)
+      <a href="{{ $previousPageUrl ?? '#' }}" class="btn btn-outline-dark btn-mobile -lg-mr-1">@translate('Previous results')</a>
+      @endif
+
+      @if($hasMoreTransactions ?? false)
+      <a href="{{ $nextPageUrl ?? '#' }}" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Next results')</a>
+      @endif
+    </div>
+    @endif
   </div>
 </div>
 

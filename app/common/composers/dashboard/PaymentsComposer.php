@@ -30,6 +30,6 @@ final class PaymentsComposer extends Composer implements \App\Core\Schema\Compos
 
   private function getPayments(User $user): array
   {
-    return TransactionsRepository::getUserTransactions('transfer', 5);
+    return TransactionsRepository::getUserTransactions('transfer', 5, 0);
   }
 }

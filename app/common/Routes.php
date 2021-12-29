@@ -121,6 +121,11 @@ final class Routes extends Router
       'require_login' => true
     ],
     [
+      'path' => '/dashboard/transactions/{page}',
+      'namespace' => 'Dashboard\\Transactions',
+      'require_login' => true
+    ],
+    [
       'path' => '/dashboard/transaction/{uuid}',
       'namespace' => 'Dashboard\\Transaction',
       'require_login' => true

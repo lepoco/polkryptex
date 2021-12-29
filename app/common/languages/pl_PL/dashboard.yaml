@@ -61,6 +61,8 @@ Exchange currencies: Wymień waluty
 
 # app\common\views\dashboard\transactions.blade.php
 Transactions: Transakcje
+Next results: Następne wyniki
+Previous results: Poprzednie wyniki
 
 # app\common\views\dashboard\transaction.blade.php
 Transaction: Transakcja

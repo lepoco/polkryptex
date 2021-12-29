@@ -55,8 +55,10 @@ final class TransactionComposer extends Composer implements \App\Core\Schema\Com
     $view->with('user', $user);
     $view->with('header', $header);
     $view->with('transaction', $transaction);
+    $view->with('methodId', $transaction->getMethodId() ?? 0);
+    $view->with('isTopup', ($typeName === 'topup'));
     $view->with('currency', $transaction->getWalletTo()->getCurrency());
-    $view->with('is_valid', !empty($transaction));
+    $view->with('isValid', !empty($transaction));
   }
 
   private function getTransaction(string $uuid): ?Transaction
