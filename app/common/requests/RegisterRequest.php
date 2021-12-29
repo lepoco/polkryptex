@@ -2,7 +2,7 @@
 
 namespace App\Common\Requests;
 
-use App\Core\Facades\{Email, Translate};
+use App\Core\Facades\{Email, Translate, Session};
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
 use App\Core\Auth\{Account, User, Permission, Confirmation};
@@ -81,23 +81,41 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, Status::OK);
     }
 
-    if (!$this->registerUser()) {
+    $user = $this->registerUser();
+
+    if (empty($user)) {
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::IM_A_TEAPOT);
     }
+
+    $resendConfirmation = Confirmation::add('resend_registration_confirmation', $user);
 
     $this->addContent(
       'redirect',
       Redirect::url('register/confirmation', [
         'n' => $this->nonce('RegisterConfirmation'),
-        'e' => $this->get('email')
+        'e' => urlencode($this->get('email')),
+        'r' => $resendConfirmation
       ])
     );
+
+    Session::put('user.resend_confirmation', $user);
+
+    Email::send($this->get('email'), [
+      'subject' => Translate::string('Thank you for your registration!'),
+      'header' => Translate::string('Account confirmation'),
+      'message' => Translate::string('Thank you for creating an account on our website. Click on the link below to activate your account.'),
+      'action_title' => Translate::string('Confirm email'),
+      'action_url' => Redirect::url('register/confirm', [
+        'confirmation' => Confirmation::add('registration_confirmation', $user),
+        'email' => urlencode($this->get('email'))
+      ])
+    ]);
 
     // This should never happen
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 
-  private function registerUser(): bool
+  private function registerUser(): ?User
   {
     $encryptedPassword = Encryption::encrypt($this->get('password'), 'password');
 
@@ -110,30 +128,17 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
 
     $registered = Account::register($newUser, $encryptedPassword);
 
-    if (! $registered) {
-      return false;
+    if (!$registered) {
+      return null;
     }
 
     $registeredUser = Account::getBy('email', $this->get('email'));
 
     if (empty($registeredUser)) {
-      return false;
+      return null;
     }
 
-    //$registeredUser
-
-    Email::send($this->get('email'), [
-      'subject' => Translate::string('Thank you for your registration!'),
-      'header' => Translate::string('Account confirmation'),
-      'message' => Translate::string('Thank you for creating an account on our website. Click on the link below to activate your account.'),
-      'action_title' => Translate::string('Confirm email'),
-      'action_url' => Redirect::url('register/confirm', [
-        'confirmation' => Confirmation::add('registration_confirmation', $registeredUser),
-        'email' => urlencode($this->get('email'))
-      ])
-    ]);
-
-    return true;
+    return $registeredUser;
   }
 
   private function passwordMessage(): string
