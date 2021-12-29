@@ -99,6 +99,12 @@ final class ChangePasswordRequest extends Request implements \App\Core\Schema\Re
       $this->finish(self::ERROR_PASSWORD_TOO_SHORT, Status::OK);
     }
 
+    if ($this->user->comparePassword($this->get('new_password'))) {
+      $this->addContent('fields', ['new_password']);
+      $this->addContent('message', Translate::string('The given password is the same as the previous one.'));
+      $this->finish(self::ERROR_PASSWORD_CANNOT_BE_SAME, Status::OK);
+    }
+
     $this->user->updatePassword($this->get('new_password'));
 
     Email::send($this->user->getEmail(), [

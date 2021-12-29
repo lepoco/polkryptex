@@ -40,6 +40,13 @@ final class RegisterConfirmationComposer extends Composer implements \App\Core\S
 
     $isTokenValid = Confirmation::isValid('resend_registration_confirmation', $user, $resendConfirmationToken);
 
+    if (!$isTokenValid) {
+      $view->with('isTokenValid', $isTokenValid);
+      $view->with('isValid', false);
+
+      return;
+    }
+
     $view->with('resendLink', Redirect::url('register/confirmation', [
       'resend' => Encryption::encrypt('resend_confirmation', 'nonce'),
       'n' => $registartionNonce,
