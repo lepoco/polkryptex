@@ -139,13 +139,13 @@ $background = '#f2f3f8';
                   <td style="padding:0;">
                     <p
                       style="font-size:10px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">
-                      {{ $site_name ?? '' }} respects your privacy. To learn more please read our <a
-                        href="{{ $privacy_url ?? '#' }}" style="color: #6c6c6c">Privacy Statement</a>.</p>
+                      {{ $site_name ?? '' }} {{ \App\Core\Facades\Translate::string('respects your privacy. To learn more please read our') }} <a
+                        href="{{ $privacy_url ?? '#' }}" style="color: #6c6c6c">{{ \App\Core\Facades\Translate::string('Privacy Statement') }}</a>.</p>
 
                     @isset($support_url)
                     <p
                       style="font-size:10px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">
-                      Account questions? <a href="{{ $support_url ?? '#' }}" style="color: #6c6c6c">Visit Customer Support</a>.</p>
+                      {{ \App\Core\Facades\Translate::string('Account questions?') }} <a href="{{ $support_url ?? '#' }}" style="color: #6c6c6c">{{ \App\Core\Facades\Translate::string('Visit Customer Support') }}</a>.</p>
                     @endisset
 
                     @yield('footer')

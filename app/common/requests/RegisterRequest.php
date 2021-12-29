@@ -5,7 +5,7 @@ namespace App\Common\Requests;
 use App\Core\Facades\{Email, Translate};
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
-use App\Core\Auth\{Account, User, Permission};
+use App\Core\Auth\{Account, User, Permission, Confirmation};
 use App\Core\Data\Encryption;
 use App\Core\Utils\Cast;
 use Illuminate\Support\Str;
@@ -127,9 +127,9 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
       'header' => Translate::string('Account confirmation'),
       'message' => Translate::string('Thank you for creating an account on our website. Click on the link below to activate your account.'),
       'action_title' => Translate::string('Confirm email'),
-      'action_url' => \App\Core\Http\Redirect::url('registration', [
-        'confirmation' => '123',
-        'email' => $this->get('email')
+      'action_url' => Redirect::url('register/confirm', [
+        'confirmation' => Confirmation::add('registration_confirmation', $registeredUser),
+        'email' => urlencode($this->get('email'))
       ])
     ]);
 

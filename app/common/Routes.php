@@ -31,6 +31,11 @@ final class Routes extends Router
       'redirect_logged' => true
     ],
     [
+      'path' => '/register/confirm',
+      'namespace' => 'RegisterConfirm',
+      'redirect_logged' => true
+    ],
+    [
       'path' => '/register/confirmation',
       'namespace' => 'RegisterConfirmation',
       'redirect_logged' => true,

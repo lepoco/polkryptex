@@ -23,6 +23,8 @@ final class Encryption
       'session'  => Config::get('salts.session', ''),
       'cookie'   => Config::get('salts.cookie', ''),
       'password' => Config::get('salts.password', ''),
+      'token' => Config::get('salts.token', ''),
+      'webauth' => Config::get('salts.token', ''),
       'nonce'    => Config::get('salts.nonce', '')
     ];
   }
@@ -55,6 +57,14 @@ final class Encryption
       $salts['cookie'] = $customSalt;
     }
 
+    if (empty($salts['token'])) {
+      $salts['token'] = $customSalt;
+    }
+
+    if (empty($salts['webauth'])) {
+      $salts['webauth'] = $customSalt;
+    }
+
     if (empty($salts['algo'])) {
       $salts['algo'] = $customAlgo;
     }
@@ -69,6 +79,14 @@ final class Encryption
 
       case 'session':
         return (!empty($salts['session']) ? hash_hmac('sha256', $text, $salts['session']) : '');
+        break;
+
+      case 'token':
+        return (!empty($salts['token']) ? password_hash(hash_hmac('sha256', $text, $salts['token']), $salts['algo']) : '');
+        break;
+
+      case 'webauth':
+        return (!empty($salts['webauth']) ? password_hash(hash_hmac('sha256', $text, $salts['webauth']), $salts['algo']) : '');
         break;
 
       case 'cookie':
@@ -108,6 +126,14 @@ final class Encryption
       $salts['session'] = $customSalt;
     }
 
+    if (empty($salts['token'])) {
+      $salts['token'] = $customSalt;
+    }
+
+    if (empty($salts['webauth'])) {
+      $salts['webauth'] = $customSalt;
+    }
+
     if (empty($salts['cookie'])) {
       $salts['cookie'] = $customSalt;
     }
@@ -124,6 +150,12 @@ final class Encryption
 
       case 'cookie':
         return ($plain ? hash_hmac('sha256', $text, $salts['cookie']) : $text) == $compare_text;
+
+      case 'token':
+        return password_verify(($plain ? hash_hmac('sha256', $text, $salts['token']) : $text), $compare_text);
+
+      case 'webauth':
+        return password_verify(($plain ? hash_hmac('sha256', $text, $salts['webauth']) : $text), $compare_text);
 
       default:
         return false;

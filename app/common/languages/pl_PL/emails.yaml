@@ -1,0 +1,15 @@
+# app\common\views\layouts\email.blade.php
+respects your privacy. To learn more please read our: respektuje Twoją prywatność. Aby dowiedzieć się więcej, przeczytaj nasze
+Privacy Statement: Oświadczenie o prywatności
+Account questions?: Pytania związane z kontem?
+Visit Customer Support: Odwiedź nasze centrum wsparcia
+
+# app\common\requests\AddWalletRequest.php
+New wallet has been added to your account: Nowy portfel został dodany do twojego konta
+New wallet added: Nowy portfel dodany
+A new wallet has been assigned to your account. You can top-up it now.: Do twojego konta został przypisany nowy portfel. Możesz go już doładować.
+
+# app\common\requests\ChangePasswordRequest.php
+Password changed!: Hasło zmienione
+Your password on the site has been changed: Twoje hasło w swersie zostało zminione
+Your password has been updated, if you did not change it, contact the support and check the last activity on your devices.: Hasło w serwisie zostało zaktualizowane, jeśli to nie ty je zmieniłeś/aś, skontaktuj się z obsługą i sprawdź ostatnią aktywność na swoich urządzeniach.

@@ -18,3 +18,8 @@ git push --set-upstream origin pr/FEATURE_NAME
 ```
 
 Create new pull request from this feature
+
+## Sample password
+```
+1bmTQrWoOYvjjD6TNCjVZCuZX7m0E4cVsC5kZ@
+```

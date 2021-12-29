@@ -2,9 +2,9 @@
 
 namespace App\Common\Requests;
 
-use App\Core\Facades\Translate;
+use App\Core\Facades\{Translate, Email};
 use App\Core\View\Request;
-use App\Core\Http\Status;
+use App\Core\Http\{Status, Redirect};
 use App\Core\Auth\Account;
 use App\Core\Auth\User;
 use Illuminate\Support\Str;
@@ -101,7 +101,14 @@ final class ChangePasswordRequest extends Request implements \App\Core\Schema\Re
 
     $this->user->updatePassword($this->get('new_password'));
 
-    // TODO: Save new password
+    Email::send($this->user->getEmail(), [
+      'subject' => Translate::string('Your password on the site has been changed'),
+      'header' => Translate::string('Password changed!'),
+      'message' => Translate::string('Your password has been updated, if you did not change it, contact the support and check the last activity on your devices.'),
+      'action_title' => Translate::string('Sign in'),
+      'action_url' => Redirect::url('signin')
+    ]);
+
     $this->addContent('message', Translate::string('Your new password has been saved.'));
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }

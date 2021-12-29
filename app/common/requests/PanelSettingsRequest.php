@@ -38,7 +38,8 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
       'mail_smtp_encryption',
       'mail_sendname',
       'mail_sendfrom',
-      'mail_replyto'
+      'mail_replyto',
+      'mail_legal'
     ]);
 
     $this->isEmpty([
@@ -51,7 +52,8 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
       'mail_smtp_encryption',
       'mail_sendname',
       'mail_sendfrom',
-      'mail_replyto'
+      'mail_replyto',
+      'mail_legal'
     ]);
 
     $this->validate([
@@ -64,7 +66,8 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
       ['mail_smtp_encryption', self::SANITIZE_STRING],
       ['mail_sendname', self::SANITIZE_STRING],
       ['mail_sendfrom', FILTER_VALIDATE_EMAIL],
-      ['mail_replyto', FILTER_VALIDATE_EMAIL]
+      ['mail_replyto', FILTER_VALIDATE_EMAIL],
+      ['mail_legal', self::SANITIZE_STRING]
     ]);
 
     $user = Account::current();
@@ -91,6 +94,7 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
     Option::set('mail_sendname', $this->get('mail_sendname'));
     Option::set('mail_sendfrom', $this->get('mail_sendfrom'));
     Option::set('mail_replyto', $this->get('mail_replyto'));
+    Option::set('mail_legal', $this->get('mail_legal'));
 
     Option::set('mail_smtp_encryption', $this->get('mail_smtp_encryption'));
 

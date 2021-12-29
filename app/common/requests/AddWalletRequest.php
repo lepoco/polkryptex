@@ -3,7 +3,7 @@
 namespace App\Common\Requests;
 
 use App\Common\Money\{WalletsRepository, CurrenciesRepository, Wallet};
-use App\Core\Facades\{Translate, Statistics};
+use App\Core\Facades\{Translate, Statistics, Email};
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
 use App\Core\Auth\Account;
@@ -84,6 +84,14 @@ final class AddWalletRequest extends Request implements \App\Core\Schema\Request
     }
 
     Statistics::push(\App\Core\Data\Statistics::TYPE_USER, 'WALLET:Registered');
+
+    Email::send($user->getEmail(), [
+      'subject' => Translate::string('New wallet has been added to your account'),
+      'header' => Translate::string('New wallet added') . ' - ' . $currency->getIsoCode(),
+      'message' => Translate::string('A new wallet has been assigned to your account. You can top-up it now.'),
+      'action_title' => Translate::string('Top up'),
+      'action_url' => Redirect::url('dashboard/topup')
+    ]);
 
     $this->addContent('redirect', Redirect::url('dashboard'));
     $this->finish(self::CODE_SUCCESS, Status::OK);

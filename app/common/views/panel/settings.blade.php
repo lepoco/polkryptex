@@ -102,6 +102,12 @@
         </div>
 
         <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="mail_legal"
+            placeholder="@translate('Email legal statement')" value="@option('mail_legal', '')">
+          <label for="mail_legal">@translate('Email legal statement')</label>
+        </div>
+
+        <div class="floating-input -reveal">
           <input class="floating-input__field" type="email" name="mail_sendfrom"
             placeholder="@translate('Send emails from address')" value="@option('mail_sendfrom', '')">
           <label for="mail_sendfrom">@translate('Send emails from address')</label>
