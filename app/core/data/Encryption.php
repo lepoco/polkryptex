@@ -100,7 +100,7 @@ final class Encryption
 
   /**
    * Compares encrypted data with those in the database.
-   * 
+   *
    * @link https://php.net/manual/en/function.hash-hmac.php
    * @link https://secure.php.net/manual/en/function.password-verify.php
    */
@@ -143,7 +143,15 @@ final class Encryption
         return password_verify(($plain ? hash_hmac('sha256', $text, $salts['password']) : $text), $compare_text);
 
       case 'nonce':
-        return ($plain ? hash_hmac('sha1', $text . date('Y-m-d h'), $salts['nonce']) : $text) == $compare_text;
+        // We define the validity of the nonce for about two hours,
+        // a solution for minutes would be better, but it would require more acrobatics.
+        if (($plain ? hash_hmac('sha1', $text . date('Y-m-d h'), $salts['nonce']) : $text) == $compare_text) {
+          return true;
+        } elseif (($plain ? hash_hmac('sha1', $text . date('Y-m-d h', time() - 3600), $salts['nonce']) : $text) == $compare_text) {
+          return true;
+        } else {
+          return false;
+        }
 
       case 'session':
         return ($plain ? hash_hmac('sha256', $text, $salts['session']) : $text) == $compare_text;

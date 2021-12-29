@@ -19,7 +19,12 @@ git push --set-upstream origin pr/FEATURE_NAME
 
 Create new pull request from this feature
 
-## Sample password
+## Sample PHPCS validation
+```powershell
+phpcs --standard=D:\www\projects\polkryptex-git\phpcs.xml -s D:\www\projects\polkryptex-git\app\core\Bootstrap.php
 ```
+
+## Sample password
+```powershell
 1bmTQrWoOYvjjD6TNCjVZCuZX7m0E4cVsC5kZ@
 ```

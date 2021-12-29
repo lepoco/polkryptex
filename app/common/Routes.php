@@ -14,6 +14,11 @@ use App\Core\Http\Router;
  */
 final class Routes extends Router
 {
+  protected string $signInRedirect = 'signin';
+  protected string $signedInRedirect = 'dashboard';
+  protected string $unconfirmedNamespace = 'Dashboard\Unconfirmed';
+  protected string $unocnfirmedRedirect = 'dashboard/unconfirmed';
+
   /**
    * @var array $routes HTTP paths and Namespaces. The namespace should be in the Pascal Case (Studly Case).
    */
@@ -33,7 +38,7 @@ final class Routes extends Router
     [
       'path' => '/register/confirm',
       'namespace' => 'RegisterConfirm',
-      'redirect_logged' => true
+      //'redirect_logged' => true
     ],
     [
       'path' => '/register/confirmation',
@@ -45,6 +50,11 @@ final class Routes extends Router
       'path' => '/signin',
       'namespace' => 'SignIn',
       'redirect_logged' => true
+    ],
+    [
+      'path' => '/dashboard/unconfirmed',
+      'namespace' => 'Dashboard\\Unconfirmed',
+      'require_login' => true
     ],
     [
       'path' => '/contact',

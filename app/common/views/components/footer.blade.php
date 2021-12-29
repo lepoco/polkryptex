@@ -3,7 +3,7 @@
 @include('components.offline')
 
 @iflogged
-  @include('components.signout')
+@include('components.signout')
 @endif
 
 {{-- @ifpermission('all') --}}
@@ -19,12 +19,13 @@
       <span>{{ $cookieKey }}</span>
   @endforeach
   <p>Cached: {{ \App\Core\Facades\Cache::count() ?? 0 }}, Queries: {{ \App\Core\Facades\App::queries() ?? 0 }}</p>
+  <p>Defined vars: {{ count(get_defined_vars()) }}</p>
   <p>Rendered: 
   <span>
 @php
 
-if(defined('APPSTART')) {
-echo (microtime(true) - APPSTART) * 1000 . ' ms';
+if(isset($_SERVER["REQUEST_TIME_FLOAT"])) {
+echo (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) * 1000 . ' ms';
 } else {
 echo 'Unknown time';
 }

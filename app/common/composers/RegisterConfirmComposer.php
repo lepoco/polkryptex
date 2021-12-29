@@ -4,6 +4,7 @@ namespace App\Common\Composers;
 
 use App\Core\View\Blade\Composer;
 use App\Core\Auth\{Account, Confirmation};
+use App\Core\Http\Redirect;
 use Illuminate\View\View;
 
 /**
@@ -27,8 +28,18 @@ final class RegisterConfirmComposer extends Composer implements \App\Core\Schema
     $email = htmlspecialchars(urldecode($_GET['email']));
 
     $user = Account::getBy('email', $email);
+    $isLoggedIn = Account::isLoggedIn();
 
-    if (empty($user) || $user->isConfirmed()) {
+    if (empty($user)) {
+      $view->with('isValid', false);
+
+      return;
+    }
+
+    if ($user->isConfirmed()) {
+      if ($isLoggedIn) {
+        Redirect::to('dashboard');
+      }
       $view->with('isValid', false);
 
       return;
@@ -50,6 +61,7 @@ final class RegisterConfirmComposer extends Composer implements \App\Core\Schema
     $view->with('user', $user);
     $view->with('email', $email);
     $view->with('confirmation', $confirmation);
+    $view->with('isLoggedIn', $isLoggedIn);
 
     $view->with('isValid', true);
   }
