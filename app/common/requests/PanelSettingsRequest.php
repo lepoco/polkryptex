@@ -55,14 +55,14 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
     ]);
 
     $this->validate([
-      ['language', FILTER_SANITIZE_STRING],
-      ['site_name', FILTER_SANITIZE_STRING],
-      ['base_url', FILTER_SANITIZE_STRING],
-      ['home_url', FILTER_SANITIZE_STRING],
+      ['language', self::SANITIZE_STRING],
+      ['site_name', self::SANITIZE_STRING],
+      ['base_url', self::SANITIZE_STRING],
+      ['home_url', self::SANITIZE_STRING],
       ['signout_time', FILTER_VALIDATE_INT],
-      ['cookie_name', FILTER_SANITIZE_STRING],
-      ['mail_smtp_encryption', FILTER_SANITIZE_STRING],
-      ['mail_sendname', FILTER_SANITIZE_STRING],
+      ['cookie_name', self::SANITIZE_STRING],
+      ['mail_smtp_encryption', self::SANITIZE_STRING],
+      ['mail_sendname', self::SANITIZE_STRING],
       ['mail_sendfrom', FILTER_VALIDATE_EMAIL],
       ['mail_replyto', FILTER_VALIDATE_EMAIL]
     ]);

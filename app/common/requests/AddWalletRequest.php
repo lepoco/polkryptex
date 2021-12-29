@@ -40,9 +40,9 @@ final class AddWalletRequest extends Request implements \App\Core\Schema\Request
 
     $this->validate([
       ['id', FILTER_VALIDATE_INT],
-      ['currency', FILTER_SANITIZE_STRING],
-      ['accept_terms', FILTER_SANITIZE_STRING],
-      ['accept_currencies', FILTER_SANITIZE_STRING]
+      ['currency', self::SANITIZE_STRING],
+      ['accept_terms', self::SANITIZE_STRING],
+      ['accept_currencies', self::SANITIZE_STRING]
     ]);
 
     $user = Account::current();

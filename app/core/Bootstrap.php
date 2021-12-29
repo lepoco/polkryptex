@@ -25,6 +25,8 @@ use Illuminate\Log\LogManager;
  */
 abstract class Bootstrap implements \App\Core\Schema\App
 {
+  protected int $queries = 0;
+
   protected int $status;
 
   protected bool $connected;
@@ -198,6 +200,10 @@ abstract class Bootstrap implements \App\Core\Schema\App
   {
     $objects = get_object_vars($this);
 
+    if ($property == 'database') {
+      $this->queries++;
+    }
+
     if (!isset($objects[$property])) {
       return $this;
     }
@@ -249,6 +255,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
     }
 
     $this->installed = $this->database->schema()->hasTable('options') && $this->database->schema()->hasTable('users');
+    $this->queries++;
 
     return $this->installed;
   }
@@ -275,6 +282,14 @@ abstract class Bootstrap implements \App\Core\Schema\App
     }
 
     return true;
+  }
+
+  /**
+   * Get the number of queries to the database for a given run.
+   */
+  final public function queries(): int
+  {
+    return $this->queries;
   }
 
   final protected function setupContainer(): self

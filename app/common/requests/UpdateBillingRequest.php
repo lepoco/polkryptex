@@ -52,14 +52,14 @@ final class UpdateBillingRequest extends Request implements \App\Core\Schema\Req
 
     $this->validate([
       ['id', FILTER_VALIDATE_INT],
-      ['first_name', FILTER_SANITIZE_STRING],
-      ['last_name', FILTER_SANITIZE_STRING],
-      ['street', FILTER_SANITIZE_STRING],
-      ['postal_code', FILTER_SANITIZE_STRING],
-      ['city', FILTER_SANITIZE_STRING],
-      ['province', FILTER_SANITIZE_STRING],
-      ['country', FILTER_SANITIZE_STRING],
-      ['phone', FILTER_SANITIZE_STRING],
+      ['first_name', self::SANITIZE_STRING],
+      ['last_name', self::SANITIZE_STRING],
+      ['street', self::SANITIZE_STRING],
+      ['postal_code', self::SANITIZE_STRING],
+      ['city', self::SANITIZE_STRING],
+      ['province', self::SANITIZE_STRING],
+      ['country', self::SANITIZE_STRING],
+      ['phone', self::SANITIZE_STRING],
       ['email', FILTER_VALIDATE_EMAIL]
     ]);
 

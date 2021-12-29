@@ -42,7 +42,7 @@ final class PaymentsSendRequest extends Request implements \App\Core\Schema\Requ
       ['id', FILTER_VALIDATE_INT],
       ['wallet', FILTER_VALIDATE_INT],
       ['amount', FILTER_SANITIZE_NUMBER_FLOAT],
-      ['payment_method', FILTER_SANITIZE_STRING]
+      ['payment_method', self::SANITIZE_STRING]
     ]);
 
     if (1 > $this->get('amount')) {

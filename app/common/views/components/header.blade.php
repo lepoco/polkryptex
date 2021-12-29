@@ -12,7 +12,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#212529">
   <meta name="msapplication-starturl" content="/">
-  <title>@option('site_name', 'Polkryptex'){{ isset($title) ? ' - ' . $title : '' }}</title>
+  <title>@option('site_name', 'Website'){{ isset($title) ? ' - ' . $title : '' }}</title>
   <link rel="apple-touch-icon" href="@asset('img/icons/192.png')">
   <link rel="icon" href="@asset('img/icons/192.png')">
   <link rel="manifest" href="@asset('m.webmanifest')">

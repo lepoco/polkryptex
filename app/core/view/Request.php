@@ -49,6 +49,11 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
   protected const CODE_SUCCESS                   = 'S01';
 
+  /**
+   * Workaround for depracted way of sanitizing.
+   */
+  protected const SANITIZE_STRING = 513;
+
   protected bool $finished = false;
 
   protected string $method = '';
@@ -158,7 +163,11 @@ abstract class Request extends Renderable implements \App\Core\Schema\Request
 
       $value = isset($this->incomeData[$field[0]]) ? $this->incomeData[$field[0]] : '';
 
-      $filteredValue = filter_var($value, $field[1]);
+      if ($field[1] == self::SANITIZE_STRING) {
+        $filteredValue = htmlspecialchars($value, ENT_QUOTES);
+      } else {
+        $filteredValue = filter_var($value, $field[1]);
+      }
 
       if (false === $filteredValue) {
         $incorrectFields[] = $field;

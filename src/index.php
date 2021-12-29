@@ -11,9 +11,12 @@
 use App\Common\App;
 use App\Core\Utils\ErrorHandler;
 
+define('APPDEBUG', true);
 define('APPSTART', microtime(true));
 define('ABSPATH', __DIR__ . '/../');
 define('APPDIR', 'app/');
+
+define('SUPPORTEMAIL', 'webmaster@polkryptex.pl');
 
 date_default_timezone_set('UTC');
 

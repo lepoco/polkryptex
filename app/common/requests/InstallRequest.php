@@ -50,10 +50,10 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     ]);
 
     $this->validate([
-      ['user', FILTER_SANITIZE_STRING],
+      ['user', self::SANITIZE_STRING],
       ['password', FILTER_UNSAFE_RAW],
-      ['host', FILTER_SANITIZE_STRING],
-      ['database', FILTER_SANITIZE_STRING],
+      ['host', self::SANITIZE_STRING],
+      ['database', self::SANITIZE_STRING],
       ['admin_email', FILTER_VALIDATE_EMAIL],
       ['admin_password', FILTER_UNSAFE_RAW]
     ]);

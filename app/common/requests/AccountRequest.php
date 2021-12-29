@@ -42,8 +42,8 @@ final class AccountRequest extends Request implements \App\Core\Schema\Request
 
     $this->validate([
       ['id', FILTER_VALIDATE_INT],
-      ['displayname', FILTER_SANITIZE_STRING],
-      ['language', FILTER_SANITIZE_STRING]
+      ['displayname', self::SANITIZE_STRING],
+      ['language', self::SANITIZE_STRING]
     ]);
 
     if (!Account::isLoggedIn()) {

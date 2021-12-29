@@ -29,7 +29,7 @@ final class App extends Bootstrap implements \App\Core\Schema\App
             'name' => 'Polkryptex',
             'version' => '1.1.0',
             'log_level' => 'debug',
-            'debug' => true
+            'debug' => defined('APPDEBUG') && APPDEBUG
           ],
           'i18n' => [
             'default' => 'en_US',
