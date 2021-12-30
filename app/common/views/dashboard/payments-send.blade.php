@@ -9,9 +9,9 @@
       <h4 class="-font-secondary -fw-700 -pb-3">@translate('Send money')</h4>
     </div>
     <div class="col-12">
-      <form id="paymentSend">
-        <input type="hidden" name="action" value="PaymentSend" />
-        <input type="hidden" name="nonce" value="@nonce('paymentsend')" />
+      <form id="paymentsSend">
+        <input type="hidden" name="action" value="PaymentsSend" />
+        <input type="hidden" name="nonce" value="@nonce('paymentssend')" />
         <input type="hidden" name="id" value="{{ $user->getId() }}" />
 
         <div class="floating-input -reveal">

@@ -8,5 +8,5 @@ import FormRequest from "../common/formrequest";
  * @license GPL-3.0
  * @since   1.1.0
  */
-FormRequest.register("#paymentSend", function (status: string, response: any) {
+FormRequest.register("#paymentsSend", function (status: string, response: any) {
 });

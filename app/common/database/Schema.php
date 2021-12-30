@@ -52,8 +52,9 @@ final class Schema
     DB::schema()->dropIfExists('user_newsletters');
     DB::schema()->dropIfExists('user_plans');
     DB::schema()->dropIfExists('user_confirmations');
-    DB::schema()->dropIfExists('user_keys');
+
     DB::schema()->dropIfExists('user_cards');
+    DB::schema()->dropIfExists('user_keys');
 
     DB::schema()->dropIfExists('users');
 

@@ -9,9 +9,9 @@
       <h4 class="-font-secondary -fw-700 -pb-3">@translate('Request transfer')</h4>
     </div>
     <div class="col-12">
-      <form id="paymentRequest">
-        <input type="hidden" name="action" value="PaymentRequest" />
-        <input type="hidden" name="nonce" value="@nonce('paymentrequest')" />
+      <form id="paymentsRequest">
+        <input type="hidden" name="action" value="PaymentsRequest" />
+        <input type="hidden" name="nonce" value="@nonce('paymentsrequest')" />
         <input type="hidden" name="id" value="{{ $user->getId() }}" />
 
         <div class="floating-input -reveal">

@@ -5,6 +5,7 @@ namespace App\Common\Composers\Dashboard;
 use App\Core\Auth\Account;
 use App\Core\View\Blade\Composer;
 use Illuminate\View\View;
+use App\Common\Money\CardRepository;
 
 /**
  * Additional logic for the views/dashboard/account.blade view.
@@ -17,6 +18,9 @@ final class AccountComposer extends Composer implements \App\Core\Schema\Compose
 {
   public function compose(View $view): void
   {
+    $user = Account::current();
+
     $view->with('user', Account::current());
+    $view->with('user_cards', CardRepository::getUserCards($user));
   }
 }

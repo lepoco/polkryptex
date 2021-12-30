@@ -15,7 +15,7 @@
 
     <div class="-pb-1 -reveal">
       <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Save card')</button>
-      <a href="@url('dashboard')" class="btn btn-outline-dark btn-mobile">@translate('Back to dashboard')</a>
+      <a href="@url('dashboard/account')" class="btn btn-outline-dark btn-mobile">@translate('Back to dashboard')</a>
     </div>
 
   </form>

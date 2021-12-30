@@ -24,23 +24,44 @@
     </div>
 
     <div class="col-12 -mt-2">
-      <div class="row">
+      <div class="dashboard__cards">
 
-        <div class="col -reveal">
-          <a href="@url('dashboard/cards/add')">
-          <div class="dashboard__banner h-100 p-5 bg-light -rounded-2 -reveal" style="max-width: 15rem">
+        @foreach ($user_cards as $user_card)
+        
+        <div class="dashboard__card h-100 p-1 bg-light -rounded-2 -reveal">
+          <div data-provider="{{ $user_card->getProvider() }}" class="dashboard__card__content">
+            <div class="-text-center">
+              @switch($user_card->getProvider())
+                  @case('visa')
+                      @media('visa.svg')
+                      @break
+                  @case(2)
+                      
+                      @break
+                  @default
+                  @media('mastercard-horizontal.svg')
+              @endswitch
+              <p class="-mt-1">(**** {{ substr($user_card->number, -4) }})</p>
+            </div>
+          </div>
+        </div>
+
+        @endforeach
+
+        <div class="dashboard__card h-100 p-1 bg-light -rounded-2 -reveal">
+          <div class="dashboard__card__content">
+            <a href="@url('dashboard/cards/add')">
               <div class="-text-center">
                 <i class="icon-ic_fluent_add_circle_20 -s-24"></i>
                 <p>@translate('Add card')</p>
               </div>
+            </a>
           </div>
-        </a>
         </div>
-
       </div>
     </div>
 
-    <div class="col-12 -mt-5">
+    <div class="col-12 -mt-3">
       <form id="account" method="POST">
         <input type="hidden" name="action" value="Account" />
         <input type="hidden" name="nonce" value="@nonce('account')" />

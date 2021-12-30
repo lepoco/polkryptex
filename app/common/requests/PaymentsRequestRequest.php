@@ -15,11 +15,11 @@ use App\Core\Auth\Account;
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */
-final class PaymentsSendRequest extends Request implements \App\Core\Schema\Request
+final class PaymentsRequestRequest extends Request implements \App\Core\Schema\Request
 {
   public function getAction(): string
   {
-    return 'PaymentsSend';
+    return 'PaymentsRequest';
   }
 
   public function process(): void
