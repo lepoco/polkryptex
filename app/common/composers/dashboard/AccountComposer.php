@@ -20,6 +20,7 @@ final class AccountComposer extends Composer implements \App\Core\Schema\Compose
   {
     $user = Account::current();
 
+    $view->with('has_profile_picture', !empty($user->getImage(false)));
     $view->with('user', Account::current());
     $view->with('user_cards', CardRepository::getUserCards($user));
   }

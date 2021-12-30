@@ -6,6 +6,7 @@ use App\Common\Money\WalletsRepository;
 use App\Core\Auth\Account;
 use App\Core\View\Blade\Composer;
 use App\Core\Http\Redirect;
+use App\Common\Money\CardRepository;
 use Illuminate\View\View;
 
 /**
@@ -22,5 +23,6 @@ final class PlanComposer extends Composer implements \App\Core\Schema\Composer
     $user = Account::current();
 
     $view->with('user', $user);
+    $view->with('user_cards', CardRepository::getUserCards($user));
   }
 }

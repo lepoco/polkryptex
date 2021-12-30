@@ -9,17 +9,17 @@ use App\Core\Http\{Status, Redirect};
 use App\Core\Auth\Account;
 
 /**
- * Action triggered when requesting funds.
+ * Action triggered when selecting plan.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */
-final class PaymentsRequestRequest extends Request implements \App\Core\Schema\Request
+final class SelectPlanRequest extends Request implements \App\Core\Schema\Request
 {
   public function getAction(): string
   {
-    return 'PaymentsRequest';
+    return 'SelectPlan';
   }
 
   public function process(): void

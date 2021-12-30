@@ -12,9 +12,16 @@
     <div class="col-12 dashboard__section">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2 -reveal">
         <div class="dashboard__banner__picture">
-          <img class="editable__picture" data-errorscr="@asset('img/pexels-watch-pay.jpeg')"
-            src="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}"
-            alt="Stack Overflow logo and icons and such">
+          
+          @if($has_profile_picture)
+            <img class="editable__picture" data-errorscr="@asset('img/pexels-watch-pay.jpeg')"
+              src="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}"
+              alt="{{ $user->getDisplayName() }} Profile image">
+          @else
+            <img class="editable__picture" data-errorscr="@asset('img/pexels-watch-pay.jpeg')"
+              src="@asset('img/pexels-watch-pay.jpeg')"
+              alt="{{ $user->getDisplayName() }} Profile image">
+          @endif
         </div>
         <div>
           <h4>@translate('Hello,') <span class="editable__displayname">{{ $user->getDisplayName() }}</span></h4>

@@ -22,7 +22,7 @@ final class ContactRequest extends Request implements \App\Core\Schema\Request
 
   public function process(): void
   {
-    $this->addContent('message', 'it works');
+    $this->addContent('message', '{NOT IMPLEMENTED}');
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 }

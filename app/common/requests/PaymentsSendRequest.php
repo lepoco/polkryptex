@@ -24,6 +24,7 @@ final class PaymentsSendRequest extends Request implements \App\Core\Schema\Requ
 
   public function process(): void
   {
+    $this->addContent('message', '{NOT IMPLEMENTED}');
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 }

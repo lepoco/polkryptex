@@ -181,6 +181,16 @@
   }
 }
 
+.select__card {
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    max-width: 9rem;
+    max-height: 2rem;
+  }
+}
+
 input[type="checkbox"] {
   &.-alert {
     border: 0.2rem solid #ff6666;
