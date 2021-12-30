@@ -117,7 +117,7 @@ final class RegisterRequest extends Request implements \App\Core\Schema\Request
 
   private function registerUser(): ?User
   {
-    $encryptedPassword = Encryption::encrypt($this->get('password'), 'password');
+    $encryptedPassword = Encryption::hash($this->get('password'), 'password');
 
     $newUser = User::build([
       'display_name' => Cast::emailToUsername($this->get('email')),

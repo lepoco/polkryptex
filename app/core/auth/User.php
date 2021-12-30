@@ -89,7 +89,7 @@ final class User extends \App\Core\Data\DatabaseObject
   public function updatePassword(string $password, bool $plain = true): bool
   {
     if ($plain) {
-      $password = Encryption::encrypt(
+      $password = Encryption::hash(
         $password,
         'password'
       );
@@ -114,7 +114,7 @@ final class User extends \App\Core\Data\DatabaseObject
   public function updateSessionToken(string $token, bool $keepPlain = false): bool
   {
     if (!$keepPlain) {
-      $token = Encryption::encrypt($token, 'session');
+      $token = Encryption::hash($token, 'session');
     }
 
     return DB::table('users')->where('id', $this->getId())->update([
@@ -157,7 +157,7 @@ final class User extends \App\Core\Data\DatabaseObject
   public function updateTokens(string $sessionToken, string $cookieToken, bool $keepSessionPlain = false, bool $keepCookiePlain = true): bool
   {
     if (!$keepSessionPlain) {
-      $sessionToken = Encryption::encrypt($sessionToken, 'session');
+      $sessionToken = Encryption::hash($sessionToken, 'session');
     }
 
     return DB::table('users')->where('id', $this->getId())->update([

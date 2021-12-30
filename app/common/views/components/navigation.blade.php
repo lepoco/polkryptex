@@ -33,6 +33,14 @@
               href="@url('dashboard/payments')">@translate('Payments')</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link{{ $pagenow === 'dashboard.transactions' || $pagenow === 'dashboard.transaction' ? ' active' : '' }}"
+              href="@url('dashboard/transactions')">@translate('Transactions')</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{{ $pagenow === 'dashboard.plan' ? ' active' : '' }}"
+              href="@url('dashboard/plan')">@translate('My plan')</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link{{ $pagenow === 'dashboard.account' || $pagenow === 'dashboard.billing' || $pagenow === 'dashboard.password' ? ' active' : '' }}"
               href="@url('dashboard/account')">@translate('Account')</a>
           </li>

@@ -145,6 +145,16 @@ final class Routes extends Router
       'namespace' => 'Dashboard\\Exchange',
       'require_login' => true
     ],
+    [
+      'path' => '/dashboard/plan',
+      'namespace' => 'Dashboard\\Plan',
+      'require_login' => true
+    ],
+    [
+      'path' => '/dashboard/cards/add',
+      'namespace' => 'Dashboard\\CardsAdd',
+      'require_login' => true
+    ],
 
     // Admin panel
     [

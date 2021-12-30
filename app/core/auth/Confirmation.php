@@ -23,7 +23,7 @@ final class Confirmation
   {
     $confirmationId = self::getConfirmationId($type);
     $token = Encryption::salter(64);
-    $encrypted = Encryption::encrypt($token, 'token');
+    $encrypted = Encryption::hash($token, 'token');
 
     if (!empty(self::get($type, $user))) {
       $query = DB::table('user_confirmations')->where(['confirmation_id' => $confirmationId, 'user_id' => $user->id()])->update([

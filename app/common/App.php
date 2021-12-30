@@ -60,7 +60,8 @@ final class App extends Bootstrap implements \App\Core\Schema\App
             'password' => \App\Common\Config::SALT_PASSWORD,
             'nonce' => \App\Common\Config::SALT_NONCE,
             'token' => \App\Common\Config::SALT_TOKEN,
-            'webauth' => \App\Common\Config::SALT_WEBAUTH
+            'webauth' => \App\Common\Config::SALT_WEBAUTH,
+            'passphrase' => \App\Common\Config::SALT_PASSPHRASE
           ],
           'storage' => [
             'logs' => Path::getAppPath('storage/logs'),

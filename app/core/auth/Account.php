@@ -41,6 +41,9 @@ final class Account
 
     $user = new User($userId);
 
+    // How to Attack Unauthenticated Encryption
+    // https://paragonie.com/blog/2015/05/using-encryption-and-authentication-correctly#title.2.1
+
     if (!$user->isValid()) {
       return null;
     }
@@ -53,8 +56,6 @@ final class Account
       return null;
     }
 
-    // Here we have two queries to the database,
-    // it can be considered whether it is worth implementing a secure cache
     if (!$user->compareCookieToken(Session::get('auth.token', ''))) {
       return null;
     }

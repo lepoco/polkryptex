@@ -48,7 +48,7 @@ final class RegisterConfirmationComposer extends Composer implements \App\Core\S
     }
 
     $view->with('resendLink', Redirect::url('register/confirmation', [
-      'resend' => Encryption::encrypt('resend_confirmation', 'nonce'),
+      'resend' => Encryption::hash('resend_confirmation', 'nonce'),
       'n' => $registartionNonce,
       'e' => urlencode($email),
       'r' => $resendConfirmationToken

@@ -4,6 +4,9 @@ Exchange: Wymień
 Recent transations: Ostatnie transakcje
 See all: Zobacz wszystkie
 Back to dashboard: Powrót do kokpitu
+Total balance: Całkowite saldo
+total balance: saldo całkowite
+Wallet: Portfel
 
 # app\common\views\dashboard\account.blade.php
 Account: Konto
@@ -69,3 +72,13 @@ Transaction: Transakcja
 Exchange: Wymiana
 Transfer: Przelew
 Top-up: Doładowanie
+
+# app\common\views\components\navigation.blade.php
+My plan: Mój plan
+
+# app\common\views\dashboard\plan.blade.php
+Subscription plan: Plan subskrypcyjny
+I accept the terms and conditions related to subscription.: Akceptuję regulamin związany z subskrypcją.
+monthly fee: opłata miesięczna
+Activate: Aktywuj
+I consent to the automatic withdrawal of funds from my account.: Wyrażam zgodę na automatyczne pobieranie środków z mojego konta.

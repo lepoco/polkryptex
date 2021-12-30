@@ -19,20 +19,21 @@ final class Encryption
   private static function getSalts(): array
   {
     return [
-      'algo'     => Config::get('encryption.algorithm', PASSWORD_BCRYPT),
-      'session'  => Config::get('salts.session', ''),
-      'cookie'   => Config::get('salts.cookie', ''),
-      'password' => Config::get('salts.password', ''),
-      'token' => Config::get('salts.token', ''),
-      'webauth' => Config::get('salts.token', ''),
-      'nonce'    => Config::get('salts.nonce', '')
+      'algo'       => Config::get('encryption.algorithm', PASSWORD_BCRYPT),
+      'session'    => Config::get('salts.session', ''),
+      'cookie'     => Config::get('salts.cookie', ''),
+      'password'   => Config::get('salts.password', ''),
+      'token'      => Config::get('salts.token', ''),
+      'webauth'    => Config::get('salts.token', ''),
+      'nonce'      => Config::get('salts.nonce', ''),
+      'passphrase' => Config::get('salts.passphrase', '')
     ];
   }
 
   /**
-   * Encrypts data depending on the selected method, default password.
+   * Creates hashes of data depending on the selected method, default password.
    */
-  public static function encrypt(
+  public static function hash(
     string $text,
     string $type = 'password',
     string $customSalt = '',
@@ -99,7 +100,7 @@ final class Encryption
   }
 
   /**
-   * Compares encrypted data with those in the database.
+   * Compares hashed data with raw input.
    *
    * @link https://php.net/manual/en/function.hash-hmac.php
    * @link https://secure.php.net/manual/en/function.password-verify.php
@@ -168,6 +169,58 @@ final class Encryption
       default:
         return false;
     }
+  }
+
+  /**
+   * Generate a pseudo-random string of bytes.
+   */
+  public static function generateVector(string $cipherAlgo = 'aes-256-cbc'): string
+  {
+    if (!(function_exists('openssl_cipher_iv_length') && function_exists('openssl_random_pseudo_bytes'))) {
+      return null;
+    }
+
+    return openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipherAlgo));
+  }
+
+  /**
+   * Encrypt data using Open SSL.
+   */
+  public static function encrypt(string $data, string $iv, string $passphrase = null, string $cipherAlgo = 'aes-256-cbc'): string|bool
+  {
+    if (!function_exists('openssl_encrypt')) {
+      return null;
+    }
+
+    $salts = self::getSalts();
+
+    if (empty($passphrase)) {
+      $passphrase = $salts['passphrase'] ?? '';
+    }
+
+    $options = 0; //OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING
+
+    return openssl_encrypt($data, $cipherAlgo, $passphrase, $options, $iv);
+  }
+
+  /**
+   * Decrypts encrypted data using Open SSL.
+   */
+  public static function decrypt(string $data, string $iv, string $passphrase = null, string $cipherAlgo = 'aes-256-cbc'): string|bool
+  {
+    if (!function_exists('openssl_decrypt')) {
+      return null;
+    }
+
+    $salts = self::getSalts();
+
+    if (empty($passphrase)) {
+      $passphrase = $salts['passphrase'] ?? '';
+    }
+
+    $options = 0; //OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING
+
+    return openssl_decrypt($data, $cipherAlgo, $passphrase, $options, $iv);
   }
 
   /**

@@ -118,6 +118,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     $injector->inject('SALT_NONCE', $this->salts['nonce'], 'const');
     $injector->inject('SALT_TOKEN', $this->salts['token'], 'const');
     $injector->inject('SALT_WEBAUTH', $this->salts['webauth'], 'const');
+    $injector->inject('SALT_PASSPHRASE', $this->salts['passphrase'], 'const');
 
     $injector->inject('DATABASE_NAME', $this->get('database'), 'const');
     $injector->inject('DATABASE_USER', $this->get('user'), 'const');
@@ -137,6 +138,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
     Config::set('salts.nonce', $this->salts['nonce']);
     Config::set('salts.token', $this->salts['token']);
     Config::set('salts.webauth', $this->salts['webauth']);
+    Config::set('salts.passphrase', $this->salts['passphrase']);
 
     App::rebind('config');
   }
@@ -149,7 +151,8 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
       'password' => Encryption::salter(64),
       'nonce' => Encryption::salter(64),
       'token' => Encryption::salter(64),
-      'webauth' => Encryption::salter(64)
+      'webauth' => Encryption::salter(64),
+      'passphrase' => Encryption::salter(64)
     ];
 
     return $this->salts;
@@ -183,7 +186,7 @@ final class InstallRequest extends Request implements \App\Core\Schema\Request
 
   private function registerAdmin(): void
   {
-    $encryptedPassword = Encryption::encrypt(
+    $encryptedPassword = Encryption::hash(
       $this->get('admin_password'),
       'password',
       $this->salts['password'],

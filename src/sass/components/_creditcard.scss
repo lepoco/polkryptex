@@ -1,0 +1,158 @@
+/**
+ * Copyright (c) 2021 Pomianowski Leszek
+ * GPL-3.0
+ *
+ * Partial Copyright (c) 2021 by Adam Quinlan
+ * https://codepen.io/quinlo/pen/YONMEa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+.credit-card {
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+
+  &__container {
+    width: 100%;
+    max-width: 40rem;
+    max-height: 26rem;
+    height: 26rem;
+  }
+
+  &__number-icon {
+    height: 3.5rem;
+    position: absolute;
+    right: 6px;
+    top: calc(50% - 17px);
+    width: 60px;
+  }
+
+  &__button-generate {
+    cursor: pointer;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+
+    svg {
+      width: 100px;
+      max-height: 60px;
+    }
+
+    &.-visa {
+      background-image: url("data:image/svg+xml;utf8,<svg version='1.1' id='Layer_1' xmlns:sketch='http://www.bohemiancoding.com/sketch/ns' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='750px' height='471px' viewBox='0 0 750 471' enable-background='new 0 0 750 471' xml:space='preserve'><title>Slice 1</title><g id='visa' sketch:type='MSLayerGroup'><path id='Shape' sketch:type='MSShapeGroup' fill='#0E4595' d='M278.198,334.228l33.36-195.763h53.358l-33.384,195.763H278.198L278.198,334.228z'/><path id='path13' sketch:type='MSShapeGroup' fill='#0E4595' d='M524.307,142.687c-10.57-3.966-27.135-8.222-47.822-8.222c-52.725,0-89.863,26.551-90.18,64.604c-0.297,28.129,26.514,43.821,46.754,53.185c20.77,9.597,27.752,15.716,27.652,24.283c-0.133,13.123-16.586,19.116-31.924,19.116c-21.355,0-32.701-2.967-50.225-10.274l-6.877-3.112l-7.488,43.823c12.463,5.466,35.508,10.199,59.438,10.445c56.09,0,92.502-26.248,92.916-66.884c0.199-22.27-14.016-39.216-44.801-53.188c-18.65-9.056-30.072-15.099-29.951-24.269c0-8.137,9.668-16.838,30.559-16.838c17.447-0.271,30.088,3.534,39.936,7.5l4.781,2.259L524.307,142.687'/><path id='Path' sketch:type='MSShapeGroup' fill='#0E4595' d='M661.615,138.464h-41.23c-12.773,0-22.332,3.486-27.941,16.234l-79.244,179.402h56.031c0,0,9.16-24.121,11.232-29.418c6.123,0,60.555,0.084,68.336,0.084c1.596,6.854,6.492,29.334,6.492,29.334h49.512L661.615,138.464L661.615,138.464z M596.198,264.872c4.414-11.279,21.26-54.724,21.26-54.724c-0.314,0.521,4.381-11.334,7.074-18.684l3.607,16.878c0,0,10.217,46.729,12.352,56.527h-44.293V264.872L596.198,264.872z'/><path id='path16' sketch:type='MSShapeGroup' fill='#0E4595' d='M232.903,138.464L180.664,271.96l-5.565-27.129c-9.726-31.274-40.025-65.157-73.898-82.12l47.767,171.204l56.455-0.064l84.004-195.386L232.903,138.464'/><path id='path18' sketch:type='MSShapeGroup' fill='#F2AE14' d='M131.92,138.464H45.879l-0.682,4.073c66.939,16.204,111.232,55.363,129.618,102.415l-18.709-89.96C152.877,142.596,143.509,138.896,131.92,138.464'/></g></svg>");
+    }
+  }
+
+  &__svg {
+    .card {
+      &-number {
+        text-transform: uppercase;
+        font-family: monospace;
+        font-size: 5rem;
+        font-weight: 600;
+        fill: #ffffff;
+      }
+
+      &-name {
+        text-transform: uppercase;
+        font-family: monospace;
+        font-size: 3rem;
+        font-weight: 400;
+        fill: #ffffff;
+      }
+
+      &-subtitle {
+        opacity: 0.6;
+        fill: #ffffff;
+        font-size: 2.5rem;
+        font-family: monospace;
+        font-weight: 400;
+      }
+
+      &-expire {
+        font-family: monospace;
+        font-weight: 400;
+        font-size: 2.5rem;
+        fill: #ffffff;
+      }
+
+      &-security {
+        font-size: 3rem;
+        fill: #111;
+        font-family: monospace;
+        font-weight: 400;
+      }
+
+      &-valid {
+        font-size: 1.6rem;
+        fill: #ffffff;
+        font-family: monospace;
+        font-weight: 400;
+      }
+
+      &-signature-space {
+        fill: #f2f2f2;
+      }
+
+      &-signature-line {
+        fill: #d8d2db;
+      }
+
+      &-signature {
+        font-size: 3.5rem;
+        font-family: cursive;
+      }
+
+      &-magnetic {
+        fill: #111111;
+      }
+
+      &-provider {
+        fill: #eaeaea;
+      }
+
+      &-cvv {
+        fill: #c4c4c4;
+      }
+    }
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 400px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: -webkit-transform 0.6s;
+    -webkit-transition: -webkit-transform 0.6s;
+    transition: transform 0.6s;
+    transition: transform 0.6s, -webkit-transform 0.6s;
+    cursor: pointer;
+
+    &__front,
+    &__back {
+      position: absolute;
+      width: 100%;
+      max-width: 400px;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
+      color: #47525d;
+    }
+
+    &__back {
+      -webkit-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+    }
+
+    &.--flipped {
+      -webkit-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+    }
+  }
+}

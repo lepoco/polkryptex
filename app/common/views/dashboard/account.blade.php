@@ -8,10 +8,12 @@
     <div class="col-12">
       <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Account')</h4>
     </div>
+
     <div class="col-12 dashboard__section">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2 -reveal">
         <div class="dashboard__banner__picture">
-          <img class="editable__picture" data-errorscr="@asset('img/pexels-watch-pay.jpeg')" src="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}"
+          <img class="editable__picture" data-errorscr="@asset('img/pexels-watch-pay.jpeg')"
+            src="{{ ! empty($user->getImage(false)) ? $user->getImage(true) : '' }}"
             alt="Stack Overflow logo and icons and such">
         </div>
         <div>
@@ -20,6 +22,24 @@
         </div>
       </div>
     </div>
+
+    <div class="col-12 -mt-2">
+      <div class="row">
+
+        <div class="col -reveal">
+          <a href="@url('dashboard/cards/add')">
+          <div class="dashboard__banner h-100 p-5 bg-light -rounded-2 -reveal" style="max-width: 15rem">
+              <div class="-text-center">
+                <i class="icon-ic_fluent_add_circle_20 -s-24"></i>
+                <p>@translate('Add card')</p>
+              </div>
+          </div>
+        </a>
+        </div>
+
+      </div>
+    </div>
+
     <div class="col-12 -mt-5">
       <form id="account" method="POST">
         <input type="hidden" name="action" value="Account" />

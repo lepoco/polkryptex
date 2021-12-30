@@ -26,17 +26,17 @@
         @if($isTopup)
         <div class="transaction_image">
 
-          @switch($methodId)
-              @case(2)
-                  @media('mastercard-horizontal.svg')
-                  @break
-              @case(3)
-                  @media('google-pay.svg')
-                  @break
-              @case(4)
+          @switch($methodName)
+              @case('paypal')
                   @media('paypal.svg')
                   @break
-              @case(5)
+              @case('google_pay')
+                  @media('google-pay.svg')
+                  @break
+              @case('card')
+                  @media('mastercard-horizontal.svg')
+                  @break
+              @case('apple_pay')
                   @media('apple-pay.svg')
                   @break
               @default

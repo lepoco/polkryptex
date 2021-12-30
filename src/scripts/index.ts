@@ -13,13 +13,17 @@ import FormHelpers from "./common/formhelpers";
 import Cookie from "./common/cookie";
 import SignOut from "./common/signout";
 import LoadReveal from "./common/loadreveal";
+import CreditCard from "./common/creditcard";
 
 require("./../sass/style.scss");
 
-FormHelpers.init();
-Cookie.init();
-SignOut.init();
-LoadReveal.init();
+window.onload = function (e) {
+  FormHelpers.init();
+  Cookie.init();
+  SignOut.init();
+  LoadReveal.init();
+  CreditCard.init();
+};
 
 if (AppData.isWorkerEnabled() && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {

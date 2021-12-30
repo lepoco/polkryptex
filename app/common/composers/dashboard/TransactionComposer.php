@@ -55,7 +55,7 @@ final class TransactionComposer extends Composer implements \App\Core\Schema\Com
     $view->with('user', $user);
     $view->with('header', $header);
     $view->with('transaction', $transaction);
-    $view->with('methodId', $transaction->getMethodId() ?? 0);
+    $view->with('methodName', TransactionsRepository::getMethodName($transaction->getMethodId() ?? 0));
     $view->with('isTopup', ($typeName === 'topup'));
     $view->with('currency', $transaction->getWalletTo()->getCurrency());
     $view->with('isValid', !empty($transaction));

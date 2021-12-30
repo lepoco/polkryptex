@@ -52,6 +52,8 @@ final class Schema
     DB::schema()->dropIfExists('user_newsletters');
     DB::schema()->dropIfExists('user_plans');
     DB::schema()->dropIfExists('user_confirmations');
+    DB::schema()->dropIfExists('user_keys');
+    DB::schema()->dropIfExists('user_cards');
 
     DB::schema()->dropIfExists('users');
 
@@ -146,6 +148,31 @@ final class Schema
         $table->text('token')->nullable();
         $table->timestamp('created_at')->useCurrent();
         $table->boolean('is_confirmed')->default(false);
+        $table->timestamp('updated_at')->nullable()->useCurrent();
+      });
+    }
+
+    if (!DB::schema()->hasTable('user_keys')) {
+      DB::schema()->create('user_keys', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->references('id')->on('users');
+        $table->text('name')->nullable();
+        $table->text('key')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
+      });
+    }
+
+    if (!DB::schema()->hasTable('user_cards')) {
+      DB::schema()->create('user_cards', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('key_id')->references('id')->on('user_keys');
+        $table->foreignId('user_id')->references('id')->on('users');
+        $table->text('number')->nullable();
+        $table->text('holder')->nullable();
+        $table->text('expiration')->nullable();
+        $table->text('security')->nullable();
+        $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }

@@ -19,6 +19,7 @@ final class Config implements \App\Core\Schema\Config
   public const SALT_NONCE = '';
   public const SALT_TOKEN = '';
   public const SALT_WEBAUTH = '';
+  public const SALT_PASSPHRASE = '';
 
   public const DATABASE_NAME = '';
   public const DATABASE_USER = '';

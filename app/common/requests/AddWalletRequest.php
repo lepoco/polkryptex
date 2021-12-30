@@ -24,6 +24,8 @@ final class AddWalletRequest extends Request implements \App\Core\Schema\Request
 
   public function process(): void
   {
+    // TODO: The execution of this query takes a long time, we need to check what is causing bottleneck.
+
     $this->isSet([
       'id',
       'currency',

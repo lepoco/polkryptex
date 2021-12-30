@@ -137,7 +137,7 @@ final class Prefill
 
     DB::table('options')->insert([
       'name' => 'signout_time',
-      'value' => 15
+      'value' => 10
     ]);
 
     DB::table('options')->insert([

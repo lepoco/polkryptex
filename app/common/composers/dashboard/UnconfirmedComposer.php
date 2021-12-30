@@ -35,7 +35,7 @@ final class UnconfirmedComposer extends Composer implements \App\Core\Schema\Com
 
     $view->with('user', $user);
     $view->with('resendLink', Redirect::url('dashboard/unconfirmed', [
-      'resend' => Encryption::encrypt('resend_confirmation', 'nonce'),
+      'resend' => Encryption::hash('resend_confirmation', 'nonce'),
       'email' => urlencode($user->getEmail()),
       'token' => $resendConfirmation
     ]));
