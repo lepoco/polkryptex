@@ -25,7 +25,7 @@ final class ErrorHandler
   /**
    * Registers globally a custom error handler.
    */
-  public static function register(): void
+  public static function register(): bool
   {
     if (defined('APPDEBUG') && APPDEBUG === true) {
       ini_set('display_errors', '1');
@@ -38,6 +38,8 @@ final class ErrorHandler
 
     set_error_handler([self::class, 'error'], E_ALL);
     set_exception_handler([self::class, 'exception']);
+
+    return true;
   }
 
   /**

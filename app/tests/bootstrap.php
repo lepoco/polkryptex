@@ -8,9 +8,14 @@
  * @since   1.1.0
  */
 
+define('APPDEBUG', true);
 define('APPSTART', microtime(true));
 define('ABSPATH', realpath(__DIR__ . '/../../') . '/');
 define('APPDIR', 'app/');
+
+define('SUPPORTEMAIL', 'webmaster@polkryptex.pl');
+
+date_default_timezone_set('UTC');
 
 date_default_timezone_set('UTC');
 

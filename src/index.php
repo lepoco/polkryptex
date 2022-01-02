@@ -8,9 +8,6 @@
  * @since   1.1.0
  */
 
-use App\Common\App;
-use App\Core\Utils\ErrorHandler;
-
 define('APPDEBUG', true);
 define('APPSTART', microtime(true));
 define('ABSPATH', __DIR__ . '/../');
@@ -22,9 +19,9 @@ date_default_timezone_set('UTC');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-ErrorHandler::register();
+\App\Core\Utils\ErrorHandler::register();
 
-(new App())
+(new \App\Common\App())
   ->setup()
   ->connect()
   ->print()
