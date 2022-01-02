@@ -17,6 +17,4 @@ define('SUPPORTEMAIL', 'webmaster@polkryptex.pl');
 
 date_default_timezone_set('UTC');
 
-date_default_timezone_set('UTC');
-
 require ABSPATH . 'vendor/autoload.php';

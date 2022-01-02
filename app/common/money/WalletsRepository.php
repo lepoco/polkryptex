@@ -50,12 +50,12 @@ final class WalletsRepository
   private static function fetchFromObject(object $db): Wallet
   {
     return Wallet::build([
-      'id' => $db->id,
-      'user_id' => $db->user_id,
-      'currency_id' => $db->currency_id,
-      'balance' => $db->virtual_balance,
-      'created_at' => $db->created_at,
-      'updated_at' => $db->updated_at
+      'id' => $db->id ?? 0,
+      'user_id' => $db->user_id ?? 0,
+      'currency_id' => $db->currency_id ?? 0,
+      'balance' => $db->virtual_balance ?? 0,
+      'created_at' => $db->created_at ?? '',
+      'updated_at' => $db->updated_at ?? ''
     ]);
   }
 }

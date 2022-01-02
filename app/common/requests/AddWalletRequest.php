@@ -95,6 +95,8 @@ final class AddWalletRequest extends Request implements \App\Core\Schema\Request
       'action_url' => Redirect::url('dashboard/topup')
     ]);
 
+    //ray(['queries' => \App\Core\Facades\App::queries()]); //29 queries
+
     $this->addContent('redirect', Redirect::url('dashboard'));
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
