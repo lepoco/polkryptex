@@ -179,6 +179,13 @@ final class Routes extends Router
       'redirect_no_permission' => 'dashboard'
     ],
     [
+      'path' => '/panel/users/add',
+      'namespace' => 'Panel\\UsersAdd',
+      'require_login' => true,
+      'permission' => 'admin_users',
+      'redirect_no_permission' => 'dashboard'
+    ],
+    [
       'path' => '/panel/user/{uuid}',
       'namespace' => 'Panel\\User',
       'require_login' => true,
