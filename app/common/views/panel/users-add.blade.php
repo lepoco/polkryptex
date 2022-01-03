@@ -38,8 +38,8 @@
           <div class="col-12">
             <div class="floating-input -reveal">
               <input class="floating-input__field" type="text" name="user_display_name"
-                placeholder="@translate('Name')">
-              <label for="user_display_name">@translate('Name')</label>
+                placeholder="@translate('Display name')">
+              <label for="user_display_name">@translate('Display name')</label>
             </div>
           </div>
 
@@ -59,14 +59,10 @@
             </div>
           </div>
 
-          <div class="col-12 -mb-2">
-            <hr>
+          <div class="col-12 -reveal">
+            <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1 -reveal">@translate('Add user')</button> 
+            <a href="@url('panel/users')" class="btn btn-outline-dark btn-mobile -lg-mr-1 -reveal">@translate('Go back to users')</a>
           </div>
-
-          <div class="col-12">
-            <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1 -reveal">@translate('Add')</button>
-          </div>
-
         </div>
       </form>
     </div>

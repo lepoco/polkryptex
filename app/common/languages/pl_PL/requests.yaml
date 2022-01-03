@@ -15,3 +15,8 @@ Incorrect password.: Nieprawidłowe hasło.
 Passwords must be the same.: Hasła muszą być takie same.
 Your new password has been saved.: Twoje nowe hasło zostało zapisane.
 The password provided is too simple. It should be %s to %s characters long and contain a lowercase letter, an uppercase letter, a number and a special character.: Podane hasło jest za proste. Powinno zawierać od %s do %s znaków, małe i duże litery, cyfry oraz znaki specjalne.
+
+# app\common\requests\PanelAddUserRequest.php
+This e-mail address is already registered.: Ten adres e-mail jest już zarejestrowany.
+Passwords provided do not match.: Wprowadzone hasła różnią się od siebie.
+The user has been correctly registered!: Użytownik został poprawnie zarejestrowany.

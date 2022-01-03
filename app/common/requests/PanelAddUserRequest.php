@@ -2,6 +2,7 @@
 
 namespace App\Common\Requests;
 
+use App\Core\Facades\Translate;
 use App\Core\View\Request;
 use App\Core\Http\Status;
 use App\Core\Auth\{Account, User, Permission, Confirmation};
@@ -40,7 +41,7 @@ final class PanelAddUserRequest extends Request implements \App\Core\Schema\Requ
     ]);
 
     $this->validate([
-      ['user_role', self::SANITIZE_STRING], 
+      ['user_role', self::SANITIZE_STRING],
       ['user_email', FILTER_VALIDATE_EMAIL],
       ['user_display_name', self::SANITIZE_STRING],
       ['user_password', FILTER_UNSAFE_RAW],
@@ -49,16 +50,16 @@ final class PanelAddUserRequest extends Request implements \App\Core\Schema\Requ
 
     if (Account::isRegistered($this->get('user_email'))) {
       $this->addContent('fields', ['user_email']);
-      $this->addContent('message', 'You cannot use this email address.');
+      $this->addContent('message', Translate::string('This e-mail address is already registered.'));
       $this->finish(self::ERROR_ENTRY_EXISTS, Status::OK);
     }
 
-    if($this->get('user_password') !== $this->get('user_password_confirm')){
-      $this->addContent('message', 'Password doesn\'t match');
+    if ($this->get('user_password') !== $this->get('user_password_confirm')) {
+      $this->addContent('message', Translate::string('Passwords provided do not match.'));
       $this->addContent('fields', ['user_password', 'user_password_confirm']);
       $this->finish(self::ERROR_PASSWORDS_DONT_MATCH, Status::OK);
     }
-    
+
     $encryptedPassword = Encryption::hash(
       $this->get('user_password'),
       'password'
@@ -75,7 +76,7 @@ final class PanelAddUserRequest extends Request implements \App\Core\Schema\Requ
 
     Account::register($newUser, $encryptedPassword);
 
-    $this->addContent('message', 'User registred!');
+    $this->addContent('message', Translate::string('The user has been correctly registered!'));
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }
 }

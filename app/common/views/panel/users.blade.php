@@ -45,9 +45,9 @@
       </table>
     </div>
 
-    <div class="col-12 -mt-2">
-            <a href="@url('panel/users/add')" class="btn btn-dark btn-mobile -lg-mr-1 -reveal">@translate('Add new user')</a>
-          </div>
+    <div class="col-12 -mt-2 -reveal">
+      <a href="@url('panel/users/add')" class="btn btn-dark btn-mobile -lg-mr-1 -reveal">@translate('Add new user')</a>
+    </div>
   </div>
 </div>
 

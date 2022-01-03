@@ -1,0 +1,12 @@
+#app\common\views\panel\users-add.blade.php
+Default: Domyślny
+Manager: Menedżer
+Analyst: Analityk
+Admin: Administrator
+Role: Rola
+Add user: Dodaj użytkownika
+Confirm password: Potwierdz hasło
+Go back to users: Wróć do listy
+
+# app\common\views\panel\users.blade.php
+Add new user: Dodaj nowego użytkownika
