@@ -182,7 +182,7 @@
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-12 -reveal">
         <button type="submit" class="btn btn-dark btn-mobile -lg-mr-1 -reveal">@translate('Update')</button>
       </div>
 

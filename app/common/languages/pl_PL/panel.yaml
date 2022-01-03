@@ -10,3 +10,9 @@ Go back to users: Wróć do listy
 
 # app\common\views\panel\users.blade.php
 Add new user: Dodaj nowego użytkownika
+Registration date: Data rejestracji
+Last login: Ostatnie logowanie
+Activated: Aktywowany
+Confirmed: Potwierdzony
+Yes: Tak
+No: Nie

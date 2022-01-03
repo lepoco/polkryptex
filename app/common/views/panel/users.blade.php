@@ -32,11 +32,11 @@
             <th scope="row"><a href="@url('panel/user')/{{ $singleUser->getUUID() }}">{{ $singleUser->getId() }}</a></th>
             <td><a href="@url('panel/user')/{{ $singleUser->getUUID() }}">{{ $singleUser->getEmail() }}</a></td>
             <td>{{ $singleUser->getDisplayName() }}</td>
-            <td>{{ ucfirst(\App\Core\Auth\Permission::getRoleName($singleUser->getRole())) }}</td>
+            <td>{{ \App\Core\Facades\Translate::string(ucfirst(\App\Core\Auth\Permission::getRoleName($singleUser->getRole()))) }}</td>
             <td>{{ $singleUser->getCreatedAt() }}</td>
             <td>{{ !empty($singleUser->getLastLogin()) ? $singleUser->getLastLogin() : '---' }}</td>
-            <td>{{ $singleUser->isActive() ? 'Yes' : 'No' }}</td>
-            <td>{{ $singleUser->isConfirmed() ? 'Yes' : 'No' }}</td>
+            <td>{{ $singleUser->isActive() ? \App\Core\Facades\Translate::string('Yes') : \App\Core\Facades\Translate::string('No') }}</td>
+            <td>{{ $singleUser->isConfirmed() ? \App\Core\Facades\Translate::string('Yes') : \App\Core\Facades\Translate::string('No') }}</td>
           </tr>
           @endforeach
           @endisset

@@ -1,5 +1,5 @@
 @extends('layouts.panel', [
-'title' => \App\Core\Facades\Translate::string('AddUser')
+'title' => \App\Core\Facades\Translate::string('Add new user')
 ])
 
 @section('content')
@@ -7,7 +7,7 @@
 <div class="dashboard container pt-5 pb-5">
   <div class="row">
     <div class="col-12">
-      <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Add Users')</h4>
+      <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Add new user')</h4>
     </div>
 
     <div class="col-12">
