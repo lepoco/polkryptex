@@ -9,4 +9,15 @@ import FormRequest from "../common/formrequest";
  * @since   1.1.0
  */
 FormRequest.register("#panelAddUser", function (status: string, response: any) {
+    if ("S01" === response.status) {
+        let fields = document.querySelectorAll('input[type="password"]');
+        fields.forEach(function (field: HTMLFormElement) {
+          field.value = "";
+        });
+        
+        fields = document.querySelectorAll('input[type="email"]');
+        fields.forEach(function (field: HTMLFormElement) {
+          field.value = "";
+        });  
+    }
 });

@@ -18,13 +18,13 @@
         <div class="row">
           <div class="col-12 -mt-1">
             <div class="floating-input -reveal">
-              <select class="floating-input__field" placeholder="@translate('Role')" name="role">
+              <select class="floating-input__field" placeholder="@translate('Role')" name="user_role">
                 <option value="default">@translate('Default')</option>
                 <option value="manager">@translate('Manager')</option>
                 <option value="analyst">@translate('Analyst')</option>
                 <option value="admin">@translate('Admin')</option>
               </select>
-              <label for="role">@translate('Role')</label>
+              <label for="user_role">@translate('Role')</label>
             </div>
           </div>
 
