@@ -30,6 +30,9 @@
       section.transition {
         display: none !important;
       }
+      .-reveal {
+        visibility: visible !important;
+      }
     </style>
   </noscript>
 
