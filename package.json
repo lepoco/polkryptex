@@ -1,7 +1,9 @@
 {
   "name": "polkryptex-polkryptex",
   "version": "1.1.0",
+  "description": "Wallet app",
   "private": true,
+  "main": "index.tsx",
   "devDependencies": {
     "typescript": "^4.4.3",
     "ts-loader": "^9.2.6",
@@ -13,8 +15,23 @@
     "workbox-webpack-plugin": "^6.3.0",
     "copy-webpack-plugin": "^10.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Polkryptex/Polkryptex.git"
+  },
+  "keywords": [
+    "crypto",
+    "wallets",
+    "money"
+  ],
+  "author": "UKW ZPI Group 3 2021-2022",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Polkryptex/Polkryptex/issues"
+  },
   "scripts": {
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --mode=development --name=polkryptex",
+    "production": "webpack --config webpack.config.js --mode=production --name=polkryptex",
     "info": "webpack info"
   }
 }

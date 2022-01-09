@@ -10,7 +10,7 @@
       <h4 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Users')</h4>
     </div>
 
-    <div class="col-12">
+    <div class="col-12 -reveal">
       <table class="table table-striped">
         <thead>
           <tr class="-reveal">

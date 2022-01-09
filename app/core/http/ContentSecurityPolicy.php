@@ -14,15 +14,17 @@ use App\Core\Data\Encryption;
  */
 final class ContentSecurityPolicy
 {
-  private bool $allowObjects;
+  private bool $allowObjects = false;
 
-  private bool $allowFrames;
+  private bool $allowFrames = false;
 
-  private bool $allowExternalImages;
+  private bool $allowExternalImages = false;
 
-  private bool $allowInlineScripts;
+  private bool $allowInlineScripts = false;
 
-  private bool $allowInlineStyles;
+  private bool $allowInlineStyles = false;
+
+  private bool $allowUnsafeEvalScripts = false;
 
   private string $root;
 
@@ -50,6 +52,10 @@ final class ContentSecurityPolicy
     $this->allowFrames = $frames;
     $this->allowObjects = $objects;
     $this->allowExternalImages = $externalImages;
+
+    if (defined('APPDEBUG') && APPDEBUG) {
+      $this->allowUnsafeEvalScripts = true;
+    }
 
     return $this;
   }
@@ -174,6 +180,10 @@ final class ContentSecurityPolicy
 
     if ($this->allowInlineScripts) {
       $source .= ' \'unsafe-inline\'';
+    }
+
+    if ($this->allowUnsafeEvalScripts) {
+      $source .= ' \'unsafe-eval\'';
     }
 
     return ' script-src ' . $source . ';';

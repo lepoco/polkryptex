@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="col-12 -mb-2">
+      <div class="col-12 -mb-2 -reveal">
         <hr>
       </div>
 
@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <div class="col-12 -mb-2">
+      <div class="col-12 -mb-2 -reveal">
         <hr>
       </div>
 
@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <div class="col-12 -mb-2">
+      <div class="col-12 -mb-2 -reveal">
         <hr>
       </div>
 
@@ -115,7 +115,7 @@
         </div>
       </div>
 
-      <div class="col-12 -mb-2">
+      <div class="col-12 -mb-2 -reveal">
         <hr>
       </div>
 
@@ -148,7 +148,7 @@
         </div>
       </div>
 
-      <div class="col-12 -mb-1">
+      <div class="col-12 -mb-1 -reveal">
         <hr>
       </div>
 

@@ -30,12 +30,12 @@
       </div>
     </div>
 
-    <div class="col-12 -mt-2">
+    <div class="col-12 -mt-2 -reveal">
       <div class="dashboard__cards">
 
         @foreach ($user_cards as $user_card)
         
-        <div class="dashboard__card h-100 p-1 bg-light -rounded-2 -reveal">
+        <div class="dashboard__card h-100 p-1 bg-light -rounded-2">
           <div data-provider="{{ $user_card->getProvider() }}" class="dashboard__card__content">
             <div class="-text-center">
               @switch($user_card->getProvider())
@@ -55,7 +55,7 @@
 
         @endforeach
 
-        <div class="dashboard__card h-100 p-1 bg-light -rounded-2 -reveal">
+        <div class="dashboard__card h-100 p-1 bg-light -rounded-2">
           <div class="dashboard__card__content">
             <a href="@url('dashboard/cards/add')">
               <div class="-text-center">
