@@ -27,14 +27,28 @@ AddDefaultCharset UTF-8
 <FilesMatch "\.(webmanifest)$">
   Header set Content-Type "application/manifest+json; charset=utf-8"
   Header set Cache-Control "max-age=31536000, immutable"
-  Header set X-Frame-Options: sameorigin
+  Header set X-Frame-Options "sameorigin"
   Header set X-Content-Type-Options "nosniff"
 </FilesMatch>
 
-<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|css|svg|svg+xml|json|js)$">
+<FilesMatch "\.(js)$">
+  Header set Content-Type "text/javascript; charset=utf-8"
+  Header set Cache-Control "max-age=31536000, immutable"
+  Header set X-Frame-Options "sameorigin"
+  Header set X-Content-Type-Options "nosniff"
+</FilesMatch>
+
+<FilesMatch "\.(css)$">
+  Header set Content-Type "text/css; charset=utf-8"
+  Header set Cache-Control "max-age=31536000, immutable"
+  Header set X-Frame-Options "sameorigin"
+  Header set X-Content-Type-Options "nosniff"
+</FilesMatch>
+
+<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|svg|svg+xml|json)$">
   AddDefaultCharset UTF-8
   Header set Cache-Control "max-age=31536000, immutable"
-  Header set X-Frame-Options: sameorigin
+  Header set X-Frame-Options "sameorigin"
   Header set X-Content-Type-Options "nosniff"
 </FilesMatch>
 
