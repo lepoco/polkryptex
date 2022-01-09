@@ -35,8 +35,6 @@
     ]
   },
   "config": {
-    "disable-tls": true,
-    "secure-http": false,
     "allow-plugins": {
       "pestphp/pest-plugin": true
     }
