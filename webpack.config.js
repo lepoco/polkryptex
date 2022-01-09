@@ -25,21 +25,25 @@ module.exports = function (_env, argv) {
           exclude: /node_modules/,
         },
         {
-          test: /\.scss$/,
+          test: /\.(sa|c|sc)ss$/,
+          exclude: /node_modules/,
+          type: "asset/resource",
+          generator: {
+            filename: "bundle.min.css",
+          },
           use: [
-            {
-              loader: "file-loader",
-              options: {
-                name: "bundle.min.css",
-              },
-            },
             {
               loader: "sass-loader",
               options: {
-                implementation: require("sass"),
-                sourceMap: !IS_PRODUCTION,
+                implementation: require.resolve("sass"),
                 sassOptions: {
-                  outputStyle: "compressed",
+                  outFile: "bundle.min.css",
+                  outputStyle: IS_PRODUCTION ? "compressed" : "expanded",
+                  sourceComments: !IS_PRODUCTION,
+                  sourceMap: !IS_PRODUCTION,
+                  omitSourceMapUrl: !IS_PRODUCTION,
+                  sourceMapEmbed: !IS_PRODUCTION,
+                  //indentedSyntax: !IS_PRODUCTION,
                 },
               },
             },
