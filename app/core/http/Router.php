@@ -3,7 +3,7 @@
 namespace App\Core\Http;
 
 use App\Core\Facades\{App, Option, Logs, Config, Request, Session};
-use App\Core\Factories\{ControllerFactory, RequestFactory, RestFactory};
+use App\Core\Factories\{ControllerFactory, RequestFactory, RestFactory, CronFactory};
 use App\Core\Data\Encryption;
 use App\Core\Auth\Account;
 use App\Core\Http\Redirect;
@@ -29,6 +29,16 @@ abstract class Router implements \App\Core\Schema\Router
 
   public function setup(): self
   {
+    $this->router->get(
+      '/cron/run/{key}',
+      fn () => $this->handleCron()
+    );
+
+    $this->router->post(
+      '/cron/run/{key}',
+      fn () => $this->handleCron()
+    );
+
     $this->router->post(
       '/request',
       fn () => $this->handleRequest()
@@ -80,6 +90,17 @@ abstract class Router implements \App\Core\Schema\Router
   public function run(): bool
   {
     return $this->router->run();
+  }
+
+  protected function handleCron(): void
+  {
+    $cron = CronFactory::make();
+
+    if (is_object($cron)) {
+      $cron->print();
+    } else {
+      Logs::error('Desired CRON endpoint not exist', ['request' => Request::all()]);
+    }
   }
 
   protected function handleRequest(): void

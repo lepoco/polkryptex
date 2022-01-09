@@ -6,7 +6,7 @@ use DateTime;
 use App\Common\Money\Crypto\CoinApi;
 
 beforeEach(function () {
-  $apiKey = "833FC560-3E48-4BAD-ABA9-4A3BE958E6CD";
+  $apiKey = "";
 
   $this->coinApi = new CoinApi($apiKey);
 });

@@ -23,6 +23,7 @@ final class Schema
     }
 
     self::tableOptions();
+    self::tableCron();
     self::tableUsers();
     self::tableWallets();
     self::tableStatistics();
@@ -34,6 +35,7 @@ final class Schema
      * Drop must be in the correct order regarding the foreign keys.
      */
     DB::schema()->dropIfExists('options');
+    DB::schema()->dropIfExists('cron');
 
     DB::schema()->dropIfExists('statistics');
     DB::schema()->dropIfExists('statistics_tags');
@@ -70,6 +72,19 @@ final class Schema
         $table->id();
         $table->string('name');
         $table->longText('value')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
+      });
+    }
+  }
+
+  private static function tableCron(): void
+  {
+    if (!DB::schema()->hasTable('cron')) {
+      DB::schema()->create('cron', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->timestamp('last_run')->nullable();
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });
