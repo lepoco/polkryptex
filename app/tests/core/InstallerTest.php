@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Tests\Installer;
+
 test('Installer exists.', function () {
   $this->assertTrue(class_exists('\\App\\Core\\Data\\ErrorBag'));
 

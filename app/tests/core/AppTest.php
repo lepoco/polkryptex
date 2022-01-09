@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Tests\Core;
+
 test('PHP version is compatible.', function () {
   $this->assertTrue(defined('PHP_MAJOR_VERSION') && PHP_MAJOR_VERSION >= 8);
 });

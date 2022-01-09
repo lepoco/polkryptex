@@ -16,6 +16,7 @@
     "illuminate/http": "^8",
     "illuminate/database": "^8",
     "illuminate/log": "^8",
+    "symfony/http-client": "^6.0",
     "bramus/router": "^1.6",
     "phpmailer/phpmailer": "^6.5",
     "web-auth/webauthn-lib": "^3.3"
@@ -34,6 +35,8 @@
     ]
   },
   "config": {
+    "disable-tls": true,
+    "secure-http": false,
     "allow-plugins": {
       "pestphp/pest-plugin": true
     }
