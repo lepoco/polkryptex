@@ -10,7 +10,7 @@ use App\Core\Utils\Path;
 /**
  * Main class of the application. Contains all logic.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */

@@ -5,7 +5,7 @@ export const name = "LoadReveal";
 /**
  * Animates pages when opened.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/LoadReveal
  * @license GPL-3.0
  * @since   1.1.0

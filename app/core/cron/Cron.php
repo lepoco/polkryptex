@@ -9,7 +9,7 @@ use App\Core\Facades\{DB, Option};
 /**
  * Responsible for cyclical tasks.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */
@@ -30,6 +30,8 @@ final class Cron
    */
   public static function runByUser(string $lastRun): void
   {
+    // TODO: Consider https://www.php.net/pthreads
+
     $timeLastRun = strtotime($lastRun);
 
     $difference = (strtotime("-10 minutes") - $timeLastRun) / 60;

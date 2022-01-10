@@ -12,7 +12,7 @@ use App\Core\Facades\Option;
 /**
  * CRON job for updating crypto.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */
@@ -51,6 +51,10 @@ final class UpdateCryptoJob extends Job
 
   private function getRateFromCoinApi(string $currency, array $rates): float
   {
+    if (isset(self::ASSET_CORELATIONS[$currency])) {
+      $currency = self::ASSET_CORELATIONS[$currency];
+    }
+
     $key = array_search($currency, array_column($rates, 'asset_id_quote'));
 
     if (!isset($rates[$key])) {

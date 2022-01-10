@@ -5,7 +5,7 @@ export const name = "SignOut";
 /**
  * Displays information about the ending time of the session.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/SignOut
  * @license GPL-3.0
  * @since   1.1.0

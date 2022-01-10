@@ -8,7 +8,7 @@ use App\Core\Data\Encryption;
 /**
  * Creates a set of rules to protect the site from XSS attacks.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */

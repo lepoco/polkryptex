@@ -10,7 +10,7 @@ use Illuminate\View\View;
 /**
  * Additional logic for the views/panel/statistics.blade view.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.0.0
  */
@@ -22,7 +22,7 @@ final class StatisticsComposer extends Composer implements \App\Core\Schema\Comp
 
     $view->with('user', Account::current());
     $view->with('users', $users);
-    $view->with('users_count', count($users));
+    $view->with('users_count', count($users) - 1); // Do not include dummy user
     $view->with('reqests_today', $this->getRequestsCount());
     $view->with('views_today', $this->getViewsCount());
     $view->with('transactions_today', $this->getTransactionsCount());

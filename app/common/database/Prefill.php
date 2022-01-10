@@ -9,7 +9,7 @@ use App\Core\Facades\{Config, Request, DB};
 /**
  * Populates the database with basic values.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  * @see https://laravel.com/docs/5.0/schema
@@ -229,17 +229,17 @@ final class Prefill
 
     DB::table('options')->insert([
       'name' => 'currencyconverter_api_key',
-      'value' => new DateTime('now')
+      'value' => ''
     ]);
 
     DB::table('options')->insert([
       'name' => 'coin_api_key',
-      'value' => new DateTime('now')
+      'value' => ''
     ]);
 
     DB::table('options')->insert([
       'name' => 'openexchangerates_api_key',
-      'value' => new DateTime('now')
+      'value' => ''
     ]);
   }
 

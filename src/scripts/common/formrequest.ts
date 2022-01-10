@@ -7,7 +7,7 @@ export const name = "FormRequest";
 /**
  * Set of tools to facilitate sending Ajax requests for forms.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/FormRequest
  * @license GPL-3.0
  * @since   1.1.0

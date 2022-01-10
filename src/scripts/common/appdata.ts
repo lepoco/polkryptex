@@ -3,7 +3,7 @@ export const name = "AppData";
 /**
  * Class retrieves the data stored in the window.app and then facilitates its use.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/AppData
  * @license GPL-3.0
  * @since   1.1.0

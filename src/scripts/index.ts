@@ -2,7 +2,7 @@
  * Polkryptex
  * https://polkryptex.pl/
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Index
  * @license GPL-3.0
  * @since   1.1.0

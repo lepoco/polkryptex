@@ -4,7 +4,7 @@ import Toast from "./../common/toast";
 /**
  * Page controller for dashboard.account.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Pages/Dashboard/Account
  * @license GPL-3.0
  * @since   1.1.0

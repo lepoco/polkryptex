@@ -5,7 +5,7 @@ import Toast from "./../common/toast";
 /**
  * Page controller for register.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Pages/Register
  * @license GPL-3.0
  * @since   1.1.0

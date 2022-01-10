@@ -3,7 +3,7 @@ export const name = "Translator";
 /**
  * Translates string provided.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/Translator
  * @license GPL-3.0
  * @since   1.1.0

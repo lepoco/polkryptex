@@ -6,7 +6,7 @@ export const name = "Cookie";
 /**
  * Displays information about cookies.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/Cookie
  * @license GPL-3.0
  * @since   1.1.0

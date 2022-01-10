@@ -6,7 +6,7 @@ export const name = "Toast";
 /**
  * Adds a new notification to the displayed pool.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/Toast
  * @license GPL-3.0
  * @since   1.1.0

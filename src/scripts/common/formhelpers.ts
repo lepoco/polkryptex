@@ -3,7 +3,7 @@ export const name = "FormHelpers";
 /**
  * Triggers a set of automatic functions to facilitate the use of forms.
  *
- * @author  Pomianowski <kontakt@rapiddev.pl>
+ * @author  Pomianowski <support@polkryptex.pl>
  * @module  Common/FormHelpers
  * @license GPL-3.0
  * @since   1.1.0
