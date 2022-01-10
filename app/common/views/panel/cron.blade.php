@@ -16,6 +16,10 @@
     </div>
 
     <div class="col-12 -reveal">
+      <strong>@translate('Last run'):</strong> {{$last_run ?? '?'}}
+    </div>
+
+    <div class="col-12 -reveal">
       <hr>
     </div>
 

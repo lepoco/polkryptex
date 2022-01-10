@@ -25,6 +25,7 @@ final class CronComposer extends Composer implements \App\Core\Schema\Composer
 
     $view->with('user', Account::current());
     $view->with('jobs', $this->getJobs());
+    $view->with('last_run', Option::get('cron_last_run', ''));
     $view->with('secret', $cronSecret);
     $view->with('cron_url', Redirect::url('cron/run/' . $cronSecret));
   }
