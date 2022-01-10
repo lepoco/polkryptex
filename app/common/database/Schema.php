@@ -73,6 +73,7 @@ final class Schema
         $table->string('name');
         $table->longText('value')->nullable();
         $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable()->useCurrent();
       });
     }
   }

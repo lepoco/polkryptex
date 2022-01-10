@@ -76,7 +76,7 @@
     </div>
 
     <div class="col-12 -reveal">
-      <strong>@translate('Last run'):</strong> {{$last_run ?? '?'}}
+      <strong>@translate('Last run'):</strong> {{$last_run ?? '?'}} UTC
     </div>
 
     <div class="col-12 -reveal">

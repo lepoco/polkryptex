@@ -35,6 +35,11 @@ final class UpdateCryptoJob extends Job
   public function process(): void
   {
     $coinApiKey = Option::get('coin_api_key', '');
+
+    if (empty($coinApiKey)) {
+      return;
+    }
+
     $cryptoCurrencies = $this->getInternalCrypto();
     $coinApi = new CoinApi($coinApiKey);
 

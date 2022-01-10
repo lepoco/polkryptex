@@ -31,6 +31,11 @@ final class UpdateCurrenciesJob extends Job
   public function process(): void
   {
     $openexchangeratesKey = Option::get('openexchangerates_api_key', '');
+
+    if (empty($openexchangeratesKey)) {
+      return;
+    }
+
     $exchangeApi = new OpenExchangeRates($openexchangeratesKey);
     $internalCurrencies = $this->getInternalCurrencies();
 

@@ -57,9 +57,9 @@ module.exports = function (_env, argv) {
     plugins: [
       new Copy({
         patterns: [
-          { from: path.resolve(__dirname, "src/img"), to: "img" },
           {
-            from: path.resolve(__dirname, "src", "m.webmanifest"),
+            from: path.resolve(__dirname, "src/img"),
+            to: "img",
           },
           {
             from: path.resolve(__dirname, "src", "favicon.ico"),

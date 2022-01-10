@@ -27,8 +27,11 @@ final class App extends Bootstrap implements \App\Core\Schema\App
         new Config([
           'app' => [
             'name' => 'Polkryptex',
+            'short_name' => 'Polkryptex',
             'version' => '1.1.0',
+            'description' => 'Cryptocurrency exchange platform',
             'log_level' => 'debug',
+            'color' => '#191c1f',
             'debug' => defined('APPDEBUG') && APPDEBUG
           ],
           'i18n' => [

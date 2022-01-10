@@ -111,6 +111,12 @@ abstract class Bootstrap implements \App\Core\Schema\App
       $this->session->put('language', $this->configuration->get('i18n.default', 'en_US'));
     }
 
+    $savedLanguage = $this->options->get('language', '');
+
+    if (!empty($savedLanguage)) {
+      $this->session->put('language', $savedLanguage);
+    }
+
     $this->session->put('last_opened', $timeNow);
 
     return $this;

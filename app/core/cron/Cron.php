@@ -5,7 +5,6 @@ namespace App\Core\Cron;
 use DateTime;
 use App\Core\Utils\Path;
 use App\Core\Facades\{DB, Option};
-use Illuminate\Support\Facades\Date;
 
 /**
  * Responsible for cyclical tasks.
