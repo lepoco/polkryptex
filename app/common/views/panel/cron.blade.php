@@ -37,8 +37,8 @@
           @foreach ($jobs as $singleJob)
           <tr class="-reveal">
             <th scope="row">{{ $singleJob['id'] ?? 0 }}</th>
-            <td><strong>\\{{ $singleJob['full_name'] ?? '' }}</strong></td>
-            <td>{{ $singleJob['name'] ?? '' }}</td>
+            <td><strong>\\{{ $singleJob['name'] ?? '' }}</strong></td>
+            <td>{{ $singleJob['job_name'] ?? '' }}</td>
             <td><strong>{{ $singleJob['interval'] ?? '' }}</strong></td>
             <td>{{ $singleJob['last_run'] ?? '' }}</td>
             <td>{{ $singleJob['created_at'] ?? '' }}</td>

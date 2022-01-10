@@ -16,7 +16,7 @@ final class UpdateCryptoJob extends Job
 {
   public function getName(): string
   {
-    return 'UpdateCryptoJob';
+    return 'UpdateCrypto';
   }
 
   public function getInterval(): string

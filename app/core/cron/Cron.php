@@ -41,32 +41,22 @@ final class Cron
     return $this;
   }
 
-  public function formatName(string $jobName): string
-  {
-    return str_replace('job', '_job', strtolower(trim($jobName)));
-  }
-
+  /**
+   * Gets list of information about every job.
+   */
   public function getJobs(): array
   {
     $jobsClassList = $this->getJobsClassList();
-    $jobsTable = $this->getJobsTable();
+    $jobsTable = [];
 
-    for ($i = 0; $i < count($jobsTable); $i++) {
-      foreach ($jobsClassList as $singleJobClass) {
-        try {
-          $jobInstance = new $singleJobClass();
-        } catch (\Throwable $th) {
-          continue;
-        }
-
-        $jobParsedName = $this->formatName($jobInstance->getName());
-
-        if ($jobParsedName == $jobsTable[$i]['name']) {
-          $jobsTable[$i]['full_name'] = $jobInstance->getName();
-          $jobsTable[$i]['class_name'] = $singleJobClass;
-          $jobsTable[$i]['interval'] = $jobInstance->getInterval();
-        }
+    foreach ($jobsClassList as $singleJobClass) {
+      try {
+        $jobInstance = new $singleJobClass();
+      } catch (\Throwable $th) {
+        continue;
       }
+
+      $jobsTable[] = $jobInstance->getInfo();
     }
 
     return $jobsTable;
@@ -83,137 +73,14 @@ final class Cron
       return false;
     }
 
-    $jobName = $this->formatName($jobInstance->getName());
-
-    if (!$this->isTimePassed($jobName, $jobInstance->getInterval())) {
+    if (!$jobInstance->isTimePassed()) {
       return false;
     }
 
     $jobInstance->process();
-
-    $this->updateJob($jobName);
+    $jobInstance->update();
 
     return true;
-  }
-
-  /**
-   * Checks whether the selected job should be run.
-   */
-  private function isTimePassed(string $name, string $interval): bool
-  {
-    $jobInfo = $this->getJob($name);
-
-    if (empty($jobInfo)) {
-      return true;
-    }
-
-    $difference = $this->getElapsedMinutes($jobInfo['last_run']);
-    $interval = $this->getIntervalInMinutes($interval);
-
-    if ($interval < 1) {
-      return false;
-    }
-
-    return $difference > $interval;
-  }
-
-  /**
-   * Converts a text interval to minutes.
-   */
-  private function getIntervalInMinutes(string $interval): int
-  {
-    $interval = trim(strtolower($interval));
-    $intervalParams = explode(' ', $interval);
-    $intervalParams[0] = intval($intervalParams[0]);
-
-    $intervalInMinutes = 0;
-
-    if (str_contains($intervalParams[1], 'm')) {
-      $intervalInMinutes = $intervalParams[0];
-    } elseif (str_contains($intervalParams[1], 'h')) {
-      $intervalInMinutes = $intervalParams[0] * 60;
-    } elseif (str_contains($intervalParams[1], 'd')) {
-      $intervalInMinutes = $intervalParams[0] * 60 * 24;
-    }
-
-    if ($intervalInMinutes < 1) {
-      $intervalInMinutes = 0;
-    }
-
-    return $intervalInMinutes;
-  }
-
-  /**
-   * Checks how much time has elapsed since a given date.
-   */
-  private function getElapsedMinutes(string $time): int
-  {
-    $timeNow = new DateTime('now');
-    $timeLastRun = new DateTime($time);
-
-    $difference = abs(($timeNow->getTimestamp() - $timeLastRun->getTimestamp()) / 60);
-
-    return (int) $difference;
-  }
-
-  /**
-   * Updates information about a job in the database.
-   */
-  private function updateJob(string $name): void
-  {
-    $query = DB::table('cron')->where(['name' => $name])->get('*')->first();
-
-    if (!isset($query->id)) {
-      DB::table('cron')->insertGetId([
-        'name' => $name,
-        'last_run' => date('Y-m-d H:i:s'),
-        'created_at' => date('Y-m-d H:i:s')
-      ]);
-
-      return;
-    }
-
-    DB::table('cron')->where('id', $query->id)->update([
-      'last_run' => date('Y-m-d H:i:s')
-    ]);
-  }
-
-  /**
-   * Gets job information from the database.
-   */
-  private function getJob(string $name): array
-  {
-    $query = DB::table('cron')->where(['name' => $name])->get('*')->first();
-
-    if (!isset($query->last_run)) {
-      return [];
-    }
-
-    return [
-      'id' => $query->id,
-      'name' => $name,
-      'last_run' => $query->last_run,
-      'created_at' => $query->created_at
-    ];
-  }
-
-  private function getJobsTable(): array
-  {
-    $cronJobs = [];
-    $results = DB::table('cron')->orderBy('id', 'desc')->get('*');
-
-    foreach ($results as $result) {
-      if (isset($result->id)) {
-        $cronJobs[] = [
-          'id' => $result->id ?? 0,
-          'name' => $result->name ?? '__UNKNOWN__',
-          'last_run' => $result->last_run ?? '__UNKNOWN__',
-          'created_at' => $result->created_at ?? '__UNKNOWN__',
-        ];
-      }
-    }
-
-    return $cronJobs;
   }
 
   /**
