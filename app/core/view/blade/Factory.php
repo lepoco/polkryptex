@@ -104,7 +104,7 @@ abstract class Factory extends Renderable
     if (!empty($composer)) {
       $this->factory->composer($view, $composer);
     }
-  
+
     return $this->factory->make($view, $this->data->get(), []);
   }
 

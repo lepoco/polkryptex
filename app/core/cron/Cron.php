@@ -5,6 +5,7 @@ namespace App\Core\Cron;
 use DateTime;
 use App\Core\Utils\Path;
 use App\Core\Facades\{DB, Option};
+use Illuminate\Support\Facades\Date;
 
 /**
  * Responsible for cyclical tasks.
@@ -28,16 +29,22 @@ final class Cron
   /**
    * If enabled, tries to trigger CRON jobs at the end of user action.
    */
-  public static function runByUser(string $lastRun): void
+  public static function runByUser(string|DateTime $lastRun): void
   {
     // TODO: Consider https://www.php.net/pthreads
 
-    $timeLastRun = strtotime($lastRun);
+    if (!empty($lastRun)) {
+      if ($lastRun instanceof DateTime) {
+        $timeLastRun = $lastRun->getTimestamp();
+      } else {
+        $timeLastRun = strtotime($lastRun);
+      }
 
-    $difference = (strtotime("-10 minutes") - $timeLastRun) / 60;
+      $difference = (strtotime("-10 minutes") - $timeLastRun) / 60;
 
-    if ($difference < 15) {
-      return;
+      if ($difference < 15) {
+        return;
+      }
     }
 
     Option::set('cron_last_run', new DateTime('now'));

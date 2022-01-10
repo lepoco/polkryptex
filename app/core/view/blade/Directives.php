@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
  */
 final class Directives
 {
-
   /**
    * Creates url.
    * Triggered once.

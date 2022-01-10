@@ -18,8 +18,6 @@ use App\Core\Facades\Option;
  */
 final class UpdateCurrenciesJob extends Job
 {
-  private const CORELATIONS = [];
-
   public function getName(): string
   {
     return 'UpdateCurrencies';
