@@ -2,8 +2,10 @@
 
 namespace App\Core\Cron;
 
+use App\Core\Facades\Option;
 use App\Core\View\Request;
 use App\Core\Cron\Cron;
+use App\Core\Data\Encryption;
 use App\Core\Http\Status;
 
 /**
@@ -15,19 +17,29 @@ use App\Core\Http\Status;
  */
 final class Endpoint extends Request
 {
+  /**
+   * Gets the request name.
+   */
   public function getAction(): string
   {
     return 'CronEndpoint';
   }
 
+  /**
+   * Processes the query.
+   */
   public function process(): void
   {
+    $this->validateCronKey();
     // TODO: Validate URL key in segment 2
     // https://polkryptex.lan/cron/run/{key}
 
     Cron::run();
   }
 
+  /**
+   * Triggers actions and processes the default response.
+   */
   public function print(): void
   {
     if (method_exists($this, 'process')) {
@@ -38,5 +50,26 @@ final class Endpoint extends Request
     }
 
     $this->finish(self::CODE_SUCCESS);
+  }
+
+  /**
+   * Checks if the CRON key is valid.
+   */
+  private function validateCronKey(): void
+  {
+    $segments = \App\Core\Facades\Request::segments();
+
+    if (!isset($segments[2])) {
+      $this->addContent('error', 'Invalid token');
+      $this->finish(self::ERROR_PASSWORD_INVALID, Status::BAD_REQUEST);
+    }
+
+    $key = strtolower(htmlspecialchars(trim($segments[2])));
+    $cronSecret = strtolower(trim(Option::get('cron_secret', Encryption::salter(8, 'LN'))));
+
+    if ($cronSecret != $key) {
+      $this->addContent('error', 'Invalid token');
+      $this->finish(self::ERROR_PASSWORD_INVALID, Status::BAD_REQUEST);
+    }
   }
 }

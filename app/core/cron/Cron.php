@@ -4,10 +4,10 @@ namespace App\Core\Cron;
 
 use DateTime;
 use App\Core\Utils\Path;
-use App\Core\Facades\DB;
+use App\Core\Facades\{DB, Option};
 
 /**
- * Extends the Repository class containing the application's configuration to the name Config. Uses the Laravel scheme.
+ * Responsible for cyclical tasks.
  *
  * @author  Pomianowski <kontakt@rapiddev.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
@@ -17,20 +17,64 @@ final class Cron
 {
   private const NAMESPACE = '\\App\\Common\\Cron\\';
 
+  /**
+   * Triggers a new instance of the class.
+   */
   public static function run()
   {
-    return new self();
+    return (new self())->invokeJobs();
   }
 
-  public function __construct()
+  /**
+   * Retrieves a list and then tries to run jobs.
+   */
+  public function invokeJobs(): self
   {
-    $jobLists = $this->getJobsLists();
+    $jobLists = $this->getJobsClassList();
 
-    foreach ($jobLists as $key => $job) {
+    foreach ($jobLists as $job) {
       $this->runJob($job);
     }
+
+    Option::set('cron_last_run', new DateTime('now'));
+
+    return $this;
   }
 
+  public function formatName(string $jobName): string
+  {
+    return str_replace('job', '_job', strtolower(trim($jobName)));
+  }
+
+  public function getJobs(): array
+  {
+    $jobsClassList = $this->getJobsClassList();
+    $jobsTable = $this->getJobsTable();
+
+    for ($i = 0; $i < count($jobsTable); $i++) {
+      foreach ($jobsClassList as $singleJobClass) {
+        try {
+          $jobInstance = new $singleJobClass();
+        } catch (\Throwable $th) {
+          continue;
+        }
+
+        $jobParsedName = $this->formatName($jobInstance->getName());
+
+        if ($jobParsedName == $jobsTable[$i]['name']) {
+          $jobsTable[$i]['full_name'] = $jobInstance->getName();
+          $jobsTable[$i]['class_name'] = $singleJobClass;
+          $jobsTable[$i]['interval'] = $jobInstance->getInterval();
+        }
+      }
+    }
+
+    return $jobsTable;
+  }
+
+  /**
+   * Triggers a new job based on its class name.
+   */
   private function runJob(string $jobClassName): bool
   {
     try {
@@ -39,7 +83,7 @@ final class Cron
       return false;
     }
 
-    $jobName = str_replace('job', '_job', strtolower(trim($jobInstance->getName())));
+    $jobName = $this->formatName($jobInstance->getName());
 
     if (!$this->isTimePassed($jobName, $jobInstance->getInterval())) {
       return false;
@@ -52,6 +96,9 @@ final class Cron
     return true;
   }
 
+  /**
+   * Checks whether the selected job should be run.
+   */
   private function isTimePassed(string $name, string $interval): bool
   {
     $jobInfo = $this->getJob($name);
@@ -70,6 +117,9 @@ final class Cron
     return $difference > $interval;
   }
 
+  /**
+   * Converts a text interval to minutes.
+   */
   private function getIntervalInMinutes(string $interval): int
   {
     $interval = trim(strtolower($interval));
@@ -93,6 +143,9 @@ final class Cron
     return $intervalInMinutes;
   }
 
+  /**
+   * Checks how much time has elapsed since a given date.
+   */
   private function getElapsedMinutes(string $time): int
   {
     $timeNow = new DateTime('now');
@@ -103,6 +156,9 @@ final class Cron
     return (int) $difference;
   }
 
+  /**
+   * Updates information about a job in the database.
+   */
   private function updateJob(string $name): void
   {
     $query = DB::table('cron')->where(['name' => $name])->get('*')->first();
@@ -111,19 +167,20 @@ final class Cron
       DB::table('cron')->insertGetId([
         'name' => $name,
         'last_run' => date('Y-m-d H:i:s'),
-        'created_at' => date('Y-m-d H:i:s'),
-        'updated_at' => date('Y-m-d H:i:s')
+        'created_at' => date('Y-m-d H:i:s')
       ]);
 
       return;
     }
 
     DB::table('cron')->where('id', $query->id)->update([
-      'last_run' => date('Y-m-d H:i:s'),
-      'updated_at' => date('Y-m-d H:i:s')
+      'last_run' => date('Y-m-d H:i:s')
     ]);
   }
 
+  /**
+   * Gets job information from the database.
+   */
   private function getJob(string $name): array
   {
     $query = DB::table('cron')->where(['name' => $name])->get('*')->first();
@@ -136,12 +193,33 @@ final class Cron
       'id' => $query->id,
       'name' => $name,
       'last_run' => $query->last_run,
-      'created_at' => $query->created_at,
-      'updated_at' => $query->updated_at
+      'created_at' => $query->created_at
     ];
   }
 
-  private function getJobsLists(): array
+  private function getJobsTable(): array
+  {
+    $cronJobs = [];
+    $results = DB::table('cron')->orderBy('id', 'desc')->get('*');
+
+    foreach ($results as $result) {
+      if (isset($result->id)) {
+        $cronJobs[] = [
+          'id' => $result->id ?? 0,
+          'name' => $result->name ?? '__UNKNOWN__',
+          'last_run' => $result->last_run ?? '__UNKNOWN__',
+          'created_at' => $result->created_at ?? '__UNKNOWN__',
+        ];
+      }
+    }
+
+    return $cronJobs;
+  }
+
+  /**
+   * Gets a list of job classes.
+   */
+  private function getJobsClassList(): array
   {
     $files = array_diff(scandir(Path::getAppPath('common/cron/')), ['.', '..']);
 

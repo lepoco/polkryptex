@@ -16,3 +16,10 @@ Activated: Aktywowany
 Confirmed: Potwierdzony
 Yes: Tak
 No: Nie
+
+# app\common\composers\panel\CronComposer.php
+Name: Nazwa
+Created at: Utworzono
+Last run: Ostatnie uruchomienie
+Full name: Pełna nazwa
+Interval: Interwał

@@ -2,6 +2,8 @@
 
 namespace App\Common\Database;
 
+use DateTime;
+use App\Core\Data\Encryption;
 use App\Core\Facades\{Config, Request, DB};
 
 /**
@@ -208,6 +210,21 @@ final class Prefill
     DB::table('options')->insert([
       'name' => 'mail_smtp_encryption',
       'value' => 'smtps'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'cron_secret',
+      'value' => Encryption::salter(32, 'LN')
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'cron_run_by_user',
+      'value' => 'false'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'cron_last_run',
+      'value' => new DateTime('now')
     ]);
   }
 

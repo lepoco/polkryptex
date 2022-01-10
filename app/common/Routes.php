@@ -193,6 +193,13 @@ final class Routes extends Router
       'redirect_no_permission' => 'dashboard'
     ],
     [
+      'path' => '/panel/cron',
+      'namespace' => 'Panel\\Cron',
+      'require_login' => true,
+      'permission' => 'admin_cron',
+      'redirect_no_permission' => 'dashboard'
+    ],
+    [
       'path' => '/panel/tools',
       'namespace' => 'Panel\\Tools',
       'require_login' => true,
