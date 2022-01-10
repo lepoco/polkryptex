@@ -3,8 +3,11 @@
 namespace App\Common\Composers\Panel;
 
 use FilesystemIterator;
-use App\Core\Facades\{DB, Statistics, Config};
+use App\Core\Facades\{DB, Statistics, Config, Option};
 use App\Core\Auth\{Account, User};
+use App\Core\Cron\Cron;
+use App\Core\Data\Encryption;
+use App\Core\Http\Redirect;
 use App\Core\Utils\Path;
 use App\Core\View\Blade\Composer;
 use Illuminate\View\View;
@@ -20,10 +23,17 @@ final class ToolsComposer extends Composer implements \App\Core\Schema\Composer
 {
   public function compose(View $view): void
   {
+    $cronSecret = strtolower(trim(Option::get('cron_secret', Encryption::salter(8, 'LN'))));
+
     $view->with('user', Account::current());
     $view->with('cached_blade', $this->getCachedBlade());
     $view->with('cached_records', $this->getCachedRecords());
     $view->with('logs_count', $this->getLogsCount());
+
+    $view->with('jobs', $this->getJobs());
+    $view->with('last_run', Option::get('cron_last_run', ''));
+    $view->with('secret', $cronSecret);
+    $view->with('cron_url', Redirect::url('cron/run/' . $cronSecret));
   }
 
 
@@ -48,5 +58,13 @@ final class ToolsComposer extends Composer implements \App\Core\Schema\Composer
     $fileIterator = new FilesystemIterator(Path::getAppPath('storage/logs'), FilesystemIterator::SKIP_DOTS);
 
     return iterator_count($fileIterator);
+  }
+
+  private function getJobs(): array
+  {
+    $cron = new Cron();
+    $cronJobs = $cron->getJobs();
+
+    return $cronJobs;
   }
 }

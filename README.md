@@ -26,6 +26,7 @@ The application uses several solutions to improve work and design. They are nece
 - [x] Statistics module
 - [x] E-mails
 - [x] User wallets
+- [x] CRON jobs
 - [x] Transactions module
 - [ ] Internal payment system combined with the account balance of user accounts
 - [x] Top-up module

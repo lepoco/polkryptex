@@ -226,6 +226,21 @@ final class Prefill
       'name' => 'cron_last_run',
       'value' => new DateTime('now')
     ]);
+
+    DB::table('options')->insert([
+      'name' => 'currencyconverter_api_key',
+      'value' => new DateTime('now')
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'coin_api_key',
+      'value' => new DateTime('now')
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'openexchangerates_api_key',
+      'value' => new DateTime('now')
+    ]);
   }
 
   private static function fillCurrencies(): void

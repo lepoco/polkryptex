@@ -8,6 +8,7 @@ use App\Core\Facades\App;
 use App\Core\Email\Mailer;
 use App\Core\i18n\Translate;
 use App\Core\Cache\Redis;
+use App\Core\Cron\Cron;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Database\Capsule\Manager;
@@ -164,6 +165,8 @@ abstract class Bootstrap implements \App\Core\Schema\App
    */
   public function close(bool $exit = true): void
   {
+    $this->checkCron();
+
     $this->session->put('_rendered', time());
 
     $this->session->save();
@@ -304,6 +307,15 @@ abstract class Bootstrap implements \App\Core\Schema\App
     $this->rebind();
 
     \Illuminate\Support\Facades\Facade::setFacadeApplication($this->container);
+
+    return $this;
+  }
+
+  final protected function checkCron(): self
+  {
+    if ($this->options->get('cron_run_by_user', false)) {
+      Cron::runByUser($this->options->get('cron_last_run', ''));
+    }
 
     return $this;
   }

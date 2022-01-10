@@ -152,6 +152,32 @@
         <hr>
       </div>
 
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="currencyconverter_api_key" placeholder="@translate('CurrencyConverter API Key')"
+            value="@option('currencyconverter_api_key', '')">
+          <label for="currencyconverter_api_key">@translate('CurrencyConverter API Key')</label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="coin_api_key" placeholder="@translate('Coin API Key')"
+            value="@option('coin_api_key', '')">
+          <label for="coin_api_key">@translate('Coin API Key')</label>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="openexchangerates_api_key" placeholder="@translate('Open Exchange Rates Key')"
+            value="@option('openexchangerates_api_key', '')">
+          <label for="openexchangerates_api_key">@translate('Open Exchange Rates Key')</label>
+        </div>
+      </div>
+
+      <div class="col-12 -mb-1 -reveal">
+        <hr>
+      </div>
+
       <div class="col-12">
         <div class="form-check -reveal">
           <input {{ \App\Core\Facades\Option::get('service_worker_enabled', false) ? 'checked="checked"' : '' }}
@@ -179,6 +205,13 @@
             class="form-check-input" id="mail_smtp_auth" name="mail_smtp_auth" name="mail_smtp_auth"
             value="mail_smtp_auth">
           <label for="mail_smtp_auth">@translate('Enable SMTP Auth')</label>
+        </div>
+
+        <div class="form-check -reveal -pb-2">
+          <input {{ \App\Core\Facades\Option::get('cron_run_by_user', false) ? 'checked="checked"' : '' }} type="checkbox"
+            class="form-check-input" id="cron_run_by_user" name="cron_run_by_user" name="cron_run_by_user"
+            value="cron_run_by_user">
+          <label for="cron_run_by_user">@translate('Trigger CRON jobs by user visit.')</label>
         </div>
       </div>
 

@@ -4,6 +4,10 @@ namespace App\Common\Cron;
 
 use App\Core\Cron\Job;
 use App\Common\Money\Crypto\CoinApi;
+use App\Common\Money\CurrenciesRepository;
+use App\Common\Money\Currency;
+use App\Core\Facades\Config;
+use App\Core\Facades\Option;
 
 /**
  * CRON job for updating crypto.
@@ -14,6 +18,10 @@ use App\Common\Money\Crypto\CoinApi;
  */
 final class UpdateCryptoJob extends Job
 {
+  private const ASSET_CORELATIONS = [
+    'BTC' => 'BTC'
+  ];
+
   public function getName(): string
   {
     return 'UpdateCrypto';
@@ -21,13 +29,50 @@ final class UpdateCryptoJob extends Job
 
   public function getInterval(): string
   {
-    return '1 HOUR';
+    return '8 HOURS';
   }
 
   public function process(): void
   {
-    // https://polkryptex.lan/cron/run/_SECRET
-    $coinApi = new CoinApi('833FC560-3E48-4BAD-ABA9-4A3BE958E6CD');
-    // Get info from crypto currencies
+    $coinApiKey = Option::get('coin_api_key', '');
+    $cryptoCurrencies = $this->getInternalCrypto();
+    $coinApi = new CoinApi($coinApiKey);
+
+    $coinApiResponse = $coinApi->getExchangeRates('USD');
+
+    if (!isset($coinApiResponse['rates'])) {
+      return;
+    }
+
+    foreach ($cryptoCurrencies as $currency) {
+      $this->updateCurrency($currency, $this->getRateFromCoinApi($currency->getIsoCode(), $coinApiResponse['rates']));
+    }
+  }
+
+  private function getRateFromCoinApi(string $currency, array $rates): float
+  {
+    $key = array_search($currency, array_column($rates, 'asset_id_quote'));
+
+    if (!isset($rates[$key])) {
+      return 0;
+    }
+
+    return $rates[$key]['rate'] ?? 0;
+  }
+
+  private function updateCurrency(Currency $currency, float $rate): void
+  {
+    if ($rate <= 0) {
+      return;
+    }
+
+    $currency->updateRate($rate);
+
+    CurrenciesRepository::addStock($currency->id(), $rate);
+  }
+
+  private function getInternalCrypto(): array
+  {
+    return CurrenciesRepository::getAll(['is_crypto' => true]);
   }
 }

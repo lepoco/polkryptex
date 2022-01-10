@@ -20,9 +20,27 @@ final class Cron
   /**
    * Triggers a new instance of the class.
    */
-  public static function run()
+  public static function run(): self
   {
     return (new self())->invokeJobs();
+  }
+
+  /**
+   * If enabled, tries to trigger CRON jobs at the end of user action.
+   */
+  public static function runByUser(string $lastRun): void
+  {
+    $timeLastRun = strtotime($lastRun);
+
+    $difference = (strtotime("-10 minutes") - $timeLastRun) / 60;
+
+    if ($difference < 15) {
+      return;
+    }
+
+    Option::set('cron_last_run', new DateTime('now'));
+
+    (new self())->invokeJobs();
   }
 
   /**

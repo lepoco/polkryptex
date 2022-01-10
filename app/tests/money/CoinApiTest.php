@@ -6,6 +6,7 @@ use DateTime;
 use App\Common\Money\Crypto\CoinApi;
 
 beforeEach(function () {
+  //$coinApiKey = Config::get('api.coin', '');
   $apiKey = "";
 
   $this->coinApi = new CoinApi($apiKey);

@@ -16,10 +16,14 @@ final class CurrenciesRepository
   /**
    * Retrieves all currencies from the database.
    */
-  public static function getAll(): array
+  public static function getAll(array $conditions = []): array
   {
     $currencies = [];
-    $dbCurrencies = DB::table('currencies')->get()->all();
+    if (!empty($conditions)) {
+      $dbCurrencies = DB::table('currencies')->where($conditions)->get()->all();
+    } else {
+      $dbCurrencies = DB::table('currencies')->get()->all();
+    }
 
     foreach ($dbCurrencies as $currency) {
       if (!isset($currency->id) || !isset($currency->rate) || !isset($currency->name)) {
@@ -45,6 +49,15 @@ final class CurrenciesRepository
     });
 
     return new Currency($currencyId);
+  }
+
+  public static function addStock(int $currencyId, float $rate): bool
+  {
+    return DB::table('currencies_stock')->insert([
+      'rate' => $rate,
+      'currency_id' => $currencyId,
+      'created_at' => date('Y-m-d H:i:s'),
+    ]);
   }
 
   private static function fetchFromObject(object $db): Currency

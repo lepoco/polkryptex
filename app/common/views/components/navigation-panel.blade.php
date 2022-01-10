@@ -34,10 +34,6 @@
             href="@url('panel/users')">@translate('Users')</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link{{ $pagenow === 'panel.cron' ? ' active' : '' }}"
-            href="@url('panel/cron')">@translate('CRON')</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link{{ $pagenow === 'panel.settings' ? ' active' : '' }}"
             href="@url('panel/settings')">@translate('Settings')</a>
         </li>

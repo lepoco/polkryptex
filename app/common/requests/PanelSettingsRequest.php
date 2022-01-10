@@ -39,7 +39,9 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
       'mail_sendname',
       'mail_sendfrom',
       'mail_replyto',
-      'mail_legal'
+      'mail_legal',
+      'currencyconverter_api_key',
+      'coin_api_key'
     ]);
 
     $this->isEmpty([
@@ -67,7 +69,10 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
       ['mail_sendname', self::SANITIZE_STRING],
       ['mail_sendfrom', FILTER_VALIDATE_EMAIL],
       ['mail_replyto', FILTER_VALIDATE_EMAIL],
-      ['mail_legal', self::SANITIZE_STRING]
+      ['mail_legal', self::SANITIZE_STRING],
+      ['currencyconverter_api_key', self::SANITIZE_STRING],
+      ['coin_api_key', self::SANITIZE_STRING],
+      ['openexchangerates_api_key', self::SANITIZE_STRING]
     ]);
 
     $user = Account::current();
@@ -95,6 +100,9 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
     Option::set('mail_sendfrom', $this->get('mail_sendfrom'));
     Option::set('mail_replyto', $this->get('mail_replyto'));
     Option::set('mail_legal', $this->get('mail_legal'));
+    Option::set('currencyconverter_api_key', $this->get('currencyconverter_api_key'));
+    Option::set('coin_api_key', $this->get('coin_api_key'));
+    Option::set('openexchangerates_api_key', $this->get('openexchangerates_api_key'));
 
     Option::set('mail_smtp_encryption', $this->get('mail_smtp_encryption'));
 
@@ -108,6 +116,7 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
 
     Option::set('mail_smtp_port', $this->optional('mail_smtp_port'));
 
+    Option::set('cron_run_by_user', $this->isTrue('cron_run_by_user'));
     Option::set('service_worker_enabled', $this->isTrue('service_worker_enabled'));
     Option::set('stastistics_keep_ip', $this->isTrue('stastistics_keep_ip'));
     Option::set('mail_smtp_enabled', $this->isTrue('mail_smtp_enabled'));

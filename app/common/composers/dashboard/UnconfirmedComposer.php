@@ -53,6 +53,5 @@ final class UnconfirmedComposer extends Composer implements \App\Core\Schema\Com
         'email' => urlencode($user->getEmail())
       ])
     ]);
-    ray('resend');
   }
 }

@@ -65,6 +65,18 @@ final class Currency extends \App\Core\Data\DatabaseObject
       ->setId($properties['id'] ?? 0);
   }
 
+  public function updateRate(float $rate): bool
+  {
+    if ($this->getId() < 1) {
+      return false;
+    }
+
+    return DB::table('currencies')->where('id', $this->getId())->update([
+      'rate' => $rate,
+      'updated_at' => date('Y-m-d H:i:s')
+    ]);
+  }
+
   private function fetch(int $id): void
   {
     if (0 === $id) {
