@@ -28,7 +28,19 @@ final class TransactionsRepository
 
   public static function transfer(Wallet $from, Wallet $to, float $amount): bool
   {
-    return false;
+    $fromStartingBalance = $from->getBalance();
+    $toStartingBalance = $to->getBalance();
+
+    $fromCurrencyRate = $from->getCurrency()->getRate();
+    $toCurrencyRate = $to->getCurrency()->getRate();
+
+    $fromNewBalance = $fromStartingBalance - $amount;
+    $toNewBalance = $toStartingBalance + (($amount * $fromCurrencyRate) / $toCurrencyRate);
+
+    $from->updateBalance($fromNewBalance);
+    $to->updateBalance($toNewBalance);
+
+    return self::makeTransfer($from, $to, ($amount * $fromCurrencyRate));
   }
 
   public static function exchange(Wallet $from, Wallet $to, float $amount, float $rate): bool
@@ -177,6 +189,35 @@ final class TransactionsRepository
       'uuid' => Str::uuid(),
       'method_id' => self::getMethodId($method),
       'type_id' => self::getTypeId('topup'),
+      'created_at' => date('Y-m-d H:i:s')
+    ]);
+  }
+
+  private static function makeTransfer(Wallet $fromWallet, Wallet $toWallet, float $amount): bool
+  {
+    DB::table('transactions')->insert([
+      'user_id' => $fromWallet->getUserId(),
+      'wallet_from' => $fromWallet->getId(),
+      'wallet_to' => $toWallet->getId(),
+      'amount' => $amount,
+      'is_topup' => false,
+      'rate' => $fromWallet->getCurrency()->getRate(),
+      'uuid' => Str::uuid(),
+      'type_id' => self::getTypeId('transfer'),
+      'method_id' => self::getMethodId('internal'),
+      'created_at' => date('Y-m-d H:i:s')
+    ]);
+
+    return DB::table('transactions')->insert([
+      'user_id' => $toWallet->getUserId(),
+      'wallet_from' => $fromWallet->getId(),
+      'wallet_to' => $toWallet->getId(),
+      'amount' => $amount,
+      'is_topup' => false,
+      'rate' => $toWallet->getCurrency()->getRate(),
+      'uuid' => Str::uuid(),
+      'type_id' => self::getTypeId('transfer'),
+      'method_id' => self::getMethodId('internal'),
       'created_at' => date('Y-m-d H:i:s')
     ]);
   }

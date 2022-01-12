@@ -178,6 +178,12 @@
         <hr>
       </div>
 
+      //redis
+
+      <div class="col-12 -mb-1 -reveal">
+        <hr>
+      </div>
+
       <div class="col-12">
         <div class="form-check -reveal">
           <input {{ \App\Core\Facades\Option::get('service_worker_enabled', false) ? 'checked="checked"' : '' }}

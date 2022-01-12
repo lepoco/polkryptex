@@ -1,0 +1,40 @@
+.user-card {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 2rem;
+  background-color: $c-light;
+
+  .profile {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    span {
+      line-height: 1.8rem;
+      display: block;
+    }
+
+    img {
+      width: 4rem;
+      height: 4rem;
+      margin-right: 2rem;
+      border-radius: 2rem;
+      object-fit: cover;
+    }
+  }
+
+  .close {
+    margin-left: 2rem;
+    cursor: pointer;
+
+    img {
+      width: 1.4rem;
+    }
+  }
+}

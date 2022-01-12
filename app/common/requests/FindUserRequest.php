@@ -70,7 +70,7 @@ final class FindUserRequest extends Request implements \App\Core\Schema\Request
 
     $this->addContent('user_name', $foundUser->getName());
     $this->addContent('user_display_name', $foundUser->getDisplayName());
-    $this->addContent('user_image', $foundUser->getImage());
+    $this->addContent('user_image', !empty($foundUser->getImage(false)) ? $foundUser->getImage(true) : '');
 
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }

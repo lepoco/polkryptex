@@ -21,14 +21,14 @@ final class PaymentsComposer extends Composer implements \App\Core\Schema\Compos
   public function compose(View $view): void
   {
     $user = Account::current();
-    $payments = $this->getPayments($user);
+    $transactions = $this->getTransactions($user);
 
     $view->with('user', $user);
-    $view->with('payments', $payments);
-    $view->with('has_payments', !empty($payments));
+    $view->with('recent_transactions', $transactions);
+    $view->with('has_transactions', !empty($transactions));
   }
 
-  private function getPayments(User $user): array
+  private function getTransactions(User $user): array
   {
     return TransactionsRepository::getUserTransactions('transfer', 5, 0);
   }

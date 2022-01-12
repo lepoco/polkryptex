@@ -12,6 +12,10 @@ FormRequest.register("#panelAddUser", function (status: string, response: any) {
   if ("S01" === response.status) {
     let fields = document.querySelectorAll("input");
     fields.forEach(function (field: HTMLInputElement) {
+      if(field.name === 'nonce' || field.name === 'action' || field.name === 'action') {
+        return;
+      }
+
       field.value = "";
     });
   }

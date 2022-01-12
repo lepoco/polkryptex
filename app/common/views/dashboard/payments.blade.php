@@ -24,27 +24,24 @@
         </div>
       </div>
     </div>
-    <div class="col-12">
-      @isset($payments)
+    
+    <div class="col-12 -reveal">
+      @if($has_transactions ?? false)
 
-      @foreach($payments as $paymentGroup)
       <div class="-w-100 -flex -flex-beetween -mt-4 -mb-3">
-        <strong class="-color-secondary">{{ $paymentGroup['date'] ?? '' }}</strong>
+        <strong class="-color-secondary">@translate('Recent transations')</strong>
+        <a href="@url('dashboard/transactions')">@translate('See all')</a>
       </div>
+
+      @isset($recent_transactions)
       <div class="transactions">
-
-        @isset($paymentGroup['transactions'])
-        <div class="transactions">
-          @foreach ($paymentGroup['transactions'] as $transaction)
-          @include('components.transaction', ['transaction' => $transaction])
-          @endforeach
-        </div>
-        @endisset
-
+        @foreach ($recent_transactions as $transaction)
+        @include('components.transaction', ['transaction' => $transaction])
+        @endforeach
       </div>
-      @endforeach
-
       @endisset
+
+      @endif
     </div>
   </div>
 </div>
