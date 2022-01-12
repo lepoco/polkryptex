@@ -55,8 +55,8 @@ final class App extends Bootstrap implements \App\Core\Schema\App
                 'engine' => null,
                 'options' => [
                   // TODO: This option is terrible, but our current hosting requires it.
-                  \PDO::ATTR_EMULATE_PREPARES => true,
-                  \PDO::MYSQL_ATTR_COMPRESS => true
+                  /*\PDO::ATTR_EMULATE_PREPARES*/20 => true,
+                  /*\PDO::MYSQL_ATTR_COMPRESS*/1003 => true
                 ]
               ]
             ]

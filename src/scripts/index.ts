@@ -1,6 +1,5 @@
 /**
- * Polkryptex
- * https://polkryptex.pl/
+ * Index
  *
  * @author  Pomianowski <support@polkryptex.pl>
  * @module  Index

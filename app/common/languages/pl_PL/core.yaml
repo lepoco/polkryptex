@@ -16,11 +16,26 @@ Settings: Ustawienia
 
 # app\common\views\components\expanded-footer.blade.php
 Website Terms: Regulamin
+Carriers: Kariery
 Legal Agreements: Umowy Prawne
 Privacy Policy: Polityka Prywatności
 Source Code: Kod źródłowy
 Licenses: Licencje
 Budget & Analytics: Budżet i Analityka
+Company: Firma
+Help: Pomoc
+Rewards: Nagrody
+Money transfers: Transfery środków
+About us: O nas
+Help Centre: Centrum Pomocy
+Security: Bezpieczeństwo
+Developer APIs: API dla deweloperów
+Credit cards: Karty
+Crypto: Krypto
+Accept: Akceptuj
+Manage cookies: Zarządzaj ciasteczkami
+Learn more: Dowiedz się więcej
+We use 🍪 cookies to personalize the content you see on Polkryptex.: Używamy 🍪 ciasteczek aby personalizować treści, które oglądasz na Polkryptex.
 
 # app\common\views\not-found.blade.php
 Not found: Nie znaleziono

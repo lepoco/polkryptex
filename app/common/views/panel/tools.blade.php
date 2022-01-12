@@ -72,11 +72,11 @@
 
     <div class="col-12 -reveal">
       <strong>Endpoint: </strong>
-      <a href="{{$cron_url ?? '#'}}" target="_blank" rel="noopener">{{$cron_url ?? '#'}}</a>
+      <a href="{{$cron_url ?? '#'}}" target="_blank" rel="noopener">{{ $cron_url ?? '#' }}</a>
     </div>
 
     <div class="col-12 -reveal">
-      <strong>@translate('Last run'):</strong> {{$last_run ?? '?'}} UTC
+      <strong>@translate('Last run'):</strong> {{ $last_run ?? '?' }} UTC
     </div>
 
     <div class="col-12 -reveal">

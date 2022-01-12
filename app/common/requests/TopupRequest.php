@@ -3,7 +3,7 @@
 namespace App\Common\Requests;
 
 use App\Common\Money\{WalletsRepository, TransactionsRepository, PaymentMethods};
-use App\Core\Facades\{Translate, Statistics};
+use App\Core\Facades\{Cache, Translate, Statistics};
 use App\Core\View\Request;
 use App\Core\Http\{Status, Redirect};
 use App\Core\Auth\Account;
@@ -125,6 +125,8 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
     }
 
     Statistics::push(\App\Core\Data\Statistics::TYPE_TRANSACTION, 'TRANSACTION:Topup');
+
+    Cache::forget('transactions.list.off0.user_' . $user->getId());
 
     $this->addContent('redirect', Redirect::url('dashboard'));
     $this->finish(self::CODE_SUCCESS, Status::OK);

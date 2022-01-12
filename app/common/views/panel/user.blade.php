@@ -75,13 +75,13 @@
       <div class="col-12 col-lg-4 -mt-2 -reveal">
         <strong>@translate('Is confirmed')</strong>
         <br>
-        {{ $user->isConfirmed() ? 'Yes' : 'No' }}
+        {{ $user->isConfirmed() ? \App\Core\Facades\Translate::string('Yes') : \App\Core\Facades\Translate::string('No') }}
       </div>
 
       <div class="col-12 col-lg-4 -mt-2 -reveal">
         <strong>@translate('Is activated')</strong>
         <br>
-        {{ $user->isActive() ? 'Yes' : 'No' }}
+        {{ $user->isActive() ? \App\Core\Facades\Translate::string('Yes') : \App\Core\Facades\Translate::string('No') }}
       </div>
 
       <div class="col-12 col-lg-4 -mt-2 -reveal">

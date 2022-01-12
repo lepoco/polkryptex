@@ -5,7 +5,7 @@ Analyst: Analityk
 Admin: Administrator
 Role: Rola
 Add user: Dodaj użytkownika
-Confirm password: Potwierdz hasło
+Confirm password: Potwierdź hasło
 Go back to users: Wróć do listy
 
 # app\common\views\panel\users.blade.php
@@ -17,9 +17,29 @@ Confirmed: Potwierdzony
 Yes: Tak
 No: Nie
 
+# app\common\views\panel\user.blade.php
+Is confirmed: Czy potwierdzony
+Is activated: Czy aktywowany
+Timezone: Strefa czasowa
+Confirm: Potwierdź
+Block: Zablokuj
+Delete: Usuń
+
 # app\common\composers\panel\CronComposer.php
 Name: Nazwa
 Created at: Utworzono
 Last run: Ostatnie uruchomienie
 Full name: Pełna nazwa
 Interval: Interwał
+
+# app\common\views\panel\statistics.blade.php
+Transactions today: Transakcji dzisiaj
+Requests today: Zapytań dzisiaj
+
+# app\common\views\panel\tools.blade.php
+Cached views: Zapisane widoki
+Cache records: Zapisy w cache
+Log files: Pliki logów
+Flush blade views: Wyczyść widoki Blade
+Flush logs: Wyczyść logi
+Flush cache: Wyczyść cache

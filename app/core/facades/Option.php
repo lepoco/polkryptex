@@ -12,7 +12,7 @@ use App\Core\Facades\Abstract\Facade;
  * @since   1.1.0
  *
  * @method static mixed remember(string $key, \Closure $callback) Get an option from the database, or store the default value.
- * @method static mixed get(string $key, mixed $default = '') Get option from the database.
+ * @method static mixed get(string $key, mixed $default = '', $cache = true) Get option from the database.
  * @method static mixed set(string $key, mixed $value) Set and save option in the database.
  */
 final class Option extends Facade

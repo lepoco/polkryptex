@@ -36,9 +36,7 @@ final class Statistics
       return;
     }
 
-    // TODO: FIX CACHE
-    $this->fetchTags(DB::table('statistics_tags')->get()->all() ?? []);
-    $this->fetchTypes(DB::table('statistics_types')->get()->all() ?? []);
+    $this->fetch();
   }
 
   /**
@@ -163,6 +161,18 @@ final class Statistics
     ];
 
     return $insertedId;
+  }
+
+  private function fetch(): void
+  {
+    // TODO: This is Redis intensive, large array
+
+    $tags = Cache::remember('statistics.tags_data', 86400, fn () => DB::table('statistics_tags')->get(['id', 'name'])->all() ?? []);
+
+    $types = Cache::remember('statistics.types_data', 86400, fn () => DB::table('statistics_types')->get(['id', 'name'])->all() ?? []);
+
+    $this->fetchTags($tags);
+    $this->fetchTypes($types);
   }
 
   private function fetchTags(array $tags = []): self

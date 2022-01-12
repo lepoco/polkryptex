@@ -168,12 +168,12 @@ export default class FormRequest {
     });
   }
 
-  static urlEncode(fd: any) {
-    var s = "";
+  static urlEncode(formData: any) {
+    let s = "";
     function encode(s: any) {
       return encodeURIComponent(s).replace(/%20/g, "+");
     }
-    for (var pair of fd.entries()) {
+    for (let pair of formData.entries()) {
       if (typeof pair[1] == "string") {
         s += (s ? "&" : "") + encode(pair[0]) + "=" + encode(pair[1]);
       }

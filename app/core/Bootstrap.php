@@ -86,13 +86,13 @@ abstract class Bootstrap implements \App\Core\Schema\App
   {
     if (!$soft) {
       $this
-        ->setCache(new Redis())
         ->setSession(new Session());
     }
 
     $this
       ->setDatabase(new Manager($this->container))
-      ->setOptions(new Options());
+      ->setOptions(new Options())
+      ->setCache(new Redis());
 
     $this->isConnected(true);
 

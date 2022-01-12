@@ -21,6 +21,10 @@ final class CardRepository
   public static function getUserCards(User $user): array
   {
     $userCards = [];
+
+    // $dbCards = Cache::remember('user_cards.'.$user-id(), 3600, fn() => {
+    // });
+
     $dbCards = DB::table('user_cards')->where(['user_id' => $user->id()])->get()->all();
 
     foreach ($dbCards as $singleCardObject) {

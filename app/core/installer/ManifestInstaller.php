@@ -8,7 +8,7 @@ use App\Core\Data\Encryption;
 use App\Core\Utils\Path;
 
 /**
- * Automatic user installer.
+ * Automatic manifest creator.
  *
  * @author  Pomianowski <support@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
@@ -23,7 +23,7 @@ final class ManifestInstaller implements InstallerComponent
   private ErrorBag $errorBag;
 
   /**
-   * Creates a new user installer instance and initializes internal classes.
+   * Creates a new manifest creator instance and initializes internal classes.
    */
   public function __construct()
   {

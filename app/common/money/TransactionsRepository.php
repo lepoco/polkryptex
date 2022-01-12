@@ -38,7 +38,7 @@ final class TransactionsRepository
 
   public static function getBy(string $key, mixed $value): ?Transaction
   {
-    $transactionId = Cache::remember('transaction.getBy.' . $key . '.' . crc32($value), 120, function () use ($key, $value) {
+    $transactionId = Cache::remember('transaction.getBy.' . $key . '.' . crc32($value), 3600, function () use ($key, $value) {
       $query = DB::table('transactions')->where($key, 'LIKE', $value)->get(['id'])->first();
 
       if (!isset($query->id)) {
@@ -75,6 +75,11 @@ final class TransactionsRepository
       $arguments['type_id'] = self::getTypeId($type);
     }
 
+    // $results = Cache::remember(
+    //   'transactions.list.off' . $offset . '.user_' . $user->getId(),
+    //   120,
+    //   fn () => DB::table('transactions')->orderBy('id', 'desc')->where($arguments)->skip($offset)->take($limit)->get(['id'])
+    // );
     $results = DB::table('transactions')->orderBy('id', 'desc')->where($arguments)->skip($offset)->take($limit)->get(['id']);
 
     foreach ($results as $result) {

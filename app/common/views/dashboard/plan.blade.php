@@ -16,37 +16,51 @@
       <span>@translate('monthly fee')</span>
     </div>
 
+    <div class="-pb-1 -reveal">
+      <strong>@translate('Plan')</strong>
+    </div>
+
     <div class="floating-radio -split">
       <label>
-        <input type="radio" name="plan_tier" data-price="9,90" value="standard" checked="checked" />
+        <input type="radio" name="plan_tier" data-price="free" data-display="free" data-name="@translate('Standard')" value="standard" checked="checked" />
         <div class="floating-radio__label -reveal">
-          Standard
+          <p class="-m-0 -p-0"><strong>@translate('Standard')</strong></p>
+          <small>free</small>
         </div>
       </label>
 
       <label>
-        <input type="radio" name="plan_tier" data-price="16,90" value="plus" />
+        <input type="radio" name="plan_tier" data-price="14.90" data-display="$ 14,90" data-name="@translate('Plus')" value="plus" />
         <div class="floating-radio__label -reveal">
-          Plus
+          <p class="-m-0 -p-0"><strong>@translate('Plus')</strong></p>
+          <small>$ 14,90 / month</small>
         </div>
       </label>
 
       <label>
-        <input type="radio" name="plan_tier" data-price="24,90" value="premium" />
+        <input type="radio" name="plan_tier" data-price="29.90" data-display="$ 29,90" data-name="@translate('Premium')" value="premium" />
         <div class="floating-radio__label -reveal">
-          Premium
+          <p class="-m-0 -p-0"><strong>@translate('Premium')</strong></p>
+          <small>$ 29,90 / month</small>
         </div>
       </label>
 
       <label>
-        <input type="radio" name="plan_tier" data-price="39,90" value="trader" />
+        <input type="radio" name="plan_tier" data-price="49.90" data-display="$ 49,90" data-name="@translate('Trader')" value="trader" />
         <div class="floating-radio__label -reveal">
-          Trader
+          <p class="-m-0 -p-0"><strong>@translate('Trader')</strong></p>
+          <small>$ 49,90 / month</small>
         </div>
       </label>
     </div>
 
-    <hr>
+    <div class="-reveal">
+      <hr>
+    </div>
+
+    <div class="-pb-1 -reveal">
+      <strong>@translate('Payment method')</strong>
+    </div>
 
     <div class="floating-radio -split">
       @foreach ($user_cards as $user_card)
@@ -74,8 +88,7 @@
     <div class="form-check -reveal -mb-2">
       <input type="checkbox" class="form-check-input" id="accept_auto_withdraw" name="accept_auto_withdraw" name="subscribe"
         value="accept_auto_withdraw">
-      <label for="accept_auto_withdraw">@translate('I consent to the automatic withdrawal of funds from my
-        account.')</label>
+      <label for="accept_auto_withdraw">@translate('I consent to the automatic withdrawal of funds from my account.')</label>
     </div>
 
     <div class="-pb-1 -reveal">

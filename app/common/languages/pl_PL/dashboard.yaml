@@ -77,8 +77,12 @@ Top-up: Doładowanie
 My plan: Mój plan
 
 # app\common\views\dashboard\plan.blade.php
+free: darmowy
+Free: Darmowy
 Subscription plan: Plan subskrypcyjny
 I accept the terms and conditions related to subscription.: Akceptuję regulamin związany z subskrypcją.
 monthly fee: opłata miesięczna
 Activate: Aktywuj
 I consent to the automatic withdrawal of funds from my account.: Wyrażam zgodę na automatyczne pobieranie środków z mojego konta.
+Add new card: Dodaj nową kartę
+Payment method: Metoda płatności

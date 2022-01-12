@@ -11,7 +11,7 @@ use App\Core\Data\Encryption;
 /**
  * Action triggered during signing in.
  *
- * @author  Kujawski <szymonspam@wp.pl>
+ * @author  Lidzbarski <pawel@polkryptex.pl>
  * @license GPL-3.0 https://www.gnu.org/licenses/gpl-3.0.txt
  * @since   1.1.0
  */

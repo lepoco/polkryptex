@@ -25,24 +25,16 @@
         </div>
 
         <div class="floating-input -reveal">
-          <input class="floating-input__field" type="number" min="5" max="1000" name="amount"
-            placeholder="@translate('Amount')" value="@option('amount', '')">
-          <label for="amount">@translate('Amount')</label>
+          <input class="floating-input__field payee" type="text" placeholder="@translate('Payee')" name="payee" data-id="{{ $user->getId() }}" data-action="FindUser" data-nonce="@nonce('finduser')">
+          <label for="payee">@translate('Payee')</label>
         </div>
 
         <hr>
 
-        <div class="floating-search -reveal">
-          <select data-placeholder="Search 123" name="payee">
-            <option disabled readonly selected>Select user</option>
-            <option value="1">First option</option>
-            <option value="2">Second option</option>
-            <option value="3">Third option</option>
-            <option value="4">Fourth option</option>
-            <option value="5">Fifth option</option>
-            <option value="6">Sixth option</option>
-          </select>
-          <label for="payee">@translate('Payee')</label>
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="number" min="5" max="1000" name="amount"
+            placeholder="@translate('Amount')" value="@option('amount', '')">
+          <label for="amount">@translate('Amount')</label>
         </div>
 
         <div class="-reveal -pb-1">

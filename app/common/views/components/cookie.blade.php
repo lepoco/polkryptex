@@ -3,7 +3,7 @@
     <div class="container">
       <div class="cookie__body -reveal">
         <div>
-          <span>@translate('We use  🍪 cookies to personalize the content you see on Polkryptex.') <a
+          <span>@translate('We use 🍪 cookies to personalize the content you see on Polkryptex.') <a
               href="@url('privacy')">@translate('Learn more')</a></span>
         </div>
         <div class="-flex-center">

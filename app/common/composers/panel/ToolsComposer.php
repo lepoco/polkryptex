@@ -10,6 +10,7 @@ use App\Core\Data\Encryption;
 use App\Core\Http\Redirect;
 use App\Core\Utils\Path;
 use App\Core\View\Blade\Composer;
+use DateTime;
 use Illuminate\View\View;
 
 /**
@@ -31,9 +32,11 @@ final class ToolsComposer extends Composer implements \App\Core\Schema\Composer
     $view->with('logs_count', $this->getLogsCount());
 
     $view->with('jobs', $this->getJobs());
-    $view->with('last_run', Option::get('cron_last_run', ''));
     $view->with('secret', $cronSecret);
     $view->with('cron_url', Redirect::url('cron/run/' . $cronSecret));
+
+    $cronLastRun = Option::get('cron_last_run', '');
+    $view->with('last_run', $cronLastRun instanceof DateTime ? $cronLastRun->format('Y-m-d H:i:s') : $cronLastRun);
   }
 
 

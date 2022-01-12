@@ -31,8 +31,6 @@ final class Endpoint extends Request
   public function process(): void
   {
     $this->validateCronKey();
-    // TODO: Validate URL key in segment 2
-    // https://polkryptex.lan/cron/run/{key}
 
     Cron::run();
   }
@@ -64,7 +62,7 @@ final class Endpoint extends Request
       $this->finish(self::ERROR_PASSWORD_INVALID, Status::BAD_REQUEST);
     }
 
-    $key = strtolower(htmlspecialchars(trim($segments[2])));
+    $key = strtolower(htmlspecialchars(trim((string)$segments[2])));
     $cronSecret = strtolower(trim(Option::get('cron_secret', Encryption::salter(8, 'LN'))));
 
     if ($cronSecret != $key) {

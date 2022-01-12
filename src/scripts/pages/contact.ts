@@ -3,7 +3,7 @@ import FormRequest from "./../common/formrequest";
 /**
  * Page controller for contact.
  *
- * @author  Kujawski <szymonspam@wp.pl>
+ * @author  Kujawski <szymon@polkryptex.pl>
  * @module  Pages/Contact
  * @license GPL-3.0
  * @since   1.1.0

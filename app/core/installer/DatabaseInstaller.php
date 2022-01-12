@@ -86,8 +86,8 @@ final class DatabaseInstaller implements InstallerComponent
   {
     try {
       Config::set('database.connections.default.options', [
-        \PDO::ATTR_EMULATE_PREPARES => true,
-        \PDO::MYSQL_ATTR_COMPRESS => true
+        /*\PDO::ATTR_EMULATE_PREPARES*/20 => true,
+        /*\PDO::MYSQL_ATTR_COMPRESS*/1003 => true
       ]);
 
       App::rebind('config');

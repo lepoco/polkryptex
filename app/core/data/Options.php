@@ -26,16 +26,20 @@ final class Options
     return $db;
   }
 
-  public function get(string $name, mixed $default = null): mixed
+  public function get(string $name, mixed $default = null, bool $cache = true): mixed
   {
-    if (Cache::has('options.' . $name)) {
-      return Cache::get('options.' . $name, 'CACHE_ERROR');
+    if ($cache) {
+      if (Cache::has('options.' . $name)) {
+        return Cache::get('options.' . $name, 'CACHE_ERROR');
+      }
     }
 
     $db = $this->getFromDatabase($name, $default);
 
     // TODO: This is where we may have problems, we can do FORCE REFRESH or something
-    Cache::put('options.' . $name, $db);
+    if ($cache) {
+      Cache::put('options.' . $name, $db);
+    }
 
     return $db;
   }
