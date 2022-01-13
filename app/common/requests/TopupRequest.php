@@ -119,7 +119,9 @@ final class TopupRequest extends Request implements \App\Core\Schema\Request
 
     // TODO: At this point, we've already verified the correctness of the data and can connect to the payment gateway provider.
 
-    if (!TransactionsRepository::topup($user, $selectedWallet, $this->get('amount'), $paymentMethod)) {
+    $amount = round($this->get('amount'), 12);
+
+    if (!TransactionsRepository::topup($user, $selectedWallet, $amount, $paymentMethod)) {
       $this->addContent('message', Translate::string('An error occurred while processing your payment.'));
       $this->finish(self::ERROR_INTERNAL_ERROR, Status::UNAUTHORIZED);
     }

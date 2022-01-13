@@ -16,10 +16,12 @@ use Illuminate\Support\Str;
  */
 final class TransactionsRepository
 {
+  private const ROUND_PLACES = 12;
+
   public static function topup(User $user, Wallet $wallet, float $amount, string $method): bool
   {
-    $currentBalance = $wallet->getBalance();
-    $newBalance = $currentBalance + $amount;
+    $currentBalance = round($wallet->getBalance(), self::ROUND_PLACES);
+    $newBalance = round($currentBalance + $amount, self::ROUND_PLACES);
 
     $wallet->updateBalance($newBalance);
 
@@ -28,16 +30,16 @@ final class TransactionsRepository
 
   public static function transfer(Wallet $from, Wallet $to, float $amount): bool
   {
-    $fromStartingBalance = $from->getBalance();
-    $toStartingBalance = $to->getBalance();
+    $fromStartingBalance = round($from->getBalance(), self::ROUND_PLACES);
+    $toStartingBalance = round($to->getBalance(), self::ROUND_PLACES);
 
-    $fromCurrencyRate = $from->getCurrency()->getRate();
-    $toCurrencyRate = $to->getCurrency()->getRate();
+    $fromCurrencyRate = round($from->getCurrency()->getRate(), self::ROUND_PLACES);
+    $toCurrencyRate = round($to->getCurrency()->getRate(), self::ROUND_PLACES);
 
-    $usdValue = $amount / $fromCurrencyRate;
+    $usdValue = round($amount / $fromCurrencyRate, 6);
 
-    $fromNewBalance = $fromStartingBalance - $amount;
-    $toNewBalance = $toStartingBalance + ($usdValue * $toCurrencyRate);
+    $fromNewBalance = round($fromStartingBalance - $amount, 6);
+    $toNewBalance = round($toStartingBalance + ($usdValue * $toCurrencyRate), 6);
 
     $from->updateBalance($fromNewBalance);
     $to->updateBalance($toNewBalance);
@@ -47,16 +49,16 @@ final class TransactionsRepository
 
   public static function exchange(Wallet $from, Wallet $to, float $amount): bool
   {
-    $fromStartingBalance = $from->getBalance();
-    $toStartingBalance = $to->getBalance();
+    $fromStartingBalance = round($from->getBalance(), self::ROUND_PLACES);
+    $toStartingBalance = round($to->getBalance(), self::ROUND_PLACES);
 
-    $fromCurrencyRate = $from->getCurrency()->getRate();
-    $toCurrencyRate = $to->getCurrency()->getRate();
+    $fromCurrencyRate = round($from->getCurrency()->getRate(), self::ROUND_PLACES);
+    $toCurrencyRate = round($to->getCurrency()->getRate(), self::ROUND_PLACES);
 
-    $usdValue = $amount / $fromCurrencyRate;
+    $usdValue = round($amount / $fromCurrencyRate, 6);
 
-    $fromNewBalance = $fromStartingBalance - $amount;
-    $toNewBalance = $toStartingBalance + ($usdValue * $toCurrencyRate);
+    $fromNewBalance = round($fromStartingBalance - $amount, 6);
+    $toNewBalance = round($toStartingBalance + ($usdValue * $toCurrencyRate), 6);
 
     $from->updateBalance($fromNewBalance);
     $to->updateBalance($toNewBalance);

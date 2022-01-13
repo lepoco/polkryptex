@@ -88,7 +88,7 @@ final class ExchangeRequest extends Request implements \App\Core\Schema\Request
       $this->finish(self::ERROR_VALUE_TOO_LOW, Status::UNAUTHORIZED);
     }
 
-    $amount = number_format((float)$this->get('amount'), 12);
+    $amount = round((float)$this->get('amount'), 12);
 
     TransactionsRepository::exchange($outcomeWallet, $incomeWallet, $amount);
 

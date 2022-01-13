@@ -13,7 +13,7 @@ final class Formatter
 {
   public static function toString(float $amount): string
   {
-    $number = number_format($amount, 12, '.', ' ');
+    $number = number_format($amount, 6, '.', ' ');
     $number = rtrim($number, '0');
 
     if (str_ends_with($number, '.')) {

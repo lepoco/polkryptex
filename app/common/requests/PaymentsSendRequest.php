@@ -46,7 +46,7 @@ final class PaymentsSendRequest extends Request implements \App\Core\Schema\Requ
     ]);
 
     $user = Account::current();
-    $amount = number_format((float)$this->get('amount'), 12);
+    $amount = round((float)$this->get('amount'), 12);
 
     if ($amount < 5 || $amount > 20000) {
       $this->addContent('message', Translate::string('Amount entered is incorrect.'));
