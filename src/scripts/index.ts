@@ -14,6 +14,8 @@ import SignOut from "./common/signout";
 import LoadReveal from "./common/loadreveal";
 import CreditCard from "./common/creditcard";
 
+import { Dropdown as BootstrapDropdown } from "./components/bootstrap-bundle";
+
 require("./../sass/style.scss");
 
 window.onload = function (e) {
@@ -21,6 +23,8 @@ window.onload = function (e) {
   Cookie.init();
   SignOut.init();
   CreditCard.init();
+
+  let drop = new BootstrapDropdown();
 };
 
 if (AppData.isWorkerEnabled() && "serviceWorker" in navigator) {
