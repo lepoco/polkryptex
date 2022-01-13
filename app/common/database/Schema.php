@@ -287,7 +287,7 @@ final class Schema
         $table->foreignId('wallet_from')->nullable()->references('id')->on('wallets');
         $table->foreignId('wallet_to')->references('id')->on('wallets');
         $table->float('amount')->default(0);
-        $table->float('rate')->default(1);
+        $table->float('rate', 12, 8, false)->default(1);
         $table->boolean('is_topup')->default(false);
         $table->string('uuid')->nullable();
         $table->string('method_reference')->nullable();
