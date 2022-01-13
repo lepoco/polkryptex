@@ -108,6 +108,7 @@
         <div class="floating-input -reveal">
           <select class="floating-input__field" placeholder="@translate('SMTP Encryption')"
             data-selected="@option('mail_smtp_encryption', 'en_US')" name="mail_smtp_encryption">
+            <option value="disabled">@translate('Disabled')</option>
             <option value="smtps">@translate('SMTP SSL')</option>
             <option value="starttls">@translate('START TLS')</option>
           </select>
@@ -178,7 +179,48 @@
         <hr>
       </div>
 
-      //redis
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="redis_host" placeholder="@translate('Redis Host')"
+            value="@option('redis_host', '')">
+          <label for="redis_host">@translate('Redis Host / Socket')</label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="number" name="redis_port" placeholder="@translate('Redis Port')"
+            value="@option('redis_port', '')">
+          <label for="redis_port">@translate('Redis Port')</label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="number" name="redis_timeout" placeholder="@translate('Redis Timeout')"
+            value="@option('redis_timeout', '')">
+          <label for="redis_timeout">@translate('Redis Timeout')</label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="redis_prefix" placeholder="@translate('Redis Prefix')"
+            value="@option('redis_prefix', '')">
+          <label for="redis_prefix">@translate('Redis Prefix')</label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="redis_username" placeholder="@translate('Redis Username')"
+            value="@option('redis_username', '')">
+          <label for="redis_username">@translate('Redis Username')</label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="floating-input -reveal">
+          <input class="floating-input__field" type="text" name="redis_password" placeholder="@translate('Redis Password')"
+            value="@option('redis_password', '')">
+          <label for="redis_password">@translate('Redis Password')</label>
+        </div>
+      </div>
 
       <div class="col-12 -mb-1 -reveal">
         <hr>
@@ -211,6 +253,13 @@
             class="form-check-input" id="mail_smtp_auth" name="mail_smtp_auth" name="mail_smtp_auth"
             value="mail_smtp_auth">
           <label for="mail_smtp_auth">@translate('Enable SMTP Auth')</label>
+        </div>
+
+        <div class="form-check -reveal -pb-2">
+          <input {{ \App\Core\Facades\Option::get('redis_enable', false) ? 'checked="checked"' : '' }} type="checkbox"
+            class="form-check-input" id="redis_enable" name="redis_enable" name="redis_enable"
+            value="redis_enable">
+          <label for="redis_enable">@translate('Enable Redis Cache')</label>
         </div>
 
         <div class="form-check -reveal -pb-2">

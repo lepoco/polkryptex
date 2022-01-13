@@ -241,6 +241,41 @@ final class Prefill
       'name' => 'openexchangerates_api_key',
       'value' => ''
     ]);
+
+    DB::table('options')->insert([
+      'name' => 'redis_enable',
+      'value' => 'false'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'redis_port',
+      'value' => 6379
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'redis_host',
+      'value' => '127.0.0.1'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'redis_timeout',
+      'value' => '1.0'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'redis_prefix',
+      'value' => 'polkryptex'
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'redis_username',
+      'value' => ''
+    ]);
+
+    DB::table('options')->insert([
+      'name' => 'redis_password',
+      'value' => ''
+    ]);
   }
 
   private static function fillCurrencies(): void

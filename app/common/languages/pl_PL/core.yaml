@@ -62,7 +62,6 @@ Back to home: Powrót na stronę główną
 
 # app\common\views\register.blade.php
 Password too short?: Hasło za krótkie?
-Get a free and open source password manager for yourself.: Znajdź dla siebie darmowy i otwarty menedżer haseł.
 
 # app\common\views\register-confirmation.blade.php
 Thank you for your registration. A message with a confirmation link should be sent to your inbox.: Dziękujemy za rejestrację. Na Twoją skrzynkę powinna zostać wysłana wiadomość z linkiem potwierdzającym.

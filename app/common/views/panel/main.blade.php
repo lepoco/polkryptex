@@ -36,6 +36,24 @@
         </div>
       </div>
     </div>
+
+    <div class="col-12 col-lg-4 -pb-3 -reveal">
+      <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
+        <div>
+          <h3 class="-flex"> <i class="icon-ic_fluent_database_20 -s-24 -mr-1"></i> {{ $cache_keys ?? 0 }}</h3>
+          <p>@translate('Cache keys')</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-4 -pb-3 -reveal">
+      <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
+        <div>
+          <h3 class="-flex"> <i class="icon-ic_fluent_database_20 -s-24 -mr-1"></i> {{ $cache_queries ?? 0 }}</h3>
+          <p>@translate('Cache queries')</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

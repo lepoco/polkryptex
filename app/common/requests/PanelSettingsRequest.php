@@ -41,7 +41,13 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
       'mail_replyto',
       'mail_legal',
       'currencyconverter_api_key',
-      'coin_api_key'
+      'coin_api_key',
+      'redis_host',
+      'redis_port',
+      'redis_timeout',
+      'redis_prefix',
+      'redis_username',
+      'redis_password'
     ]);
 
     $this->isEmpty([
@@ -70,9 +76,17 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
       ['mail_sendfrom', FILTER_VALIDATE_EMAIL],
       ['mail_replyto', FILTER_VALIDATE_EMAIL],
       ['mail_legal', self::SANITIZE_STRING],
+
       ['currencyconverter_api_key', self::SANITIZE_STRING],
       ['coin_api_key', self::SANITIZE_STRING],
-      ['openexchangerates_api_key', self::SANITIZE_STRING]
+      ['openexchangerates_api_key', self::SANITIZE_STRING],
+
+      ['redis_host', self::SANITIZE_STRING],
+      ['redis_port', self::SANITIZE_STRING],
+      ['redis_timeout', self::SANITIZE_STRING],
+      ['redis_prefix', self::SANITIZE_STRING],
+      ['redis_username', self::SANITIZE_STRING],
+      ['redis_password', self::SANITIZE_STRING]
     ]);
 
     $user = Account::current();
@@ -110,11 +124,20 @@ final class PanelSettingsRequest extends Request implements \App\Core\Schema\Req
     Option::set('mail_smtp_user', $this->optional('mail_smtp_user'));
 
     // Do not expose the real password in frontend
-    if ($this->optional('mail_smtp_password') !== 'hiddenpasswordhiddenpassword') {
-      Option::set('mail_smtp_password', $this->optional('mail_smtp_password'));
+    if ($this->optional('mail_smtp_password', false) !== 'hiddenpasswordhiddenpassword') {
+      Option::set('mail_smtp_password', $this->optional('mail_smtp_password', false));
     }
 
+    Option::set('redis_host', $this->optional('redis_host'));
+    Option::set('redis_port', $this->optional('redis_port'));
+    Option::set('redis_timeout', $this->optional('redis_timeout'));
+    Option::set('redis_prefix', $this->optional('redis_prefix'));
+    Option::set('redis_username', $this->optional('redis_username'));
+    Option::set('redis_password', $this->optional('redis_password'));
+
     Option::set('mail_smtp_port', $this->optional('mail_smtp_port'));
+
+    Option::set('redis_enable', $this->isTrue('redis_enable'));
 
     Option::set('cron_run_by_user', $this->isTrue('cron_run_by_user'));
     Option::set('service_worker_enabled', $this->isTrue('service_worker_enabled'));

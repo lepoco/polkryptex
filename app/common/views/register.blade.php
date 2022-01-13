@@ -34,8 +34,7 @@
       <div>
         <strong>@translate('Password too short?')</strong>
         <br>
-        <a target="_blank" rel="noopener nofollow" href="https://keepassxc.org/download/">@translate('Get a free and
-          open source password manager for yourself.')</a>
+        <a target="_blank" rel="noopener nofollow" href="https://keepassxc.org/download/">@translate('Get a free and open source password manager for yourself.')</a>
       </div>
     </div>
     <div class="-reveal -pb-1">

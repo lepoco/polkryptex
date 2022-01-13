@@ -2,7 +2,7 @@
 
 namespace App\Common\Composers\Panel;
 
-use App\Core\Facades\{DB, Statistics};
+use App\Core\Facades\{Cache, DB, Statistics};
 use App\Core\Auth\{Account, User};
 use App\Core\View\Blade\Composer;
 use Illuminate\View\View;
@@ -26,6 +26,8 @@ final class MainComposer extends Composer implements \App\Core\Schema\Composer
     $view->with('reqests_today', $this->getRequestsCount());
     $view->with('views_today', $this->getViewsCount());
     $view->with('transactions_today', $this->getTransactionsCount());
+    $view->with('cache_keys', Cache::count());
+    $view->with('cache_queries', Cache::queries());
   }
 
   private function getUsers(): array

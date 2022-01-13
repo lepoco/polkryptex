@@ -2,12 +2,32 @@
   $methodName = $transaction->getMethodName();
   $typeName = $transaction->getTypeName();
 
+  $methodDisplayName = 'app';
+
+  switch ($methodName) {
+    case 'apple_pay':
+      $methodDisplayName = 'Apple Pay';
+      break;
+
+    case 'google_pay':
+      $methodDisplayName = 'Google Pay';
+      break;
+
+    case 'paypal':
+      $methodDisplayName = 'PayPal';
+      break;
+
+    case 'card':
+      $methodDisplayName = \App\Core\Facades\Translate::string('Credit Card');
+      break;
+  }
+
   $header = '';
 
   switch ($typeName) {
     case 'topup':
       $currency = $transaction->getWalletTo()->getCurrency();
-      $header = \App\Core\Facades\Translate::string('Top-up via') . ' ' . $methodName;
+      $header = \App\Core\Facades\Translate::string('Top-up via') . ' ' . $methodDisplayName;
       break;
 
     case 'transfer':
