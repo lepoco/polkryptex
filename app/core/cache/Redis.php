@@ -3,6 +3,7 @@
 namespace App\Core\Cache;
 
 use App\Core\Cache\Memory;
+use App\Core\Facades\App;
 use App\Core\Facades\Logs;
 use App\Core\Facades\Option;
 
@@ -36,12 +37,14 @@ final class Redis extends Memory implements \App\Core\Schema\Cache
   /**
    * Initializes memory cache and connects to Redis.
    */
-  public function __construct()
+  public function __construct(bool $isInstalled)
   {
-    if (extension_loaded('redis')) {
+    if ($isInstalled && extension_loaded('redis')) {
       $this->redisLoaded = true;
 
-      $this->initializeRedis();
+      if (true === Option::get('redis_enable', false, false)) {
+        $this->initializeRedis();
+      }
     }
   }
 
@@ -287,13 +290,19 @@ final class Redis extends Memory implements \App\Core\Schema\Cache
     $this->tryAuth();
 
     try {
-      $this->connection->connect(
-        $this->configuration['host'],
-        $this->configuration['port'],
-        $this->configuration['timeout'],
-        null,
-        100
-      );
+      if (substr($this->configuration['host'], 0, 1) === "/") {
+        // Connect by Unix socket
+        $this->connection->connect($this->configuration['host']);
+      } else {
+        // Connect by ip
+        $this->connection->connect(
+          $this->configuration['host'],
+          $this->configuration['port'],
+          $this->configuration['timeout'],
+          null,
+          100
+        );
+      }
     } catch (\Throwable $th) {
       Logs::error($th->getMessage(), ['exception' => $th]);
 
