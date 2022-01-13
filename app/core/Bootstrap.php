@@ -92,7 +92,7 @@ abstract class Bootstrap implements \App\Core\Schema\App
     $this
       ->setDatabase(new Manager($this->container))
       ->setOptions(new Options())
-      ->setCache(new Redis());
+      ->setCache(new Redis($this->isInstalled()));
 
     $this->isConnected(true);
 
@@ -111,10 +111,12 @@ abstract class Bootstrap implements \App\Core\Schema\App
       $this->session->put('language', $this->configuration->get('i18n.default', 'en_US'));
     }
 
-    $savedLanguage = $this->options->get('language', '');
+    if ($this->isInstalled()) {
+      $savedLanguage = $this->options->get('language', '');
 
-    if (!empty($savedLanguage)) {
-      $this->session->put('language', $savedLanguage);
+      if (!empty($savedLanguage)) {
+        $this->session->put('language', $savedLanguage);
+      }
     }
 
     $this->session->put('last_opened', $timeNow);
@@ -319,6 +321,10 @@ abstract class Bootstrap implements \App\Core\Schema\App
 
   final protected function checkCron(): self
   {
+    if (!$this->isInstalled()) {
+      return $this;
+    }
+
     if ($this->options->get('cron_run_by_user', false)) {
       Cron::runByUser($this->options->get('cron_last_run', ''));
     }
