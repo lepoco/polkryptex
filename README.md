@@ -29,10 +29,10 @@ The application uses several solutions to improve work and design. They are nece
 - [x] CRON jobs
 - [x] Redis as cache database
 - [x] Transactions module
-- [ ] Internal payment system combined with the account balance of user accounts
+- [x] Internal payment system combined with the account balance of user accounts
 - [x] Top-up module
 - [ ] Service provider for Top-up module (PayPal /= PayU)
-- [ ] Cryptocurrency exchange system
+- [x] Cryptocurrency exchange system
 - [ ] Exchange of cryptocurrencies with their current rates and historical rates presented in the charts
 - [ ] (Optional) Forecasting further rate of a given cryptocurrency
 - [x] (Optional) PWA support
