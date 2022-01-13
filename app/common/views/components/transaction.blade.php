@@ -1,6 +1,7 @@
 @php
   $methodName = $transaction->getMethodName();
   $typeName = $transaction->getTypeName();
+  $isCrypto = false;
 
   $methodDisplayName = 'app';
 
@@ -34,12 +35,24 @@
       $currency = $transaction->getWalletFrom()->getCurrency();
       $header = \App\Core\Facades\Translate::string('Transfer');
       break;
+
+    case 'exchange':
+      if($transaction->getAmount() < 0) {
+        $currency = $transaction->getWalletFrom()->getCurrency();
+      } else {
+        $currency = $transaction->getWalletTo()->getCurrency();
+      }
+      
+      $header = \App\Core\Facades\Translate::string('Exchange');
+      break;
     
     default:
       $currency = $transaction->getWalletTo()->getCurrency();
       $header = \App\Core\Facades\Translate::string('Transaction');
       break;
   }
+
+  $isCrypto = $currency->isCrypto();
 @endphp
 
 <div class="-w-100 -reveal">
@@ -57,11 +70,15 @@
         <span>
           @translate('From') <strong>{{ $transaction->getWalletFrom()->getCurrency()->getIsoCode() }}&#64;{{ strtoupper($transaction->getUserFromName()) }}</strong> @translate('To') <strong>{{ $transaction->getWalletTo()->getCurrency()->getIsoCode() }}&#64;{{ strtoupper($transaction->getUserToName()) }}</strong> - {{ $transaction->getCreatedAt() ?? '' }}
         </span>
+        @elseif('exchange' === $typeName)
+        <span>
+          @translate('From') <strong>{{ $transaction->getWalletFrom()->getCurrency()->getIsoCode() }}</strong> @translate('To') <strong>{{ $transaction->getWalletTo()->getCurrency()->getIsoCode() }}</strong> - {{ $transaction->getCreatedAt() ?? '' }}
+        </span>
         @endif
       </span>
 
       <strong>
-        {{ $currency->isSignLeft() ? $currency->getSign() : '' }} {{ number_format((float) ($transaction->getAmount() * $transaction->getRate()) ?? 0, 2, '.', '') }}
+        {{ $currency->isSignLeft() ? $currency->getSign() : '' }} {{ number_format((float) ($transaction->getAmount() * $transaction->getRate()) ?? 0, $isCrypto ? 6 : 2, '.', '') }}
         {{ !$currency->isSignLeft() ? $currency->getSign() : '' }}
       </strong>
     </div>

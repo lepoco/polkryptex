@@ -24,7 +24,7 @@
               <option data-name="{{ \App\Core\Facades\Translate::string($singleWallet->getCurrency()->getName()) }}"
                 data-sign="{{ $singleWallet->getCurrency()->getSign() }}"
                 data-signleft="{{ $singleWallet->getCurrency()->isSignLeft() ? 1 : 0 }}"
-                value="{{ number_format($singleWallet->getBalance(), 2) }}">{{
+                value="{{ number_format($singleWallet->getBalance(), $singleWallet->getCurrency()->isCrypto() ? 6 : 2) }}">{{
                 \App\Core\Facades\Translate::string($singleWallet->getCurrency()->getName()) }}</option>
 
               @endforeach

@@ -62,6 +62,10 @@ module.exports = function (_env, argv) {
             to: "img",
           },
           {
+            from: path.resolve(__dirname, "src/fonts"),
+            to: "fonts",
+          },
+          {
             from: path.resolve(__dirname, "src", "favicon.ico"),
           },
           {
