@@ -88,7 +88,9 @@ final class ExchangeRequest extends Request implements \App\Core\Schema\Request
       $this->finish(self::ERROR_VALUE_TOO_LOW, Status::UNAUTHORIZED);
     }
 
-    TransactionsRepository::exchange($outcomeWallet, $incomeWallet, (float)$this->get('amount'));
+    $amount = number_format((float)$this->get('amount'), 12);
+
+    TransactionsRepository::exchange($outcomeWallet, $incomeWallet, $amount);
 
     $this->addContent('redirect', Redirect::url('dashboard'));
     $this->addContent('message', Translate::string('Funds successfully exchanged.'));

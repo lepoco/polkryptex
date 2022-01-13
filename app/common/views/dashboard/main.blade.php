@@ -11,13 +11,13 @@
     <div class="col-12 dashboard__section">
       <div class="dashboard__banner h-100 p-5 bg-light -rounded-2">
         <div class="-w-100">
-          <h4 class="-reveal"><span class="wallet-current-value">$ {{ number_format($wallets_total, 2) }}</span></h4>
+          <h4 class="-reveal"><span class="wallet-current-value">$ {{ \App\Common\Money\Formatter::toString($wallets_total) }}</span></h4>
 
           <div class="floating-input -mt-2 -reveal">
             <select class="floating-input__field" name="select-wallet" style="max-width: 290px"
               placeholder="@translate('Wallet')" name="wallet">
 
-              <option data-sign="$" data-signleft="1" value="{{ number_format($wallets_total, 2) }}">@translate('Total balance')</option>
+              <option data-sign="$" data-signleft="1" value="{{ \App\Common\Money\Formatter::toString($wallets_total) }}">@translate('Total balance')</option>
 
               @foreach ($wallets as $singleWallet)
 
