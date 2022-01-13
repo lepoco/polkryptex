@@ -20,7 +20,6 @@ window.onload = function (e) {
   FormHelpers.init();
   Cookie.init();
   SignOut.init();
-  LoadReveal.init();
   CreditCard.init();
 };
 
@@ -43,16 +42,22 @@ if (AppData.isWorkerEnabled() && "serviceWorker" in navigator) {
   });
 }
 
-try {
-  require("./pages/" + AppData.pageNow());
-  AppData.setRouting({ success: true, message: "imported" });
-} catch (error) {
-  AppData.setRouting({
-    success: false,
-    message: "No module for page " + AppData.pageNow(),
-    error: error.message,
-  });
-}
+window.onload = function (e) {
+  try {
+    require("./pages/" + AppData.pageNow());
+    AppData.setRouting({ success: true, message: "imported" });
+
+    LoadReveal.init();
+  } catch (error) {
+    AppData.setRouting({
+      success: false,
+      message: "No module for page " + AppData.pageNow(),
+      error: error.message,
+    });
+
+    LoadReveal.init();
+  }
+};
 
 function navigatorOnline() {
   if (!window.navigator.onLine) {

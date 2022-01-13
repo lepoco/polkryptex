@@ -28,6 +28,7 @@ final class ExchangeComposer extends Composer implements \App\Core\Schema\Compos
     }
 
     $view->with('user', $user);
+    $view->with('has_one_wallet', count($wallets) === 1);
     $view->with('user_wallets', $wallets);
     $view->with('has_wallets', !empty($wallets));
   }

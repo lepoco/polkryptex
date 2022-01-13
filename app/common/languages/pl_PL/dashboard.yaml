@@ -61,6 +61,9 @@ Request transfer: Poproś o przelew
 From wallet: Z portfela
 To wallet: Do portfela
 Exchange currencies: Wymień waluty
+Exchange rate: Kurs wymiany
+Exchanged: Po przeliczeniu
+You currently only have one wallet, add a new one to be able to exchange currencies between them.: Masz obecnie tylko jeden portfel, dodaj nowy aby móc wymieniać waluty między nimi.
 
 # app\common\views\dashboard\transactions.blade.php
 Transactions: Transakcje

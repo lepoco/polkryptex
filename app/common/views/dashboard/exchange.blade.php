@@ -6,14 +6,17 @@
 @section('content')
 <h2 class="-font-secondary -fw-700 -pb-3 -reveal">@translate('Exchange')</h2>
 <div>
+  @if(!$has_one_wallet)
+
   <form id="exchange">
     <input type="hidden" name="action" value="Exchange" />
     <input type="hidden" name="nonce" value="@nonce('exchange')" />
+    <input type="hidden" name="id" value="{{ $user->id() ?? '0' }}" />
 
     <div class="floating-input -reveal">
       <select class="floating-input__field" placeholder="@translate('From wallet')" name="wallet_from">
         @foreach ($user_wallets as $singleWallet)
-        <option value="{{ $singleWallet->getCurrency()->getIsoCode() }}">{{ $singleWallet->getCurrency()->getIsoCode() . ' - ' .
+        <option data-crypto="{{ $singleWallet->getCurrency()->isCrypto() ? '1' : '0' }}" data-rate="{{ $singleWallet->getCurrency()->getRate() }}" value="{{ $singleWallet->getCurrency()->getIsoCode() }}">{{ $singleWallet->getCurrency()->getIsoCode() . ' - ' .
           \App\Core\Facades\Translate::string($singleWallet->getCurrency()->getName()) }}</option>
         @endforeach
       </select>
@@ -22,8 +25,9 @@
 
     <div class="floating-input -reveal">
       <select class="floating-input__field" placeholder="@translate('To wallet')" name="wallet_to">
+        @php $count = 0; @endphp
         @foreach ($user_wallets as $singleWallet)
-        <option value="{{ $singleWallet->getCurrency()->getIsoCode() }}">{{ $singleWallet->getCurrency()->getIsoCode() . ' - ' .
+        <option data-crypto="{{ $singleWallet->getCurrency()->isCrypto() ? '1' : '0' }}" {{ $count++ > 0 ? 'selected="selected"' : ''}} data-rate="{{ $singleWallet->getCurrency()->getRate() }}" value="{{ $singleWallet->getCurrency()->getIsoCode() }}">{{ $singleWallet->getCurrency()->getIsoCode() . ' - ' .
           \App\Core\Facades\Translate::string($singleWallet->getCurrency()->getName()) }}</option>
         @endforeach
       </select>
@@ -31,8 +35,15 @@
     </div>
 
     <div class="floating-input -reveal">
-      <input class="floating-input__field" type="number" placeholder="@translate('Amount')" name="amount">
+      <input class="floating-input__field" type="number" placeholder="@translate('Amount')" name="amount" min="5" max="20000">
       <label for="amount">@translate('Amount')</label>
+    </div>
+
+    <div class="-mb-2 -reveal">
+      <p class="-font-secondary -fw-700">@translate('Exchange rate'):</p>
+      <h4 class="exchange-rate">0</h4>
+      <p class="-font-secondary -fw-700">@translate('Exchanged'):</p>
+      <h4 class="exchanged-amount">0</h4>
     </div>
 
     <div class="form-check -mb-2 -reveal">
@@ -58,5 +69,12 @@
       <a href="@url('dashboard')" class="btn btn-outline-dark btn-mobile">@translate('Back to dashboard')</a>
     </div>
   </form>
+  @else
+    <div class="-reveal">
+      <p>@translate('You currently only have one wallet, add a new one to be able to exchange currencies between them.')</p>
+      <a href="@url('dashboard/add')" class="btn btn-dark btn-mobile -lg-mr-1">@translate('Add new wallet')</a>
+      <a href="@url('dashboard')" class="btn btn-outline-dark btn-mobile">@translate('Back to dashboard')</a>
+    </div>
+  @endif
 </div>
 @endsection
