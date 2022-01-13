@@ -230,7 +230,7 @@ final class Schema
     if (!DB::schema()->hasTable('currencies')) {
       DB::schema()->create('currencies', function (Blueprint $table) {
         $table->id();
-        $table->float('rate', 12, 8, false)->default(1);
+        $table->float('rate', 32, 16, false)->default(1);
         $table->integer('iso_number')->nullable();
         $table->string('iso_code')->nullable();
         $table->string('sign')->nullable();
@@ -249,7 +249,7 @@ final class Schema
     if (!DB::schema()->hasTable('currencies_stock')) {
       DB::schema()->create('currencies_stock', function (Blueprint $table) {
         $table->id();
-        $table->float('rate', 12, 8, false)->default(1);
+        $table->float('rate', 32, 16, false)->default(1);
         $table->foreignId('currency_id')->references('id')->on('currencies')->default(1);
         $table->timestamp('created_at')->useCurrent();
       });
@@ -260,7 +260,7 @@ final class Schema
         $table->id();
         $table->foreignId('user_id')->references('id')->on('users');
         $table->foreignId('currency_id')->references('id')->on('currencies')->default(1);
-        $table->float('virtual_balance')->default(0);
+        $table->float('virtual_balance', 32, 16, false)->default(0);
         $table->timestamp('created_at')->useCurrent();
         $table->timestamp('updated_at')->nullable()->useCurrent();
       });
@@ -286,8 +286,8 @@ final class Schema
         $table->foreignId('user_id')->references('id')->on('users');
         $table->foreignId('wallet_from')->nullable()->references('id')->on('wallets');
         $table->foreignId('wallet_to')->references('id')->on('wallets');
-        $table->float('amount')->default(0);
-        $table->float('rate', 12, 8, false)->default(1);
+        $table->float('amount', 32, 16, false)->default(0);
+        $table->float('rate', 32, 16, false)->default(1);
         $table->boolean('is_topup')->default(false);
         $table->string('uuid')->nullable();
         $table->string('method_reference')->nullable();

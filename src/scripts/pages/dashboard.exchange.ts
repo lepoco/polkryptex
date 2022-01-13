@@ -1,4 +1,5 @@
 import FormRequest from "../common/formrequest";
+import Money from "../common/money";
 
 /**
  * Page controller for dashboard.exchange.
@@ -60,7 +61,7 @@ function updateRate() : void {
 
   if (RATE_BOX instanceof HTMLHeadingElement) {
     //RATE_BOX.innerHTML = Intl.NumberFormat('en-US').format(rate);
-    RATE_BOX.innerHTML = (isCrypto ? rate.toFixed(8) : rate.toFixed(4)) + ' ' + walletTo.value ?? '';
+    RATE_BOX.innerHTML = Money.format(rate) + ' ' + walletTo.value ?? '';
   }
 }
 
@@ -103,7 +104,7 @@ function updateAmount() {
     if(INPUT_AMOUNT.value == '') {
       AMOUNT_BOX.innerHTML = '0';
     } else {
-      AMOUNT_BOX.innerHTML = (isCrypto ? (amount * rate).toFixed(6) : (amount * rate).toFixed(2)) + ' ' + walletTo.value ?? '';
+      AMOUNT_BOX.innerHTML = Money.format((amount * rate)) + ' ' + walletTo.value ?? '';
     }
   }
 }
@@ -115,6 +116,11 @@ function selectionChanged(event:Event) {
 }
 
 function amountChanged(event:Event, input:HTMLInputElement) {
+  let v = parseFloat(input.value);
+  if (v < 0) input.value = (0).toString();
+  if (v > 20000) input.value = (20000).toString();
+
+
   input.value = Math.abs(parseFloat(input.value)).toString();
   updateAmount();
 }

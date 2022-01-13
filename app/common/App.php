@@ -28,7 +28,7 @@ final class App extends Bootstrap implements \App\Core\Schema\App
           'app' => [
             'name' => 'Polkryptex',
             'short_name' => 'Polkryptex',
-            'version' => '1.1.0',
+            'version' => '1.2.0',
             'description' => 'Cryptocurrency exchange platform',
             'log_level' => 'debug',
             'color' => '#191c1f',

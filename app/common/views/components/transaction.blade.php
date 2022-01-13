@@ -78,7 +78,7 @@
       </span>
 
       <strong>
-        {{ $currency->isSignLeft() ? $currency->getSign() : '' }} {{ number_format((float) ($transaction->getAmount() * $transaction->getRate()) ?? 0, $isCrypto ? 6 : 2, '.', '') }}
+        {{ $currency->isSignLeft() ? $currency->getSign() : '' }} {{ \App\Common\Money\Formatter::toString((float) ($transaction->getAmount() * $transaction->getRate()) ?? 0) }}
         {{ !$currency->isSignLeft() ? $currency->getSign() : '' }}
       </strong>
     </div>
