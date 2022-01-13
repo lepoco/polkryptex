@@ -80,6 +80,11 @@ final class PaymentsSendRequest extends Request implements \App\Core\Schema\Requ
       $this->finish(self::ERROR_VALUE_INVALID, Status::UNAUTHORIZED);
     }
 
+    if ($outcomeWallet->getBalance() < $amount) {
+      $this->addContent('message', Translate::string('You do not have sufficient funds in your account.'));
+      $this->finish(self::ERROR_VALUE_INVALID, Status::UNAUTHORIZED);
+    }
+
     // Verify payee
     $payee = Account::getBy('name', trim(strtolower($this->get('payee_name'))));
 

@@ -56,6 +56,7 @@ Request money: Zażądaj pieniędzy
 Send money: Wyślij pieniądze
 Payee: Odbiorca
 Request transfer: Poproś o przelew
+You do not have sufficient funds in your account.: Nie masz wystarczających środków na koncie.
 
 # app\common\views\dashboard\exchange.blade.php
 From wallet: Z portfela
