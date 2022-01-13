@@ -9,6 +9,7 @@
       <h4 class="-font-secondary -fw-700 -pb-3">@translate('Request transfer')</h4>
     </div>
     <div class="col-12">
+      @if(false)
       <form id="paymentsRequest">
         <input type="hidden" name="action" value="PaymentsRequest" />
         <input type="hidden" name="nonce" value="@nonce('paymentsrequest')" />
@@ -48,6 +49,10 @@
           <a href="@url('dashboard/payments')" class="btn btn-outline-dark btn-mobile">@translate('Back to payments')</a>
         </div>
       </form>
+      @else
+      <p>@translate('Your plan does not support sending transfer requests,\nupgrade your plan to Premium or higher.')</p>
+      <a href="@url('dashboard/plan')" class="btn btn-outline-dark btn-mobile">@translate('Upgrade account')</a>
+      @endif
     </div>
   </div>
 </div>

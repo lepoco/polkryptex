@@ -116,6 +116,7 @@ final class PaymentsSendRequest extends Request implements \App\Core\Schema\Requ
 
     TransactionsRepository::transfer($outcomeWallet, $incomeWallet, $amount);
 
+    $this->addContent('redirect', Redirect::url('dashboard/payments'));
     $this->addContent('message', Translate::string('Funds successfully transferred.'));
     $this->finish(self::CODE_SUCCESS, Status::OK);
   }

@@ -1,12 +1,24 @@
 @php
-  $method = \App\Common\Money\TransactionsRepository::getMethodName($transaction->getMethodId());
-  $type = \App\Common\Money\TransactionsRepository::getTypeName($transaction->getTypeId());
-  $currency = $transaction->getWalletTo()->getCurrency();
+  $methodName = $transaction->getMethodName();
+  $typeName = $transaction->getTypeName();
 
-  $methodName = \App\Common\Money\PaymentMethods::getName($method);
+  $header = '';
 
-  if ('topup' === $type) {
-    $header = \App\Core\Facades\Translate::string('Top-up via') . ' ' . $methodName;
+  switch ($typeName) {
+    case 'topup':
+      $currency = $transaction->getWalletTo()->getCurrency();
+      $header = \App\Core\Facades\Translate::string('Top-up via') . ' ' . $methodName;
+      break;
+
+    case 'transfer':
+      $currency = $transaction->getWalletFrom()->getCurrency();
+      $header = \App\Core\Facades\Translate::string('Transfer');
+      break;
+    
+    default:
+      $currency = $transaction->getWalletTo()->getCurrency();
+      $header = \App\Core\Facades\Translate::string('Transaction');
+      break;
   }
 @endphp
 
@@ -19,17 +31,17 @@
 
       <span>
         <p><strong>{{ $header ?? '' }}</strong></p>
-        @if('topup' === $type)
+        @if('topup' === $typeName)
         <span>{{ $transaction->getCreatedAt() ?? '' }}</span>
-        @else
+        @elseif('transfer' === $typeName)
         <span>
-          @translate('From') <strong>US@you</strong> @translate('to') <strong>EUR@you</strong> - {{ $transaction->getCreatedAt() ?? '' }}
+          @translate('From') <strong>{{ $transaction->getWalletFrom()->getCurrency()->getIsoCode() }}&#64;{{ strtoupper($transaction->getUserFromName()) }}</strong> @translate('To') <strong>{{ $transaction->getWalletTo()->getCurrency()->getIsoCode() }}&#64;{{ strtoupper($transaction->getUserToName()) }}</strong> - {{ $transaction->getCreatedAt() ?? '' }}
         </span>
         @endif
       </span>
 
       <strong>
-        {{ $currency->isSignLeft() ? $currency->getSign() : '' }} {{ number_format((float) $transaction->getAmount() ?? 0, 2, '.', '') }}
+        {{ $currency->isSignLeft() ? $currency->getSign() : '' }} {{ number_format((float) ($transaction->getAmount() * $transaction->getRate()) ?? 0, 2, '.', '') }}
         {{ !$currency->isSignLeft() ? $currency->getSign() : '' }}
       </strong>
     </div>

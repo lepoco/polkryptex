@@ -34,13 +34,15 @@ final class TransactionsRepository
     $fromCurrencyRate = $from->getCurrency()->getRate();
     $toCurrencyRate = $to->getCurrency()->getRate();
 
+    $usdValue = $amount / $fromCurrencyRate;
+
     $fromNewBalance = $fromStartingBalance - $amount;
-    $toNewBalance = $toStartingBalance + (($amount * $fromCurrencyRate) / $toCurrencyRate);
+    $toNewBalance = $toStartingBalance + ($usdValue * $toCurrencyRate);
 
     $from->updateBalance($fromNewBalance);
     $to->updateBalance($toNewBalance);
 
-    return self::makeTransfer($from, $to, ($amount * $fromCurrencyRate));
+    return self::makeTransfer($from, $to, $usdValue);
   }
 
   public static function exchange(Wallet $from, Wallet $to, float $amount, float $rate): bool
@@ -199,7 +201,7 @@ final class TransactionsRepository
       'user_id' => $fromWallet->getUserId(),
       'wallet_from' => $fromWallet->getId(),
       'wallet_to' => $toWallet->getId(),
-      'amount' => $amount,
+      'amount' => -$amount,
       'is_topup' => false,
       'rate' => $fromWallet->getCurrency()->getRate(),
       'uuid' => Str::uuid(),
