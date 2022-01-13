@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col-12 col-lg-6 -reveal">
-            <img lazy src="@asset('img/iphone-account.png')" alt="" width="550" />
+            <img lazy src="@asset('img/iphone-account.png')" alt="Polkryptex home mobile image" style="max-width: 550px;width: 100%;" />
         </div>
 
         <div class="col-12 -pt-6 -pb-3 -flex-center -flex-justify-center -text-center -reveal">
@@ -77,7 +77,7 @@
                         <div class="card -rounded-2 -color-dark">
                             <div class="card-body -p-4">
                                 <h5 class="-font-secondary -fw-700">Standard</h5>
-                                <p>Free</p>
+                                <p>@translate('Free')</p>
                             </div>
                         </div>
                     </a>

@@ -49,10 +49,10 @@
       <div class="d-flex">
 
         @iflogged
-        <a href="@url('signout')" class="btn btn-dark btn-mobile" type="submit">@translate('Sign Out')</a>
+        <a href="@url('signout')" class="btn btn-dark btn-mobile -sm-w-100" type="submit">@translate('Sign Out')</a>
         @else
-        <a href="@url('signin')" class="btn btn-secondary btn-mobile -lg-mr-1" type="submit">@translate('Sign in')</a>
-        <a href="@url('register')" class="btn btn-dark btn-mobile" type="submit">@translate('Register for free')</a>
+        <a href="@url('signin')" class="btn btn-secondary btn-mobile -lg-mr-1 -sm-w-100" type="submit">@translate('Sign in')</a>
+        <a href="@url('register')" class="btn btn-dark btn-mobile -sm-w-100" type="submit">@translate('Register for free')</a>
         @endif
 
       </div>

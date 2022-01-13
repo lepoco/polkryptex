@@ -98,6 +98,52 @@ h4,
   }
 }
 
+@include media-breakpoint-down(md) {
+  h1,
+  .h1 {
+    font-size: 4rem !important;
+
+    .span,
+    span,
+    strong {
+      font-size: 4rem !important;
+    }
+  }
+
+  h2,
+  .h2 {
+    font-size: 3rem !important;
+
+    .span,
+    span,
+    strong {
+      font-size: 3rem !important;
+    }
+  }
+
+  h3,
+  .h3 {
+    font-size: 2.5rem !important;
+
+    .span,
+    span,
+    strong {
+      font-size: 2.5rem !important;
+    }
+  }
+
+  h4,
+  .h4 {
+    font-size: 2rem !important;
+
+    .span,
+    span,
+    strong {
+      font-size: 2rem !important;
+    }
+  }
+}
+
 a {
   text-decoration: none;
   color: $c-hyperlink;
@@ -198,7 +244,12 @@ form,
   color: #dc3545;
   background: #26262638;
 
-  span, h1, code, strong, small, p {
+  span,
+  h1,
+  code,
+  strong,
+  small,
+  p {
     color: #dc3545;
     font-size: 12px;
     line-height: 12px;
