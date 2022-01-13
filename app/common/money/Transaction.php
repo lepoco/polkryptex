@@ -71,6 +71,42 @@ final class Transaction extends \App\Core\Data\DatabaseObject
       ->setId($properties['id'] ?? 0);
   }
 
+  public function getTypeName(): string
+  {
+    if (empty($this->typeId)) {
+      return '';
+    }
+
+    return TransactionsRepository::getTypeName($this->typeId);
+  }
+
+  public function getMethodName(): string
+  {
+    if (empty($this->methodId)) {
+      return '';
+    }
+
+    return TransactionsRepository::getMethodName($this->methodId);
+  }
+
+  public function getUserFromName(): string
+  {
+    if (empty($this->getWalletFrom())) {
+      return '';
+    }
+
+    return $this->getWalletFrom()->getUser()->getName();
+  }
+
+  public function getUserToName(): string
+  {
+    if (empty($this->getWalletTo())) {
+      return '';
+    }
+
+    return $this->getWalletTo()->getUser()->getName();
+  }
+
   private function fetch(int $id): void
   {
     if (0 === $id) {
