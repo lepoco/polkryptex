@@ -26,14 +26,5 @@ final class AccountComposer extends Composer implements \App\Core\Schema\Compose
     $view->with('has_profile_picture', !empty($user->getImage(false)));
     $view->with('user', Account::current());
     $view->with('user_cards', CardRepository::getUserCards($user));
-
-    Email::send('lechu.pomian@gmail.com', [
-      'subject' => Translate::string('Thank you for your registration!'),
-      'header' => Translate::string('Account confirmation'),
-      'message' => Translate::string('Thank you for creating an account on our website. Click on the link below to activate your account.'),
-      'action_title' => Translate::string('Confirm email'),
-      'action_url' => Redirect::url('register/confirm', [
-      ])
-    ]);
   }
 }
